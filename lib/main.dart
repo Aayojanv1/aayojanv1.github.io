@@ -14,9 +14,11 @@ import 'services/places_service.dart';
 import 'theme/app_theme.dart';
 import 'widgets/searching_animation.dart';
 
-const bool kSimulateMode = false;
+const bool _forceSimulate = bool.fromEnvironment('SIMULATE', defaultValue: false);
 // API key injected at build time via --dart-define=GEMINI_API_KEY=...
 const String kGeminiApiKey = String.fromEnvironment('GEMINI_API_KEY');
+// Simulate if forced OR if no API key provided
+final bool kSimulateMode = _forceSimulate || kGeminiApiKey.isEmpty;
 
 void main() {
   runApp(const MoodMunchApp());
