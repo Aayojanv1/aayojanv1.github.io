@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth, getPartners, getAllPartners, addPartner, updatePartner, deletePartner, createOrder, getAllOrders, getUserOrders, savePayment, updateUserPhone, updateUserPreferences, updateUserProfile } from "./useFirebase";
+import { matchCaterers, anonymize } from "./matchingPipeline";
 
 // ─── Geo Data ─────────────────────────────────────────────────────────────────
 const PINCODE_COORDS = {
@@ -25,12 +26,16 @@ const SVC = {
 const ALL_CUISINES=["Bengali","Mughlai","North Indian","South Indian","Continental","Chinese","Kolkata Biryani","Vegetarian Only","Jain","Punjabi","Rajasthani","Street Food","Bakery & Desserts","Multi-cuisine"];
 
 const SEED_CATERERS=[
-  {id:"c1",name:"Bhojohori Manna Caterers",ownerName:"Subroto Das",phone:"9830012345",email:"subroto@bhojohori.in",address:"Plot 5A, Action Area I",pincode:"700156",specialty:["Wedding","Party","Religious"],cuisineSpecialties:["Bengali","Multi-cuisine"],serviceTypes:["full"],tags:["Bengali Cuisine","Multi-course"],priceRange:"₹₹₹",logo:"🪷",rating:4.8,turnaround:"2–3 hrs",registeredAt:"2024-01-10",active:true},
-  {id:"c2",name:"Kolkata Dawat",ownerName:"Md. Irfan Ali",phone:"9736054321",email:"irfan@kolkatadawat.com",address:"EE-12, Action Area II",pincode:"700157",specialty:["Party","Corporate","Wedding"],cuisineSpecialties:["Mughlai","Kolkata Biryani","North Indian"],serviceTypes:["full","bulk"],tags:["Budget-friendly","Mughlai & Bengali"],priceRange:"₹₹",logo:"🍚",rating:4.6,turnaround:"1–2 hrs",registeredAt:"2024-02-05",active:true},
-  {id:"c3",name:"Ananda Bhojan Events",ownerName:"Priya Chakraborty",phone:"9674011223",email:"priya@anandabhojan.com",address:"Eco Park Gate 2, Sector IV",pincode:"700160",specialty:["Wedding","Religious"],cuisineSpecialties:["Bengali","Vegetarian Only","Jain"],serviceTypes:["full"],tags:["Luxury","Live counters","Veg specialist"],priceRange:"₹₹₹₹",logo:"🎊",rating:4.9,turnaround:"3–4 hrs",registeredAt:"2024-01-22",active:true},
-  {id:"c4",name:"Thakurbarir Ranna",ownerName:"Goutam Banerjee",phone:"9800167890",email:"goutam@thakurbarir.com",address:"K-7 Rajarhat Main Road",pincode:"700135",specialty:["Wedding","Religious","Party"],cuisineSpecialties:["Bengali","Vegetarian Only"],serviceTypes:["full","bulk"],tags:["Authentic Bengali","Vegetarian"],priceRange:"₹₹",logo:"🏛️",rating:4.7,turnaround:"2–3 hrs",registeredAt:"2024-03-01",active:true},
-  {id:"c5",name:"Biryani & Beyond",ownerName:"Rajesh Sharma",phone:"9051022334",email:"rajesh@biryanibb.com",address:"Silicon Valley Tower 3",pincode:"700156",specialty:["Party","Corporate"],cuisineSpecialties:["Kolkata Biryani","Mughlai","North Indian"],serviceTypes:["bulk"],tags:["Kolkata Biryani","Non-veg specialist"],priceRange:"₹₹",logo:"🍖",rating:4.5,turnaround:"1–2 hrs",registeredAt:"2024-02-18",active:true},
-  {id:"c6",name:"Sanmilani Grand Caterers",ownerName:"Debabrata Roy",phone:"9339044556",email:"deb@sanmilani.com",address:"New Town Connector, Block D",pincode:"700157",specialty:["Wedding","Party","Corporate","Religious"],cuisineSpecialties:["Bengali","North Indian","Continental","Multi-cuisine"],serviceTypes:["full","bulk"],tags:["Premium","Full-service","Pan-Bengali"],priceRange:"₹₹₹",logo:"👑",rating:4.8,turnaround:"2–4 hrs",registeredAt:"2024-01-30",active:true},
+  {id:"c1",name:"Bhojohori Manna Caterers",ownerName:"Subroto Das",phone:"9830012345",email:"subroto@bhojohori.in",address:"Plot 5A, Action Area I",pincode:"700156",specialty:["Wedding","Party","Religious"],cuisineSpecialties:["Bengali","Multi-cuisine"],serviceTypes:["full"],tags:["Bengali Cuisine","Multi-course"],priceRange:"₹₹₹",logo:"🪷",rating:4.8,turnaround:"2–3 hrs",registeredAt:"2024-01-10",active:true,minGuests:50,maxGuests:800,pricePerPlateMin:400,pricePerPlateMax:1200,yearsInBusiness:12,teamSize:25,totalOrders:145},
+  {id:"c2",name:"Kolkata Dawat",ownerName:"Md. Irfan Ali",phone:"9736054321",email:"irfan@kolkatadawat.com",address:"EE-12, Action Area II",pincode:"700157",specialty:["Party","Corporate","Wedding"],cuisineSpecialties:["Mughlai","Kolkata Biryani","North Indian"],serviceTypes:["full","bulk"],tags:["Budget-friendly","Mughlai & Bengali"],priceRange:"₹₹",logo:"🍚",rating:4.6,turnaround:"1–2 hrs",registeredAt:"2024-02-05",active:true,minGuests:20,maxGuests:400,pricePerPlateMin:200,pricePerPlateMax:600,yearsInBusiness:8,teamSize:15,totalOrders:89},
+  {id:"c3",name:"Ananda Bhojan Events",ownerName:"Priya Chakraborty",phone:"9674011223",email:"priya@anandabhojan.com",address:"Eco Park Gate 2, Sector IV",pincode:"700160",specialty:["Wedding","Religious"],cuisineSpecialties:["Bengali","Vegetarian Only","Jain"],serviceTypes:["full"],tags:["Luxury","Live counters","Veg specialist"],priceRange:"₹₹₹₹",logo:"🎊",rating:4.9,turnaround:"3–4 hrs",registeredAt:"2024-01-22",active:true,minGuests:80,maxGuests:1200,pricePerPlateMin:600,pricePerPlateMax:1800,yearsInBusiness:18,teamSize:40,totalOrders:210},
+  {id:"c4",name:"Thakurbarir Ranna",ownerName:"Goutam Banerjee",phone:"9800167890",email:"goutam@thakurbarir.com",address:"K-7 Rajarhat Main Road",pincode:"700135",specialty:["Wedding","Religious","Party"],cuisineSpecialties:["Bengali","Vegetarian Only"],serviceTypes:["full","bulk"],tags:["Authentic Bengali","Vegetarian"],priceRange:"₹₹",logo:"🏛️",rating:4.7,turnaround:"2–3 hrs",registeredAt:"2024-03-01",active:true,minGuests:30,maxGuests:350,pricePerPlateMin:250,pricePerPlateMax:700,yearsInBusiness:6,teamSize:12,totalOrders:52},
+  {id:"c5",name:"Biryani & Beyond",ownerName:"Rajesh Sharma",phone:"9051022334",email:"rajesh@biryanibb.com",address:"Silicon Valley Tower 3",pincode:"700156",specialty:["Party","Corporate"],cuisineSpecialties:["Kolkata Biryani","Mughlai","North Indian"],serviceTypes:["bulk"],tags:["Kolkata Biryani","Non-veg specialist"],priceRange:"₹₹",logo:"🍖",rating:4.5,turnaround:"1–2 hrs",registeredAt:"2024-02-18",active:true,minGuests:1,maxGuests:200,pricePerPlateMin:120,pricePerPlateMax:400,yearsInBusiness:3,teamSize:8,totalOrders:34},
+  {id:"c6",name:"Sanmilani Grand Caterers",ownerName:"Debabrata Roy",phone:"9339044556",email:"deb@sanmilani.com",address:"New Town Connector, Block D",pincode:"700157",specialty:["Wedding","Party","Corporate","Religious"],cuisineSpecialties:["Bengali","North Indian","Continental","Multi-cuisine"],serviceTypes:["full","bulk"],tags:["Premium","Full-service","Pan-Bengali"],priceRange:"₹₹₹",logo:"👑",rating:4.8,turnaround:"2–4 hrs",registeredAt:"2024-01-30",active:true,minGuests:40,maxGuests:1000,pricePerPlateMin:350,pricePerPlateMax:1500,yearsInBusiness:15,teamSize:35,totalOrders:178},
+  {id:"c7",name:"Roshni's Kitchen",ownerName:"Roshni Ghosh",phone:"9123045567",email:"roshni@roshniskitchen.in",address:"Plot 12, Action Area III",pincode:"700161",specialty:["Party","Corporate"],cuisineSpecialties:["Bengali","Continental","Street Food"],serviceTypes:["bulk"],tags:["Home-style","Small batches","Fresh"],priceRange:"₹",logo:"🏡",rating:4.3,turnaround:"1–2 hrs",registeredAt:"2026-04-15",active:true,minGuests:1,maxGuests:100,pricePerPlateMin:120,pricePerPlateMax:350,yearsInBusiness:1,teamSize:4,totalOrders:3},
+  {id:"c8",name:"Spice Route Caterers",ownerName:"Anirban Sen",phone:"9876012345",email:"anirban@spiceroute.com",address:"Salt Lake Sector V, BN Block",pincode:"700059",specialty:["Corporate","Party","Wedding"],cuisineSpecialties:["North Indian","Punjabi","Rajasthani","Multi-cuisine"],serviceTypes:["full","bulk"],tags:["Corporate specialist","Thali setup","Punjabi"],priceRange:"₹₹₹",logo:"🌶️",rating:4.6,turnaround:"2–3 hrs",registeredAt:"2025-11-01",active:true,minGuests:25,maxGuests:500,pricePerPlateMin:300,pricePerPlateMax:900,yearsInBusiness:5,teamSize:18,totalOrders:15},
+  {id:"c9",name:"Maa Annapurna Foods",ownerName:"Sumitra Devi",phone:"9830178901",email:"sumitra@annapurna.com",address:"Baguiati Main Road",pincode:"700136",specialty:["Religious","Wedding","Party"],cuisineSpecialties:["Bengali","Vegetarian Only"],serviceTypes:["full","bulk"],tags:["Temple catering","Pure veg","Budget"],priceRange:"₹",logo:"🪔",rating:4.4,turnaround:"2–3 hrs",registeredAt:"2026-03-20",active:true,minGuests:20,maxGuests:300,pricePerPlateMin:150,pricePerPlateMax:450,yearsInBusiness:2,teamSize:6,totalOrders:8},
+  {id:"c10",name:"Flames & Flavors",ownerName:"Arjun Kapoor",phone:"9051098765",email:"arjun@flamesflavors.com",address:"EM Bypass, Near Ruby Hospital",pincode:"700105",specialty:["Party","Corporate","Wedding"],cuisineSpecialties:["Continental","Chinese","Multi-cuisine","North Indian"],serviceTypes:["full","bulk"],tags:["Modern cuisine","Live BBQ","Fusion"],priceRange:"₹₹₹",logo:"🔥",rating:4.7,turnaround:"2–4 hrs",registeredAt:"2025-06-10",active:true,minGuests:30,maxGuests:600,pricePerPlateMin:350,pricePerPlateMax:1100,yearsInBusiness:7,teamSize:22,totalOrders:67},
 ];
 
 const DB={
@@ -604,17 +609,28 @@ export default function AayojanApp(){
     const coords=PINCODE_COORDS[customerPincode.trim()];
     if(customerPincode.trim().length!==6||!coords){setPincodeError("Enter a valid Newtown/Kolkata pincode");return;}
     setPincodeError("");setCustomerCoords(coords);
-    const withDist=allCaterers.filter(c=>!serviceType||(c.serviceTypes||["full"]).includes(serviceType)).map(c=>{const cc=PINCODE_COORDS[c.pincode];const dist=cc?Math.round(haversineKm(coords.lat,coords.lng,cc.lat,cc.lng)*10)/10:99;const extraKm=Math.max(0,dist-BASE_KM);return{...c,distanceKm:dist,extraKm:parseFloat(extraKm.toFixed(1)),surcharge:Math.round(extraKm*KM_RATE)};}).sort((a,b)=>a.distanceKm-b.distanceKm);
+    const withDist=allCaterers.map(c=>{const cc=PINCODE_COORDS[c.pincode];const dist=cc?Math.round(haversineKm(coords.lat,coords.lng,cc.lat,cc.lng)*10)/10:99;const extraKm=Math.max(0,dist-BASE_KM);return{...c,distanceKm:dist,extraKm:parseFloat(extraKm.toFixed(1)),surcharge:Math.round(extraKm*KM_RATE)};}).sort((a,b)=>a.distanceKm-b.distanceKm);
     setNearbyCaterers(withDist);setStep(2);
   };
 
-  // ── Quotes ────────────────────────────────────────────────────────────────
+  // ── Quotes (Pipeline: Retrieve → Rank → Rerank) ────────────────────────────
   const generateQuotes=()=>{
     if(!user){setShowLogin(true);return;}
     setLoading(true);
     setTimeout(()=>{
-      const matched=nearbyCaterers.filter(c=>c.specialty.map(s=>s.toLowerCase()).includes(eventType)).slice(0,5).map(c=>{const v=(Math.random()-0.3)*0.3;const ppa=Math.max(SVC[serviceType].priceRange.min,Math.round((perPlateBudget*(1+v))/10)*10);const base=ppa*guestCount;const tf=c.surcharge*Math.ceil(guestCount/50);return{...c,quoteCode:`${c.id.toUpperCase()}-${Math.random().toString(36).substring(2,6).toUpperCase()}`,perPlateActual:ppa,basePrice:base,travelSurcharge:tf,totalPrice:base+tf,itemsCovered:selectedItems.length,withinBudget:ppa<=perPlateBudget};}).sort((a,b)=>a.perPlateActual-b.perPlateActual);
-      const now=new Date();const qr={id:`QR-${Date.now()}`,customerId:user?.uid,customerEmail:user?.email,catererIds:matched.map(c=>c.id),eventType,serviceType,guestCount,perPlateBudget,menuItems:selectedItems,customerPincode,sentAt:now.toISOString(),expiresAt:new Date(now.getTime()+WAIT_HRS*3600000).toISOString(),status:"Awaiting Responses",whatsappLog:matched.map(c=>({catererId:c.id,catererName:c.name,maskedPhone:`${String(c.phone).slice(0,5)}•••••`,sentAt:now.toISOString(),status:"Sent ✅"}))};
+      // Run 3-stage matching pipeline
+      const result=matchCaterers(nearbyCaterers,{serviceType,eventType,guestCount,perPlateBudget,selectedItems,maxDistanceKm:15,topN:5});
+      const anonResults=anonymize(result.results);
+      const matched=anonResults.map(c=>{
+        // Generate realistic quote based on caterer's price range + user budget
+        const priceMin=c.pricePerPlateMin||150;const priceMax=c.pricePerPlateMax||1500;
+        const fitPrice=Math.max(priceMin,Math.min(priceMax,perPlateBudget));
+        const variance=(Math.random()-0.4)*0.15;
+        const ppa=Math.max(SVC[serviceType].priceRange.min,Math.round((fitPrice*(1+variance))/10)*10);
+        const base=ppa*guestCount;const tf=c.surcharge*Math.ceil(guestCount/50);
+        return{...c,quoteCode:`${c.id.toUpperCase()}-${Math.random().toString(36).substring(2,6).toUpperCase()}`,perPlateActual:ppa,basePrice:base,travelSurcharge:tf,totalPrice:base+tf,itemsCovered:selectedItems.length,withinBudget:ppa<=perPlateBudget};
+      }).sort((a,b)=>a.perPlateActual-b.perPlateActual);
+      const now=new Date();const qr={id:`QR-${Date.now()}`,customerId:user?.uid,customerEmail:user?.email,catererIds:matched.map(c=>c.id),eventType,serviceType,guestCount,perPlateBudget,menuItems:selectedItems,customerPincode,sentAt:now.toISOString(),expiresAt:new Date(now.getTime()+WAIT_HRS*3600000).toISOString(),status:"Awaiting Responses",pipeline:result.pipeline,whatsappLog:matched.map(c=>({catererId:c.id,catererName:c._anonLabel,maskedPhone:"••••••••••",sentAt:now.toISOString(),status:"Sent ✅"}))};
       DB.saveQR(qr);setQuotationRequest(qr);setWhatsappSent(qr.whatsappLog);setQuotes(matched);setLoading(false);setStep(5);
     },1800);
   };
@@ -646,7 +662,7 @@ export default function AayojanApp(){
 
   // ── Order ─────────────────────────────────────────────────────────────────
   const validateAddress=()=>{const e={};if(!deliveryAddress.flat.trim())e.flat="Required";if(!deliveryAddress.building.trim())e.building="Required";if(!deliveryAddress.street.trim())e.street="Required";if(!deliveryAddress.pincode.trim()||deliveryAddress.pincode.length!==6)e.pincode="Valid 6-digit pincode required";setAddressErrors(e);return Object.keys(e).length===0;};
-  const placeOrder=async()=>{if(!validateAddress())return;const order={quotationRequestId:quotationRequest?.id,customerId:user?.uid,customerEmail:user?.email,customerPhone:user?.phone||"",catererId:selectedQuote.id,catererName:selectedQuote.name,eventType,serviceType,guestCount,perPlateBudget,perPlateActual:selectedQuote.perPlateActual,menuItems:selectedItems,deliveryAddress:`${deliveryAddress.flat}, ${deliveryAddress.building}, ${deliveryAddress.street}${deliveryAddress.landmark?", "+deliveryAddress.landmark:""}, ${deliveryAddress.city} - ${deliveryAddress.pincode}`,deliveryPincode:deliveryAddress.pincode,distanceKm:selectedQuote.distanceKm,basePrice:selectedQuote.basePrice,travelSurcharge:selectedQuote.travelSurcharge,totalPrice:selectedQuote.totalPrice,quoteCode:selectedQuote.quoteCode,status:"Confirmed",placedAt:new Date().toISOString()};const orderId=await createOrder(order);setOrderPlaced({id:orderId,...order});setStep(6);};
+  const placeOrder=async()=>{if(!validateAddress())return;const order={quotationRequestId:quotationRequest?.id,customerId:user?.uid,customerEmail:user?.email,customerPhone:user?.phone||"",catererId:selectedQuote.id,catererName:selectedQuote._realName||selectedQuote.name,eventType,serviceType,guestCount,perPlateBudget,perPlateActual:selectedQuote.perPlateActual,menuItems:selectedItems,deliveryAddress:`${deliveryAddress.flat}, ${deliveryAddress.building}, ${deliveryAddress.street}${deliveryAddress.landmark?", "+deliveryAddress.landmark:""}, ${deliveryAddress.city} - ${deliveryAddress.pincode}`,deliveryPincode:deliveryAddress.pincode,distanceKm:selectedQuote.distanceKm,basePrice:selectedQuote.basePrice,travelSurcharge:selectedQuote.travelSurcharge,totalPrice:selectedQuote.totalPrice,quoteCode:selectedQuote.quoteCode,matchScore:selectedQuote._matchPercent,status:"Confirmed",placedAt:new Date().toISOString()};const orderId=await createOrder(order);setOrderPlaced({id:orderId,...order});setStep(6);};
 
   // ── Registration ──────────────────────────────────────────────────────────
   const validateReg=()=>{const e={};if(!regForm.name.trim())e.name="Required";if(!regForm.ownerName.trim())e.ownerName="Required";if(!/^\d{10}$/.test(regForm.phone))e.phone="Valid 10-digit number";if(!regForm.email.includes("@"))e.email="Valid email required";if(!regForm.address.trim())e.address="Required";if(!PINCODE_COORDS[regForm.pincode.trim()])e.pincode="Valid Kolkata pincode";if(regForm.specialty.length===0)e.specialty="Select at least one";if(regForm.cuisineSpecialties.length===0)e.cuisineSpecialties="Select at least one";if(regForm.serviceTypes.length===0)e.serviceTypes="Select at least one";if(regForm.pricePerPlateMin>=regForm.pricePerPlateMax)e.pricing="Min must be less than max";setRegErrors(e);return Object.keys(e).length===0;};
@@ -1459,9 +1475,17 @@ export default function AayojanApp(){
             {/* Step 5: Quotes */}
             {step===5&&<div>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:4}}>
-                <div><h2 style={S.cardTitle}>Quotation Sent! ✅</h2><p style={{fontSize:13,color:"#6b7280",marginBottom:18}}>{quotes.length} caterers contacted · {stCfg?.label}</p></div>
+                <div><h2 style={S.cardTitle}>Quotation Sent! ✅</h2><p style={{fontSize:13,color:"#6b7280",marginBottom:18}}>{quotes.length} caterers matched · {stCfg?.label}</p></div>
                 {user&&<div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"5px 10px",fontSize:11,color:"#16a34a"}}>✅ {user.phone}</div>}
               </div>
+
+              {/* Pipeline stats */}
+              {quotationRequest?.pipeline&&<div style={{display:"flex",gap:6,alignItems:"center",background:"var(--bg-secondary, #f9fafb)",border:"1px solid var(--border-color, #e5e7eb)",borderRadius:10,padding:"10px 14px",marginBottom:14,flexWrap:"wrap"}}>
+                <span style={{fontSize:11,fontWeight:700,color:"var(--text-secondary, #6b7280)"}}>🔍 Pipeline:</span>
+                {[["🗂️",quotationRequest.pipeline.totalCaterers,"Total"],["✅",quotationRequest.pipeline.afterRetrieval,"Eligible"],["📊",quotationRequest.pipeline.afterRanking,"Ranked"],["🏆",quotationRequest.pipeline.finalCount,"Selected"]].map(([icon,val,lbl])=>(
+                  <span key={lbl} style={{fontSize:11,padding:"2px 8px",borderRadius:8,background:"#fff5f5",color:accent,border:"1px solid #fca5a5",fontWeight:600}}>{icon} {val} {lbl}</span>
+                ))}
+              </div>}
 
               {/* 48hr banner */}
               {quotationRequest&&<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",background:"linear-gradient(135deg,#fff5f5,#fffbeb)",border:"1px solid #fca5a5",borderRadius:12,padding:"14px 18px",marginBottom:16,gap:12}}>
@@ -1498,23 +1522,27 @@ export default function AayojanApp(){
                 Sorted by per-plate price. <span style={{color:"#16a34a"}}>🟢 Within budget</span> · <span style={{color:"#ef4444"}}>🔴 Over budget</span> · Beyond 5 km: <strong style={{color:accent}}>+₹{KM_RATE}/km</strong>
               </div>
 
-              {quotes.map(q=>(
-                <div key={q.id} style={{background:"#fff",border:`1.5px solid ${selectedQuote?.id===q.id?"#16a34a":expandedCaterer===q.id?accent:"#fde8d8"}`,borderRadius:14,padding:"16px 18px",marginBottom:12,boxShadow:"0 2px 8px rgba(192,57,43,0.06)"}}>
-                  {/* Budget & distance badges */}
+              {quotes.map((q,qi)=>(
+                <div key={q.id} style={{background:"var(--bg-card, #fff)",border:`1.5px solid ${selectedQuote?.id===q.id?"#16a34a":expandedCaterer===q.id?accent:"var(--border-color, #fde8d8)"}`,borderRadius:14,padding:"16px 18px",marginBottom:12,boxShadow:"0 2px 8px rgba(192,57,43,0.06)"}}>
+                  {/* Match score + Budget & distance badges */}
                   <div style={{display:"flex",gap:6,marginBottom:10,flexWrap:"wrap"}}>
+                    <span style={{fontSize:11,padding:"3px 10px",borderRadius:14,fontWeight:800,background:"linear-gradient(135deg,#fff5f5,#ffe4e6)",color:accent,border:`1px solid ${accent}`}}>
+                      {q._matchPercent||0}% Match
+                    </span>
                     <span style={{fontSize:11,padding:"3px 10px",borderRadius:14,fontWeight:700,background:q.withinBudget?"#f0fdf4":"#fef2f2",color:q.withinBudget?"#16a34a":"#ef4444",border:`1px solid ${q.withinBudget?"#bbf7d0":"#fecaca"}`}}>
                       {q.withinBudget?`✓ Within budget · ₹${q.perPlateActual}/plate`:`⚠ Over budget · ₹${q.perPlateActual}/plate`}
                     </span>
                     <span style={{fontSize:11,padding:"3px 10px",borderRadius:14,fontWeight:600,background:q.distanceKm<=5?"#f0fdf4":"#fff7ed",color:q.distanceKm<=5?"#16a34a":"#ea580c",border:`1px solid ${q.distanceKm<=5?"#bbf7d0":"#fdba74"}`}}>
                       📍 {q.distanceKm} km {q.distanceKm<=5?"✓ Free zone":`+₹${q.travelSurcharge}`}
                     </span>
+                    {q._boostReasons?.map(r=><span key={r} style={{fontSize:11,padding:"3px 10px",borderRadius:14,fontWeight:600,background:"#fffbeb",color:"#92400e",border:"1px solid #fde68a"}}>{r}</span>)}
                   </div>
 
                   <div style={{display:"flex",gap:12,marginBottom:10}}>
-                    <div style={{width:46,height:46,fontSize:22,background:"#fff5f5",borderRadius:11,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{q.logo}</div>
+                    <div style={{width:46,height:46,fontSize:22,background:"#fff5f5",borderRadius:11,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{q._anonIcon||q.logo}</div>
                     <div style={{flex:1}}>
-                      <div style={{fontSize:15,fontWeight:700,color:"#1f2937",marginBottom:2}}>{q.name}</div>
-                      <div style={{fontSize:11,color:"#9ca3af",marginBottom:3}}>⭐{q.rating} · 📍{PINCODE_COORDS[q.pincode]?.area} · ⏱{q.turnaround}</div>
+                      <div style={{fontSize:15,fontWeight:700,color:"var(--text-primary, #1f2937)",marginBottom:2}}>{q._anonLabel||q.name}</div>
+                      <div style={{fontSize:11,color:"#9ca3af",marginBottom:3}}>⭐{q.rating} · 📍{PINCODE_COORDS[q.pincode]?.area} · ⏱{q.turnaround}{q.yearsInBusiness?` · ${q.yearsInBusiness}yr exp`:""}</div>
 
                       {/* Phone: locked or unlocked */}
                       <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:5,padding:"5px 10px",background:unlockedPhones[q.id]?"#f0fdf4":"#f9fafb",border:`1px solid ${unlockedPhones[q.id]?"#bbf7d0":"#e5e7eb"}`,borderRadius:8}}>
@@ -1596,12 +1624,13 @@ export default function AayojanApp(){
               <h2 style={S.cardTitle}>{serviceType==="full"?"Event Venue Address":"Delivery Address"}</h2>
               <p style={{fontSize:14,color:"#6b7280",marginBottom:18}}>{serviceType==="full"?"Where will the event be held?":"Where should the food be delivered?"}</p>
               <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:10,padding:"12px 16px",marginBottom:20}}>
-                <div style={{fontSize:11,color:"#16a34a",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:5}}>Selected Caterer</div>
+                <div style={{fontSize:11,color:"#16a34a",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:5}}>Selected Caterer — Identity Revealed ✅</div>
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:6}}>
                   <div>
-                    <div style={{fontSize:14,fontWeight:700,color:"#1f2937"}}>{selectedQuote.logo} {selectedQuote.name}</div>
+                    <div style={{fontSize:14,fontWeight:700,color:"#1f2937"}}>{selectedQuote.logo} {selectedQuote._realName||selectedQuote.name}</div>
+                    {selectedQuote._anonLabel&&<div style={{fontSize:11,color:"#9ca3af",marginBottom:2}}>Previously shown as: {selectedQuote._anonLabel}</div>}
                     <div style={{fontSize:12,color:"#9ca3af"}}>
-                      {unlockedPhones[selectedQuote.id]?<span style={{color:"#16a34a",fontWeight:700}}>📞 +91 {unlockedPhones[selectedQuote.id]}</span>:<span>📞 {String(selectedQuote.phone).slice(0,5)}•••••</span>}
+                      {unlockedPhones[selectedQuote.id]?<span style={{color:"#16a34a",fontWeight:700}}>📞 +91 {unlockedPhones[selectedQuote.id]}</span>:<span>📞 ••••••••••</span>}
                       · {selectedQuote.distanceKm} km away
                     </div>
                   </div>
