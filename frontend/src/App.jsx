@@ -304,7 +304,23 @@ function AayojanChatbot({onOrderCreated,user,onLoginRequired,allCaterers,onStart
 1) If the user asks about anything NOT related to food, catering, events, menus, or party planning — politely redirect: "I'm your catering assistant! Let's plan your perfect event 🍽️ Tell me about your guests, cuisine, and budget."
 2) If the user uses profanity or abusive language — respond: "Let's keep things friendly! 😊 I'm here to help plan amazing food for your event. What kind of catering do you need?"
 3) Do NOT engage with off-topic conversations (politics, tech, jokes, personal questions, etc.) — always steer back to catering.
-4) Keep replies to 2-3 sentences. Be warm, suggest Bengali dishes (Sorshe Ilish, Kosha Mangsho, Mishti Doi, Rasgolla). Use vivid, appetizing food descriptions ("aromatic slow-cooked", "melt-in-your-mouth", "crispy golden", "creamy rich"). When listing menu items, format EACH item on its own line as: "- Item Name — ₹price/plate" (this enables rich card display). Group items under bold headers like "**🥘 Starters:**", "**🍛 Main Course:**", "**🍮 Desserts:**".
+4) Keep replies to 2-3 sentences. Be warm, use vivid appetizing descriptions ("aromatic slow-cooked", "melt-in-your-mouth", "crispy golden", "creamy rich").
+CRITICAL MENU FORMAT: When suggesting or listing menu items, you MUST format EACH item on its own line with price like this:
+**🥘 Starters:**
+- Fish Fry — ₹90/plate
+- Chicken Cutlet — ₹75/plate
+- Paneer Tikka — ₹85/plate
+
+**🍛 Main Course:**
+- Kosha Mangsho — ₹180/plate
+- Chicken Biryani — ₹150/plate
+- Chingri Malai Curry — ₹220/plate
+
+**🍮 Desserts:**
+- Mishti Doi — ₹50/plate
+- Rasgolla — ₹40/plate
+
+NEVER list items comma-separated on one line. ALWAYS one item per line with "— ₹price/plate". This is mandatory for UI rendering.
 5) Collect: service type (full catering 30+ guests with staff/cutlery, OR bulk delivery any quantity packed), event type, guest count, per-plate budget ₹350-1800 full / ₹120-600 bulk, menu items, pincode (700156-Action Area I, 700157-Action Area II, 700135-Rajarhat, 700161-Action Area III, 700136-Baguiati, 700059-Salt Lake V, 700091-Salt Lake, 700105-EM Bypass, 700107-Gariahat, 700160-Eco Park).
 6) COST ESTIMATION (based on 2025 Kolkata market rates — Arsalan, Aminia, local caterers): When user asks for cost/estimate or discusses menu, provide realistic estimates:
    POPULAR DISH RATES (bulk delivery per plate, Kolkata 2025):
@@ -402,35 +418,52 @@ function AayojanChatbot({onOrderCreated,user,onLoginRequired,allCaterers,onStart
     setMsgs(prev=>[...prev,{role:"assistant",text:`✅ **Order placed!** ID: **${order.id}**\n\nWe'll contact caterers and reach you at ${user.phone} within 48 hours. Dhonnobad! 🙏`}]);setOrderData(null);
   };
 
-  const FOOD_EMOJIS={"biryani":"🍚","rice":"🍚","pulao":"🍚","chicken":"🍗","mutton":"🍖","fish":"🐟","ilish":"🐟","chingri":"🦐","prawn":"🦐","paneer":"🧀","dal":"🫘","luchi":"🫓","roti":"🫓","naan":"🫓","paratha":"🫓","starter":"🥘","cutlet":"🍢","fry":"🍟","tikka":"🍢","kebab":"🍢","chap":"🍖","chaap":"🍖","kosha":"🍖","dessert":"🍮","mishti":"🍮","rasgolla":"🍡","gulab":"🍩","ice cream":"🍨","sweet":"🍬","drink":"🥤","mocktail":"🍹","lassi":"🥛","salad":"🥗","soup":"🍲","curry":"🍛","dosa":"🫓","samosa":"🥟","roll":"🌯","chowmein":"🍜"};
+  const FOOD_EMOJIS={"biryani":"🍚","rice":"🍚","pulao":"🍚","chicken":"🍗","mutton":"🍖","fish":"🐟","ilish":"🐟","chingri":"🦐","prawn":"🦐","paneer":"🧀","dal":"🫘","luchi":"🫓","roti":"🫓","naan":"🫓","paratha":"🫓","starter":"🥘","cutlet":"🍢","fry":"🍟","tikka":"🍢","kebab":"🍢","chap":"🍖","chaap":"🍖","kosha":"🍖","dessert":"🍮","mishti":"🍮","rasgolla":"🍡","gulab":"🍩","ice cream":"🍨","sweet":"🍬","drink":"🥤","mocktail":"🍹","lassi":"🥛","salad":"🥗","soup":"🍲","curry":"🍛","dosa":"🫓","samosa":"🥟","roll":"🌯","chowmein":"🍜","makhani":"🍛","dom":"🥘","doi":"🍮"};
   const getFoodEmoji=(text)=>{const t=text.toLowerCase();for(const[k,v]of Object.entries(FOOD_EMOJIS))if(t.includes(k))return v;return"🍽️";};
+  const renderFoodCard=(itemName,price,i)=>(
+    <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 12px",margin:"4px 0",borderRadius:12,background:"linear-gradient(135deg,rgba(192,57,43,0.04),rgba(231,76,60,0.08))",border:"1px solid rgba(192,57,43,0.12)",transition:"transform 0.2s"}}>
+      <span style={{fontSize:22,filter:"drop-shadow(0 1px 2px rgba(0,0,0,0.1))"}}>{getFoodEmoji(itemName)}</span>
+      <div style={{flex:1}}>
+        <div style={{fontWeight:700,fontSize:13,color:"var(--text-primary)"}}>{itemName.trim()}</div>
+        {price&&<div style={{fontSize:11,color:"#c0392b",fontWeight:600,marginTop:1}}>{price}</div>}
+      </div>
+      <div style={{width:6,height:6,borderRadius:"50%",background:"#4ade80",boxShadow:"0 0 4px #4ade80"}}/>
+    </div>
+  );
   const renderText=(text)=>{
     const lines=text.split('\n');
-    return lines.map((line,i)=>{
-      // Detect menu item lines: "- Item Name — ₹XX" or "• Item — ₹XX" or "- 🍗 Item: ₹XX"
+    const result=[];
+    for(let i=0;i<lines.length;i++){
+      const line=lines[i];
+      // Detect menu item lines: "- Item Name — ₹XX" or "• Item — ₹XX"
       const menuMatch=line.match(/^[\s]*[-•●▪]\s*(.+?)[\s]*[—\-–:]\s*(₹[\d,]+-?₹?[\d,]*\/?(?:plate|portion|pax)?.*?)$/i);
       if(menuMatch){
         const itemName=menuMatch[1].replace(/^[🍗🍚🍖🐟🦐🧀🍛🍮🍡🍢🥘🍹🥤🫓🍲🥟🌯🍜🍟🍨🍩🍬🥗🫘🍡]\s*/,"");
-        const price=menuMatch[2];
-        const emoji=getFoodEmoji(itemName);
-        return(<div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 12px",margin:"4px 0",borderRadius:12,background:"linear-gradient(135deg,rgba(192,57,43,0.04),rgba(231,76,60,0.08))",border:"1px solid rgba(192,57,43,0.12)",transition:"transform 0.2s"}}>
-          <span style={{fontSize:22,filter:"drop-shadow(0 1px 2px rgba(0,0,0,0.1))"}}>{emoji}</span>
-          <div style={{flex:1}}>
-            <div style={{fontWeight:700,fontSize:13,color:"var(--text-primary)"}}>{itemName}</div>
-            <div style={{fontSize:11,color:"#c0392b",fontWeight:600,marginTop:1}}>{price}</div>
-          </div>
-          <div style={{width:6,height:6,borderRadius:"50%",background:"#4ade80",boxShadow:"0 0 4px #4ade80"}}/>
-        </div>);
+        result.push(renderFoodCard(itemName,menuMatch[2],`card-${i}`));
+        continue;
       }
-      // Detect section headers like "### Starters" or "**Starters:**"
-      const headerMatch=line.match(/^[\s]*(?:#{1,3}\s*|(?:\*\*))(.+?)(?:\*\*)?:?\s*$/);
-      if(headerMatch&&line.includes("**")&&(line.toLowerCase().includes("starter")||line.toLowerCase().includes("main")||line.toLowerCase().includes("dessert")||line.toLowerCase().includes("drink")||line.toLowerCase().includes("bread")||line.toLowerCase().includes("side")||line.toLowerCase().includes("menu")||line.toLowerCase().includes("package"))){
-        return(<div key={i} style={{fontSize:12,fontWeight:800,color:"#c0392b",textTransform:"uppercase",letterSpacing:"0.06em",marginTop:10,marginBottom:4,paddingBottom:4,borderBottom:"1px dashed rgba(192,57,43,0.2)"}}>{headerMatch[1].replace(/\*\*/g,"")}</div>);
+      // Detect "* **Category:** item1, item2, item3" format (Gemini fallback)
+      const catListMatch=line.match(/^[\s]*[*•●-]\s*\*?\*?([^*:]+)\*?\*?\s*:\s*(.+)$/);
+      if(catListMatch){
+        const catName=catListMatch[1].replace(/[🥘🍛🍮🍹🍗🍚]/g,"").trim();
+        const items=catListMatch[2].split(/,|&/).map(s=>s.trim()).filter(Boolean);
+        if(items.length>1&&(catName.toLowerCase().includes("starter")||catName.toLowerCase().includes("main")||catName.toLowerCase().includes("dessert")||catName.toLowerCase().includes("drink")||catName.toLowerCase().includes("side")||catName.toLowerCase().includes("bread")||catName.toLowerCase().includes("course"))){
+          result.push(<div key={`hdr-${i}`} style={{fontSize:12,fontWeight:800,color:"#c0392b",textTransform:"uppercase",letterSpacing:"0.06em",marginTop:10,marginBottom:4,paddingBottom:4,borderBottom:"1px dashed rgba(192,57,43,0.2)"}}>{catName}</div>);
+          items.forEach((item,j)=>result.push(renderFoodCard(item,null,`card-${i}-${j}`)));
+          continue;
+        }
+      }
+      // Detect section headers like "**🥘 Starters:**"
+      const headerMatch=line.match(/^[\s]*\*\*([^*]+)\*\*:?\s*$/);
+      if(headerMatch&&(line.toLowerCase().includes("starter")||line.toLowerCase().includes("main")||line.toLowerCase().includes("dessert")||line.toLowerCase().includes("drink")||line.toLowerCase().includes("bread")||line.toLowerCase().includes("side")||line.toLowerCase().includes("menu")||line.toLowerCase().includes("package")||line.toLowerCase().includes("course"))){
+        result.push(<div key={`hdr-${i}`} style={{fontSize:12,fontWeight:800,color:"#c0392b",textTransform:"uppercase",letterSpacing:"0.06em",marginTop:10,marginBottom:4,paddingBottom:4,borderBottom:"1px dashed rgba(192,57,43,0.2)"}}>{headerMatch[1].replace(/[🥘🍛🍮🍹🍗🍚]/g,"").trim()}</div>);
+        continue;
       }
       // Regular text with bold support
       const parts=line.split(/(\*\*[^*]+\*\*)/g);
-      return(<span key={i}>{parts.map((p,j)=>p.startsWith('**')&&p.endsWith('**')?<strong key={j} style={{color:"var(--text-primary)"}}>{p.slice(2,-2)}</strong>:<span key={j}>{p}</span>)}{i<lines.length-1&&<br/>}</span>);
-    });
+      result.push(<span key={i}>{parts.map((p,j)=>p.startsWith('**')&&p.endsWith('**')?<strong key={j} style={{color:"var(--text-primary)"}}>{p.slice(2,-2)}</strong>:<span key={j}>{p}</span>)}{i<lines.length-1&&<br/>}</span>);
+    }
+    return result;
   };
 
   return(
