@@ -119,7 +119,14 @@ async def chat(req: ChatRequest):
         )
         return ChatResponse(reply=reply, session_id=req.session_id)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        error_msg = str(e)
+        print(f"[WARN] Chat error: {error_msg[:200]}", flush=True)
+        # Return a friendly fallback instead of 500
+        if "quota" in error_msg.lower() or "429" in error_msg or "resource" in error_msg.lower():
+            fallback = "I'm getting a lot of requests right now! The AI quota is temporarily exhausted (free tier: 20 requests/day). Please try again in a few minutes or tomorrow. Meanwhile, you can browse caterers using the service cards below!"
+        else:
+            fallback = f"Something went wrong connecting to the AI. Please try again. (Error: {error_msg[:100]})"
+        return ChatResponse(reply=fallback, session_id=req.session_id)
 
 
 @app.post("/api/menu/generate", response_model=MenuResponse)
