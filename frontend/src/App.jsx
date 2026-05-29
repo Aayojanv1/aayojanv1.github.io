@@ -264,7 +264,7 @@ function BudgetSlider({svcType,value,onChange}){
 }
 
 // ─── AI Chatbot ───────────────────────────────────────────────────────────────
-function AayojanChatbot({onOrderCreated,user,onLoginRequired}){
+function AayojanChatbot({onOrderCreated,user,onLoginRequired,allCaterers,onStartOrderFlow}){
   const [msgs,setMsgs]=useState([{role:"assistant",text:"নমস্কার! 🙏 I'm **Aayojan AI** — your catering assistant for Newtown, Kolkata!\n\nTell me about your event: guests, budget, cuisine preferences, and I'll create your custom catering order.\n\nTry: *\"I need catering for 150 guests at a wedding, budget ₹600 per plate, Action Area I\"*"}]);
   const [input,setInput]=useState("");
   const [loading,setLoading]=useState(false);
@@ -340,9 +340,24 @@ function AayojanChatbot({onOrderCreated,user,onLoginRequired}){
     setLoading(false);
   };
 
+  const [matchResults,setMatchResults]=useState(null);
+
   const confirmOrder=()=>{
     if(!user){onLoginRequired();return;}
-    const order={id:`CHAT-${Date.now()}`,source:"chatbot",customerId:user.id,customerPhone:user.phone,...orderData,status:"Quotation Requested",placedAt:new Date().toISOString()};
+
+    // Run matching pipeline on confirmed order
+    if(allCaterers?.length>0 && orderData?.pincode){
+      const coords=PINCODE_COORDS[orderData.pincode];
+      if(coords){
+        const withDist=allCaterers.map(c=>{const cc=PINCODE_COORDS[c.pincode];const dist=cc?Math.round(haversineKm(coords.lat,coords.lng,cc.lat,cc.lng)*10)/10:99;const extraKm=Math.max(0,dist-BASE_KM);return{...c,distanceKm:dist,extraKm:parseFloat(extraKm.toFixed(1)),surcharge:Math.round(extraKm*KM_RATE)};});
+        const dietPref=orderData.eventType==="religious"?"satvik":"any";
+        const result=matchCaterers(withDist,{serviceType:orderData.serviceType||"full",eventType:orderData.eventType,guestCount:orderData.guestCount,perPlateBudget:orderData.perPlateBudget,selectedItems:orderData.menuItems||[],maxDistanceKm:15,topN:5,dietaryPref:dietPref,dietaryFilter:DIETARY_FILTERS[dietPref]});
+        const anonResults=anonymize(result.results);
+        setMatchResults({caterers:anonResults,pipeline:result.pipeline});
+      }
+    }
+
+    const order={id:`CHAT-${Date.now()}`,source:"chatbot",customerId:user.uid,customerPhone:user.phone,...orderData,status:"Quotation Requested",placedAt:new Date().toISOString()};
     DB.saveChatOrder(order);onOrderCreated(order);setConfirmed(true);
     setMsgs(prev=>[...prev,{role:"assistant",text:`✅ **Order placed!** ID: **${order.id}**\n\nWe'll contact caterers and reach you at ${user.phone} within 48 hours. Dhonnobad! 🙏`}]);setOrderData(null);
   };
@@ -380,6 +395,35 @@ function AayojanChatbot({onOrderCreated,user,onLoginRequired}){
               <button onClick={()=>setOrderData(null)} style={{flex:1,padding:"9px",borderRadius:8,background:"var(--bg-hover)",border:"1px solid var(--border-default)",color:"var(--text-secondary)",cursor:"pointer",fontSize:12}}>Edit</button>
               <button onClick={confirmOrder} style={{flex:2,padding:"9px",borderRadius:8,background:"linear-gradient(135deg,#16a34a,#15803d)",border:"none",color:"#fff",cursor:"pointer",fontSize:12,fontWeight:700}}>✅ Confirm & Send</button>
             </div>
+          </div>
+        )}
+        {/* Matched caterers from pipeline — shown after confirmation */}
+        {confirmed&&matchResults&&matchResults.caterers.length>0&&(
+          <div style={{background:"var(--bg-card)",border:"2px solid #16a34a",borderRadius:14,padding:"14px",margin:"8px 0 8px 34px",boxShadow:"0 2px 12px rgba(22,163,74,0.1)"}}>
+            <div style={{fontSize:11,fontWeight:700,color:"#16a34a",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:4}}>🏆 {matchResults.caterers.length} Caterers Matched</div>
+            <div style={{fontSize:10,color:"var(--text-secondary)",marginBottom:10}}>Pipeline: {matchResults.pipeline.totalCaterers} total → {matchResults.pipeline.afterRetrieval} eligible → {matchResults.pipeline.finalCount} selected</div>
+            {matchResults.caterers.map((c,i)=>(
+              <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 10px",borderRadius:8,background:i===0?"#f0fdf4":"var(--bg-secondary)",border:i===0?"1px solid #bbf7d0":"1px solid var(--border-default)",marginBottom:6}}>
+                <span style={{fontSize:18}}>{c._anonIcon}</span>
+                <div style={{flex:1}}>
+                  <div style={{fontSize:13,fontWeight:700,color:"var(--text-primary)"}}>{c._anonLabel}</div>
+                  <div style={{fontSize:10,color:"var(--text-secondary)"}}>⭐{c.rating} · 📍{c.distanceKm}km · {c.cuisineSpecialties?.slice(0,2).join(", ")}</div>
+                </div>
+                <div style={{textAlign:"right"}}>
+                  <div style={{fontSize:14,fontWeight:800,color:i===0?"#16a34a":"var(--text-primary)"}}>{c._matchPercent}%</div>
+                  <div style={{fontSize:9,color:"var(--text-secondary)"}}>match</div>
+                </div>
+              </div>
+            ))}
+            {matchResults.caterers.some(c=>c._boostReasons?.length>0)&&(
+              <div style={{fontSize:10,color:"#92400e",background:"#fffbeb",border:"1px solid #fde68a",borderRadius:6,padding:"5px 8px",marginTop:4}}>🌱 Some results boosted to support new/growing businesses</div>
+            )}
+            {onStartOrderFlow&&<button onClick={()=>onStartOrderFlow(matchResults.caterers[0])} style={{width:"100%",padding:"9px",borderRadius:8,background:"linear-gradient(135deg,#c0392b,#e74c3c)",border:"none",color:"#fff",cursor:"pointer",fontSize:12,fontWeight:700,marginTop:8}}>Continue to Full Quote Flow →</button>}
+          </div>
+        )}
+        {confirmed&&matchResults&&matchResults.caterers.length===0&&(
+          <div style={{background:"var(--bg-card)",border:"1px solid #fecaca",borderRadius:14,padding:"14px",margin:"8px 0 8px 34px"}}>
+            <div style={{fontSize:12,color:"#ef4444",fontWeight:600}}>😔 No caterers matched your criteria in this area. Try adjusting your pincode, budget, or dietary preferences.</div>
           </div>
         )}
         <div ref={bottomRef}/>
@@ -1045,7 +1089,7 @@ export default function AayojanApp(){
                 </div>
               </div>
             ):(
-              <AayojanChatbot user={user} onOrderCreated={order=>{setChatOrderConfirmed(order);}} onLoginRequired={()=>setShowLogin(true)}/>
+              <AayojanChatbot user={user} allCaterers={allCaterers} onOrderCreated={order=>{setChatOrderConfirmed(order);}} onLoginRequired={()=>setShowLogin(true)} onStartOrderFlow={(caterer)=>{setServiceType(caterer?.serviceTypes?.[0]||"full");setCustomerPincode("");setStep(0);navigate("app");}}/>
             )}
           </div>
         </div>
