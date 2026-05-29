@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useAuth, getPartners, getAllPartners, addPartner, updatePartner, deletePartner, createOrder, getAllOrders, getUserOrders, savePayment, updateUserPhone, updateUserPreferences, updateUserProfile } from "./useFirebase";
 
 // ─── Geo Data ─────────────────────────────────────────────────────────────────
 const PINCODE_COORDS = {
@@ -326,16 +327,29 @@ export default function AayojanApp(){
   const [view,setView]=useState("landing");
   const [animIn,setAnimIn]=useState(true);
 
-  // Auth
-  const [authStage,setAuthStage]=useState("idle");
-  const [phone,setPhone]=useState("");
-  const [otp,setOtp]=useState(["","","",""]);
-  const [otpError,setOtpError]=useState("");
-  const [phoneError,setPhoneError]=useState("");
-  const [otpTimer,setOtpTimer]=useState(0);
-  const [user,setUser]=useState(null);
-  const timerRef=useRef(null);
-  const otpRefs=[useRef(),useRef(),useRef(),useRef()];
+  // Auth — Firebase
+  const {user,loading:authLoading,loginWithGoogle,loginWithEmail,signupWithEmail,logout}=useAuth();
+  const [showLogin,setShowLogin]=useState(false);
+  const [loginMode,setLoginMode]=useState("login"); // "login"|"signup"
+  const [loginEmail,setLoginEmail]=useState("");
+  const [loginPassword,setLoginPassword]=useState("");
+  const [loginName,setLoginName]=useState("");
+  const [loginError,setLoginError]=useState("");
+  const [loginLoading,setLoginLoading]=useState(false);
+  const [phoneInput,setPhoneInput]=useState("");
+  const [showPhonePrompt,setShowPhonePrompt]=useState(false);
+  const [showPreferences,setShowPreferences]=useState(false);
+  const [prefStep,setPrefStep]=useState(0); // 0=dietary, 1=cuisines, 2=budget&extras
+  const [prefData,setPrefData]=useState({dietary:"non-veg",cuisines:[],budgetRange:"moderate",spiceLevel:"medium",guestSizePreference:"50-100",allergies:[],favoriteEventTypes:[]});
+  const [prefSaving,setPrefSaving]=useState(false);
+
+  // Profile
+  const [profileTab,setProfileTab]=useState("info"); // info | orders | preferences
+  const [profileEdit,setProfileEdit]=useState(false);
+  const [profileForm,setProfileForm]=useState({displayName:"",phone:"",address:"",pincode:"",city:"Kolkata"});
+  const [profileSaving,setProfileSaving]=useState(false);
+  const [userOrders,setUserOrders]=useState([]);
+  const [ordersLoading,setOrdersLoading]=useState(false);
 
   // Service & flow
   const [serviceType,setServiceType]=useState(null);
@@ -368,18 +382,42 @@ export default function AayojanApp(){
   const [orderPlaced,setOrderPlaced]=useState(null);
   const [chatOrderConfirmed,setChatOrderConfirmed]=useState(null);
 
-  // Registration
+  // Registration (admin adds partners)
   const [regForm,setRegForm]=useState({name:"",ownerName:"",phone:"",email:"",address:"",pincode:"",specialty:[],cuisineSpecialties:[],serviceTypes:[],priceRange:"₹₹",turnaround:"2–3 hrs"});
   const [regErrors,setRegErrors]=useState({});
   const [regSuccess,setRegSuccess]=useState(false);
 
-  // DB
+  // DB view / Admin
   const [dbTab,setDbTab]=useState("caterers");
   const [dbData,setDbData]=useState({caterers:[],customers:[],quotationRequests:[],orders:[],chatOrders:[],payments:[]});
+  const [firestoreCaterers,setFirestoreCaterers]=useState([]);
+  const [adminPartners,setAdminPartners]=useState([]);
+  const [adminOrders,setAdminOrders]=useState([]);
+  const [adminLoading,setAdminLoading]=useState(false);
+  const [editingPartner,setEditingPartner]=useState(null);
 
-  useEffect(()=>{DB.init();setAnimIn(false);const t=setTimeout(()=>setAnimIn(true),60);return()=>clearTimeout(t);},[view,step,authStage]);
+  useEffect(()=>{DB.init();setAnimIn(false);const t=setTimeout(()=>setAnimIn(true),60);return()=>clearTimeout(t);},[view,step]);
   useEffect(()=>{if(serviceType) setPerPlateBudget(SVC[serviceType].priceRange.min+100);},[serviceType]);
-  useEffect(()=>{if(otpTimer>0){timerRef.current=setTimeout(()=>setOtpTimer(t=>t-1),1000);}return()=>clearTimeout(timerRef.current);},[otpTimer]);
+
+  // Show preferences modal for first-time users (no preferences saved)
+  const [prefShownOnce,setPrefShownOnce]=useState(false);
+  useEffect(()=>{
+    if(user && !user.preferences && !prefShownOnce && !showPreferences){
+      setPrefShownOnce(true);
+      setShowPreferences(true);
+      setPrefStep(0);
+    }
+  },[user]);
+
+  // Load caterers from Firestore on mount
+  useEffect(()=>{
+    getPartners().then(p=>{
+      if(p.length>0) setFirestoreCaterers(p);
+    });
+  },[]);
+
+  // Merged caterers: Firestore + seed data fallback
+  const allCaterers=firestoreCaterers.length>0?firestoreCaterers:SEED_CATERERS;
 
   const navigate=(v)=>{setAnimIn(false);setTimeout(()=>{setView(v);setAnimIn(true);},80);};
   const anim={opacity:animIn?1:0,transform:animIn?"translateY(0)":"translateY(18px)",transition:"opacity 0.32s ease,transform 0.32s ease"};
@@ -387,41 +425,120 @@ export default function AayojanApp(){
   const accent=stCfg.color;
   const accentGrad=stCfg.btnGrad;
 
-  // ── OTP ──────────────────────────────────────────────────────────────────
-  const handleSendOtp=()=>{const c=phone.replace(/\D/g,"");if(c.length!==10){setPhoneError("Enter valid 10-digit number.");return;}setPhoneError("");setOtp(["","","",""]);setOtpError("");setAuthStage("otp");setOtpTimer(30);setTimeout(()=>otpRefs[0].current?.focus(),150);};
-  const handleOtpChange=(val,idx)=>{if(!/^\d?$/.test(val))return;const n=[...otp];n[idx]=val;setOtp(n);setOtpError("");if(val&&idx<3)otpRefs[idx+1].current?.focus();};
-  const handleOtpKey=(e,idx)=>{if(e.key==="Backspace"&&!otp[idx]&&idx>0)otpRefs[idx-1].current?.focus();};
-  const handleVerifyOtp=()=>{const entered=otp.join("");if(entered.length<4){setOtpError("Enter 4-digit OTP.");return;}if(entered!==DEMO_OTP){setOtpError("Incorrect OTP. Use 1234.");return;}const nu={id:`cu_${Date.now()}`,phone:`+91 ${phone.slice(0,5)} ${phone.slice(5)}`,registeredAt:new Date().toISOString()};if(!DB.get().customers.find(c=>c.phone===phone))DB.saveCustomer(nu);setUser(nu);setAuthStage("verified");setOtpError("");};
-  const handleResendOtp=()=>{setOtp(["","","",""]);setOtpError("");setOtpTimer(30);setTimeout(()=>otpRefs[0].current?.focus(),100);};
+  // ── Firebase Auth Handlers ──────────────────────────────────────────────
+  const handleGoogleLogin=async()=>{
+    setLoginError("");setLoginLoading(true);
+    try{ await loginWithGoogle(); setShowLogin(false); }
+    catch(e){ setLoginError(e.message); }
+    finally{ setLoginLoading(false); }
+  };
+  const handleEmailAuth=async()=>{
+    setLoginError("");
+    if(!loginEmail||!loginPassword){setLoginError("Email and password required.");return;}
+    if(loginMode==="signup"&&!loginName){setLoginError("Name is required.");return;}
+    setLoginLoading(true);
+    try{
+      if(loginMode==="signup") await signupWithEmail(loginEmail,loginPassword,loginName);
+      else await loginWithEmail(loginEmail,loginPassword);
+      setShowLogin(false);setLoginEmail("");setLoginPassword("");setLoginName("");
+    }catch(e){
+      const msg=e.code==="auth/user-not-found"?"No account found. Sign up instead."
+        :e.code==="auth/wrong-password"?"Incorrect password."
+        :e.code==="auth/email-already-in-use"?"Email already registered. Try login."
+        :e.code==="auth/weak-password"?"Password must be at least 6 characters."
+        :e.message;
+      setLoginError(msg);
+    }finally{setLoginLoading(false);}
+  };
+  const handleSavePhone=async()=>{
+    if(!phoneInput||phoneInput.replace(/\D/g,"").length!==10)return;
+    if(user) await updateUserPhone(user.uid,phoneInput);
+    setShowPhonePrompt(false);setPhoneInput("");
+  };
+
+  // ── Save Preferences ──────────────────────────────────────────────────────
+  const handleSavePreferences=async()=>{
+    if(!user) return;
+    setPrefSaving(true);
+    try{
+      await updateUserPreferences(user.uid, prefData);
+      setShowPreferences(false);
+    }catch(e){ console.error("Pref save error:",e); }
+    finally{ setPrefSaving(false); }
+  };
+
+  const togglePrefArray=(key,val)=>{
+    setPrefData(prev=>{
+      const arr=prev[key]||[];
+      return{...prev,[key]:arr.includes(val)?arr.filter(v=>v!==val):[...arr,val]};
+    });
+  };
+
+  // ── Profile Handlers ──────────────────────────────────────────────────────
+  const openProfile=async()=>{
+    if(!user) return;
+    setProfileForm({
+      displayName:user.displayName||"",
+      phone:user.phone||"",
+      address:user.address||"",
+      pincode:user.pincode||"",
+      city:user.city||"Kolkata",
+    });
+    if(user.preferences) setPrefData(user.preferences);
+    setProfileEdit(false);
+    setProfileTab("info");
+    navigate("profile");
+    // Load orders
+    setOrdersLoading(true);
+    const orders=await getUserOrders(user.uid);
+    setUserOrders(orders);
+    setOrdersLoading(false);
+  };
+
+  const handleSaveProfile=async()=>{
+    if(!user) return;
+    setProfileSaving(true);
+    try{
+      await updateUserProfile(user.uid, profileForm);
+      setProfileEdit(false);
+    }catch(e){ console.error(e); }
+    finally{ setProfileSaving(false); }
+  };
+
+  // ── Admin: load partners & orders ──────────────────────────────────────
+  const loadAdminData=async()=>{
+    setAdminLoading(true);
+    const [p,o]=await Promise.all([getAllPartners(),getAllOrders()]);
+    setAdminPartners(p);setAdminOrders(o);setAdminLoading(false);
+  };
 
   // ── Pincode ───────────────────────────────────────────────────────────────
   const handlePincodeNext=()=>{
     const coords=PINCODE_COORDS[customerPincode.trim()];
     if(customerPincode.trim().length!==6||!coords){setPincodeError("Enter a valid Newtown/Kolkata pincode");return;}
     setPincodeError("");setCustomerCoords(coords);
-    const withDist=DB.getCaterers().filter(c=>!serviceType||(c.serviceTypes||["full"]).includes(serviceType)).map(c=>{const cc=PINCODE_COORDS[c.pincode];const dist=cc?Math.round(haversineKm(coords.lat,coords.lng,cc.lat,cc.lng)*10)/10:99;const extraKm=Math.max(0,dist-BASE_KM);return{...c,distanceKm:dist,extraKm:parseFloat(extraKm.toFixed(1)),surcharge:Math.round(extraKm*KM_RATE)};}).sort((a,b)=>a.distanceKm-b.distanceKm);
+    const withDist=allCaterers.filter(c=>!serviceType||(c.serviceTypes||["full"]).includes(serviceType)).map(c=>{const cc=PINCODE_COORDS[c.pincode];const dist=cc?Math.round(haversineKm(coords.lat,coords.lng,cc.lat,cc.lng)*10)/10:99;const extraKm=Math.max(0,dist-BASE_KM);return{...c,distanceKm:dist,extraKm:parseFloat(extraKm.toFixed(1)),surcharge:Math.round(extraKm*KM_RATE)};}).sort((a,b)=>a.distanceKm-b.distanceKm);
     setNearbyCaterers(withDist);setStep(2);
   };
 
   // ── Quotes ────────────────────────────────────────────────────────────────
   const generateQuotes=()=>{
-    if(authStage!=="verified"){setAuthStage("phone");return;}
+    if(!user){setShowLogin(true);return;}
     setLoading(true);
     setTimeout(()=>{
       const matched=nearbyCaterers.filter(c=>c.specialty.map(s=>s.toLowerCase()).includes(eventType)).slice(0,5).map(c=>{const v=(Math.random()-0.3)*0.3;const ppa=Math.max(SVC[serviceType].priceRange.min,Math.round((perPlateBudget*(1+v))/10)*10);const base=ppa*guestCount;const tf=c.surcharge*Math.ceil(guestCount/50);return{...c,quoteCode:`${c.id.toUpperCase()}-${Math.random().toString(36).substring(2,6).toUpperCase()}`,perPlateActual:ppa,basePrice:base,travelSurcharge:tf,totalPrice:base+tf,itemsCovered:selectedItems.length,withinBudget:ppa<=perPlateBudget};}).sort((a,b)=>a.perPlateActual-b.perPlateActual);
-      const now=new Date();const qr={id:`QR-${Date.now()}`,customerId:user?.id,customerPhone:user?.phone,catererIds:matched.map(c=>c.id),eventType,serviceType,guestCount,perPlateBudget,menuItems:selectedItems,customerPincode,sentAt:now.toISOString(),expiresAt:new Date(now.getTime()+WAIT_HRS*3600000).toISOString(),status:"Awaiting Responses",whatsappLog:matched.map(c=>({catererId:c.id,catererName:c.name,maskedPhone:`${String(c.phone).slice(0,5)}•••••`,sentAt:now.toISOString(),status:"Sent ✅"}))};
+      const now=new Date();const qr={id:`QR-${Date.now()}`,customerId:user?.uid,customerEmail:user?.email,catererIds:matched.map(c=>c.id),eventType,serviceType,guestCount,perPlateBudget,menuItems:selectedItems,customerPincode,sentAt:now.toISOString(),expiresAt:new Date(now.getTime()+WAIT_HRS*3600000).toISOString(),status:"Awaiting Responses",whatsappLog:matched.map(c=>({catererId:c.id,catererName:c.name,maskedPhone:`${String(c.phone).slice(0,5)}•••••`,sentAt:now.toISOString(),status:"Sent ✅"}))};
       DB.saveQR(qr);setQuotationRequest(qr);setWhatsappSent(qr.whatsappLog);setQuotes(matched);setLoading(false);setStep(5);
     },1800);
   };
 
   // ── Payment handlers ──────────────────────────────────────────────────────
   const handleUnlockPhone=(caterer)=>{
-    if(!user){setAuthStage("phone");return;}
+    if(!user){setShowLogin(true);return;}
     if(unlockedPhones[caterer.id]){return;}
     setPaymentModal({amount:PHONE_UNLOCK_FEE,purpose:`Unlock ${caterer.name}'s contact number`,catererId:caterer.id,type:"phone_unlock",catererName:caterer.name,
-      onSuccess:()=>{
-        const payment={id:`PAY-${Date.now()}`,customerId:user.id,catererId:caterer.id,catererName:caterer.name,type:"phone_unlock",amount:PHONE_UNLOCK_FEE,status:"success",paidAt:new Date().toISOString()};
-        DB.savePayment(payment);
+      onSuccess:async()=>{
+        await savePayment({customerId:user.uid,catererId:caterer.id,catererName:caterer.name,type:"phone_unlock",amount:PHONE_UNLOCK_FEE,status:"success",paidAt:new Date().toISOString()});
         setUnlockedPhones(prev=>({...prev,[caterer.id]:caterer.phone}));
         setPaymentModal(null);
       }
@@ -429,12 +546,11 @@ export default function AayojanApp(){
   };
 
   const handleFoodTasting=(caterer)=>{
-    if(!user){setAuthStage("phone");return;}
+    if(!user){setShowLogin(true);return;}
     if(tastingBooked[caterer.id]){return;}
     setPaymentModal({amount:FOOD_TASTING_FEE,purpose:`Book Food Tasting Session with ${caterer.name}`,catererId:caterer.id,type:"food_tasting",catererName:caterer.name,
-      onSuccess:()=>{
-        const payment={id:`PAY-${Date.now()}`,customerId:user.id,catererId:caterer.id,catererName:caterer.name,type:"food_tasting",amount:FOOD_TASTING_FEE,status:"success",paidAt:new Date().toISOString()};
-        DB.savePayment(payment);
+      onSuccess:async()=>{
+        await savePayment({customerId:user.uid,catererId:caterer.id,catererName:caterer.name,type:"food_tasting",amount:FOOD_TASTING_FEE,status:"success",paidAt:new Date().toISOString()});
         setTastingBooked(prev=>({...prev,[caterer.id]:true}));
         setPaymentModal(null);
       }
@@ -443,18 +559,18 @@ export default function AayojanApp(){
 
   // ── Order ─────────────────────────────────────────────────────────────────
   const validateAddress=()=>{const e={};if(!deliveryAddress.flat.trim())e.flat="Required";if(!deliveryAddress.building.trim())e.building="Required";if(!deliveryAddress.street.trim())e.street="Required";if(!deliveryAddress.pincode.trim()||deliveryAddress.pincode.length!==6)e.pincode="Valid 6-digit pincode required";setAddressErrors(e);return Object.keys(e).length===0;};
-  const placeOrder=()=>{if(!validateAddress())return;const order={id:`ORD-${Date.now()}`,quotationRequestId:quotationRequest?.id,customerId:user?.id,customerPhone:user?.phone,catererId:selectedQuote.id,catererName:selectedQuote.name,eventType,serviceType,guestCount,perPlateBudget,perPlateActual:selectedQuote.perPlateActual,menuItems:selectedItems,deliveryAddress:`${deliveryAddress.flat}, ${deliveryAddress.building}, ${deliveryAddress.street}${deliveryAddress.landmark?", "+deliveryAddress.landmark:""}, ${deliveryAddress.city} - ${deliveryAddress.pincode}`,deliveryPincode:deliveryAddress.pincode,distanceKm:selectedQuote.distanceKm,basePrice:selectedQuote.basePrice,travelSurcharge:selectedQuote.travelSurcharge,totalPrice:selectedQuote.totalPrice,quoteCode:selectedQuote.quoteCode,status:"Confirmed",placedAt:new Date().toISOString()};DB.saveOrder(order);setOrderPlaced(order);setStep(6);};
+  const placeOrder=async()=>{if(!validateAddress())return;const order={quotationRequestId:quotationRequest?.id,customerId:user?.uid,customerEmail:user?.email,customerPhone:user?.phone||"",catererId:selectedQuote.id,catererName:selectedQuote.name,eventType,serviceType,guestCount,perPlateBudget,perPlateActual:selectedQuote.perPlateActual,menuItems:selectedItems,deliveryAddress:`${deliveryAddress.flat}, ${deliveryAddress.building}, ${deliveryAddress.street}${deliveryAddress.landmark?", "+deliveryAddress.landmark:""}, ${deliveryAddress.city} - ${deliveryAddress.pincode}`,deliveryPincode:deliveryAddress.pincode,distanceKm:selectedQuote.distanceKm,basePrice:selectedQuote.basePrice,travelSurcharge:selectedQuote.travelSurcharge,totalPrice:selectedQuote.totalPrice,quoteCode:selectedQuote.quoteCode,status:"Confirmed",placedAt:new Date().toISOString()};const orderId=await createOrder(order);setOrderPlaced({id:orderId,...order});setStep(6);};
 
   // ── Registration ──────────────────────────────────────────────────────────
   const validateReg=()=>{const e={};if(!regForm.name.trim())e.name="Required";if(!regForm.ownerName.trim())e.ownerName="Required";if(!/^\d{10}$/.test(regForm.phone))e.phone="Valid 10-digit number";if(!regForm.email.includes("@"))e.email="Valid email required";if(!regForm.address.trim())e.address="Required";if(!PINCODE_COORDS[regForm.pincode.trim()])e.pincode="Valid Kolkata pincode";if(regForm.specialty.length===0)e.specialty="Select at least one";if(regForm.cuisineSpecialties.length===0)e.cuisineSpecialties="Select at least one";if(regForm.serviceTypes.length===0)e.serviceTypes="Select at least one";setRegErrors(e);return Object.keys(e).length===0;};
-  const submitReg=()=>{if(!validateReg())return;const logos=["🍽️","🥘","🫕","🥗","🍛","🥞","🎂"];DB.saveCaterer({id:`c${Date.now()}`,...regForm,pincode:regForm.pincode.trim(),logo:logos[Math.floor(Math.random()*logos.length)],tags:regForm.cuisineSpecialties.slice(0,3),rating:4.0,registeredAt:new Date().toISOString().split("T")[0],active:true});setRegSuccess(true);};
+  const submitReg=async()=>{if(!validateReg())return;const logos=["🍽️","🥘","🫕","🥗","🍛","🥞","🎂"];await addPartner({...regForm,pincode:regForm.pincode.trim(),logo:logos[Math.floor(Math.random()*logos.length)],tags:regForm.cuisineSpecialties.slice(0,3),turnaround:regForm.turnaround});setRegSuccess(true);getPartners().then(p=>{if(p.length>0)setFirestoreCaterers(p);});};
 
   const copyCode=(code)=>{navigator.clipboard?.writeText(code);setCopiedCode(code);setTimeout(()=>setCopiedCode(null),2000);};
   const toggleItem=(item)=>setSelectedItems(prev=>prev.includes(item)?prev.filter(i=>i!==item):[...prev,item]);
   const addCustomItem=()=>{if(customItem.trim()&&!selectedItems.includes(customItem.trim())){setSelectedItems(prev=>[...prev,customItem.trim()]);setCustomItem("");}};
   const resetApp=()=>{setStep(0);setServiceType(null);setQuotes([]);setSelectedItems([]);setEventType(null);setGuestCount(100);setPerPlateBudget(500);setCustomerPincode("");setCustomerCoords(null);setSelectedQuote(null);setOrderPlaced(null);setQuotationRequest(null);setWhatsappSent([]);setDeliveryAddress({flat:"",building:"",street:"",landmark:"",pincode:"",city:"Kolkata",state:"West Bengal"});};
 
-  const showLoginModal=authStage==="phone"||authStage==="otp";
+  if(authLoading) return <div style={{display:"flex",alignItems:"center",justifyContent:"center",minHeight:"100vh",background:"#fdf8f3"}}><div style={{textAlign:"center"}}><div style={{fontSize:48,marginBottom:12}}>🍛</div><div style={{color:"#6b7280"}}>Loading...</div></div></div>;
 
   return(
     <div style={S.root}>
@@ -465,33 +581,169 @@ export default function AayojanApp(){
       {/* ── Payment Gateway Modal ─────────────────────────────────────────── */}
       {paymentModal&&<PaymentGateway amount={paymentModal.amount} purpose={paymentModal.purpose} catererName={paymentModal.catererName} onSuccess={paymentModal.onSuccess} onCancel={()=>setPaymentModal(null)}/>}
 
-      {/* ── OTP Modal ──────────────────────────────────────────────────────── */}
-      {showLoginModal&&(
+      {/* ── Login Modal (Firebase Auth) ────────────────────────────────────── */}
+      {showLogin&&(
         <div style={{position:"fixed",inset:0,zIndex:190,background:"rgba(0,0,0,0.4)",backdropFilter:"blur(4px)",display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
           <div style={{...S.card,...anim,maxWidth:400,width:"100%",textAlign:"center"}}>
-            <div style={{fontSize:44,marginBottom:12}}>📱</div>
-            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"#1f2937",marginBottom:6}}>{authStage==="phone"?"Login to Continue":"Enter OTP"}</h2>
-            <p style={{fontSize:13,color:"#6b7280",marginBottom:22,lineHeight:1.5}}>{authStage==="phone"?"Verify your mobile to send quote requests":"OTP sent to +91 "+phone.slice(0,5)+" "+phone.slice(5)}</p>
-            {authStage==="phone"&&<>
-              <div style={{display:"flex",border:"1px solid #e5e7eb",borderRadius:10,overflow:"hidden",marginBottom:10}}>
-                <div style={{padding:"12px 12px",background:"#f9fafb",color:"#6b7280",fontSize:13,fontWeight:600,borderRight:"1px solid #e5e7eb",whiteSpace:"nowrap"}}>🇮🇳 +91</div>
-                <input type="tel" maxLength={10} placeholder="Mobile number" value={phone} onChange={e=>{setPhone(e.target.value.replace(/\D/g,""));setPhoneError("");}} onKeyDown={e=>e.key==="Enter"&&handleSendOtp()} style={{flex:1,padding:"12px 14px",border:"none",color:"#1f2937",fontSize:15,outline:"none"}} autoFocus/>
+            <button onClick={()=>{setShowLogin(false);setLoginError("");}} style={{position:"absolute",top:12,right:16,background:"none",border:"none",fontSize:20,cursor:"pointer",color:"#9ca3af"}}>×</button>
+            <div style={{fontSize:44,marginBottom:12}}>🔐</div>
+            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"#1f2937",marginBottom:6}}>{loginMode==="login"?"Welcome Back":"Create Account"}</h2>
+            <p style={{fontSize:13,color:"#6b7280",marginBottom:18}}>Sign in to book caterers & place orders</p>
+
+            {/* Google Sign-in */}
+            <button onClick={handleGoogleLogin} disabled={loginLoading} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"1px solid #e5e7eb",background:"#fff",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:10,fontSize:14,fontWeight:600,color:"#374151",marginBottom:16,opacity:loginLoading?0.6:1}}>
+              <span style={{fontSize:20}}>🌐</span> Continue with Google
+            </button>
+
+            <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:16}}>
+              <div style={{flex:1,height:1,background:"#e5e7eb"}}/>
+              <span style={{fontSize:12,color:"#9ca3af"}}>or use email</span>
+              <div style={{flex:1,height:1,background:"#e5e7eb"}}/>
+            </div>
+
+            {/* Email/Password */}
+            {loginMode==="signup"&&<input type="text" placeholder="Full Name" value={loginName} onChange={e=>setLoginName(e.target.value)} style={{width:"100%",padding:"12px 14px",borderRadius:10,border:"1px solid #e5e7eb",marginBottom:10,fontSize:14,outline:"none",boxSizing:"border-box"}}/>}
+            <input type="email" placeholder="Email" value={loginEmail} onChange={e=>setLoginEmail(e.target.value)} style={{width:"100%",padding:"12px 14px",borderRadius:10,border:"1px solid #e5e7eb",marginBottom:10,fontSize:14,outline:"none",boxSizing:"border-box"}}/>
+            <input type="password" placeholder="Password" value={loginPassword} onChange={e=>setLoginPassword(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handleEmailAuth()} style={{width:"100%",padding:"12px 14px",borderRadius:10,border:"1px solid #e5e7eb",marginBottom:10,fontSize:14,outline:"none",boxSizing:"border-box"}}/>
+
+            {loginError&&<div style={{color:"#ef4444",fontSize:12,marginBottom:8,textAlign:"left"}}>{loginError}</div>}
+
+            <button onClick={handleEmailAuth} disabled={loginLoading} style={{...S.primaryBtn,width:"100%",opacity:loginLoading?0.6:1}}>
+              {loginLoading?"Please wait...":loginMode==="login"?"Sign In →":"Create Account →"}
+            </button>
+
+            <div style={{marginTop:14,fontSize:13}}>
+              {loginMode==="login"
+                ?<span style={{color:"#6b7280"}}>New here? <button onClick={()=>{setLoginMode("signup");setLoginError("");}} style={{background:"none",border:"none",color:"#c0392b",cursor:"pointer",fontWeight:600,fontSize:13}}>Sign Up</button></span>
+                :<span style={{color:"#6b7280"}}>Have an account? <button onClick={()=>{setLoginMode("login");setLoginError("");}} style={{background:"none",border:"none",color:"#c0392b",cursor:"pointer",fontWeight:600,fontSize:13}}>Sign In</button></span>
+              }
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Preferences Onboarding Modal ──────────────────────────────────── */}
+      {showPreferences&&user&&(
+        <div style={{position:"fixed",inset:0,zIndex:200,background:"rgba(0,0,0,0.5)",backdropFilter:"blur(6px)",display:"flex",alignItems:"center",justifyContent:"center",padding:20,overflowY:"auto"}}>
+          <div style={{...S.card,...anim,maxWidth:480,width:"100%",maxHeight:"90vh",overflowY:"auto",padding:28}}>
+            <button onClick={()=>setShowPreferences(false)} style={{position:"absolute",top:12,right:16,background:"none",border:"none",fontSize:20,cursor:"pointer",color:"#9ca3af"}}>×</button>
+
+            {/* Header */}
+            <div style={{textAlign:"center",marginBottom:20}}>
+              <div style={{fontSize:44,marginBottom:8}}>{["🍽️","🥘","✨"][prefStep]}</div>
+              <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"#1f2937",marginBottom:4}}>
+                {prefStep===0?"Your Food Preferences":prefStep===1?"Favourite Cuisines":"Almost Done!"}
+              </h2>
+              <p style={{fontSize:13,color:"#6b7280"}}>
+                {prefStep===0?"Help us personalise your catering experience":prefStep===1?"Select cuisines you love (pick multiple)":"Budget & event preferences"}
+              </p>
+              {/* Step indicator */}
+              <div style={{display:"flex",justifyContent:"center",gap:8,marginTop:12}}>
+                {[0,1,2].map(i=>(
+                  <div key={i} style={{width:i===prefStep?28:10,height:6,borderRadius:3,background:i<=prefStep?"#c0392b":"#e5e7eb",transition:"all 0.3s ease"}}/>
+                ))}
               </div>
-              {phoneError&&<div style={{color:"#ef4444",fontSize:12,marginBottom:8}}>{phoneError}</div>}
-              <button onClick={handleSendOtp} style={{...S.primaryBtn,width:"100%",marginTop:4}}>Send OTP →</button>
-            </>}
-            {authStage==="otp"&&<>
-              <div style={{display:"flex",gap:10,justifyContent:"center",marginBottom:10}}>
-                {otp.map((d,i)=><input key={i} ref={otpRefs[i]} type="tel" maxLength={1} value={d} onChange={e=>handleOtpChange(e.target.value,i)} onKeyDown={e=>handleOtpKey(e,i)} style={{width:56,height:60,textAlign:"center",fontSize:24,fontWeight:800,color:"#1f2937",background:"#f9fafb",border:`2px solid ${otpError?"#ef4444":d?"#c0392b":"#e5e7eb"}`,borderRadius:10,outline:"none"}}/>)}
+            </div>
+
+            {/* Step 0: Dietary Preference + Spice Level */}
+            {prefStep===0&&(
+              <div>
+                <label style={{fontSize:13,fontWeight:600,color:"#374151",marginBottom:8,display:"block"}}>🥗 Dietary Preference</label>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:18}}>
+                  {[{id:"non-veg",label:"Non-Vegetarian",icon:"🍗"},{id:"veg",label:"Vegetarian",icon:"🥬"},{id:"vegan",label:"Vegan",icon:"🌱"},{id:"eggetarian",label:"Eggetarian",icon:"🥚"}].map(d=>(
+                    <button key={d.id} onClick={()=>setPrefData(p=>({...p,dietary:d.id}))} style={{padding:"14px 12px",borderRadius:12,border:`2px solid ${prefData.dietary===d.id?"#c0392b":"#e5e7eb"}`,background:prefData.dietary===d.id?"#fff5f5":"#fff",cursor:"pointer",textAlign:"center",transition:"all 0.2s"}}>
+                      <div style={{fontSize:24,marginBottom:4}}>{d.icon}</div>
+                      <div style={{fontSize:13,fontWeight:prefData.dietary===d.id?700:500,color:prefData.dietary===d.id?"#c0392b":"#374151"}}>{d.label}</div>
+                    </button>
+                  ))}
+                </div>
+
+                <label style={{fontSize:13,fontWeight:600,color:"#374151",marginBottom:8,display:"block"}}>🌶️ Spice Level</label>
+                <div style={{display:"flex",gap:8}}>
+                  {[{id:"mild",label:"Mild",icon:"😊"},{id:"medium",label:"Medium",icon:"😋"},{id:"spicy",label:"Spicy",icon:"🥵"},{id:"extra-spicy",label:"Extra Spicy",icon:"🔥"}].map(s=>(
+                    <button key={s.id} onClick={()=>setPrefData(p=>({...p,spiceLevel:s.id}))} style={{flex:1,padding:"10px 6px",borderRadius:10,border:`2px solid ${prefData.spiceLevel===s.id?"#c0392b":"#e5e7eb"}`,background:prefData.spiceLevel===s.id?"#fff5f5":"#fff",cursor:"pointer",textAlign:"center",transition:"all 0.2s"}}>
+                      <div style={{fontSize:20}}>{s.icon}</div>
+                      <div style={{fontSize:11,fontWeight:prefData.spiceLevel===s.id?700:500,color:prefData.spiceLevel===s.id?"#c0392b":"#374151",marginTop:2}}>{s.label}</div>
+                    </button>
+                  ))}
+                </div>
+
+                <label style={{fontSize:13,fontWeight:600,color:"#374151",marginBottom:8,display:"block",marginTop:18}}>⚠️ Allergies (optional)</label>
+                <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
+                  {["Nuts","Dairy","Gluten","Shellfish","Soy","Eggs","None"].map(a=>(
+                    <button key={a} onClick={()=>{if(a==="None")setPrefData(p=>({...p,allergies:[]}));else togglePrefArray("allergies",a);}} style={{padding:"7px 14px",borderRadius:20,border:`1.5px solid ${(a==="None"&&prefData.allergies.length===0)||prefData.allergies.includes(a)?"#c0392b":"#e5e7eb"}`,background:(a==="None"&&prefData.allergies.length===0)||prefData.allergies.includes(a)?"#fff5f5":"#fff",cursor:"pointer",fontSize:12,fontWeight:500,color:(a==="None"&&prefData.allergies.length===0)||prefData.allergies.includes(a)?"#c0392b":"#6b7280",transition:"all 0.2s"}}>
+                      {a}
+                    </button>
+                  ))}
+                </div>
               </div>
-              {otpError&&<div style={{color:"#ef4444",fontSize:12,marginBottom:8}}>{otpError}</div>}
-              <div style={{background:"#fff5f5",border:"1px solid #fca5a5",borderRadius:8,padding:"7px 14px",fontSize:12,color:"#6b7280",marginBottom:12}}>🔑 Demo OTP: <strong>1234</strong></div>
-              <button onClick={handleVerifyOtp} style={{...S.primaryBtn,width:"100%"}}>Verify & Continue ✓</button>
-              <div style={{display:"flex",justifyContent:"center",gap:18,marginTop:12}}>
-                {otpTimer>0?<span style={{fontSize:12,color:"#9ca3af"}}>Resend in {otpTimer}s</span>:<button onClick={handleResendOtp} style={{background:"none",border:"none",color:"#c0392b",fontSize:12,cursor:"pointer",fontWeight:600}}>Resend OTP</button>}
-                <button onClick={()=>{setAuthStage("phone");setOtp(["","","",""]);setOtpError("");}} style={{background:"none",border:"none",color:"#9ca3af",fontSize:12,cursor:"pointer"}}>Change number</button>
+            )}
+
+            {/* Step 1: Cuisine Selection */}
+            {prefStep===1&&(
+              <div>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+                  {ALL_CUISINES.map(c=>(
+                    <button key={c} onClick={()=>togglePrefArray("cuisines",c)} style={{padding:"12px 14px",borderRadius:10,border:`2px solid ${prefData.cuisines.includes(c)?"#c0392b":"#e5e7eb"}`,background:prefData.cuisines.includes(c)?"#fff5f5":"#fff",cursor:"pointer",textAlign:"left",display:"flex",alignItems:"center",gap:8,transition:"all 0.2s"}}>
+                      <span style={{fontSize:16}}>{prefData.cuisines.includes(c)?"✅":"○"}</span>
+                      <span style={{fontSize:13,fontWeight:prefData.cuisines.includes(c)?700:500,color:prefData.cuisines.includes(c)?"#c0392b":"#374151"}}>{c}</span>
+                    </button>
+                  ))}
+                </div>
+                {prefData.cuisines.length===0&&<p style={{fontSize:12,color:"#9ca3af",marginTop:10,textAlign:"center"}}>Select at least one cuisine to continue</p>}
               </div>
-            </>}
+            )}
+
+            {/* Step 2: Budget & Event Type */}
+            {prefStep===2&&(
+              <div>
+                <label style={{fontSize:13,fontWeight:600,color:"#374151",marginBottom:8,display:"block"}}>💰 Typical Budget per Plate</label>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:18}}>
+                  {[{id:"budget",label:"Budget-Friendly",sub:"₹120–₹350",icon:"💵"},{id:"moderate",label:"Moderate",sub:"₹350–₹600",icon:"💰"},{id:"premium",label:"Premium",sub:"₹600–₹1000",icon:"💎"},{id:"luxury",label:"Luxury",sub:"₹1000+",icon:"👑"}].map(b=>(
+                    <button key={b.id} onClick={()=>setPrefData(p=>({...p,budgetRange:b.id}))} style={{padding:"14px 10px",borderRadius:12,border:`2px solid ${prefData.budgetRange===b.id?"#c0392b":"#e5e7eb"}`,background:prefData.budgetRange===b.id?"#fff5f5":"#fff",cursor:"pointer",textAlign:"center",transition:"all 0.2s"}}>
+                      <div style={{fontSize:22,marginBottom:2}}>{b.icon}</div>
+                      <div style={{fontSize:13,fontWeight:prefData.budgetRange===b.id?700:500,color:prefData.budgetRange===b.id?"#c0392b":"#374151"}}>{b.label}</div>
+                      <div style={{fontSize:11,color:"#9ca3af",marginTop:2}}>{b.sub}</div>
+                    </button>
+                  ))}
+                </div>
+
+                <label style={{fontSize:13,fontWeight:600,color:"#374151",marginBottom:8,display:"block"}}>👥 Typical Guest Count</label>
+                <div style={{display:"flex",gap:8,marginBottom:18}}>
+                  {[{id:"1-30",label:"1–30"},{id:"30-100",label:"30–100"},{id:"100-300",label:"100–300"},{id:"300+",label:"300+"}].map(g=>(
+                    <button key={g.id} onClick={()=>setPrefData(p=>({...p,guestSizePreference:g.id}))} style={{flex:1,padding:"10px 6px",borderRadius:10,border:`2px solid ${prefData.guestSizePreference===g.id?"#c0392b":"#e5e7eb"}`,background:prefData.guestSizePreference===g.id?"#fff5f5":"#fff",cursor:"pointer",fontSize:13,fontWeight:prefData.guestSizePreference===g.id?700:500,color:prefData.guestSizePreference===g.id?"#c0392b":"#374151",transition:"all 0.2s"}}>
+                      {g.label}
+                    </button>
+                  ))}
+                </div>
+
+                <label style={{fontSize:13,fontWeight:600,color:"#374151",marginBottom:8,display:"block"}}>🎊 Event Types You Usually Host</label>
+                <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+                  {EVENT_TYPES.map(e=>(
+                    <button key={e.id} onClick={()=>togglePrefArray("favoriteEventTypes",e.id)} style={{padding:"8px 16px",borderRadius:20,border:`1.5px solid ${prefData.favoriteEventTypes.includes(e.id)?"#c0392b":"#e5e7eb"}`,background:prefData.favoriteEventTypes.includes(e.id)?"#fff5f5":"#fff",cursor:"pointer",fontSize:12,fontWeight:500,display:"flex",alignItems:"center",gap:6,color:prefData.favoriteEventTypes.includes(e.id)?"#c0392b":"#6b7280",transition:"all 0.2s"}}>
+                      <span>{e.icon}</span>{e.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Navigation Buttons */}
+            <div style={{display:"flex",gap:10,marginTop:24}}>
+              {prefStep>0&&(
+                <button onClick={()=>setPrefStep(s=>s-1)} style={{...S.ghostBtn,flex:1,padding:"12px 0"}}>← Back</button>
+              )}
+              {prefStep<2?(
+                <button onClick={()=>setPrefStep(s=>s+1)} disabled={prefStep===1&&prefData.cuisines.length===0} style={{...S.primaryBtn,flex:1,opacity:prefStep===1&&prefData.cuisines.length===0?0.5:1}}>
+                  Next →
+                </button>
+              ):(
+                <button onClick={handleSavePreferences} disabled={prefSaving} style={{...S.primaryBtn,flex:1,opacity:prefSaving?0.6:1}}>
+                  {prefSaving?"Saving...":"🎉 Save & Start Exploring"}
+                </button>
+              )}
+            </div>
+            <button onClick={()=>setShowPreferences(false)} style={{background:"none",border:"none",color:"#9ca3af",fontSize:12,cursor:"pointer",marginTop:10,display:"block",textAlign:"center",width:"100%"}}>Skip for now</button>
           </div>
         </div>
       )}
@@ -506,10 +758,16 @@ export default function AayojanApp(){
           </div>
         </button>
         <div className="header-right" style={{display:"flex",alignItems:"center",gap:8}}>
-          {["app","chat"].includes(view)&&<button onClick={()=>navigate("landing")} style={S.ghostBtn}>← Home</button>}
+          {["app","chat","profile"].includes(view)&&<button onClick={()=>navigate("landing")} style={S.ghostBtn}>← Home</button>}
           <button onClick={()=>navigate("chat")} style={{...S.ghostBtn,borderColor:"#fca5a5",color:"#c0392b",background:"#fff5f5"}}>🤖 AI Chat</button>
-          <button onClick={()=>{const d=DB.get();setDbData(d);navigate("dbview");}} style={S.ghostBtn}>🗄️ DB</button>
-          {user?<div style={{display:"flex",alignItems:"center",gap:5,background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"6px 10px",fontSize:12,color:"#16a34a"}}>✅ {user.phone}</div>:<button onClick={()=>setAuthStage("phone")} style={{...S.primaryBtn,padding:"8px 16px",width:"auto",marginTop:0}}>Login</button>}
+          {user?.isAdmin&&<button onClick={()=>{loadAdminData();navigate("admin");}} style={{...S.ghostBtn,borderColor:"#bbf7d0",color:"#16a34a",background:"#f0fdf4"}}>👑 Admin</button>}
+          {user?<div style={{display:"flex",alignItems:"center",gap:8}}>
+            <button onClick={openProfile} style={{display:"flex",alignItems:"center",gap:5,background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"6px 10px",fontSize:12,color:"#16a34a",cursor:"pointer"}}>
+              {user.photoURL?<img src={user.photoURL} alt="" style={{width:20,height:20,borderRadius:"50%"}}/>:<span>👤</span>}
+              {user.displayName||user.email}
+            </button>
+            <button onClick={logout} style={{background:"none",border:"1px solid #fca5a5",borderRadius:8,padding:"6px 10px",fontSize:11,color:"#c0392b",cursor:"pointer"}}>Logout</button>
+          </div>:<button onClick={()=>setShowLogin(true)} style={{...S.primaryBtn,padding:"8px 16px",width:"auto",marginTop:0}}>Login</button>}
         </div>
       </header>
 
@@ -579,7 +837,7 @@ export default function AayojanApp(){
 
           {/* Stats */}
           <div className="stats-grid" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10,marginBottom:36}}>
-            {[["🍽️",DB.getCaterers().length+"+","Caterers"],["📍","10+","Pincodes"],["⭐","4.7","Avg Rating"],["🎉","500+","Events"]].map(([icon,val,lbl])=>(
+            {[["🍽️",allCaterers.length+"+","Caterers"],["📍","10+","Pincodes"],["⭐","4.7","Avg Rating"],["🎉","500+","Events"]].map(([icon,val,lbl])=>(
               <div key={lbl} style={{background:"#fff",border:"1px solid #fde8d8",borderRadius:14,padding:"16px 12px",textAlign:"center",boxShadow:"0 1px 4px rgba(192,57,43,0.06)"}}>
                 <div style={{fontSize:22,marginBottom:4}}>{icon}</div>
                 <div style={{fontSize:22,fontWeight:800,color:"#1f2937"}}>{val}</div>
@@ -607,7 +865,7 @@ export default function AayojanApp(){
           <div style={{marginBottom:40}}>
             <h2 style={S.sectionTitle}>Featured Caterers</h2>
             <div className="feat-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
-              {DB.getCaterers().slice(0,3).map(c=>(
+              {allCaterers.slice(0,3).map(c=>(
                 <div key={c.id} style={{background:"#fff",border:"1px solid #fde8d8",borderRadius:14,padding:"16px",boxShadow:"0 1px 6px rgba(192,57,43,0.07)"}}>
                   <div style={{display:"flex",gap:10,alignItems:"flex-start",marginBottom:10}}>
                     <div style={{fontSize:26,background:"#fff5f5",borderRadius:10,width:42,height:42,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{c.logo}</div>
@@ -1178,11 +1436,336 @@ export default function AayojanApp(){
               </div>
               <p style={{color:"#6b7280",fontSize:13,marginBottom:18,lineHeight:1.6}}>Aayojan will coordinate with the caterer and contact you at <strong style={{color:"#c0392b"}}>{user?.phone}</strong>. Caterer's number remains private. 🔒</p>
               <div style={{display:"flex",gap:10}}>
-                <button onClick={()=>{const d=DB.get();setDbData(d);navigate("dbview");setDbTab("orders");}} style={S.secondaryBtn}>View in DB 🗄️</button>
                 <button onClick={()=>{navigate("landing");resetApp();}} style={{...S.primaryBtn,marginTop:0,flex:1}}>Back to Home</button>
               </div>
             </div>}
           </div>
+        </div>
+      )}
+
+      {/* ══════════════════════════════════════════════════════════════════════
+          USER PROFILE
+      ══════════════════════════════════════════════════════════════════════ */}
+      {view==="profile"&&user&&(
+        <div style={{...S.page,...anim}}>
+          {/* Profile Header Card */}
+          <div style={{...S.card,padding:"28px 32px",marginBottom:20,textAlign:"center",position:"relative",background:"linear-gradient(135deg,#fff5f5,#fef9f7)"}}>
+            <div style={{width:72,height:72,borderRadius:"50%",margin:"0 auto 12px",background:"linear-gradient(135deg,#c0392b,#e74c3c)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:32,color:"#fff",overflow:"hidden",border:"3px solid #fff",boxShadow:"0 4px 16px rgba(192,57,43,0.2)"}}>
+              {user.photoURL?<img src={user.photoURL} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}}/>:"👤"}
+            </div>
+            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"#1f2937",marginBottom:2}}>{user.displayName||"User"}</h2>
+            <p style={{fontSize:13,color:"#6b7280"}}>{user.email}</p>
+            {user.phone&&<p style={{fontSize:12,color:"#9ca3af",marginTop:2}}>📱 {user.phone}</p>}
+            <div style={{display:"flex",justifyContent:"center",gap:16,marginTop:16}}>
+              <div style={{textAlign:"center"}}>
+                <div style={{fontSize:20,fontWeight:800,color:"#c0392b"}}>{userOrders.length}</div>
+                <div style={{fontSize:11,color:"#9ca3af"}}>Orders</div>
+              </div>
+              <div style={{width:1,background:"#e5e7eb"}}/>
+              <div style={{textAlign:"center"}}>
+                <div style={{fontSize:20,fontWeight:800,color:"#c0392b"}}>{user.preferences?.cuisines?.length||0}</div>
+                <div style={{fontSize:11,color:"#9ca3af"}}>Cuisines</div>
+              </div>
+              <div style={{width:1,background:"#e5e7eb"}}/>
+              <div style={{textAlign:"center"}}>
+                <div style={{fontSize:20,fontWeight:800,color:"#c0392b"}}>{user.preferences?.dietary==="veg"?"🥬":user.preferences?.dietary==="vegan"?"🌱":"🍗"}</div>
+                <div style={{fontSize:11,color:"#9ca3af"}}>{user.preferences?.dietary||"Not set"}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Profile Tabs */}
+          <div style={{display:"flex",gap:8,marginBottom:20}}>
+            {[{id:"info",label:"📋 My Info"},{id:"orders",label:"📦 Orders"},{id:"preferences",label:"🍽️ Preferences"}].map(tab=>(
+              <button key={tab.id} onClick={()=>setProfileTab(tab.id)} style={{...S.ghostBtn,flex:1,textAlign:"center",background:profileTab===tab.id?"#c0392b":"transparent",color:profileTab===tab.id?"#fff":"#6b7280",borderColor:profileTab===tab.id?"#c0392b":"#e5e7eb",fontWeight:profileTab===tab.id?700:500}}>{tab.label}</button>
+            ))}
+          </div>
+
+          {/* ── Tab: My Info ────────────────────────────────────────────────── */}
+          {profileTab==="info"&&(
+            <div style={S.card}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
+                <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:18,fontWeight:700}}>Personal Information</h3>
+                {!profileEdit&&<button onClick={()=>setProfileEdit(true)} style={{...S.ghostBtn,fontSize:12}}>✏️ Edit</button>}
+              </div>
+
+              {profileEdit?(
+                <div>
+                  <div style={{marginBottom:12}}>
+                    <label style={S.fieldLabel}>Full Name</label>
+                    <input style={S.inp2} value={profileForm.displayName} onChange={e=>setProfileForm(f=>({...f,displayName:e.target.value}))} placeholder="Your full name"/>
+                  </div>
+                  <div style={{marginBottom:12}}>
+                    <label style={S.fieldLabel}>📱 Phone Number</label>
+                    <input style={S.inp2} value={profileForm.phone} onChange={e=>setProfileForm(f=>({...f,phone:e.target.value.replace(/[^0-9+]/g,"").slice(0,13)}))} placeholder="+91 9876543210" maxLength={13}/>
+                    <div style={{fontSize:11,color:"#9ca3af",marginTop:2}}>Used for delivery coordination only</div>
+                  </div>
+                  <div style={{marginBottom:12}}>
+                    <label style={S.fieldLabel}>📍 Default Delivery Address</label>
+                    <input style={S.inp2} value={profileForm.address} onChange={e=>setProfileForm(f=>({...f,address:e.target.value}))} placeholder="Flat/House, Building, Street"/>
+                  </div>
+                  <div style={{display:"flex",gap:12,marginBottom:12}}>
+                    <div style={{flex:1}}>
+                      <label style={S.fieldLabel}>Pincode</label>
+                      <input style={S.inp2} value={profileForm.pincode} onChange={e=>setProfileForm(f=>({...f,pincode:e.target.value.replace(/\D/g,"").slice(0,6)}))} placeholder="700156" maxLength={6}/>
+                    </div>
+                    <div style={{flex:1}}>
+                      <label style={S.fieldLabel}>City</label>
+                      <input style={{...S.inp2,background:"#f9fafb"}} value={profileForm.city} disabled/>
+                    </div>
+                  </div>
+
+                  <div style={{display:"flex",gap:10,marginTop:16}}>
+                    <button onClick={()=>setProfileEdit(false)} style={{...S.ghostBtn,flex:1,padding:"10px 0"}}>Cancel</button>
+                    <button onClick={handleSaveProfile} disabled={profileSaving} style={{...S.primaryBtn,flex:1,marginTop:0,opacity:profileSaving?0.6:1}}>
+                      {profileSaving?"Saving...":"Save Changes ✓"}
+                    </button>
+                  </div>
+                </div>
+              ):(
+                <div>
+                  {[
+                    {icon:"👤",label:"Name",value:user.displayName||"—"},
+                    {icon:"✉️",label:"Email",value:user.email},
+                    {icon:"📱",label:"Phone",value:user.phone||"Not added yet"},
+                    {icon:"📍",label:"Address",value:user.address||"Not added yet"},
+                    {icon:"📮",label:"Pincode",value:user.pincode||"—"},
+                    {icon:"🏙️",label:"City",value:user.city||"Kolkata"},
+                    {icon:"🔐",label:"Login Method",value:user.provider==="google.com"?"Google Account":"Email & Password"},
+                  ].map(row=>(
+                    <div key={row.label} style={{display:"flex",alignItems:"center",padding:"10px 0",borderBottom:"1px solid #f3f4f6"}}>
+                      <span style={{fontSize:16,width:28}}>{row.icon}</span>
+                      <span style={{fontSize:13,color:"#6b7280",width:90}}>{row.label}</span>
+                      <span style={{fontSize:14,fontWeight:500,color:row.value.includes("Not added")?"#9ca3af":"#1f2937",flex:1}}>{row.value}</span>
+                    </div>
+                  ))}
+                  {(!user.phone||!user.address)&&(
+                    <div style={{marginTop:16,padding:"12px 16px",borderRadius:10,background:"#fffbeb",border:"1px solid #fde68a",fontSize:12,color:"#92400e"}}>
+                      💡 <strong>Complete your profile!</strong> Add your phone number and address for faster order placement.
+                      <button onClick={()=>setProfileEdit(true)} style={{display:"block",marginTop:8,background:"none",border:"none",color:"#c0392b",cursor:"pointer",fontWeight:700,fontSize:12}}>→ Add now</button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ── Tab: Orders ────────────────────────────────────────────────── */}
+          {profileTab==="orders"&&(
+            <div>
+              {ordersLoading?(
+                <div style={{textAlign:"center",padding:40,color:"#6b7280"}}>Loading orders...</div>
+              ):userOrders.length===0?(
+                <div style={{...S.card,textAlign:"center",padding:"40px 20px"}}>
+                  <div style={{fontSize:48,marginBottom:12}}>📦</div>
+                  <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:18,color:"#1f2937",marginBottom:6}}>No Orders Yet</h3>
+                  <p style={{fontSize:13,color:"#9ca3af",marginBottom:16}}>Start exploring caterers and place your first order!</p>
+                  <button onClick={()=>navigate("app")} style={{...S.primaryBtn,width:"auto",padding:"10px 24px",display:"inline-block"}}>Browse Caterers →</button>
+                </div>
+              ):(
+                <div>
+                  <div style={{fontSize:13,color:"#6b7280",marginBottom:12}}>{userOrders.length} order{userOrders.length>1?"s":""}</div>
+                  {userOrders.map(o=>(
+                    <div key={o.id} style={{...S.card,marginBottom:12,padding:"16px 20px"}}>
+                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+                        <div>
+                          <div style={{fontSize:14,fontWeight:700,color:"#1f2937",marginBottom:4}}>🍽️ {o.catererName||"Caterer"}</div>
+                          <div style={{fontSize:12,color:"#6b7280"}}>🎊 {o.eventType} · 👥 {o.guestCount} guests</div>
+                          <div style={{fontSize:12,color:"#6b7280"}}>📍 {o.deliveryAddress||"—"}</div>
+                          {o.createdAt&&<div style={{fontSize:11,color:"#9ca3af",marginTop:4}}>🕐 {o.createdAt?.toDate?.()?.toLocaleDateString("en-IN",{dateStyle:"medium"})||"—"}</div>}
+                        </div>
+                        <div style={{textAlign:"right"}}>
+                          <div style={{fontSize:18,fontWeight:800,color:"#16a34a"}}>₹{o.totalPrice?.toLocaleString()||"—"}</div>
+                          <span style={{fontSize:11,padding:"3px 8px",borderRadius:8,marginTop:4,display:"inline-block",background:o.status==="Confirmed"?"#f0fdf4":o.status==="Delivered"?"#eff6ff":"#fef9c3",color:o.status==="Confirmed"?"#16a34a":o.status==="Delivered"?"#2563eb":"#ca8a04",border:`1px solid ${o.status==="Confirmed"?"#bbf7d0":o.status==="Delivered"?"#bfdbfe":"#fde68a"}`}}>{o.status||"Pending"}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ── Tab: Preferences ───────────────────────────────────────────── */}
+          {profileTab==="preferences"&&(
+            <div style={S.card}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
+                <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:18,fontWeight:700}}>Food Preferences</h3>
+                <button onClick={()=>{setShowPreferences(true);setPrefStep(0);if(user.preferences)setPrefData(user.preferences);}} style={{...S.ghostBtn,fontSize:12}}>✏️ Edit</button>
+              </div>
+
+              {user.preferences?(
+                <div>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:16}}>
+                    <div style={{padding:"14px 16px",borderRadius:12,background:"#fff5f5",border:"1px solid #fca5a5"}}>
+                      <div style={{fontSize:11,color:"#9ca3af",marginBottom:4}}>DIETARY</div>
+                      <div style={{fontSize:14,fontWeight:700,color:"#c0392b",textTransform:"capitalize"}}>{user.preferences.dietary==="non-veg"?"🍗 Non-Veg":user.preferences.dietary==="veg"?"🥬 Vegetarian":user.preferences.dietary==="vegan"?"🌱 Vegan":"🥚 Eggetarian"}</div>
+                    </div>
+                    <div style={{padding:"14px 16px",borderRadius:12,background:"#fff5f5",border:"1px solid #fca5a5"}}>
+                      <div style={{fontSize:11,color:"#9ca3af",marginBottom:4}}>SPICE LEVEL</div>
+                      <div style={{fontSize:14,fontWeight:700,color:"#c0392b",textTransform:"capitalize"}}>{{"mild":"😊 Mild","medium":"😋 Medium","spicy":"🥵 Spicy","extra-spicy":"🔥 Extra Spicy"}[user.preferences.spiceLevel]||"—"}</div>
+                    </div>
+                    <div style={{padding:"14px 16px",borderRadius:12,background:"#fff5f5",border:"1px solid #fca5a5"}}>
+                      <div style={{fontSize:11,color:"#9ca3af",marginBottom:4}}>BUDGET</div>
+                      <div style={{fontSize:14,fontWeight:700,color:"#c0392b",textTransform:"capitalize"}}>{{"budget":"💵 Budget","moderate":"💰 Moderate","premium":"💎 Premium","luxury":"👑 Luxury"}[user.preferences.budgetRange]||"—"}</div>
+                    </div>
+                    <div style={{padding:"14px 16px",borderRadius:12,background:"#fff5f5",border:"1px solid #fca5a5"}}>
+                      <div style={{fontSize:11,color:"#9ca3af",marginBottom:4}}>GUEST SIZE</div>
+                      <div style={{fontSize:14,fontWeight:700,color:"#c0392b"}}>{user.preferences.guestSizePreference||"—"}</div>
+                    </div>
+                  </div>
+
+                  {user.preferences.cuisines?.length>0&&(
+                    <div style={{marginBottom:16}}>
+                      <div style={{fontSize:12,fontWeight:600,color:"#374151",marginBottom:8}}>🍛 Favourite Cuisines</div>
+                      <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
+                        {user.preferences.cuisines.map(c=><span key={c} style={{padding:"5px 12px",borderRadius:20,background:"#fff5f5",color:"#c0392b",border:"1px solid #fca5a5",fontSize:12,fontWeight:500}}>{c}</span>)}
+                      </div>
+                    </div>
+                  )}
+
+                  {user.preferences.allergies?.length>0&&(
+                    <div style={{marginBottom:16}}>
+                      <div style={{fontSize:12,fontWeight:600,color:"#374151",marginBottom:8}}>⚠️ Allergies</div>
+                      <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
+                        {user.preferences.allergies.map(a=><span key={a} style={{padding:"5px 12px",borderRadius:20,background:"#fef2f2",color:"#ef4444",border:"1px solid #fca5a5",fontSize:12,fontWeight:500}}>{a}</span>)}
+                      </div>
+                    </div>
+                  )}
+
+                  {user.preferences.favoriteEventTypes?.length>0&&(
+                    <div>
+                      <div style={{fontSize:12,fontWeight:600,color:"#374151",marginBottom:8}}>🎊 Favourite Event Types</div>
+                      <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
+                        {user.preferences.favoriteEventTypes.map(e=>{const ev=EVENT_TYPES.find(t=>t.id===e);return <span key={e} style={{padding:"5px 12px",borderRadius:20,background:"#fff5f5",color:"#c0392b",border:"1px solid #fca5a5",fontSize:12,fontWeight:500}}>{ev?.icon} {ev?.label||e}</span>;})}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ):(
+                <div style={{textAlign:"center",padding:"30px 20px"}}>
+                  <div style={{fontSize:40,marginBottom:10}}>🍽️</div>
+                  <p style={{fontSize:13,color:"#9ca3af",marginBottom:14}}>No preferences set yet. Tell us what you like!</p>
+                  <button onClick={()=>{setShowPreferences(true);setPrefStep(0);}} style={{...S.primaryBtn,width:"auto",padding:"10px 24px",display:"inline-block"}}>Set Preferences →</button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ══════════════════════════════════════════════════════════════════════
+          ADMIN PANEL (Partner Onboarding)
+      ══════════════════════════════════════════════════════════════════════ */}
+      {view==="admin"&&user?.isAdmin&&(
+        <div style={{...S.page,...anim}}>
+          <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:20}}>
+            <h2 style={{...S.sectionTitle,marginBottom:0}}>👑 Admin Panel</h2>
+            <button onClick={()=>navigate("landing")} style={S.ghostBtn}>← Home</button>
+          </div>
+
+          {/* Admin Tabs */}
+          <div style={{display:"flex",gap:8,marginBottom:20}}>
+            {["Partners","Orders","Add Partner"].map(tab=>(
+              <button key={tab} onClick={()=>setDbTab(tab.toLowerCase().replace(" ","_"))} style={{...S.ghostBtn,background:dbTab===tab.toLowerCase().replace(" ","_")?"#c0392b":"transparent",color:dbTab===tab.toLowerCase().replace(" ","_")?"#fff":"#6b7280",borderColor:dbTab===tab.toLowerCase().replace(" ","_")?"#c0392b":"#e5e7eb"}}>{tab}</button>
+            ))}
+          </div>
+
+          {adminLoading&&<div style={{textAlign:"center",padding:40,color:"#6b7280"}}>Loading...</div>}
+
+          {/* Partners List */}
+          {dbTab==="partners"&&!adminLoading&&(
+            <div>
+              <div style={{fontSize:13,color:"#6b7280",marginBottom:12}}>{adminPartners.length} partners registered</div>
+              {adminPartners.map(p=>(
+                <div key={p.id} style={{...S.card,marginBottom:12,padding:"16px 20px"}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+                    <div>
+                      <div style={{fontSize:20,marginBottom:2}}>{p.logo||"🍽️"} <strong>{p.name}</strong></div>
+                      <div style={{fontSize:12,color:"#6b7280"}}>Owner: {p.ownerName} · ☎ {p.phone} · ✉ {p.email}</div>
+                      <div style={{fontSize:12,color:"#6b7280"}}>📍 {p.address}, {p.pincode}</div>
+                      <div style={{display:"flex",gap:4,marginTop:6,flexWrap:"wrap"}}>
+                        {(p.cuisineSpecialties||[]).map(c=><span key={c} style={{fontSize:10,padding:"2px 8px",borderRadius:10,background:"#fff5f5",color:"#c0392b",border:"1px solid #fca5a5"}}>{c}</span>)}
+                      </div>
+                    </div>
+                    <div style={{display:"flex",gap:6}}>
+                      <span style={{fontSize:11,padding:"4px 10px",borderRadius:10,background:p.active?"#f0fdf4":"#fef2f2",color:p.active?"#16a34a":"#ef4444",border:`1px solid ${p.active?"#bbf7d0":"#fca5a5"}`}}>{p.active?"Active":"Inactive"}</span>
+                      <button onClick={async()=>{await updatePartner(p.id,{active:!p.active});loadAdminData();}} style={{...S.ghostBtn,fontSize:11,padding:"4px 10px"}}>{p.active?"Deactivate":"Activate"}</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Orders List */}
+          {dbTab==="orders"&&!adminLoading&&(
+            <div>
+              <div style={{fontSize:13,color:"#6b7280",marginBottom:12}}>{adminOrders.length} orders total</div>
+              {adminOrders.map(o=>(
+                <div key={o.id} style={{...S.card,marginBottom:12,padding:"16px 20px"}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+                    <div>
+                      <div style={{fontSize:14,fontWeight:700,color:"#1f2937",marginBottom:4}}>Order #{o.id?.slice(0,8)}</div>
+                      <div style={{fontSize:12,color:"#6b7280"}}>Caterer: {o.catererName} · Event: {o.eventType} · Guests: {o.guestCount}</div>
+                      <div style={{fontSize:12,color:"#6b7280"}}>Customer: {o.customerEmail||o.customerId}</div>
+                      <div style={{fontSize:12,color:"#6b7280"}}>Address: {o.deliveryAddress}</div>
+                    </div>
+                    <div style={{textAlign:"right"}}>
+                      <div style={{fontSize:16,fontWeight:800,color:"#16a34a"}}>₹{o.totalPrice?.toLocaleString()}</div>
+                      <span style={{fontSize:11,padding:"3px 8px",borderRadius:8,background:o.status==="Confirmed"?"#f0fdf4":"#fef9c3",color:o.status==="Confirmed"?"#16a34a":"#ca8a04",border:`1px solid ${o.status==="Confirmed"?"#bbf7d0":"#fde68a"}`}}>{o.status}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {adminOrders.length===0&&<div style={{textAlign:"center",padding:40,color:"#9ca3af"}}>No orders yet</div>}
+            </div>
+          )}
+
+          {/* Add Partner Form (reuse registration form) */}
+          {dbTab==="add_partner"&&(
+            <div style={S.card}>
+              {regSuccess?<div style={{textAlign:"center"}}><div style={{fontSize:60,marginBottom:12}}>✅</div><h3 style={{fontFamily:"'Playfair Display',serif",fontSize:22,color:"#1f2937",marginBottom:8}}>Partner Added!</h3><button onClick={()=>{setRegSuccess(false);setRegForm({name:"",ownerName:"",phone:"",email:"",address:"",pincode:"",specialty:[],cuisineSpecialties:[],serviceTypes:[],priceRange:"₹₹",turnaround:"2–3 hrs"});loadAdminData();setDbTab("partners");}} style={S.primaryBtn}>View Partners</button></div>:(
+              <>
+                <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:700,marginBottom:16}}>Add New Partner</h3>
+                <div className="form-grid" style={S.formGrid}>
+                  {[["Business Name *","name","e.g. Bhojohori Manna"],["Owner Name *","ownerName","Full name"],["Phone *","phone","10-digit mobile"],["Email *","email","business@email.com"],["Address *","address","Street address"],["Pincode *","pincode","6-digit pincode"]].map(([lbl,key,ph])=>(
+                    <div key={key} style={S.fieldWrap}><label style={S.fieldLabel}>{lbl}</label>
+                      <input style={{...S.inp2,borderColor:regErrors[key]?"#ef4444":"#e5e7eb"}} value={regForm[key]} onChange={e=>setRegForm({...regForm,[key]:e.target.value})} placeholder={ph}/>
+                      {regErrors[key]&&<div style={{fontSize:11,color:"#ef4444"}}>{regErrors[key]}</div>}
+                    </div>
+                  ))}
+                </div>
+                <div style={{marginTop:16}}>
+                  <label style={S.fieldLabel}>Event Types *</label>
+                  <div style={{display:"flex",flexWrap:"wrap",gap:6,marginTop:6}}>
+                    {EVENT_TYPES.map(et=><button key={et} onClick={()=>setRegForm(f=>({...f,specialty:f.specialty.includes(et)?f.specialty.filter(s=>s!==et):[...f.specialty,et]}))} style={{padding:"6px 14px",borderRadius:10,border:`1px solid ${regForm.specialty.includes(et)?"#c0392b":"#e5e7eb"}`,background:regForm.specialty.includes(et)?"#fff5f5":"#fff",color:regForm.specialty.includes(et)?"#c0392b":"#6b7280",fontSize:12,cursor:"pointer"}}>{et}</button>)}
+                  </div>
+                  {regErrors.specialty&&<div style={{fontSize:11,color:"#ef4444",marginTop:4}}>{regErrors.specialty}</div>}
+                </div>
+                <div style={{marginTop:16}}>
+                  <label style={S.fieldLabel}>Cuisine Specialties *</label>
+                  <div style={{display:"flex",flexWrap:"wrap",gap:6,marginTop:6}}>
+                    {ALL_CUISINES.map(c=><button key={c} onClick={()=>setRegForm(f=>({...f,cuisineSpecialties:f.cuisineSpecialties.includes(c)?f.cuisineSpecialties.filter(s=>s!==c):[...f.cuisineSpecialties,c]}))} style={{padding:"6px 14px",borderRadius:10,border:`1px solid ${regForm.cuisineSpecialties.includes(c)?"#c0392b":"#e5e7eb"}`,background:regForm.cuisineSpecialties.includes(c)?"#fff5f5":"#fff",color:regForm.cuisineSpecialties.includes(c)?"#c0392b":"#6b7280",fontSize:12,cursor:"pointer"}}>{c}</button>)}
+                  </div>
+                  {regErrors.cuisineSpecialties&&<div style={{fontSize:11,color:"#ef4444",marginTop:4}}>{regErrors.cuisineSpecialties}</div>}
+                </div>
+                <div style={{marginTop:16}}>
+                  <label style={S.fieldLabel}>Service Types *</label>
+                  <div style={{display:"flex",gap:8,marginTop:6}}>
+                    {Object.values(SVC).map(svc=><button key={svc.id} onClick={()=>setRegForm(f=>({...f,serviceTypes:f.serviceTypes.includes(svc.id)?f.serviceTypes.filter(s=>s!==svc.id):[...f.serviceTypes,svc.id]}))} style={{flex:1,padding:"12px",borderRadius:12,border:`2px solid ${regForm.serviceTypes.includes(svc.id)?svc.color:"#e5e7eb"}`,background:regForm.serviceTypes.includes(svc.id)?svc.grad:"#fff",cursor:"pointer",textAlign:"center"}}><div style={{fontSize:22}}>{svc.icon}</div><div style={{fontSize:12,fontWeight:700,color:svc.color,marginTop:4}}>{svc.label}</div></button>)}
+                  </div>
+                  {regErrors.serviceTypes&&<div style={{fontSize:11,color:"#ef4444",marginTop:4}}>{regErrors.serviceTypes}</div>}
+                </div>
+                <div style={{display:"flex",gap:12,marginTop:16}}>
+                  <div style={{flex:1}}><label style={S.fieldLabel}>Price Range</label><select value={regForm.priceRange} onChange={e=>setRegForm({...regForm,priceRange:e.target.value})} style={{...S.inp2,width:"100%"}}>{["₹","₹₹","₹₹₹","₹₹₹₹"].map(p=><option key={p} value={p}>{p}</option>)}</select></div>
+                  <div style={{flex:1}}><label style={S.fieldLabel}>Turnaround</label><select value={regForm.turnaround} onChange={e=>setRegForm({...regForm,turnaround:e.target.value})} style={{...S.inp2,width:"100%"}}>{["1–2 hrs","2–3 hrs","3–4 hrs","4–6 hrs","Next day"].map(t=><option key={t} value={t}>{t}</option>)}</select></div>
+                </div>
+                <button onClick={submitReg} style={{...S.primaryBtn,marginTop:20}}>Add Partner ✅</button>
+              </>
+              )}
+            </div>
+          )}
         </div>
       )}
 
