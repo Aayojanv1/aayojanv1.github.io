@@ -112,8 +112,9 @@ async def chat(req: ChatRequest):
     """Main conversational endpoint — used by both React and Flutter."""
     gemini: GeminiClient = app.state.gemini
     try:
+        messages_dicts = [{"role": m.role, "content": m.content} for m in req.messages]
         reply = await gemini.chat(
-            messages=req.messages,
+            messages=messages_dicts,
             system_prompt=req.system_prompt,
         )
         return ChatResponse(reply=reply, session_id=req.session_id)
