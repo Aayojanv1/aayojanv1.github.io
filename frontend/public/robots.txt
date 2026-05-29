@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aayojanv1.github.io/sitemap.xml
+Sitemap: https://aayojan.online/sitemap.xml
