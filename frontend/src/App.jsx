@@ -1430,16 +1430,16 @@ export default function AayojanApp(){
                 <button onClick={resetApp} style={{background:"none",border:"none",color:"#9ca3af",cursor:"pointer",fontSize:10}}>Change ×</button>
               </div>
             </div>}
-            <div style={{display:"flex",alignItems:"center",justifyContent:"center",padding:"12px 16px 4px"}}>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"center",padding:"12px 8px 4px",overflowX:"auto",WebkitOverflowScrolling:"touch"}}>
               {STEPS.map((s,i)=>(
-                <div key={i} style={{display:"flex",alignItems:"center"}}>
-                  <div style={{width:28,height:28,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:700,color:"#fff",transition:"all 0.3s",zIndex:1,background:i<=step?accent:"#d1d5db",boxShadow:i===step?`0 0 0 3px ${accent}33`:"none",transform:i===step?"scale(1.15)":"scale(1)"}}>{i<step?"✓":i+1}</div>
-                  {i<STEPS.length-1&&<div style={{width:32,height:2,background:i<step?accent:"#e5e7eb",transition:"background 0.3s"}}/>}
+                <div key={i} style={{display:"flex",alignItems:"center",flexShrink:0}}>
+                  <div style={{width:24,height:24,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,fontWeight:700,color:"#fff",transition:"all 0.3s",zIndex:1,background:i<=step?accent:"#d1d5db",boxShadow:i===step?`0 0 0 3px ${accent}33`:"none",transform:i===step?"scale(1.15)":"scale(1)"}}>{i<step?"✓":i+1}</div>
+                  {i<STEPS.length-1&&<div style={{width:20,height:2,background:i<step?accent:"#e5e7eb",transition:"background 0.3s"}}/>}
                 </div>
               ))}
             </div>
-            <div style={{display:"flex",justifyContent:"center",padding:"3px 16px 16px"}}>
-              {STEPS.map((s,i)=><span key={i} style={{width:68,textAlign:"center",fontSize:9,fontWeight:600,letterSpacing:"0.05em",textTransform:"uppercase",color:i===step?accent:"#9ca3af"}}>{s}</span>)}
+            <div style={{display:"flex",justifyContent:"center",padding:"3px 4px 14px",overflowX:"auto",WebkitOverflowScrolling:"touch"}}>
+              {STEPS.map((s,i)=><span key={i} style={{minWidth:44,maxWidth:56,flex:"1 1 auto",textAlign:"center",fontSize:8,fontWeight:600,letterSpacing:"0.03em",textTransform:"uppercase",color:i===step?accent:"#9ca3af"}}>{s}</span>)}
             </div>
           </>}
 
@@ -1448,7 +1448,7 @@ export default function AayojanApp(){
             {step===0&&<div>
               <h2 style={S.cardTitle}>Choose Your Service</h2>
               <p style={{fontSize:14,color:"#6b7280",marginBottom:20}}>How would you like your catering?</p>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
+              <div className="service-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
                 {Object.values(SVC).map(svc=>(
                   <button key={svc.id} onClick={()=>{setServiceType(svc.id);setStep(1);}} style={{border:`2px solid ${svc.border}`,borderRadius:16,padding:"22px 18px",cursor:"pointer",background:svc.grad,textAlign:"left",display:"flex",flexDirection:"column",gap:8}}>
                     <div style={{width:50,height:50,borderRadius:12,background:`rgba(${svc.accentRGB},0.12)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:24}}>{svc.icon}</div>
@@ -1477,16 +1477,19 @@ export default function AayojanApp(){
                 </div>
               </div>
               {customerPincode&&PINCODE_COORDS[customerPincode]&&<div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"8px 14px",fontSize:13,color:"#16a34a",marginBottom:12}}>✅ <strong>{PINCODE_COORDS[customerPincode].area}</strong></div>}
-              <button onClick={handlePincodeNext} disabled={customerPincode.length!==6} style={{...S.primaryBtn,background:accentGrad,opacity:customerPincode.length===6?1:0.4}}>Find Caterers Near Me →</button>
+              <div style={{display:"flex",gap:10}}>
+                <button onClick={()=>setStep(0)} style={S.secondaryBtn}>← Back</button>
+                <button onClick={handlePincodeNext} disabled={customerPincode.length!==6} style={{...S.primaryBtn,marginTop:0,flex:1,background:accentGrad,opacity:customerPincode.length===6?1:0.4}}>Find Caterers Near Me →</button>
+              </div>
             </div>}
 
             {/* Step 2: Event + Dietary */}
             {step===2&&<div>
               <h2 style={S.cardTitle}>What's the occasion?</h2>
               <p style={{fontSize:14,color:"#6b7280",marginBottom:18}}>Near {customerCoords?.area} · {stCfg?.label}</p>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:20}}>
-                {EVENT_TYPES.map(e=><button key={e.id} onClick={()=>{setEventType(e.id);if(e.id==="religious")setDietaryPref("satvik");else if(dietaryPref==="satvik"&&e.id!=="religious")setDietaryPref("any");}} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:7,padding:"18px 12px",border:`2px solid ${eventType===e.id?accent:"var(--border-color, #e5e7eb)"}`,borderRadius:12,cursor:"pointer",background:eventType===e.id?"#fff5f5":"var(--bg-card, #fff)",transform:eventType===e.id?"translateY(-2px)":"none",transition:"all 0.2s"}}>
-                  <span style={{fontSize:32}}>{e.icon}</span><span style={{fontSize:14,fontWeight:700,color:"var(--text-primary, #1f2937)"}}>{e.label}</span><span style={{fontSize:11,color:"#9ca3af",textAlign:"center"}}>{e.desc}</span>
+              <div className="event-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:20}}>
+                {EVENT_TYPES.map(e=><button key={e.id} onClick={()=>{setEventType(e.id);if(e.id==="religious")setDietaryPref("satvik");else if(dietaryPref==="satvik"&&e.id!=="religious")setDietaryPref("any");}} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:5,padding:"14px 10px",border:`2px solid ${eventType===e.id?accent:"var(--border-color, #e5e7eb)"}`,borderRadius:12,cursor:"pointer",background:eventType===e.id?"#fff5f5":"var(--bg-card, #fff)",transform:eventType===e.id?"translateY(-2px)":"none",transition:"all 0.2s"}}>
+                  <span style={{fontSize:28}}>{e.icon}</span><span style={{fontSize:13,fontWeight:700,color:"var(--text-primary, #1f2937)"}}>{e.label}</span><span style={{fontSize:10,color:"#9ca3af",textAlign:"center"}}>{e.desc}</span>
                 </button>)}
               </div>
 
@@ -1497,17 +1500,14 @@ export default function AayojanApp(){
                 {eventType==="religious"&&dietaryPref!=="veg"&&dietaryPref!=="jain"&&dietaryPref!=="satvik"&&dietaryPref!=="vegan"&&(
                   <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"8px 12px",fontSize:12,color:"#92400e",marginBottom:10}}>⚠️ Religious ceremonies typically require vegetarian/satvik food. We've set Satvik as default — you can change if needed.</div>
                 )}
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+                <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
                   {DIETARY_TYPES.map(d=>{
                     const selected=dietaryPref===d.id;
                     const isVegType=["veg","jain","satvik","vegan"].includes(d.id);
-                    return <button key={d.id} onClick={()=>setDietaryPref(d.id)} style={{display:"flex",alignItems:"center",gap:10,padding:"12px 14px",border:`2px solid ${selected?d.color:"var(--border-color, #e5e7eb)"}`,borderRadius:10,cursor:"pointer",background:selected?`${d.color}10`:"var(--bg-card, #fff)",transition:"all 0.2s",textAlign:"left"}}>
-                      <span style={{fontSize:22,flexShrink:0}}>{d.icon}</span>
-                      <div>
-                        <div style={{fontSize:13,fontWeight:700,color:selected?d.color:"var(--text-primary, #1f2937)"}}>{d.label}</div>
-                        <div style={{fontSize:10,color:"#9ca3af",lineHeight:1.3}}>{d.desc}</div>
-                      </div>
-                      {isVegType&&<span style={{fontSize:9,padding:"2px 6px",borderRadius:4,background:"#f0fdf4",color:"#16a34a",border:"1px solid #bbf7d0",fontWeight:700,flexShrink:0,marginLeft:"auto"}}>VEG</span>}
+                    return <button key={d.id} onClick={()=>setDietaryPref(d.id)} style={{display:"flex",alignItems:"center",gap:6,padding:"8px 12px",border:`2px solid ${selected?d.color:"var(--border-color, #e5e7eb)"}`,borderRadius:20,cursor:"pointer",background:selected?`${d.color}15`:"var(--bg-card, #fff)",transition:"all 0.2s",fontSize:13,fontWeight:selected?700:500,color:selected?d.color:"var(--text-primary, #6b7280)"}}>
+                      <span style={{fontSize:16}}>{d.icon}</span>
+                      {d.label}
+                      {isVegType&&<span style={{fontSize:8,padding:"1px 5px",borderRadius:4,background:"#f0fdf4",color:"#16a34a",border:"1px solid #bbf7d0",fontWeight:700}}>VEG</span>}
                     </button>;
                   })}
                 </div>
@@ -1614,7 +1614,7 @@ export default function AayojanApp(){
               </div>
 
               {/* Pipeline stats */}
-              {quotationRequest?.pipeline&&<div style={{display:"flex",gap:6,alignItems:"center",background:"var(--bg-secondary, #f9fafb)",border:"1px solid var(--border-color, #e5e7eb)",borderRadius:10,padding:"10px 14px",marginBottom:14,flexWrap:"wrap"}}>
+              {quotationRequest?.pipeline&&<div className="pipeline-stats" style={{display:"flex",gap:6,alignItems:"center",background:"var(--bg-secondary, #f9fafb)",border:"1px solid var(--border-color, #e5e7eb)",borderRadius:10,padding:"10px 14px",marginBottom:14,flexWrap:"wrap"}}>
                 <span style={{fontSize:11,fontWeight:700,color:"var(--text-secondary, #6b7280)"}}>🔍 Pipeline:</span>
                 {[["🗂️",quotationRequest.pipeline.totalCaterers,"Total"],["✅",quotationRequest.pipeline.afterRetrieval,"Eligible"],["📊",quotationRequest.pipeline.afterRanking,"Ranked"],["🏆",quotationRequest.pipeline.finalCount,"Selected"]].map(([icon,val,lbl])=>(
                   <span key={lbl} style={{fontSize:11,padding:"2px 8px",borderRadius:8,background:"#fff5f5",color:accent,border:"1px solid #fca5a5",fontWeight:600}}>{icon} {val} {lbl}</span>
@@ -1644,10 +1644,10 @@ export default function AayojanApp(){
               </div>
 
               {/* Summary */}
-              <div style={{display:"flex",justifyContent:"space-around",background:"#fff5f5",border:"1px solid #fde8d8",borderRadius:10,padding:"10px",marginBottom:12}}>
+              <div className="summary-bar" style={{display:"flex",justifyContent:"space-around",background:"#fff5f5",border:"1px solid #fde8d8",borderRadius:10,padding:"10px",marginBottom:12}}>
                 {[["📍",customerPincode,"Pincode"],["👥",guestCount,"Guests"],[`💰`,`₹${perPlateBudget}`,serviceType==="full"?"Per Plate":"Per Portion"],["🍽️",selectedItems.length,"Dishes"],[DIETARY_TYPES.find(d=>d.id===dietaryPref)?.icon||"🍽️",DIETARY_TYPES.find(d=>d.id===dietaryPref)?.label||"Any","Diet"]].map(([icon,val,lbl])=>(
-                  <div key={lbl} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:1}}>
-                    <span style={{fontSize:14}}>{icon}</span><span style={{fontSize:14,fontWeight:800,color:accent}}>{val}</span><span style={{fontSize:9,color:"#9ca3af",textTransform:"uppercase",letterSpacing:"0.06em"}}>{lbl}</span>
+                  <div key={lbl} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:1,minWidth:0}}>
+                    <span style={{fontSize:12}}>{icon}</span><span style={{fontSize:12,fontWeight:800,color:accent}}>{val}</span><span style={{fontSize:8,color:"#9ca3af",textTransform:"uppercase",letterSpacing:"0.04em"}}>{lbl}</span>
                   </div>
                 ))}
               </div>
@@ -2317,9 +2317,9 @@ const S={
   root:{minHeight:"100vh",background:"var(--bg-secondary)",fontFamily:"'DM Sans',sans-serif",color:"var(--text-primary)",paddingBottom:60,position:"relative",transition:"background 0.3s ease, color 0.3s ease"},
   bengaliTopBorder:{height:6,background:"linear-gradient(90deg,#c0392b,#e74c3c,#f97316,#e74c3c,#c0392b)",backgroundSize:"200% 100%"},
   bgPattern:{position:"fixed",top:0,left:0,right:0,bottom:0,backgroundImage:"radial-gradient(circle at 20% 20%,rgba(192,57,43,0.03) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(192,57,43,0.03) 0%,transparent 50%)",pointerEvents:"none"},
-  header:{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 24px",borderBottom:"1px solid var(--border-light)",position:"sticky",top:0,background:"var(--bg-header)",backdropFilter:"blur(10px)",zIndex:100,boxShadow:"var(--shadow-header)"},
-  page:{maxWidth:820,margin:"0 auto",padding:"24px 18px"},
-  card:{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:18,padding:"28px 32px",boxShadow:"var(--shadow-card)",transition:"background 0.3s ease, border-color 0.3s ease"},
+  header:{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"12px 14px",borderBottom:"1px solid var(--border-light)",position:"sticky",top:0,background:"var(--bg-header)",backdropFilter:"blur(10px)",zIndex:100,boxShadow:"var(--shadow-header)",gap:8,flexWrap:"wrap"},
+  page:{maxWidth:820,margin:"0 auto",padding:"24px 14px",overflowX:"hidden"},
+  card:{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:18,padding:"24px 18px",boxShadow:"var(--shadow-card)",transition:"background 0.3s ease, border-color 0.3s ease",overflowX:"hidden",wordBreak:"break-word"},
   cardTitle:{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:700,marginBottom:6,color:"var(--text-primary)"},
   sectionTitle:{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"var(--text-primary)",marginBottom:20},
   ghostBtn:{background:"var(--bg-card)",border:"1px solid var(--border-default)",color:"var(--text-secondary)",padding:"7px 12px",borderRadius:8,fontSize:12,cursor:"pointer",boxShadow:"0 1px 3px rgba(0,0,0,0.05)"},
