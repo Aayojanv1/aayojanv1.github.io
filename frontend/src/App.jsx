@@ -420,6 +420,15 @@ export default function AayojanApp(){
   useEffect(()=>{DB.init();setAnimIn(false);const t=setTimeout(()=>setAnimIn(true),60);return()=>clearTimeout(t);},[view,step]);
   useEffect(()=>{if(serviceType) setPerPlateBudget(SVC[serviceType].priceRange.min+100);},[serviceType]);
 
+  // Keep-alive ping to prevent Render cold starts (every 14 min)
+  useEffect(()=>{
+    const API_URL=import.meta.env.VITE_API_URL||"http://localhost:8000";
+    const ping=()=>fetch(`${API_URL}/health`).catch(()=>{});
+    ping(); // warm up on app load
+    const interval=setInterval(ping,14*60*1000);
+    return()=>clearInterval(interval);
+  },[]);
+
   // Show preferences modal for first-time users (no preferences saved)
   const [prefShownOnce,setPrefShownOnce]=useState(false);
   useEffect(()=>{
