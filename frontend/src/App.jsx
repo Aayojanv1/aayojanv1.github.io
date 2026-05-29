@@ -304,7 +304,7 @@ function AayojanChatbot({onOrderCreated,user,onLoginRequired,allCaterers,onStart
 1) If the user asks about anything NOT related to food, catering, events, menus, or party planning — politely redirect: "I'm your catering assistant! Let's plan your perfect event 🍽️ Tell me about your guests, cuisine, and budget."
 2) If the user uses profanity or abusive language — respond: "Let's keep things friendly! 😊 I'm here to help plan amazing food for your event. What kind of catering do you need?"
 3) Do NOT engage with off-topic conversations (politics, tech, jokes, personal questions, etc.) — always steer back to catering.
-4) Keep replies to 2-3 sentences. Be warm, suggest Bengali dishes (Sorshe Ilish, Kosha Mangsho, Mishti Doi, Rasgolla).
+4) Keep replies to 2-3 sentences. Be warm, suggest Bengali dishes (Sorshe Ilish, Kosha Mangsho, Mishti Doi, Rasgolla). Use vivid, appetizing food descriptions ("aromatic slow-cooked", "melt-in-your-mouth", "crispy golden", "creamy rich"). When listing menu items, format EACH item on its own line as: "- Item Name — ₹price/plate" (this enables rich card display). Group items under bold headers like "**🥘 Starters:**", "**🍛 Main Course:**", "**🍮 Desserts:**".
 5) Collect: service type (full catering 30+ guests with staff/cutlery, OR bulk delivery any quantity packed), event type, guest count, per-plate budget ₹350-1800 full / ₹120-600 bulk, menu items, pincode (700156-Action Area I, 700157-Action Area II, 700135-Rajarhat, 700161-Action Area III, 700136-Baguiati, 700059-Salt Lake V, 700091-Salt Lake, 700105-EM Bypass, 700107-Gariahat, 700160-Eco Park).
 6) COST ESTIMATION (based on 2025 Kolkata market rates — Arsalan, Aminia, local caterers): When user asks for cost/estimate or discusses menu, provide realistic estimates:
    POPULAR DISH RATES (bulk delivery per plate, Kolkata 2025):
@@ -402,10 +402,36 @@ function AayojanChatbot({onOrderCreated,user,onLoginRequired,allCaterers,onStart
     setMsgs(prev=>[...prev,{role:"assistant",text:`✅ **Order placed!** ID: **${order.id}**\n\nWe'll contact caterers and reach you at ${user.phone} within 48 hours. Dhonnobad! 🙏`}]);setOrderData(null);
   };
 
-  const renderText=(text)=>text.split('\n').map((line,i)=>{
-    const parts=line.split(/(\*\*[^*]+\*\*)/g);
-    return(<span key={i}>{parts.map((p,j)=>p.startsWith('**')&&p.endsWith('**')?<strong key={j} style={{color:"var(--text-primary)"}}>{p.slice(2,-2)}</strong>:<span key={j}>{p}</span>)}{i<text.split('\n').length-1&&<br/>}</span>);
-  });
+  const FOOD_EMOJIS={"biryani":"🍚","rice":"🍚","pulao":"🍚","chicken":"🍗","mutton":"🍖","fish":"🐟","ilish":"🐟","chingri":"🦐","prawn":"🦐","paneer":"🧀","dal":"🫘","luchi":"🫓","roti":"🫓","naan":"🫓","paratha":"🫓","starter":"🥘","cutlet":"🍢","fry":"🍟","tikka":"🍢","kebab":"🍢","chap":"🍖","chaap":"🍖","kosha":"🍖","dessert":"🍮","mishti":"🍮","rasgolla":"🍡","gulab":"🍩","ice cream":"🍨","sweet":"🍬","drink":"🥤","mocktail":"🍹","lassi":"🥛","salad":"🥗","soup":"🍲","curry":"🍛","dosa":"🫓","samosa":"🥟","roll":"🌯","chowmein":"🍜"};
+  const getFoodEmoji=(text)=>{const t=text.toLowerCase();for(const[k,v]of Object.entries(FOOD_EMOJIS))if(t.includes(k))return v;return"🍽️";};
+  const renderText=(text)=>{
+    const lines=text.split('\n');
+    return lines.map((line,i)=>{
+      // Detect menu item lines: "- Item Name — ₹XX" or "• Item — ₹XX" or "- 🍗 Item: ₹XX"
+      const menuMatch=line.match(/^[\s]*[-•●▪]\s*(.+?)[\s]*[—\-–:]\s*(₹[\d,]+-?₹?[\d,]*\/?(?:plate|portion|pax)?.*?)$/i);
+      if(menuMatch){
+        const itemName=menuMatch[1].replace(/^[🍗🍚🍖🐟🦐🧀🍛🍮🍡🍢🥘🍹🥤🫓🍲🥟🌯🍜🍟🍨🍩🍬🥗🫘🍡]\s*/,"");
+        const price=menuMatch[2];
+        const emoji=getFoodEmoji(itemName);
+        return(<div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 12px",margin:"4px 0",borderRadius:12,background:"linear-gradient(135deg,rgba(192,57,43,0.04),rgba(231,76,60,0.08))",border:"1px solid rgba(192,57,43,0.12)",transition:"transform 0.2s"}}>
+          <span style={{fontSize:22,filter:"drop-shadow(0 1px 2px rgba(0,0,0,0.1))"}}>{emoji}</span>
+          <div style={{flex:1}}>
+            <div style={{fontWeight:700,fontSize:13,color:"var(--text-primary)"}}>{itemName}</div>
+            <div style={{fontSize:11,color:"#c0392b",fontWeight:600,marginTop:1}}>{price}</div>
+          </div>
+          <div style={{width:6,height:6,borderRadius:"50%",background:"#4ade80",boxShadow:"0 0 4px #4ade80"}}/>
+        </div>);
+      }
+      // Detect section headers like "### Starters" or "**Starters:**"
+      const headerMatch=line.match(/^[\s]*(?:#{1,3}\s*|(?:\*\*))(.+?)(?:\*\*)?:?\s*$/);
+      if(headerMatch&&line.includes("**")&&(line.toLowerCase().includes("starter")||line.toLowerCase().includes("main")||line.toLowerCase().includes("dessert")||line.toLowerCase().includes("drink")||line.toLowerCase().includes("bread")||line.toLowerCase().includes("side")||line.toLowerCase().includes("menu")||line.toLowerCase().includes("package"))){
+        return(<div key={i} style={{fontSize:12,fontWeight:800,color:"#c0392b",textTransform:"uppercase",letterSpacing:"0.06em",marginTop:10,marginBottom:4,paddingBottom:4,borderBottom:"1px dashed rgba(192,57,43,0.2)"}}>{headerMatch[1].replace(/\*\*/g,"")}</div>);
+      }
+      // Regular text with bold support
+      const parts=line.split(/(\*\*[^*]+\*\*)/g);
+      return(<span key={i}>{parts.map((p,j)=>p.startsWith('**')&&p.endsWith('**')?<strong key={j} style={{color:"var(--text-primary)"}}>{p.slice(2,-2)}</strong>:<span key={j}>{p}</span>)}{i<lines.length-1&&<br/>}</span>);
+    });
+  };
 
   return(
     <div style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:18,overflow:"hidden",boxShadow:"0 8px 30px rgba(192,57,43,0.12)",display:"flex",flexDirection:"column",height:"76vh",maxHeight:660}}>
