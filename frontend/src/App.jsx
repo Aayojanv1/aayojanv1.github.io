@@ -328,7 +328,7 @@ export default function AayojanApp(){
   const [animIn,setAnimIn]=useState(true);
 
   // Auth — Firebase
-  const {user,loading:authLoading,loginWithGoogle,loginWithEmail,signupWithEmail,logout}=useAuth();
+  const {user,loading:authLoading,loginWithGoogle,loginWithEmail,signupWithEmail,logout,refreshUser}=useAuth();
   const [showLogin,setShowLogin]=useState(false);
   const [loginMode,setLoginMode]=useState("login"); // "login"|"signup"
   const [loginEmail,setLoginEmail]=useState("");
@@ -462,6 +462,7 @@ export default function AayojanApp(){
     setPrefSaving(true);
     try{
       await updateUserPreferences(user.uid, prefData);
+      await refreshUser();
       setShowPreferences(false);
     }catch(e){ console.error("Pref save error:",e); }
     finally{ setPrefSaving(false); }
@@ -500,6 +501,7 @@ export default function AayojanApp(){
     setProfileSaving(true);
     try{
       await updateUserProfile(user.uid, profileForm);
+      await refreshUser();
       setProfileEdit(false);
     }catch(e){ console.error(e); }
     finally{ setProfileSaving(false); }

@@ -21,20 +21,24 @@ export function useAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const buildUser = async (fbUser) => {
+    const profile = await getUserProfile(fbUser.uid);
+    return {
+      uid: fbUser.uid,
+      displayName: fbUser.displayName || profile?.displayName || "",
+      email: fbUser.email || "",
+      phone: profile?.phone || "",
+      photoURL: fbUser.photoURL || "",
+      provider: fbUser.providerData[0]?.providerId || "unknown",
+      isAdmin: ADMIN_EMAILS.includes(fbUser.email?.toLowerCase()),
+      ...profile,
+    };
+  };
+
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (fbUser) => {
       if (fbUser) {
-        const profile = await getUserProfile(fbUser.uid);
-        setUser({
-          uid: fbUser.uid,
-          displayName: fbUser.displayName || profile?.displayName || "",
-          email: fbUser.email || "",
-          phone: profile?.phone || "",
-          photoURL: fbUser.photoURL || "",
-          provider: fbUser.providerData[0]?.providerId || "unknown",
-          isAdmin: ADMIN_EMAILS.includes(fbUser.email?.toLowerCase()),
-          ...profile,
-        });
+        setUser(await buildUser(fbUser));
       } else {
         setUser(null);
       }
@@ -42,6 +46,11 @@ export function useAuth() {
     });
     return unsub;
   }, []);
+
+  const refreshUser = async () => {
+    const fbUser = auth.currentUser;
+    if (fbUser) setUser(await buildUser(fbUser));
+  };
 
   const loginWithGoogle = async () => {
     const result = await signInWithPopup(auth, googleProvider);
@@ -66,7 +75,7 @@ export function useAuth() {
     setUser(null);
   };
 
-  return { user, loading, loginWithGoogle, loginWithEmail, signupWithEmail, logout };
+  return { user, loading, loginWithGoogle, loginWithEmail, signupWithEmail, logout, refreshUser };
 }
 
 // ─── User Profile (Firestore) ───────────────────────────────────────────────
