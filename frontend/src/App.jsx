@@ -61,6 +61,24 @@ const MENU_ITEMS={
   Beverages:["Aam Panna","Thandai","Lassi","Soft Drinks","Masala Chai","Fresh Coconut Water"],
 };
 
+// Non-veg / egg / onion-garlic tags for dietary filtering
+const NON_VEG_ITEMS=new Set(["Fish Fry","Prawn Cocktail","Chicken Cutlet","Sorshe Ilish","Chingri Malai Curry","Kosha Mangsho","Mutton Curry","Kolkata Biryani"]);
+const EGG_ITEMS=new Set(["Egg Devil"]);
+const ONION_GARLIC_ITEMS=new Set(["Dal Makhani","Paneer Butter Masala","Tandoori Roti","Naan","Kosha Mangsho","Mutton Curry","Chicken Cutlet","Fish Fry"]);
+const DAIRY_ITEMS=new Set(["Mishti Doi","Lassi","Payesh","Paneer Butter Masala","Ice Cream Counter","Curd Rice","Malpua","Gulab Jamun"]);
+
+function filterMenuByDiet(items,diet){
+  if(diet==="any"||diet==="nonveg") return items;
+  return items.filter(item=>{
+    if(diet==="veg") return !NON_VEG_ITEMS.has(item)&&!EGG_ITEMS.has(item);
+    if(diet==="eggetarian") return !NON_VEG_ITEMS.has(item);
+    if(diet==="jain") return !NON_VEG_ITEMS.has(item)&&!EGG_ITEMS.has(item)&&!ONION_GARLIC_ITEMS.has(item);
+    if(diet==="satvik") return !NON_VEG_ITEMS.has(item)&&!EGG_ITEMS.has(item)&&!ONION_GARLIC_ITEMS.has(item);
+    if(diet==="vegan") return !NON_VEG_ITEMS.has(item)&&!EGG_ITEMS.has(item)&&!DAIRY_ITEMS.has(item);
+    return true;
+  });
+}
+
 const EVENT_TYPES=[
   {id:"wedding",label:"Wedding",icon:"💍",desc:"Biye, annaprasan & grand receptions"},
   {id:"party",label:"Party",icon:"🎉",desc:"Birthday, anniversary & get-togethers"},
@@ -1524,22 +1542,48 @@ export default function AayojanApp(){
               </div>
               <div style={{display:"flex",gap:10,marginTop:20}}>
                 <button onClick={()=>setStep(2)} style={S.secondaryBtn}>← Back</button>
-                <button onClick={()=>setStep(4)} disabled={serviceType==="full"&&guestCount<30} style={{...S.primaryBtn,marginTop:0,flex:1,background:accentGrad,opacity:(serviceType==="full"&&guestCount<30)?0.4:1}}>Continue to Menu →</button>
+                <button onClick={()=>{
+                  // Clear any selected items that don't match current dietary filter
+                  if(dietaryPref!=="any"){
+                    setSelectedItems(prev=>prev.filter(item=>{
+                      const allItems=Object.values(MENU_ITEMS).flat();
+                      if(!allItems.includes(item)) return true; // keep custom items
+                      return filterMenuByDiet([item],dietaryPref).length>0;
+                    }));
+                  }
+                  setStep(4);
+                }} disabled={serviceType==="full"&&guestCount<30} style={{...S.primaryBtn,marginTop:0,flex:1,background:accentGrad,opacity:(serviceType==="full"&&guestCount<30)?0.4:1}}>Continue to Menu →</button>
               </div>
             </div>}
 
             {/* Step 4: Menu */}
             {step===4&&<div>
               <h2 style={S.cardTitle}>Build Your Menu</h2>
-              <p style={{fontSize:14,color:"#6b7280",marginBottom:18}}>{selectedItems.length} selected · Budget: <span style={{color:accent,fontWeight:700}}>₹{perPlateBudget}/{serviceType==="full"?"plate":"portion"}</span></p>
-              {Object.entries(MENU_ITEMS).map(([cat,items])=>(
+              <p style={{fontSize:14,color:"#6b7280",marginBottom:12}}>{selectedItems.length} selected · Budget: <span style={{color:accent,fontWeight:700}}>₹{perPlateBudget}/{serviceType==="full"?"plate":"portion"}</span></p>
+
+              {/* Dietary badge + change option */}
+              {(()=>{const dt=DIETARY_TYPES.find(d=>d.id===dietaryPref);return dt?(
+                <div style={{display:"flex",alignItems:"center",gap:10,background:dietaryPref==="any"?"var(--bg-secondary, #f9fafb)":`${dt.color}10`,border:`1.5px solid ${dt.color}40`,borderRadius:10,padding:"10px 14px",marginBottom:16}}>
+                  <span style={{fontSize:22}}>{dt.icon}</span>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:13,fontWeight:700,color:dt.color}}>{dt.label}</div>
+                    <div style={{fontSize:11,color:"var(--text-secondary, #6b7280)"}}>{dt.desc}</div>
+                  </div>
+                  <button onClick={()=>setStep(2)} style={{fontSize:11,padding:"5px 12px",borderRadius:8,background:"var(--bg-card, #fff)",border:"1px solid var(--border-color, #e5e7eb)",color:"var(--text-secondary, #6b7280)",cursor:"pointer",fontWeight:600}}>Change ✏️</button>
+                </div>
+              ):null;})()}
+
+              {Object.entries(MENU_ITEMS).map(([cat,items])=>{
+                const filtered=filterMenuByDiet(items,dietaryPref);
+                if(filtered.length===0) return null;
+                return(
                 <div key={cat} style={{marginBottom:18}}>
                   <div style={{fontSize:11,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",color:accent,marginBottom:8,paddingBottom:5,borderBottom:`1px solid #fde8d8`}}>{cat}</div>
                   <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-                    {items.map(item=><button key={item} onClick={()=>toggleItem(item)} style={{padding:"5px 12px",borderRadius:16,fontSize:12,fontWeight:500,cursor:"pointer",border:"1px solid",transition:"all 0.15s",background:selectedItems.includes(item)?accent:"#fff",color:selectedItems.includes(item)?"#fff":"#374151",borderColor:selectedItems.includes(item)?accent:"#e5e7eb"}}>{selectedItems.includes(item)&&"✓ "}{item}</button>)}
+                    {filtered.map(item=><button key={item} onClick={()=>toggleItem(item)} style={{padding:"5px 12px",borderRadius:16,fontSize:12,fontWeight:500,cursor:"pointer",border:"1px solid",transition:"all 0.15s",background:selectedItems.includes(item)?accent:"var(--bg-card, #fff)",color:selectedItems.includes(item)?"#fff":"var(--text-primary, #374151)",borderColor:selectedItems.includes(item)?accent:"var(--border-color, #e5e7eb)"}}>{selectedItems.includes(item)&&"✓ "}{item}</button>)}
                   </div>
                 </div>
-              ))}
+              );})}
               <div style={{display:"flex",gap:8,marginTop:14,marginBottom:12}}>
                 <input value={customItem} onChange={e=>setCustomItem(e.target.value)} onKeyDown={e=>e.key==="Enter"&&addCustomItem()} placeholder="Add custom dish..." style={{flex:1,padding:"10px 14px",background:"#fff",border:"1px solid #e5e7eb",borderRadius:9,color:"#1f2937",fontSize:13,outline:"none"}}/>
                 <button onClick={addCustomItem} style={{padding:"10px 16px",background:"#fff5f5",border:"1px solid #fca5a5",borderRadius:9,color:accent,fontWeight:700,fontSize:13,cursor:"pointer"}}>+ Add</button>
