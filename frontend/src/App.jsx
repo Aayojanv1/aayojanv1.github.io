@@ -2291,9 +2291,153 @@ export default function AayojanApp(){
         </div>
       )}
 
+      {/* ══════════════════════════════════════════════════════════════════════
+          LEGAL PAGES
+      ══════════════════════════════════════════════════════════════════════ */}
+      {view==="privacy"&&(
+        <div style={{...S.page,...anim}}>
+          <button onClick={()=>navigate("landing")} style={{...S.secondaryBtn,marginBottom:20}}>← Back to Home</button>
+          <div style={S.card}>
+            <h1 style={{...S.cardTitle,fontSize:22,marginBottom:16}}>Privacy Policy</h1>
+            <p style={{fontSize:12,color:"#9ca3af",marginBottom:16}}>Last updated: 29 May 2025</p>
+            <div style={{fontSize:13,color:"var(--text-secondary)",lineHeight:1.8}}>
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>1. Information We Collect</h3>
+              <p>When you use Aayojan, we may collect:</p>
+              <ul style={{paddingLeft:20,margin:"8px 0"}}>
+                <li>Account information (name, email, phone number) via Google Sign-In or email registration</li>
+                <li>Event details you provide (event type, guest count, menu preferences, dietary needs, delivery address, pincode)</li>
+                <li>Order history and quotation requests</li>
+                <li>Device and browser information for analytics</li>
+              </ul>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>2. How We Use Your Information</h3>
+              <ul style={{paddingLeft:20,margin:"8px 0"}}>
+                <li>To match you with suitable caterers based on your requirements</li>
+                <li>To send quotation requests to caterers on your behalf</li>
+                <li>To process and fulfill your orders</li>
+                <li>To communicate order updates via WhatsApp/email</li>
+                <li>To improve our AI matching algorithms</li>
+              </ul>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>3. Data Sharing</h3>
+              <p>We share your event requirements (NOT personal contact info) with caterers during the bidding phase. Your identity is revealed to a caterer only after you select them and place an order.</p>
+              <p style={{marginTop:8}}>We do NOT sell your data to third parties.</p>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>4. Data Storage</h3>
+              <p>Your data is stored securely on Google Firebase (Firestore) servers. We use Firebase Authentication for secure login. Data is retained for as long as your account is active.</p>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>5. Your Rights</h3>
+              <ul style={{paddingLeft:20,margin:"8px 0"}}>
+                <li>Access: Request a copy of your personal data</li>
+                <li>Deletion: Request deletion of your account and associated data</li>
+                <li>Correction: Update inaccurate information via your profile</li>
+              </ul>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>6. Cookies & Analytics</h3>
+              <p>We use Firebase Analytics to understand usage patterns. No third-party advertising cookies are used.</p>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>7. Contact</h3>
+              <p>For privacy concerns, email us at: <strong>privacy@aayojan.in</strong></p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {view==="terms"&&(
+        <div style={{...S.page,...anim}}>
+          <button onClick={()=>navigate("landing")} style={{...S.secondaryBtn,marginBottom:20}}>← Back to Home</button>
+          <div style={S.card}>
+            <h1 style={{...S.cardTitle,fontSize:22,marginBottom:16}}>Terms of Service</h1>
+            <p style={{fontSize:12,color:"#9ca3af",marginBottom:16}}>Last updated: 29 May 2025</p>
+            <div style={{fontSize:13,color:"var(--text-secondary)",lineHeight:1.8}}>
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>1. About Aayojan</h3>
+              <p>Aayojan is a technology platform that connects customers with independent caterers in the Newtown/Rajarhat/Salt Lake area of Kolkata. We are a marketplace — we do NOT prepare or serve food ourselves.</p>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>2. User Accounts</h3>
+              <ul style={{paddingLeft:20,margin:"8px 0"}}>
+                <li>You must provide accurate information during registration</li>
+                <li>You are responsible for maintaining the security of your account</li>
+                <li>One account per person; no shared or bot accounts</li>
+              </ul>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>3. Orders & Payments</h3>
+              <ul style={{paddingLeft:20,margin:"8px 0"}}>
+                <li>Prices quoted by caterers are estimates and may vary based on final requirements</li>
+                <li>A platform fee (₹99–₹299) applies per booking</li>
+                <li>Payment is made directly to the caterer or via our escrow system (when available)</li>
+                <li>Aayojan is not responsible for food quality — that liability rests with the caterer</li>
+              </ul>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>4. Caterer Listings</h3>
+              <p>We vet our partner caterers but do not guarantee their services. Ratings, reviews, and match scores are algorithmically generated and meant as guidance, not guarantees.</p>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>5. Cancellation</h3>
+              <ul style={{paddingLeft:20,margin:"8px 0"}}>
+                <li>Free cancellation up to 72 hours before event</li>
+                <li>50% charge for cancellation 24–72 hours before event</li>
+                <li>No refund for cancellation less than 24 hours before event</li>
+              </ul>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>6. Prohibited Use</h3>
+              <p>You may not use the platform to harass caterers, submit false orders, scrape data, or circumvent the platform to contact caterers directly for repeat orders.</p>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>7. Limitation of Liability</h3>
+              <p>Aayojan's liability is limited to the platform fee charged. We are not liable for food quality, delivery delays, or any damages caused by the caterer's services.</p>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>8. Governing Law</h3>
+              <p>These terms are governed by the laws of India. Disputes shall be subject to the jurisdiction of courts in Kolkata, West Bengal.</p>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>9. Contact</h3>
+              <p>For questions about these terms: <strong>legal@aayojan.in</strong></p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {view==="refund"&&(
+        <div style={{...S.page,...anim}}>
+          <button onClick={()=>navigate("landing")} style={{...S.secondaryBtn,marginBottom:20}}>← Back to Home</button>
+          <div style={S.card}>
+            <h1 style={{...S.cardTitle,fontSize:22,marginBottom:16}}>Refund & Cancellation Policy</h1>
+            <p style={{fontSize:12,color:"#9ca3af",marginBottom:16}}>Last updated: 29 May 2025</p>
+            <div style={{fontSize:13,color:"var(--text-secondary)",lineHeight:1.8}}>
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>Platform Fee Refund</h3>
+              <ul style={{paddingLeft:20,margin:"8px 0"}}>
+                <li><strong>No caterer responded:</strong> Full refund of platform fee</li>
+                <li><strong>You cancel before accepting a quote:</strong> Full refund</li>
+                <li><strong>You cancel after accepting but 72+ hours before event:</strong> 80% refund of platform fee</li>
+                <li><strong>You cancel 24–72 hours before event:</strong> 50% refund</li>
+                <li><strong>Less than 24 hours:</strong> No refund</li>
+              </ul>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>Caterer Payment Refunds</h3>
+              <p>Refunds for payments made directly to caterers must be resolved with the caterer. Aayojan will assist in dispute resolution but cannot guarantee refunds from third-party caterers.</p>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>Phone Unlock Fee (₹49)</h3>
+              <p>Non-refundable once the caterer's phone number has been revealed.</p>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>Food Tasting Fee (₹199)</h3>
+              <ul style={{paddingLeft:20,margin:"8px 0"}}>
+                <li>Refundable if caterer cancels the tasting session</li>
+                <li>Non-refundable if you don't show up for a confirmed session</li>
+                <li>Adjusted against final order if you book the caterer</li>
+              </ul>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>How to Request a Refund</h3>
+              <p>Email <strong>support@aayojan.in</strong> with your order ID. Refunds are processed within 5–7 business days to the original payment method.</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <footer style={{textAlign:"center",marginTop:44,padding:"20px 20px 0",borderTop:"2px solid #fde8d8",fontSize:12,color:"#9ca3af",letterSpacing:"0.04em"}}>
         <div style={{fontSize:18,letterSpacing:10,color:"#fca5a5",marginBottom:6}}>✦ ✦ ✦ ✦ ✦</div>
-        Aayojan © 2024 · Newtown, Kolkata · আয়োজন · Rajarhat · Action Area I, II & III · Salt Lake
+        Aayojan © 2025 · Newtown, Kolkata · আয়োজন
+        <div style={{marginTop:8,display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap"}}>
+          <button onClick={()=>navigate("privacy")} style={{background:"none",border:"none",color:"#9ca3af",fontSize:11,cursor:"pointer",textDecoration:"underline"}}>Privacy Policy</button>
+          <button onClick={()=>navigate("terms")} style={{background:"none",border:"none",color:"#9ca3af",fontSize:11,cursor:"pointer",textDecoration:"underline"}}>Terms of Service</button>
+          <button onClick={()=>navigate("refund")} style={{background:"none",border:"none",color:"#9ca3af",fontSize:11,cursor:"pointer",textDecoration:"underline"}}>Refund Policy</button>
+        </div>
       </footer>
 
       <style>{`
