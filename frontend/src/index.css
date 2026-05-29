@@ -1,0 +1,28 @@
+/* Aayojan Responsive Overrides */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
+
+* { box-sizing:border-box; margin:0; padding:0; }
+body { background:#fdf8f3; font-family:'DM Sans',sans-serif; -webkit-font-smoothing:antialiased; }
+
+/* Mobile responsive */
+@media(max-width:768px){
+  .svc-grid { grid-template-columns:1fr !important; }
+  .stats-grid { grid-template-columns:repeat(2,1fr) !important; }
+  .how-grid { grid-template-columns:repeat(2,1fr) !important; }
+  .feat-grid { grid-template-columns:1fr !important; }
+  .form-grid { grid-template-columns:1fr !important; }
+  .tasting-banner { flex-direction:column !important; text-align:center !important; padding:24px 18px !important; gap:16px !important; }
+  .caterer-cta { flex-direction:column !important; text-align:center !important; padding:24px 18px !important; gap:16px !important; }
+  .hero-title { font-size:28px !important; }
+  .header-wrap { padding:12px 14px !important; flex-wrap:wrap !important; gap:10px !important; }
+  .header-right { gap:4px !important; flex-wrap:wrap !important; justify-content:flex-end !important; }
+  .header-right button { padding:5px 8px !important; font-size:11px !important; }
+  .page-wrap { padding:20px 12px !important; }
+}
+
+@media(max-width:480px){
+  .stats-grid { grid-template-columns:1fr 1fr !important; }
+  .how-grid { grid-template-columns:1fr !important; }
+  .hero-title { font-size:24px !important; }
+  .header-wrap { justify-content:space-between !important; }
+}

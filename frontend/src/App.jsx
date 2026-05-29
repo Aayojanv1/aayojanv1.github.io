@@ -497,7 +497,7 @@ export default function AayojanApp(){
       )}
 
       {/* ── Header ─────────────────────────────────────────────────────────── */}
-      <header style={S.header}>
+      <header className="header-wrap" style={S.header}>
         <button onClick={()=>{navigate("landing");resetApp();}} style={{background:"none",border:"none",cursor:"pointer",padding:0,display:"flex",alignItems:"center",gap:12}}>
           <div style={{width:46,height:46,borderRadius:12,background:"linear-gradient(135deg,#c0392b,#e74c3c)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:24,boxShadow:"0 4px 12px rgba(192,57,43,0.3)"}}>🍛</div>
           <div>
@@ -505,7 +505,7 @@ export default function AayojanApp(){
             <div style={{fontSize:10,color:"#9ca3af",marginTop:1}}>📍 Newtown, Kolkata</div>
           </div>
         </button>
-        <div style={{display:"flex",alignItems:"center",gap:8}}>
+        <div className="header-right" style={{display:"flex",alignItems:"center",gap:8}}>
           {["app","chat"].includes(view)&&<button onClick={()=>navigate("landing")} style={S.ghostBtn}>← Home</button>}
           <button onClick={()=>navigate("chat")} style={{...S.ghostBtn,borderColor:"#fca5a5",color:"#c0392b",background:"#fff5f5"}}>🤖 AI Chat</button>
           <button onClick={()=>{const d=DB.get();setDbData(d);navigate("dbview");}} style={S.ghostBtn}>🗄️ DB</button>
@@ -523,7 +523,7 @@ export default function AayojanApp(){
             {/* Bengali alpona decorative element */}
             <div style={{fontSize:28,letterSpacing:8,color:"#fca5a5",marginBottom:8,opacity:0.7}}>✦ ✦ ✦ ✦ ✦</div>
             <div style={{display:"inline-block",background:"#fff5f5",border:"1px solid #fca5a5",borderRadius:20,padding:"5px 16px",fontSize:12,color:"#c0392b",marginBottom:16,fontWeight:600,letterSpacing:"0.05em"}}>📍 Serving Newtown, Kolkata & surrounding areas</div>
-            <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:42,fontWeight:700,lineHeight:1.15,marginBottom:12}}>
+            <h1 className="hero-title" style={{fontFamily:"'Playfair Display',serif",fontSize:42,fontWeight:700,lineHeight:1.15,marginBottom:12}}>
               <span style={{color:"#1f2937"}}>Welcome to </span>
               <span style={{background:"linear-gradient(135deg,#c0392b,#e74c3c)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Aayojan !!</span>
             </h1>
@@ -538,7 +538,7 @@ export default function AayojanApp(){
           </div>
 
           {/* ── FOOD TASTING BANNER ─────────────────────────────────────────── */}
-          <div style={S.tastingBanner}>
+          <div className="tasting-banner" style={S.tastingBanner}>
             <div style={{display:"flex",gap:14,alignItems:"flex-start",flex:1}}>
               <div style={{fontSize:40,flexShrink:0}}>🍱</div>
               <div>
@@ -563,7 +563,7 @@ export default function AayojanApp(){
           <div style={{marginBottom:40}}>
             <h2 style={{...S.sectionTitle,textAlign:"center",marginBottom:6}}>Choose Your Service Type</h2>
             <p style={{textAlign:"center",color:"#6b7280",fontSize:13,marginBottom:22}}>Select how you'd like your catering delivered</p>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
+            <div className="svc-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
               {Object.values(SVC).map(svc=>(
                 <button key={svc.id} onClick={()=>{setServiceType(svc.id);navigate("app");setStep(1);}}
                   style={{border:`2px solid ${svc.border}`,borderRadius:18,padding:"24px 20px",cursor:"pointer",transition:"all 0.2s",textAlign:"left",display:"flex",flexDirection:"column",gap:10,background:svc.grad,boxShadow:"0 2px 12px rgba(192,57,43,0.08)"}}>
@@ -578,7 +578,7 @@ export default function AayojanApp(){
           </div>
 
           {/* Stats */}
-          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10,marginBottom:36}}>
+          <div className="stats-grid" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10,marginBottom:36}}>
             {[["🍽️",DB.getCaterers().length+"+","Caterers"],["📍","10+","Pincodes"],["⭐","4.7","Avg Rating"],["🎉","500+","Events"]].map(([icon,val,lbl])=>(
               <div key={lbl} style={{background:"#fff",border:"1px solid #fde8d8",borderRadius:14,padding:"16px 12px",textAlign:"center",boxShadow:"0 1px 4px rgba(192,57,43,0.06)"}}>
                 <div style={{fontSize:22,marginBottom:4}}>{icon}</div>
@@ -591,7 +591,7 @@ export default function AayojanApp(){
           {/* How it works */}
           <div style={{marginBottom:40}}>
             <h2 style={S.sectionTitle}>How It Works</h2>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
+            <div className="how-grid" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
               {[["🛎️","Pick Service","Full catering or bulk delivery"],["💬","Chat with AI","Tell our bot your needs"],["📍","Enter Pincode","5 km radius search"],["📲","48hr Quotes","WhatsApp to 5 caterers"]].map(([icon,title,desc],i)=>(
                 <div key={i} style={{background:"#fff",border:"1px solid #fde8d8",borderRadius:14,padding:"18px 12px",textAlign:"center",boxShadow:"0 1px 4px rgba(192,57,43,0.05)"}}>
                   <div style={{fontSize:10,fontWeight:800,color:"#c0392b",textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:6}}>{i+1}</div>
@@ -606,7 +606,7 @@ export default function AayojanApp(){
           {/* Featured caterers */}
           <div style={{marginBottom:40}}>
             <h2 style={S.sectionTitle}>Featured Caterers</h2>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
+            <div className="feat-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
               {DB.getCaterers().slice(0,3).map(c=>(
                 <div key={c.id} style={{background:"#fff",border:"1px solid #fde8d8",borderRadius:14,padding:"16px",boxShadow:"0 1px 6px rgba(192,57,43,0.07)"}}>
                   <div style={{display:"flex",gap:10,alignItems:"flex-start",marginBottom:10}}>
@@ -624,7 +624,7 @@ export default function AayojanApp(){
           </div>
 
           {/* Caterer CTA */}
-          <div style={{background:"linear-gradient(135deg,#c0392b,#e74c3c)",borderRadius:18,padding:"32px 36px",display:"flex",gap:24,alignItems:"center",justifyContent:"space-between",flexWrap:"wrap"}}>
+          <div className="caterer-cta" style={{background:"linear-gradient(135deg,#c0392b,#e74c3c)",borderRadius:18,padding:"32px 36px",display:"flex",gap:24,alignItems:"center",justifyContent:"space-between",flexWrap:"wrap"}}>
             <div style={{flex:1}}>
               <div style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"#fff",marginBottom:8}}>Are you a caterer? 👨‍🍳</div>
               <div style={{fontSize:14,color:"rgba(255,255,255,0.85)",marginBottom:12,lineHeight:1.6}}>Join Aayojan and receive WhatsApp quotation requests from customers in Newtown.</div>
@@ -680,7 +680,7 @@ export default function AayojanApp(){
                 <p style={{fontSize:13,color:"#6b7280"}}>Join Newtown's fastest-growing caterer network</p>
               </div>
               <div style={{...S.card,padding:"28px 32px"}}>
-                <div style={S.formGrid}>
+                <div className="form-grid" style={S.formGrid}>
                   {[["Business Name *","name","e.g. Kolkata Grand Feast"],["Owner / Manager *","ownerName","Full name"]].map(([lbl,key,ph])=>(
                     <div key={key} style={S.fieldWrap}><label style={S.fieldLabel}>{lbl}</label>
                       <input style={{...S.inp2,borderColor:regErrors[key]?"#ef4444":"#e5e7eb"}} value={regForm[key]} onChange={e=>setRegForm({...regForm,[key]:e.target.value})} placeholder={ph}/>
@@ -1135,7 +1135,7 @@ export default function AayojanApp(){
                   </div>
                 </div>
               </div>
-              <div style={S.formGrid}>
+              <div className="form-grid" style={S.formGrid}>
                 {[["Flat / House No. *","flat","e.g. Flat 4B"],["Building / Society *","building","e.g. Suncity Apartments"]].map(([lbl,key,ph])=>(
                   <div key={key} style={S.fieldWrap}><label style={S.fieldLabel}>{lbl}</label>
                     <input style={{...S.inp2,borderColor:addressErrors[key]?"#ef4444":"#e5e7eb"}} value={deliveryAddress[key]} onChange={e=>setDeliveryAddress({...deliveryAddress,[key]:e.target.value})} placeholder={ph}/>
