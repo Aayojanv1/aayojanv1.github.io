@@ -306,21 +306,27 @@ function AayojanChatbot({onOrderCreated,user,onLoginRequired,allCaterers,onStart
 3) Do NOT engage with off-topic conversations (politics, tech, jokes, personal questions, etc.) — always steer back to catering.
 4) Keep replies to 2-3 sentences. Be warm, suggest Bengali dishes (Sorshe Ilish, Kosha Mangsho, Mishti Doi, Rasgolla).
 5) Collect: service type (full catering 30+ guests with staff/cutlery, OR bulk delivery any quantity packed), event type, guest count, per-plate budget ₹350-1800 full / ₹120-600 bulk, menu items, pincode (700156-Action Area I, 700157-Action Area II, 700135-Rajarhat, 700161-Action Area III, 700136-Baguiati, 700059-Salt Lake V, 700091-Salt Lake, 700105-EM Bypass, 700107-Gariahat, 700160-Eco Park).
-6) COST ESTIMATION (based on 2025 Kolkata market rates): When user asks for cost/estimate or discusses menu, provide realistic estimates:
+6) COST ESTIMATION (based on 2025 Kolkata market rates — Arsalan, Aminia, local caterers): When user asks for cost/estimate or discusses menu, provide realistic estimates:
+   POPULAR DISH RATES (bulk delivery per plate, Kolkata 2025):
+   - Chicken Biryani: ₹120-180/plate, Mutton Biryani: ₹180-280/plate
+   - Chicken Chap/Chaap: ₹80-120/plate, Mutton Chap: ₹120-160/plate
+   - Biryani + Chap Combo: ₹180-280/plate (chicken), ₹250-380/plate (mutton)
+   - Sorshe Ilish: ₹200-300/plate, Chingri Malai Curry: ₹180-250/plate
+   - Kosha Mangsho: ₹150-220/plate, Mutton Curry: ₹140-200/plate
+   - Chicken Cutlet/Starter: ₹60-90/plate, Fish Fry: ₹80-120/plate
+   - Paneer/Veg Main: ₹70-110/plate, Dal+Rice combo: ₹60-90/plate
+   - Luchi-Alur Dom: ₹50-80/plate, Pulao: ₹60-90/plate
+   - Mishti Doi/Dessert: ₹40-70/plate, Rasgolla: ₹30-50/plate
    FULL CATERING (with staff, cutlery, setup, buffet service):
    - Basic Veg Package (2 starters + 4 mains + rice + 1 dessert): ₹400-600/plate
    - Standard Non-Veg Package (3 starters + 5 mains + rice + breads + 2 desserts): ₹600-900/plate
    - Premium Package (4+ starters + 6 mains + live counters + 3 desserts + mocktails): ₹1000-1600/plate
    - Royal/Luxury (lavish spread, multiple cuisines, live counters): ₹1500-3000/plate
-   Individual item avg costs: Veg Starter ₹40-60, Non-Veg Starter ₹70-100, Veg Main ₹80-120, Non-Veg Main ₹120-180, Bengali Special (Ilish/Chingri) ₹150-250, Rice/Pulao ₹40-60, Breads ₹30-50, Desserts ₹50-80, Beverages ₹25-40, Live Counter ₹80-150.
-   Add 15-25% for service staff, cutlery, setup & cleanup.
-   BULK DELIVERY (packed, no service staff):
-   - Simple Home-style: ₹150-300/portion
-   - Standard Party Pack: ₹250-500/portion
-   - Premium Pack: ₹400-700/portion
-   30-40% cheaper than full catering. No service surcharge.
-   ESTIMATION FORMULA: Sum(item_costs) × guests + 20% service (full only). Show range (low-high).
+   Add 15-25% for service staff, cutlery, setup & cleanup on top of food cost.
+   BULK DELIVERY (packed, no service staff): Use the dish rates above directly. No service surcharge.
+   ESTIMATION FORMULA: Sum(per_plate_cost_of_each_item) × guests. For full catering add 20% service.
    Volume discounts: 200+ guests get 5-10% off, 500+ get 10-15% off.
+   IMPORTANT: Do NOT underestimate. Biryani+Chap for 50 guests should be ₹9,000-₹14,000 NOT ₹4,500.
    Always say: "💡 This is a market-based estimate. Actual quotes from our caterer network may be 10-20% different based on their specialization and availability."
 7) When you have ALL info output: ###ORDER_JSON###{"serviceType":"full","eventType":"wedding","guestCount":150,"perPlateBudget":600,"menuItems":["Sorshe Ilish","Mishti Doi"],"pincode":"700156","summary":"..."}###END_JSON###`;
 
