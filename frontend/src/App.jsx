@@ -594,6 +594,7 @@ export default function AayojanApp(){
   const [customerCoords,setCustomerCoords]=useState(null);
   const [eventType,setEventType]=useState(null);
   const [eventDate,setEventDate]=useState("");
+  const [mealTime,setMealTime]=useState("");
   const [dietaryPref,setDietaryPref]=useState("any");
   const [guestCount,setGuestCount]=useState(100);
   const [perPlateBudget,setPerPlateBudget]=useState(500);
@@ -796,7 +797,7 @@ export default function AayojanApp(){
         const base=ppa*guestCount;const tf=c.surcharge*Math.ceil(guestCount/50);
         return{...c,quoteCode:`${c.id.toUpperCase()}-${Math.random().toString(36).substring(2,6).toUpperCase()}`,perPlateActual:ppa,basePrice:base,travelSurcharge:tf,totalPrice:base+tf,itemsCovered:selectedItems.length,withinBudget:ppa<=perPlateBudget};
       }).sort((a,b)=>a.perPlateActual-b.perPlateActual);
-      const now=new Date();const qr={id:`QR-${Date.now()}`,customerId:user?.uid,customerEmail:user?.email,catererIds:matched.map(c=>c.id),eventType,eventDate,serviceType,dietaryPref,guestCount,perPlateBudget,menuItems:selectedItems,customerPincode,sentAt:now.toISOString(),expiresAt:new Date(now.getTime()+WAIT_HRS*3600000).toISOString(),status:"Awaiting Responses",pipeline:result.pipeline,whatsappLog:matched.map(c=>({catererId:c.id,catererName:c._anonLabel,maskedPhone:"••••••••••",sentAt:now.toISOString(),status:"Sent ✅"}))};
+      const now=new Date();const qr={id:`QR-${Date.now()}`,customerId:user?.uid,customerEmail:user?.email,catererIds:matched.map(c=>c.id),eventType,eventDate,mealTime,serviceType,dietaryPref,guestCount,perPlateBudget,menuItems:selectedItems,customerPincode,sentAt:now.toISOString(),expiresAt:new Date(now.getTime()+WAIT_HRS*3600000).toISOString(),status:"Awaiting Responses",pipeline:result.pipeline,whatsappLog:matched.map(c=>({catererId:c.id,catererName:c._anonLabel,maskedPhone:"••••••••••",sentAt:now.toISOString(),status:"Sent ✅"}))};
       DB.saveQR(qr);setQuotationRequest(qr);setWhatsappSent(qr.whatsappLog);setQuotes(matched);setLoading(false);setStep(5);
     },1800);
   };
@@ -837,7 +838,7 @@ export default function AayojanApp(){
   const copyCode=(code)=>{navigator.clipboard?.writeText(code);setCopiedCode(code);setTimeout(()=>setCopiedCode(null),2000);};
   const toggleItem=(item)=>setSelectedItems(prev=>prev.includes(item)?prev.filter(i=>i!==item):[...prev,item]);
   const addCustomItem=()=>{if(customItem.trim()&&!selectedItems.includes(customItem.trim())){setSelectedItems(prev=>[...prev,customItem.trim()]);setCustomItem("");}};
-  const resetApp=()=>{setStep(0);setServiceType(null);setQuotes([]);setSelectedItems([]);setEventType(null);setEventDate("");setDietaryPref("any");setGuestCount(100);setPerPlateBudget(500);setCustomerPincode("");setCustomerCoords(null);setSelectedQuote(null);setOrderPlaced(null);setQuotationRequest(null);setWhatsappSent([]);setDeliveryAddress({flat:"",building:"",street:"",landmark:"",pincode:"",city:"Kolkata",state:"West Bengal"});};
+  const resetApp=()=>{setStep(0);setServiceType(null);setQuotes([]);setSelectedItems([]);setEventType(null);setEventDate("");setMealTime("");setDietaryPref("any");setGuestCount(100);setPerPlateBudget(500);setCustomerPincode("");setCustomerCoords(null);setSelectedQuote(null);setOrderPlaced(null);setQuotationRequest(null);setWhatsappSent([]);setDeliveryAddress({flat:"",building:"",street:"",landmark:"",pincode:"",city:"Kolkata",state:"West Bengal"});};
 
   if(authLoading) return <div style={{display:"flex",alignItems:"center",justifyContent:"center",minHeight:"100vh",background:"var(--bg-primary)"}}><div style={{textAlign:"center"}}><div style={{fontSize:48,marginBottom:12}}>🍛</div><div style={{color:"var(--text-secondary)"}}>Loading...</div></div></div>;
 
@@ -1613,6 +1614,20 @@ export default function AayojanApp(){
                 {eventDate&&(()=>{const d=new Date(eventDate);const days=Math.ceil((d-new Date())/(86400000));return <div style={{marginTop:6,fontSize:12,color:days<3?"#ef4444":days<7?"#f59e0b":"#16a34a",fontWeight:600}}>{days<3?"⚡ Express order — less than 3 days!":days<7?`⏰ ${days} days away — Standard timeline`:`✅ ${days} days away — plenty of time for best quotes`}</div>;})()}
               </div>
 
+              {/* Meal Time */}
+              <div style={{marginBottom:20}}>
+                <div style={{fontSize:12,fontWeight:700,color:"var(--text-primary, #374151)",textTransform:"uppercase",letterSpacing:"0.07em",marginBottom:8}}>🕐 Meal Time</div>
+                <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+                  {[{id:"breakfast",label:"Breakfast",icon:"🌅",time:"8-11 AM"},{id:"lunch",label:"Lunch",icon:"☀️",time:"12-3 PM"},{id:"snacks",label:"Evening Snacks",icon:"🌇",time:"4-6 PM"},{id:"dinner",label:"Dinner",icon:"🌙",time:"7-11 PM"}].map(t=>(
+                    <button key={t.id} onClick={()=>setMealTime(t.id)} style={{flex:"1 1 calc(50% - 4px)",padding:"10px 8px",borderRadius:10,border:`2px solid ${mealTime===t.id?"var(--text-accent, #c0392b)":"var(--border-default, #e5e7eb)"}`,background:mealTime===t.id?"#fff5f5":"var(--bg-input, #fff)",cursor:"pointer",textAlign:"center",transition:"all 0.2s"}}>
+                      <div style={{fontSize:20}}>{t.icon}</div>
+                      <div style={{fontSize:12,fontWeight:700,color:mealTime===t.id?"#c0392b":"var(--text-primary, #374151)",marginTop:2}}>{t.label}</div>
+                      <div style={{fontSize:10,color:"var(--text-secondary, #6b7280)"}}>{t.time}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div style={{marginBottom:24}}>
                 <div style={{fontSize:12,fontWeight:700,color:"#374151",textTransform:"uppercase",letterSpacing:"0.07em",marginBottom:10}}>👥 Number of Guests</div>
                 {serviceType==="full"&&guestCount<30&&<div style={{background:"#fef2f2",border:"1px solid #fecaca",borderRadius:8,padding:"8px 12px",fontSize:12,color:"#ef4444",marginBottom:8}}>⚠️ Full Catering requires minimum 30 guests</div>}
@@ -1642,7 +1657,7 @@ export default function AayojanApp(){
                     }));
                   }
                   setStep(4);
-                }} disabled={(serviceType==="full"&&guestCount<30)||!eventDate} style={{...S.primaryBtn,marginTop:0,flex:1,background:accentGrad,opacity:((serviceType==="full"&&guestCount<30)||!eventDate)?0.4:1}}>Continue to Menu →</button>
+                }} disabled={(serviceType==="full"&&guestCount<30)||!eventDate||!mealTime} style={{...S.primaryBtn,marginTop:0,flex:1,background:accentGrad,opacity:((serviceType==="full"&&guestCount<30)||!eventDate||!mealTime)?0.4:1}}>Continue to Menu →</button>
               </div>
             </div>}
 
@@ -1735,7 +1750,7 @@ export default function AayojanApp(){
 
               {/* Summary */}
               <div className="summary-bar" style={{display:"flex",justifyContent:"space-around",background:"#fff5f5",border:"1px solid #fde8d8",borderRadius:10,padding:"10px",marginBottom:12}}>
-                {[["📅",eventDate?new Date(eventDate).toLocaleDateString("en-IN",{day:"numeric",month:"short"}):"—","Date"],["📍",customerPincode,"Pincode"],["👥",guestCount,"Guests"],[`💰`,`₹${perPlateBudget}`,serviceType==="full"?"Per Plate":"Per Portion"],["🍽️",selectedItems.length,"Dishes"],[DIETARY_TYPES.find(d=>d.id===dietaryPref)?.icon||"🍽️",DIETARY_TYPES.find(d=>d.id===dietaryPref)?.label||"Any","Diet"]].map(([icon,val,lbl])=>(
+                {[["📅",eventDate?new Date(eventDate).toLocaleDateString("en-IN",{day:"numeric",month:"short"}):"—","Date"],["🕐",{breakfast:"Morning",lunch:"Afternoon",snacks:"Evening",dinner:"Night"}[mealTime]||"—","Time"],["📍",customerPincode,"Pincode"],["👥",guestCount,"Guests"],[`💰`,`₹${perPlateBudget}`,serviceType==="full"?"Per Plate":"Per Portion"],["🍽️",selectedItems.length,"Dishes"],[DIETARY_TYPES.find(d=>d.id===dietaryPref)?.icon||"🍽️",DIETARY_TYPES.find(d=>d.id===dietaryPref)?.label||"Any","Diet"]].map(([icon,val,lbl])=>(
                   <div key={lbl} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:1,minWidth:0}}>
                     <span style={{fontSize:12}}>{icon}</span><span style={{fontSize:12,fontWeight:800,color:accent}}>{val}</span><span style={{fontSize:8,color:"#9ca3af",textTransform:"uppercase",letterSpacing:"0.04em"}}>{lbl}</span>
                   </div>
@@ -1885,7 +1900,7 @@ export default function AayojanApp(){
               </div>
               <div style={{background:"#f9fafb",border:"1px solid #e5e7eb",borderRadius:10,padding:"14px 18px",marginTop:16}}>
                 <div style={{fontSize:11,fontWeight:700,color:"#9ca3af",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Order Summary</div>
-                {[["Service",stCfg?.label],["Event",eventType],["Date",eventDate?new Date(eventDate).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}):"—"],["Guests",guestCount],["Per "+(serviceType==="full"?"plate":"portion"),`₹${selectedQuote.perPlateActual} (budget ₹${perPlateBudget})`],["Food Total",`₹${selectedQuote.basePrice.toLocaleString()}`],...(selectedQuote.travelSurcharge>0?[["Travel",`+₹${selectedQuote.travelSurcharge}`]]:[])]
+                {[["Service",stCfg?.label],["Event",eventType],["Date",eventDate?new Date(eventDate).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}):"—"],["Meal Time",{breakfast:"Breakfast (8-11 AM)",lunch:"Lunch (12-3 PM)",snacks:"Evening Snacks (4-6 PM)",dinner:"Dinner (7-11 PM)"}[mealTime]||"—"],["Guests",guestCount],["Per "+(serviceType==="full"?"plate":"portion"),`₹${selectedQuote.perPlateActual} (budget ₹${perPlateBudget})`],["Food Total",`₹${selectedQuote.basePrice.toLocaleString()}`],...(selectedQuote.travelSurcharge>0?[["Travel",`+₹${selectedQuote.travelSurcharge}`]]:[])]
                   .map(([lbl,val])=><div key={lbl} style={{display:"flex",justifyContent:"space-between",marginBottom:7,fontSize:13}}><span style={{color:"#6b7280"}}>{lbl}</span><span style={{color:"#374151",textTransform:lbl==="Event"?"capitalize":"none"}}>{val}</span></div>)}
                 <div style={{borderTop:"1px solid #e5e7eb",paddingTop:9,marginTop:4,display:"flex",justifyContent:"space-between",fontSize:17,fontWeight:800}}><span style={{color:"#1f2937"}}>Grand Total</span><span style={{color:"#16a34a"}}>₹{selectedQuote.totalPrice.toLocaleString()}</span></div>
               </div>
