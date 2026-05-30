@@ -1049,25 +1049,51 @@ export default function AayojanApp(){
         <div style={{...S.page,...anim}}>
           {/* Hero */}
           <div style={{textAlign:"center",padding:"36px 0 28px",position:"relative"}}>
-            {/* Bengali alpona decorative element */}
-            <div style={{fontSize:28,letterSpacing:8,color:"#fca5a5",marginBottom:8,opacity:0.7}}>✦ ✦ ✦ ✦ ✦</div>
-            <div style={{display:"inline-block",background:"#fff5f5",border:"1px solid #fca5a5",borderRadius:20,padding:"5px 16px",fontSize:12,color:"#c0392b",marginBottom:16,fontWeight:600,letterSpacing:"0.05em"}}>📍 Serving Newtown, Kolkata & surrounding areas</div>
-            <h1 className="hero-title" style={{fontFamily:"'Playfair Display',serif",fontSize:42,fontWeight:700,lineHeight:1.15,marginBottom:12}}>
-              <span style={{color:"#1f2937"}}>Welcome to </span>
-              <span style={{background:"linear-gradient(135deg,#c0392b,#e74c3c)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Aayojan !!</span>
+           {/* Bengali alpona decorative border */}
+           <div style={{fontSize:16,letterSpacing:4,color:"#c0392b",marginBottom:8,opacity:0.6,fontFamily:"serif"}}>꧁ ✿ ❀ ✿ ❀ ✿ ꧂</div>
+           <div style={{display:"inline-block",background:"linear-gradient(135deg,#fff5f5,#fffbeb)",border:"1px solid #fca5a5",borderRadius:20,padding:"5px 16px",fontSize:12,color:"#c0392b",marginBottom:16,fontWeight:600,letterSpacing:"0.05em"}}>📍 নিউটাউন, কলকাতা · Serving Newtown & Surrounding Areas</div>
+           <h1 className="hero-title" style={{fontFamily:"'Playfair Display',serif",fontSize:42,fontWeight:700,lineHeight:1.15,marginBottom:8}}>
+             <span style={{color:"#1f2937"}}>স্বাগতম </span>
+             <span style={{background:"linear-gradient(135deg,#c0392b,#e74c3c)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>আয়োজন!</span>
             </h1>
-            <p style={{fontSize:16,color:"#6b7280",maxWidth:500,margin:"0 auto 24px",lineHeight:1.6}}>আপনার উৎসবে সেরা খাবারের আয়োজন। Find top-rated caterers in Newtown, Rajarhat & Salt Lake.</p>
-            {/* AI chatbot promo */}
-            <div style={{display:"flex",alignItems:"center",gap:14,background:"linear-gradient(135deg,#fff5f5,#fffbeb)",border:"1px solid #fca5a5",borderRadius:16,padding:"16px 20px",maxWidth:580,margin:"0 auto",textAlign:"left",flexWrap:"wrap"}}>
-              <div style={{width:44,height:44,borderRadius:12,background:"linear-gradient(135deg,#c0392b,#e74c3c)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>🤖</div>
-              <div style={{flex:1}}><div style={{fontWeight:800,color:"#1f2937",fontSize:15,marginBottom:2}}>Try Aayojan AI Chatbot</div><div style={{fontSize:12,color:"#6b7280"}}>Describe your event — AI builds your perfect catering order</div></div>
-              <button onClick={()=>navigate("chat")} style={{...S.primaryBtn,width:"auto",marginTop:0,padding:"10px 20px",fontSize:13,flexShrink:0}}>Chat Now →</button>
-            </div>
-            <div style={{fontSize:20,letterSpacing:8,color:"#fca5a5",marginTop:16,opacity:0.5}}>✦ ✦ ✦ ✦ ✦</div>
-          </div>
+           <p style={{fontSize:14,color:"#c0392b",fontWeight:600,marginBottom:6,fontStyle:"italic"}}>"ভোজনে আনন্দ, আয়োজনে আমরা"</p>
+           <p style={{fontSize:16,color:"#6b7280",maxWidth:520,margin:"0 auto 20px",lineHeight:1.6}}>আপনার উৎসব, আমাদের আয়োজন। From <strong>Annaprashan</strong> to <strong>Biye Bari</strong> — find the best caterers for every Bengali celebration.</p>
 
-          {/* ── FOOD TASTING BANNER ─────────────────────────────────────────── */}
-          <div className="tasting-banner" style={S.tastingBanner}>
+           {/* Bengali food showcase */}
+           <div style={{display:"flex",justifyContent:"center",gap:8,marginBottom:20,flexWrap:"wrap"}}>
+             {[["🍚","Biryani"],["🐟","Ilish"],["🍖","Kosha Mangsho"],["🦐","Chingri"],["🍮","Mishti Doi"],["🍡","Rasgolla"]].map(([emoji,name])=>(
+               <div key={name} style={{background:"#fff",border:"1px solid #fde8d8",borderRadius:12,padding:"8px 12px",display:"flex",alignItems:"center",gap:6,boxShadow:"0 1px 4px rgba(192,57,43,0.06)"}}>
+                 <span style={{fontSize:20}}>{emoji}</span>
+                 <span style={{fontSize:11,fontWeight:700,color:"#374151"}}>{name}</span>
+               </div>
+             ))}
+           </div>
+
+           {/* AI chatbot promo */}
+           <div style={{display:"flex",alignItems:"center",gap:14,background:"linear-gradient(135deg,#fff5f5,#fffbeb)",border:"1px solid #fca5a5",borderRadius:16,padding:"16px 20px",maxWidth:580,margin:"0 auto",textAlign:"left",flexWrap:"wrap"}}>
+             <div style={{width:44,height:44,borderRadius:12,background:"linear-gradient(135deg,#c0392b,#e74c3c)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>🤖</div>
+             <div style={{flex:1}}><div style={{fontWeight:800,color:"#1f2937",fontSize:15,marginBottom:2}}>আয়োজন AI চ্যাটবট</div><div style={{fontSize:12,color:"#6b7280"}}>বাংলায় বলুন বা English — AI builds your perfect catering order</div></div>
+             <button onClick={()=>navigate("chat")} style={{...S.primaryBtn,width:"auto",marginTop:0,padding:"10px 20px",fontSize:13,flexShrink:0}}>Chat Now →</button>
+           </div>
+           <div style={{fontSize:16,letterSpacing:4,color:"#c0392b",marginTop:16,opacity:0.4,fontFamily:"serif"}}>꧁ ✿ ❀ ✿ ❀ ✿ ꧂</div>
+         </div>
+
+         {/* ── Bengali Occasions Banner ─────────────────────────────────────── */}
+         <div style={{marginBottom:28,background:"linear-gradient(135deg,#fffbeb,#fff5f5)",border:"1px solid #fde8d8",borderRadius:18,padding:"20px 24px"}}>
+           <div style={{fontSize:12,fontWeight:800,color:"#c0392b",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12,textAlign:"center"}}>🎊 বাঙালির উৎসবে আমরা আছি</div>
+           <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center",gap:8}}>
+             {[["👶","অন্নপ্রাশন","Annaprashan"],["💍","বিয়ে","Wedding"],["🙏","পূজা","Pujo"],["🎂","জন্মদিন","Birthday"],["🎓","অভিষেক","Convocation"],["🏠","গৃহপ্রবেশ","Griha Pravesh"],["🪔","দীপাবলি","Diwali"],["👨‍💼","Corporate","Office Party"]].map(([icon,bn,en])=>(
+               <div key={en} style={{background:"#fff",border:"1px solid #fde8d8",borderRadius:10,padding:"8px 12px",textAlign:"center",minWidth:85}}>
+                 <div style={{fontSize:20}}>{icon}</div>
+                 <div style={{fontSize:11,fontWeight:700,color:"#1f2937"}}>{bn}</div>
+                 <div style={{fontSize:9,color:"#9ca3af"}}>{en}</div>
+               </div>
+             ))}
+           </div>
+         </div>
+
+         {/* ── FOOD TASTING BANNER ─────────────────────────────────────────── */}
+         <div className="tasting-banner" style={S.tastingBanner}>
             <div style={{display:"flex",gap:14,alignItems:"flex-start",flex:1}}>
               <div style={{fontSize:40,flexShrink:0}}>🍱</div>
               <div>
@@ -1119,9 +1145,9 @@ export default function AayojanApp(){
 
           {/* How it works */}
           <div style={{marginBottom:40}}>
-            <h2 style={S.sectionTitle}>How It Works</h2>
+            <h2 style={S.sectionTitle}>How It Works — কিভাবে কাজ করে</h2>
             <div className="how-grid" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
-              {[["🛎️","Pick Service","Full catering or bulk delivery"],["💬","Chat with AI","Tell our bot your needs"],["📍","Enter Pincode","5 km radius search"],["📲","48hr Quotes","WhatsApp to 5 caterers"]].map(([icon,title,desc],i)=>(
+              {[["🛎️","সেবা বাছুন","Full catering or bulk delivery"],["💬","AI-কে বলুন","Chat in Bengali or English"],["📍","পিনকোড দিন","5 km radius search"],["📲","48hr কোটেশন","WhatsApp to 5 caterers"]].map(([icon,title,desc],i)=>(
                 <div key={i} style={{background:"#fff",border:"1px solid #fde8d8",borderRadius:14,padding:"18px 12px",textAlign:"center",boxShadow:"0 1px 4px rgba(192,57,43,0.05)"}}>
                   <div style={{fontSize:10,fontWeight:800,color:"#c0392b",textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:6}}>{i+1}</div>
                   <div style={{fontSize:28,marginBottom:8}}>{icon}</div>
@@ -1155,9 +1181,9 @@ export default function AayojanApp(){
           {/* Caterer CTA */}
           <div className="caterer-cta" style={{background:"linear-gradient(135deg,#c0392b,#e74c3c)",borderRadius:18,padding:"32px 36px",display:"flex",gap:24,alignItems:"center",justifyContent:"space-between",flexWrap:"wrap"}}>
             <div style={{flex:1}}>
-              <div style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"#fff",marginBottom:8}}>Are you a caterer? 👨‍🍳</div>
-              <div style={{fontSize:14,color:"rgba(255,255,255,0.85)",marginBottom:12,lineHeight:1.6}}>Join Aayojan and receive WhatsApp quotation requests from customers in Newtown.</div>
-              {["✓ Free registration","✓ WhatsApp requests directly","✓ Full Service or Bulk Delivery"].map(p=><div key={p} style={{fontSize:13,color:"rgba(255,255,255,0.9)",marginBottom:3}}>{p}</div>)}
+              <div style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"#fff",marginBottom:8}}>আপনি কি ক্যাটারার? 👨‍🍳</div>
+              <div style={{fontSize:14,color:"rgba(255,255,255,0.85)",marginBottom:12,lineHeight:1.6}}>Join Aayojan — receive WhatsApp quotation requests from customers in Newtown, Kolkata.</div>
+              {["✓ ফ্রি রেজিস্ট্রেশন","✓ WhatsApp-এ সরাসরি request","✓ Full Service বা Bulk Delivery"].map(p=><div key={p} style={{fontSize:13,color:"rgba(255,255,255,0.9)",marginBottom:3}}>{p}</div>)}
             </div>
             <button onClick={()=>navigate("register")} style={{background:"#fff",border:"none",borderRadius:12,padding:"14px 28px",color:"#c0392b",fontWeight:800,fontSize:15,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,0.15)",flexShrink:0}}>Register Your Business →</button>
           </div>
