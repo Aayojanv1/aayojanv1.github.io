@@ -1148,6 +1148,38 @@ export default function AayojanApp(){
            </div>
          </div>
 
+         {/* ── FOR CATERERS — Partner appeal section ─────────────────────── */}
+         <div style={{padding:"48px 14px",background:"linear-gradient(135deg,#FDF6ED 0%,#FFF0D5 100%)",borderTop:"1px solid #EDD8BC",borderBottom:"1px solid #EDD8BC"}}>
+           <div style={{maxWidth:820,margin:"0 auto"}}>
+             <div style={{textAlign:"center",marginBottom:28}}>
+               <div style={{display:"inline-block",background:"rgba(232,118,10,0.1)",border:"1px solid rgba(232,118,10,0.2)",borderRadius:24,padding:"5px 14px",marginBottom:12}}>
+                 <span style={{fontSize:12,fontWeight:700,color:"#C95F08",letterSpacing:1}}>🔥 FOUNDING PARTNER PROGRAM</span>
+               </div>
+               <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(22px,5vw,32px)",fontWeight:800,color:"#1C130A",marginBottom:8}}>Are you a caterer in Kolkata?</h2>
+               <p style={{fontSize:14,color:"#7B634E",maxWidth:520,margin:"0 auto",lineHeight:1.7}}>Stop waiting for referrals. Get verified event leads on WhatsApp — with guest count, budget & menu preference already filled in.</p>
+             </div>
+
+             <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,marginBottom:24}} className="feat-grid">
+               {[
+                 {icon:"💰",title:"₹0 to join",sub:"Free forever for founding partners"},
+                 {icon:"📲",title:"Leads on WhatsApp",sub:"No app, no dashboard — just real enquiries"},
+                 {icon:"🏅",title:"Only 8 spots left",sub:"Founding badge + early lead priority"},
+               ].map((b,i)=>(
+                 <div key={i} style={{background:"rgba(255,255,255,0.9)",border:"1px solid #EDD8BC",borderRadius:16,padding:"18px 14px",textAlign:"center"}}>
+                   <div style={{fontSize:28,marginBottom:6}}>{b.icon}</div>
+                   <div style={{fontSize:13,fontWeight:700,color:"#1C130A",marginBottom:3}}>{b.title}</div>
+                   <div style={{fontSize:11,color:"#7B634E"}}>{b.sub}</div>
+                 </div>
+               ))}
+             </div>
+
+             <div style={{textAlign:"center"}}>
+               <a href="/partners.html" style={{display:"inline-block",background:"linear-gradient(135deg,#E8760A,#C95F08)",color:"#fff",padding:"14px 32px",borderRadius:12,fontSize:15,fontWeight:700,textDecoration:"none",boxShadow:"0 8px 24px rgba(232,118,10,0.3)"}}>Claim Your Founding Spot →</a>
+               <p style={{fontSize:12,color:"#7B634E",marginTop:10}}>You keep 97% of every booking. 3% commission only when you earn.</p>
+             </div>
+           </div>
+         </div>
+
          {/* ── CUISINES & OCCASIONS — Simple pills ────────────────────────── */}
          <div style={{padding:"36px 14px",maxWidth:820,margin:"0 auto",textAlign:"center"}}>
            <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:18,color:"var(--text-primary)",marginBottom:16}}>Cuisines & Occasions</h3>
