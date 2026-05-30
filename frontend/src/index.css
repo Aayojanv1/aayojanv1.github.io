@@ -77,8 +77,8 @@ html { overflow-x:hidden; }
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  border: 1px solid var(--border-default);
-  background: var(--bg-card);
+  border: 1.5px solid #E8760A;
+  background: #FFF7ED;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -90,6 +90,11 @@ html { overflow-x:hidden; }
 .theme-toggle:hover {
   transform: scale(1.08);
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+[data-theme="dark"] .theme-toggle {
+  border-color: #F3C869;
+  background: rgba(243,200,105,0.1);
 }
 
 /* ─── Dark Mode Global Overrides ────────────────────────────────────────────── */
