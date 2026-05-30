@@ -1077,33 +1077,35 @@ export default function AayojanApp(){
            {/* Subtle accent glow */}
            <div style={{position:"absolute",top:"-100px",left:"50%",transform:"translateX(-50%)",width:600,height:400,background:"radial-gradient(ellipse, rgba(192,57,43,0.08) 0%, transparent 60%)",pointerEvents:"none"}}/>
 
-           {/* Hero Content */}
-           <div style={{position:"relative",zIndex:2,textAlign:"center",padding:"60px 20px",maxWidth:680}}>
-             <div style={{display:"inline-block",background:"rgba(192,57,43,0.08)",border:"1px solid rgba(192,57,43,0.2)",borderRadius:24,padding:"6px 16px",marginBottom:20}}>
-               <span style={{fontSize:12,color:"var(--text-accent)",fontWeight:600}}>📍 Newtown · Salt Lake · Rajarhat, Kolkata</span>
+           {/* Hero Content — Partner-first messaging */}
+           <div style={{position:"relative",zIndex:2,textAlign:"center",padding:"60px 20px",maxWidth:720}}>
+             <div style={{display:"inline-block",background:"rgba(232,118,10,0.1)",border:"1px solid rgba(232,118,10,0.25)",borderRadius:24,padding:"6px 16px",marginBottom:20}}>
+               <span style={{fontSize:12,fontWeight:700,color:"#C95F08",letterSpacing:0.5}}>🔥 NOW ONBOARDING CATERERS · Newtown · Salt Lake · Rajarhat</span>
              </div>
-             <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(36px,7vw,56px)",fontWeight:900,lineHeight:1.1,marginBottom:16,color:"var(--text-primary)"}}>
-               Find the perfect caterer<br/><span style={{color:"var(--text-accent)"}}>for your next event</span>
+             <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(32px,7vw,52px)",fontWeight:900,lineHeight:1.1,marginBottom:16,color:"var(--text-primary)"}}>
+               Your kitchen is ready.<br/><span style={{color:"#E8760A"}}>Your order book should be full.</span>
              </h1>
-             <p style={{fontSize:16,color:"var(--text-secondary)",marginBottom:32,maxWidth:480,margin:"0 auto 32px",lineHeight:1.7}}>
-               Compare 12+ verified caterers, get quotes in 48 hours, and taste before you book. Weddings, parties, corporate — all covered.
+             <p style={{fontSize:16,color:"var(--text-secondary)",marginBottom:32,maxWidth:520,margin:"0 auto 32px",lineHeight:1.7}}>
+               Aayojan connects caterers in Kolkata with verified event leads on WhatsApp — weddings, birthdays, corporate, house parties. Stop waiting for referrals.
              </p>
 
-             {/* CTA buttons */}
+             {/* CTA buttons — Partner primary */}
              <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",marginBottom:24}}>
-               <button onClick={()=>navigate("app")} style={{background:"linear-gradient(135deg,#c0392b,#e74c3c)",color:"#fff",border:"none",padding:"14px 32px",borderRadius:12,fontSize:15,fontWeight:700,cursor:"pointer",boxShadow:"0 4px 16px rgba(192,57,43,0.3)"}}>🍽️ Find a Caterer</button>
-               <a href="/partners.html" style={{background:"var(--bg-card)",color:"var(--text-accent)",border:"2px solid var(--border-accent)",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:700,cursor:"pointer",textDecoration:"none"}}>🤝 Join as Partner</a>
+               <a href="/partners.html" style={{display:"inline-flex",alignItems:"center",gap:8,background:"linear-gradient(135deg,#E8760A,#C95F08)",color:"#fff",border:"none",padding:"14px 32px",borderRadius:12,fontSize:15,fontWeight:700,cursor:"pointer",boxShadow:"0 6px 20px rgba(232,118,10,0.35)",textDecoration:"none"}}>🏅 Join as Founding Partner</a>
+               <button onClick={()=>navigate("app")} style={{background:"var(--bg-card)",color:"var(--text-secondary)",border:"2px solid var(--border-light)",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:600,cursor:"pointer"}}>🍽️ I'm a Customer</button>
              </div>
 
-             {/* Trust stats */}
+             {/* Trust stats — partner focused */}
              <div style={{display:"flex",justifyContent:"center",gap:32,marginTop:24}}>
-               {[["12+","Verified Caterers"],["48hr","Quote Delivery"],["₹0","To Join as Partner"]].map(([val,lbl])=>(
+               {[["₹0","To Join Forever"],["8","Founding Spots Left"],["97%","Revenue You Keep"]].map(([val,lbl])=>(
                  <div key={lbl} style={{textAlign:"center"}}>
-                   <div style={{fontSize:22,fontWeight:900,color:"var(--text-accent)"}}>{val}</div>
+                   <div style={{fontSize:22,fontWeight:900,color:"#E8760A"}}>{val}</div>
                    <div style={{fontSize:11,color:"var(--text-muted)",textTransform:"uppercase",letterSpacing:1}}>{lbl}</div>
                  </div>
                ))}
              </div>
+
+             <p style={{fontSize:12,color:"var(--text-muted)",marginTop:20,maxWidth:400,margin:"20px auto 0"}}>Founding partners get priority leads, verified badge & free-forever onboarding before public launch.</p>
            </div>
          </div>
 
