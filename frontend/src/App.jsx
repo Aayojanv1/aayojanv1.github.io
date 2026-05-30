@@ -1389,21 +1389,6 @@ export default function AayojanApp(){
            </div>
          </div>
 
-         {/* ── TASTING BANNER — with background image ─────────────────────── */}
-         <div style={{position:"relative",margin:"0 14px 36px",borderRadius:20,overflow:"hidden",maxWidth:820,marginLeft:"auto",marginRight:"auto"}}>
-           <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1596797038530-2c107229654b?w=1000&q=80')",backgroundSize:"cover",backgroundPosition:"center"}}/>
-           <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(192,57,43,0.92),rgba(180,50,20,0.88))"}}/>
-           <div style={{position:"relative",zIndex:1,padding:"32px 28px",display:"flex",gap:20,alignItems:"center",justifyContent:"space-between",flexWrap:"wrap"}}>
-             <div style={{flex:1}}>
-               <div style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.7)",textTransform:"uppercase",letterSpacing:2,marginBottom:6}}>✨ Special Offer</div>
-               <div style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"#fff",marginBottom:8}}>Food Tasting Session — <span style={{textDecoration:"line-through",opacity:0.6,fontSize:16}}>₹500</span> ₹199</div>
-               <div style={{fontSize:13,color:"rgba(255,255,255,0.85)",lineHeight:1.6}}>Try before you book! 5–7 sample dishes delivered to your doorstep.</div>
-               <div style={{fontSize:11,color:"#fca5a5",marginTop:6,fontWeight:600}}>⏳ Limited slots — only 8 left this week</div>
-             </div>
-             <button onClick={()=>{navigate("app");setServiceType("bulk");setStep(1);}} style={{background:"#fff",border:"none",borderRadius:12,padding:"12px 24px",color:"#c0392b",fontWeight:800,fontSize:14,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,0.2)",flexShrink:0}}>Book Tasting →</button>
-           </div>
-         </div>
-
          {/* ── TESTIMONIALS — Clean cards ─────────────────────────────────── */}
          <div style={{padding:"0 14px 40px",maxWidth:820,margin:"0 auto"}}>
            <div style={{textAlign:"center",marginBottom:20}}>
@@ -1425,20 +1410,6 @@ export default function AayojanApp(){
                  </div>
                </div>
              ))}
-           </div>
-         </div>
-
-         {/* ── CATERER CTA — with background image ────────────────────────── */}
-         <div style={{position:"relative",margin:"0 14px 40px",borderRadius:20,overflow:"hidden",maxWidth:820,marginLeft:"auto",marginRight:"auto"}}>
-           <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1558431382-27e303142255?w=1200&q=80')",backgroundSize:"cover",backgroundPosition:"center"}}/>
-           <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(192,57,43,0.93),rgba(120,30,15,0.9))"}}/>
-           <div style={{position:"relative",zIndex:1,padding:"36px 32px",display:"flex",gap:24,alignItems:"center",justifyContent:"space-between",flexWrap:"wrap"}}>
-             <div style={{flex:1}}>
-               <div style={{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:700,color:"#fff",marginBottom:8}}>Are You a Caterer? 👨‍🍳</div>
-               <div style={{fontSize:14,color:"rgba(255,255,255,0.85)",marginBottom:12,lineHeight:1.6}}>Join Aayojan — receive WhatsApp quotation requests from customers in Newtown, Salt Lake & Rajarhat.</div>
-               {["✓ Free registration","✓ Direct WhatsApp requests","✓ Full Service or Bulk Delivery"].map(p=><div key={p} style={{fontSize:13,color:"rgba(255,255,255,0.9)",marginBottom:4}}>{p}</div>)}
-             </div>
-           <a href="/partners.html" style={{background:"#fff",border:"none",borderRadius:12,padding:"14px 28px",color:"#c0392b",fontWeight:800,fontSize:15,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,0.2)",flexShrink:0,textDecoration:"none",display:"inline-block"}}>Register Your Business →</a>
            </div>
          </div>
 
@@ -2849,6 +2820,159 @@ export default function AayojanApp(){
               <p>Email <strong>support@aayojan.in</strong> with your order ID. Refunds are processed within 5–7 business days to the original payment method.</p>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* ── ABOUT US PAGE ────────────────────────────────────────── */}
+      {view==="about"&&(
+        <div style={{...anim,overflowX:"hidden"}}>
+          {/* About Hero */}
+          <section style={{background:"var(--bg-primary)",padding:"6rem 5% 5rem",textAlign:"center",position:"relative",overflow:"hidden"}}>
+            <div style={{position:"absolute",top:"-120px",left:"50%",transform:"translateX(-50%)",width:700,height:400,background:"radial-gradient(ellipse, rgba(192,57,43,0.12) 0%, transparent 65%)",pointerEvents:"none"}}/>
+            <div style={{display:"inline-block",background:"rgba(192,57,43,0.12)",color:"var(--text-accent)",border:"1px solid rgba(192,57,43,0.3)",padding:"0.3rem 1rem",borderRadius:100,fontSize:"0.8rem",fontWeight:600,letterSpacing:"0.06em",textTransform:"uppercase",marginBottom:"1.5rem"}}>🍛 About Aayojan</div>
+            <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(2.4rem, 5vw, 4rem)",fontWeight:900,color:"var(--text-primary)",lineHeight:1.15,maxWidth:700,margin:"0 auto 1.5rem"}}> Connecting Kolkata's <em style={{fontStyle:"italic",color:"var(--text-accent)"}}>best caterers</em> with people who need them</h1>
+            <p style={{color:"var(--text-secondary)",fontSize:"1.05rem",maxWidth:560,margin:"0 auto",lineHeight:1.75}}>An AI-powered catering platform built for Newtown, Rajarhat & Salt Lake — making it effortless for customers to find trusted caterers, and for caterers to grow their business.</p>
+            <div style={{marginTop:"3.5rem",display:"flex",justifyContent:"center",gap:"1.5rem",flexWrap:"wrap"}}>
+              {["📍 Newtown, Kolkata","🤝 Partner-first platform","🤖 AI-powered matching","🎉 Weddings to office lunches"].map(pill=>(
+                <div key={pill} style={{background:"var(--bg-card)",border:"1px solid var(--border-default)",color:"var(--text-secondary)",padding:"0.5rem 1.2rem",borderRadius:100,fontSize:"0.85rem",display:"flex",alignItems:"center",gap:"0.4rem"}}>{pill}</div>
+              ))}
+            </div>
+          </section>
+
+          {/* Why We Built This */}
+          <section style={{padding:"5rem 5%",background:"var(--bg-secondary)"}}>
+            <div style={{maxWidth:1000,margin:"0 auto"}}>
+              <div style={{textAlign:"center",marginBottom:"3rem"}}>
+                <div style={{color:"var(--text-accent)",fontWeight:600,fontSize:"0.8rem",letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:"1rem"}}>Why We Built This</div>
+                <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(1.8rem,3vw,2.6rem)",fontWeight:900,lineHeight:1.2,color:"var(--text-primary)"}}>Two real problems. <span style={{color:"var(--text-accent)"}}>One platform.</span></h2>
+              </div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1.5rem",marginBottom:"1.5rem"}}>
+                {/* Customer Pain */}
+                <div style={{background:"var(--bg-card)",border:"1px solid var(--border-default)",borderRadius:20,padding:"2rem",position:"relative",overflow:"hidden"}}>
+                  <div style={{position:"absolute",top:0,left:0,right:0,height:3,background:"linear-gradient(90deg,#c0392b,#e74c3c)"}}/>
+                  <div style={{fontSize:"1.8rem",marginBottom:"0.8rem"}}>🙋</div>
+                  <div style={{color:"var(--text-accent)",fontSize:"0.75rem",fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:"0.5rem"}}>Customer Pain</div>
+                  <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:"1.1rem",fontWeight:700,color:"var(--text-primary)",marginBottom:"1rem"}}>Booking a caterer felt like guesswork</h3>
+                  <ul style={{listStyle:"none",display:"flex",flexDirection:"column",gap:"0.6rem"}}>
+                    {["Days spent chasing referrals on WhatsApp","No way to compare quality or pricing","Booking blind with no verified reviews","Quotes took days — or never came at all"].map(item=>(
+                      <li key={item} style={{display:"flex",alignItems:"flex-start",gap:"0.6rem",color:"var(--text-secondary)",fontSize:"0.88rem"}}><span style={{color:"var(--text-accent)",marginTop:2}}>✕</span> {item}</li>
+                    ))}
+                  </ul>
+                </div>
+                {/* Partner Pain */}
+                <div style={{background:"var(--bg-card)",border:"1px solid var(--border-default)",borderRadius:20,padding:"2rem",position:"relative",overflow:"hidden"}}>
+                  <div style={{position:"absolute",top:0,left:0,right:0,height:3,background:"linear-gradient(90deg,#16a34a,#4ade80)"}}/>
+                  <div style={{fontSize:"1.8rem",marginBottom:"0.8rem"}}>🍳</div>
+                  <div style={{color:"#16a34a",fontSize:"0.75rem",fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:"0.5rem"}}>Partner Pain</div>
+                  <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:"1.1rem",fontWeight:700,color:"var(--text-primary)",marginBottom:"1rem"}}>Great caterers were invisible to new customers</h3>
+                  <ul style={{listStyle:"none",display:"flex",flexDirection:"column",gap:"0.6rem"}}>
+                    {["100% dependent on word-of-mouth referrals","Empty calendars in off-peak seasons","No digital presence or customer pipeline","No platform built for how they work"].map(item=>(
+                      <li key={item} style={{display:"flex",alignItems:"flex-start",gap:"0.6rem",color:"var(--text-secondary)",fontSize:"0.88rem"}}><span style={{color:"var(--text-accent)",marginTop:2}}>✕</span> {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              {/* Aayojan Fix */}
+              <div style={{background:"var(--bg-card)",border:"2px solid var(--border-accent)",borderRadius:20,padding:"2rem 2.5rem",display:"grid",gridTemplateColumns:"auto 1fr",gap:"2rem",alignItems:"center",position:"relative",overflow:"hidden"}}>
+                <div style={{position:"absolute",top:"50%",right:-60,transform:"translateY(-50%)",width:250,height:250,background:"radial-gradient(circle, rgba(192,57,43,0.08), transparent 70%)",pointerEvents:"none"}}/>
+                <div style={{textAlign:"center"}}><div style={{fontSize:"2.5rem"}}>⚡</div></div>
+                <div>
+                  <div style={{color:"var(--text-accent)",fontSize:"0.75rem",fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:"0.5rem"}}>The Aayojan Fix</div>
+                  <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:"1.15rem",fontWeight:700,color:"var(--text-primary)",marginBottom:"0.8rem"}}>We put both sides on one platform and let AI bridge the gap</h3>
+                  <div style={{display:"flex",flexWrap:"wrap",gap:"0.6rem"}}>
+                    {["✓ Verified caterer network","✓ Quotes in 48 hours","✓ Leads on WhatsApp","✓ Free for customers","✓ Zero joining fee"].map(tag=>(
+                      <span key={tag} style={{background:"rgba(192,57,43,0.08)",border:"1px solid rgba(192,57,43,0.2)",color:"var(--text-accent)",padding:"0.3rem 0.9rem",borderRadius:100,fontSize:"0.82rem"}}>{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Numbers */}
+          <section style={{background:"var(--bg-accent-light)",padding:"5rem 5%"}}>
+            <div style={{textAlign:"center",marginBottom:"3rem"}}>
+              <div style={{color:"var(--text-accent)",fontWeight:600,fontSize:"0.8rem",letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:"0.8rem"}}>By the Numbers</div>
+              <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(1.8rem,3vw,2.6rem)",fontWeight:700,color:"var(--text-primary)"}}>Aayojan at a glance</h2>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"2rem",maxWidth:900,margin:"0 auto",textAlign:"center"}}>
+              {[{val:"3",label:"Zones served\nNewtown · Rajarhat · Salt Lake"},{val:"48h",label:"Guaranteed quote\ndelivery time"},{val:"₹0",label:"Cost to join\nfor catering partners"},{val:"5+",label:"Cuisine types\nacross our network"}].map(n=>(
+                <div key={n.val}>
+                  <span style={{fontFamily:"'Playfair Display',serif",fontSize:"2.8rem",fontWeight:900,color:"var(--text-accent)",display:"block",lineHeight:1,marginBottom:"0.4rem"}}>{n.val}</span>
+                  <div style={{color:"var(--text-secondary)",fontSize:"0.88rem",lineHeight:1.5,whiteSpace:"pre-line"}}>{n.label}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Mission & Values */}
+          <section style={{background:"var(--bg-primary)",padding:"6rem 5%"}}>
+            <div style={{textAlign:"center",marginBottom:"3.5rem"}}>
+              <div style={{color:"var(--text-accent)",fontWeight:600,fontSize:"0.8rem",letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:"0.8rem"}}>What We Stand For</div>
+              <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(1.8rem,3vw,2.6rem)",fontWeight:700,color:"var(--text-primary)",marginBottom:"0.8rem"}}>Our mission & values</h2>
+              <p style={{color:"var(--text-secondary)",fontSize:"0.97rem",maxWidth:500,margin:"0 auto",lineHeight:1.7}}>We're building a platform where both customers and caterers come away better off every time.</p>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"1.5rem",maxWidth:1000,margin:"0 auto"}}>
+              {[
+                {icon:"🤝",title:"Partner-First",desc:"Caterers are not suppliers — they're our partners. We only succeed when they grow. Every product decision is filtered through this lens."},
+                {icon:"🔍",title:"Radical Transparency",desc:"No hidden fees, no buried clauses. Customers know exactly what they're getting; partners know exactly what they'll pay."},
+                {icon:"⚡",title:"Speed Over Perfection",desc:"A quote delivered in 48 hours beats a perfect quote that takes a week. We obsess over reducing friction at every step."},
+                {icon:"📍",title:"Deeply Local",desc:"We're not trying to solve catering globally. We're building something that works brilliantly for Kolkata first."},
+                {icon:"🌱",title:"Grow Together",desc:"Our commission model means we only earn when our partners earn. Aligned incentives create better outcomes for everyone."},
+                {icon:"🍱",title:"Food is Culture",desc:"Bengali wedding food is not just a meal — it's memory. We treat every event we support as something meaningful, not transactional."},
+              ].map(v=>(
+                <div key={v.title} style={{background:"var(--bg-card)",border:"1px solid var(--border-default)",borderRadius:18,padding:"2rem",transition:"border-color 0.2s, transform 0.2s",cursor:"default"}} onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(192,57,43,0.4)";e.currentTarget.style.transform="translateY(-4px)";}} onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--border-default)";e.currentTarget.style.transform="translateY(0)";}}>
+                  <span style={{fontSize:"2.2rem",marginBottom:"1.2rem",display:"block"}}>{v.icon}</span>
+                  <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:"1.1rem",fontWeight:700,color:"var(--text-primary)",marginBottom:"0.6rem"}}>{v.title}</h3>
+                  <p style={{color:"var(--text-secondary)",fontSize:"0.88rem",lineHeight:1.7}}>{v.desc}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Team */}
+          <section style={{padding:"6rem 5%",background:"var(--bg-secondary)"}}>
+            <div style={{maxWidth:700,margin:"0 auto"}}>
+              <div style={{textAlign:"center",marginBottom:"3.5rem"}}>
+                <div style={{color:"var(--text-accent)",fontWeight:600,fontSize:"0.8rem",letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:"0.8rem"}}>The People</div>
+                <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(1.8rem,3vw,2.6rem)",fontWeight:700,color:"var(--text-primary)",marginBottom:"0.8rem"}}>Meet the team</h2>
+                <p style={{color:"var(--text-secondary)",fontSize:"0.97rem",maxWidth:500,margin:"0 auto",lineHeight:1.7}}>A small team with deep roots in Kolkata and a shared obsession with making catering discovery effortless.</p>
+              </div>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"2rem"}}>
+                {[
+                  {initials:"SB",name:"Suparna Basak",role:"Founder & Operations",bio:"IT Consultant at a top leading MNC with 16 years of experience across international markets. Her deep expertise in customer-facing challenges gives Aayojan its edge in understanding what both customers and partners truly need.",gradient:"linear-gradient(135deg, #2D1A06, #6B3A10)"},
+                  {initials:"GC",name:"Gourav Chatterjee",role:"AI Architecture",bio:"Principal Engineer at a leading MNC with 17 years of experience across international projects. Holder of multiple patents and published journals, Gourav brings world-class engineering rigour to the AI matching engine that powers Aayojan.",gradient:"linear-gradient(135deg, #1A0A2D, #4A1A6B)"},
+                ].map(m=>(
+                  <div key={m.initials} style={{background:"var(--bg-card)",border:"1px solid var(--border-default)",borderRadius:20,overflow:"hidden",transition:"transform 0.2s, box-shadow 0.2s"}} onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-5px)";e.currentTarget.style.boxShadow="0 16px 50px rgba(192,57,43,0.12)";}} onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="none";}}>
+                    <div style={{height:180,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"4rem",background:m.gradient}}>
+                      <div style={{width:80,height:80,borderRadius:"50%",background:"rgba(255,255,255,0.15)",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Playfair Display',serif",fontSize:"2rem",fontWeight:900,color:"white",border:"2px solid rgba(255,255,255,0.2)"}}>{m.initials}</div>
+                    </div>
+                    <div style={{padding:"1.5rem"}}>
+                      <div style={{fontFamily:"'Playfair Display',serif",fontSize:"1.15rem",fontWeight:700,color:"var(--text-primary)",marginBottom:"0.2rem"}}>{m.name}</div>
+                      <div style={{color:"var(--text-accent)",fontSize:"0.8rem",fontWeight:600,textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:"0.8rem"}}>{m.role}</div>
+                      <p style={{color:"var(--text-secondary)",fontSize:"0.88rem",lineHeight:1.65}}>{m.bio}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* CTA */}
+          <section style={{background:"var(--bg-card)",padding:"6rem 5%",textAlign:"center",position:"relative",overflow:"hidden"}}>
+            <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",width:600,height:300,background:"radial-gradient(ellipse, rgba(192,57,43,0.08), transparent 70%)",pointerEvents:"none"}}/>
+            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(2rem, 4vw, 3rem)",fontWeight:900,color:"var(--text-primary)",maxWidth:620,margin:"0 auto 1.2rem",position:"relative"}}>Ready to be part of the <span style={{color:"var(--text-accent)"}}>Aayojan story?</span></h2>
+            <p style={{color:"var(--text-secondary)",fontSize:"0.97rem",maxWidth:480,margin:"0 auto 2.5rem",lineHeight:1.7,position:"relative"}}>Whether you're a customer planning your next big event or a caterer looking to grow — we'd love to have you with us.</p>
+            <div style={{display:"flex",gap:"1rem",justifyContent:"center",flexWrap:"wrap",position:"relative"}}>
+              <button onClick={()=>navigate("partner-terms")} style={{background:"linear-gradient(135deg,#c0392b,#e74c3c)",color:"white",padding:"0.9rem 2rem",borderRadius:8,fontWeight:600,fontSize:"0.97rem",border:"none",cursor:"pointer",transition:"transform 0.1s"}} onMouseEnter={e=>e.currentTarget.style.transform="translateY(-2px)"} onMouseLeave={e=>e.currentTarget.style.transform="translateY(0)"}>🍽️ Join as a Partner</button>
+              <button onClick={()=>navigate("landing")} style={{border:"1.5px solid var(--border-default)",color:"var(--text-primary)",padding:"0.9rem 2rem",borderRadius:8,fontWeight:500,fontSize:"0.97rem",background:"transparent",cursor:"pointer",transition:"border-color 0.2s"}} onMouseEnter={e=>e.currentTarget.style.borderColor="var(--text-accent)"} onMouseLeave={e=>e.currentTarget.style.borderColor="var(--border-default)"}>Find a Caterer →</button>
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer style={{textAlign:"center",padding:"2rem",color:"var(--text-muted)",fontSize:"0.85rem",borderTop:"1px solid var(--border-default)"}}>
+            <p>© 2025 Aayojan AI — <span style={{cursor:"pointer",color:"var(--text-accent)"}} onClick={()=>navigate("landing")}>aayojan.online</span> · Newtown, Kolkata · <span style={{cursor:"pointer",color:"var(--text-accent)"}} onClick={()=>navigate("partner-terms")}>Partner with Us</span></p>
+          </footer>
         </div>
       )}
 
