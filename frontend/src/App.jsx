@@ -1032,7 +1032,7 @@ export default function AayojanApp(){
           {[...Array(2)].map((_,i)=>(
             <div key={i} style={{display:"flex",gap:40,paddingRight:40}}>
               <span style={{fontSize:12,color:"#fff",fontWeight:600}}>🎉 Food Tasting from ₹199</span>
-              <span style={{fontSize:12,color:"#fff",fontWeight:600}}>📍 Serving Newtown, Rajarhat & Salt Lake</span>
+              <span style={{fontSize:12,color:"#fff",fontWeight:600}}>📍 Serving Newtown, Salt Lake & Rajarhat</span>
               <span style={{fontSize:12,color:"#FDE68A",fontWeight:700}}>🔥 31+ Verified Caterers</span>
               <span style={{fontSize:12,color:"#fff",fontWeight:600}}>⚡ Free quotes in 48 hours</span>
               <span style={{fontSize:12,color:"#FDE68A",fontWeight:700}}>🚀 Now Onboarding Partner Caterers!</span>
@@ -1047,7 +1047,7 @@ export default function AayojanApp(){
           <div style={{width:46,height:46,borderRadius:12,background:"linear-gradient(135deg,#c0392b,#e74c3c)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:24,boxShadow:"0 4px 12px rgba(192,57,43,0.3)"}}>🍛</div>
           <div>
             <div style={{fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:700,background:"linear-gradient(135deg,#c0392b,#e74c3c)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Aayojan</div>
-            <div style={{fontSize:10,color:"#9ca3af",marginTop:1}}>📍 Newtown, Kolkata</div>
+            <div style={{fontSize:10,color:"#9ca3af",marginTop:1}}>📍 Newtown, Salt Lake & Rajarhat</div>
           </div>
         </button>
         <div className="header-right" style={{display:"flex",alignItems:"center",gap:8}}>
@@ -1092,7 +1092,7 @@ export default function AayojanApp(){
            <div style={{position:"relative",zIndex:2,textAlign:"center",padding:"40px 20px",maxWidth:700}}>
              <div className="hero-anim-1" style={{animation:"fadeSlideUp 0.8s ease-out"}}>
                <img src="/logo-aayojan-compact.svg" alt="Aayojan Logo" style={{width:80,height:80,margin:"0 auto 12px",display:"block",borderRadius:"50%",boxShadow:"0 4px 20px rgba(0,0,0,0.3)"}}/>
-               <div style={{fontSize:12,letterSpacing:4,color:"#fca5a5",marginBottom:12,textTransform:"uppercase",fontWeight:600}}>Newtown, Kolkata</div>
+               <div style={{fontSize:12,letterSpacing:4,color:"#fca5a5",marginBottom:12,textTransform:"uppercase",fontWeight:600}}>Newtown, Salt Lake & Rajarhat, Kolkata</div>
                <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(42px,8vw,64px)",fontWeight:700,lineHeight:1.1,marginBottom:8,color:"#fff"}}>
                  আয়োজন
                </h1>
@@ -1101,7 +1101,7 @@ export default function AayojanApp(){
                  AI-Powered Catering Platform
                </p>
                <p style={{fontSize:14,color:"rgba(255,255,255,0.6)",marginBottom:32,maxWidth:500,margin:"0 auto 32px"}}>
-                 Newtown's first catering aggregator — compare caterers, taste before you book
+                 Newtown & Salt Lake's first catering aggregator — compare caterers, taste before you book
                </p>
                 {/* Value prop badge */}
                 <div style={{display:"inline-block",background:"rgba(255,255,255,0.1)",border:"1px solid rgba(252,165,165,0.3)",borderRadius:24,padding:"6px 16px",marginBottom:20,backdropFilter:"blur(8px)"}}>
@@ -1317,7 +1317,7 @@ export default function AayojanApp(){
                  </div>
                ))}
              </div>
-             <div style={{textAlign:"center",marginTop:12,fontSize:12,color:"rgba(255,255,255,0.5)"}}>{allCaterers.length}+ verified caterers in Newtown & surroundings</div>
+            <div style={{textAlign:"center",marginTop:12,fontSize:12,color:"rgba(255,255,255,0.5)"}}>{allCaterers.length}+ verified caterers in Newtown, Salt Lake & surroundings</div>
            </div>
          </div>
 
@@ -1356,7 +1356,7 @@ export default function AayojanApp(){
              {[
                {icon:"🛎️",title:"Choose Service",sub:"Full catering or bulk delivery",num:"01"},
                {icon:"🤖",title:"AI Chat",sub:"Describe your event naturally",num:"02"},
-               {icon:"📍",title:"Your Area",sub:"Newtown & surroundings",num:"03"},
+               {icon:"📍",title:"Your Area",sub:"Newtown, Salt Lake & Rajarhat",num:"03"},
                {icon:"📲",title:"48hr Quote",sub:"5 caterers compete for you",num:"04"},
              ].map((s,i)=>(
                <div key={i} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:16,padding:"20px 14px",textAlign:"center",position:"relative",boxShadow:"0 2px 12px rgba(0,0,0,0.04)"}}>
@@ -1435,7 +1435,7 @@ export default function AayojanApp(){
            <div style={{position:"relative",zIndex:1,padding:"36px 32px",display:"flex",gap:24,alignItems:"center",justifyContent:"space-between",flexWrap:"wrap"}}>
              <div style={{flex:1}}>
                <div style={{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:700,color:"#fff",marginBottom:8}}>Are You a Caterer? 👨‍🍳</div>
-               <div style={{fontSize:14,color:"rgba(255,255,255,0.85)",marginBottom:12,lineHeight:1.6}}>Join Aayojan — receive WhatsApp quotation requests from customers in Newtown, Kolkata.</div>
+               <div style={{fontSize:14,color:"rgba(255,255,255,0.85)",marginBottom:12,lineHeight:1.6}}>Join Aayojan — receive WhatsApp quotation requests from customers in Newtown, Salt Lake & Rajarhat.</div>
                {["✓ Free registration","✓ Direct WhatsApp requests","✓ Full Service or Bulk Delivery"].map(p=><div key={p} style={{fontSize:13,color:"rgba(255,255,255,0.9)",marginBottom:4}}>{p}</div>)}
              </div>
            <a href="/partners.html" style={{background:"#fff",border:"none",borderRadius:12,padding:"14px 28px",color:"#c0392b",fontWeight:800,fontSize:15,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,0.2)",flexShrink:0,textDecoration:"none",display:"inline-block"}}>Register Your Business →</a>
@@ -1447,7 +1447,7 @@ export default function AayojanApp(){
           <div style={{maxWidth:820,margin:"0 auto",display:"grid",gridTemplateColumns:"2fr 1fr 1fr",gap:24}} className="feat-grid">
             <div>
               <div style={{fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:700,color:"var(--text-primary)",marginBottom:8}}>আয়োজন</div>
-              <p style={{fontSize:12,color:"var(--text-muted)",lineHeight:1.7,marginBottom:12}}>AI-powered catering platform for Newtown, Kolkata. Connecting you with the best caterers for every celebration.</p>
+              <p style={{fontSize:12,color:"var(--text-muted)",lineHeight:1.7,marginBottom:12}}>AI-powered catering platform for Newtown, Salt Lake & Rajarhat, Kolkata. Connecting you with the best caterers for every celebration.</p>
               <div style={{display:"flex",gap:12}}>
                 <a href="https://wa.me/918088434425?text=Hi%20Aayojan" target="_blank" rel="noopener noreferrer" style={{fontSize:20,textDecoration:"none"}}>💬</a>
                 <a href="https://instagram.com/aayojan.online" target="_blank" rel="noopener noreferrer" style={{fontSize:20,textDecoration:"none"}}>📸</a>
@@ -1458,6 +1458,7 @@ export default function AayojanApp(){
               <div style={{fontSize:12,fontWeight:700,color:"var(--text-primary)",marginBottom:10,textTransform:"uppercase",letterSpacing:1}}>Quick Links</div>
               <a href="/partners.html" style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none"}}>Partner with Us</a>
               <a href="/faq.html" style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none"}}>FAQ</a>
+              <a href="/about.html" style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none"}}>About Us</a>
               <div style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,cursor:"pointer"}} onClick={()=>window.open("https://wa.me/918088434425?text=Hi!%20Notify%20me%20when%20Aayojan%20launches","_blank")}>Notify Me at Launch</div>
               <a href="/partners.html#register" style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none"}}>Register as Caterer</a>
             </div>
@@ -1522,7 +1523,7 @@ export default function AayojanApp(){
               <div style={{textAlign:"center",marginBottom:28}}>
                 <span style={{fontSize:44}}>👨‍🍳</span>
                 <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:700,color:"var(--text-primary)",marginTop:10,marginBottom:6}}>Register Your Catering Business</h2>
-                <p style={{fontSize:13,color:"var(--text-secondary)"}}>Join Newtown's fastest-growing caterer network</p>
+                <p style={{fontSize:13,color:"var(--text-secondary)"}}>Join Newtown & Salt Lake's fastest-growing caterer network</p>
               </div>
               <div style={{...S.card,padding:"28px 32px"}}>
 
@@ -2861,7 +2862,7 @@ export default function AayojanApp(){
             <div style={{position:"absolute",inset:0,background:"url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=60')",backgroundSize:"cover",opacity:0.12}}/>
             <div style={{position:"relative",zIndex:1}}>
               <div style={{display:"inline-block",background:"rgba(255,255,255,0.15)",border:"1px solid rgba(255,255,255,0.3)",borderRadius:20,padding:"6px 16px",marginBottom:16}}>
-                <span style={{fontSize:12,color:"#fff",fontWeight:600}}>🎯 FOR CATERERS IN NEWTOWN & RAJARHAT</span>
+                <span style={{fontSize:12,color:"#fff",fontWeight:600}}>🎯 FOR CATERERS IN NEWTOWN, SALT LAKE & RAJARHAT</span>
               </div>
               <h1 style={{fontSize:"clamp(26px,5vw,40px)",fontWeight:900,color:"#fff",marginBottom:12,fontFamily:"'Playfair Display',serif",lineHeight:1.2}}>Get 15–30 Qualified Leads<br/><span style={{color:"#FDE68A"}}>Every Month — Free</span></h1>
               <p style={{fontSize:16,color:"rgba(255,255,255,0.9)",marginBottom:6}}>We bring customers to you via WhatsApp. You cook, we market.</p>
@@ -3066,7 +3067,7 @@ export default function AayojanApp(){
           <div style={{background:"linear-gradient(135deg,#0f172a,#1e293b)",borderRadius:16,padding:"36px 24px",textAlign:"center",marginBottom:32}}>
             <h2 style={{fontSize:22,fontWeight:800,color:"#fff",marginBottom:8}}>Ready to Grow Your Business?</h2>
             <p style={{fontSize:14,color:"rgba(255,255,255,0.7)",marginBottom:20}}>Join 12 caterers already getting leads through Aayojan</p>
-            <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20am%20a%20caterer%20in%20Newtown%2FRajarhat%20and%20want%20to%20join%20as%20partner.%20My%20business%20name%20is%3A%20" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:"linear-gradient(135deg,#25D366,#128C7E)",color:"#fff",padding:"16px 36px",borderRadius:30,fontSize:16,fontWeight:700,textDecoration:"none",boxShadow:"0 4px 16px rgba(37,211,102,0.3)",marginBottom:12}}>
+            <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20am%20a%20caterer%20in%20Newtown%2FSalt%20Lake%2FRajarhat%20and%20want%20to%20join%20as%20partner.%20My%20business%20name%20is%3A%20" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:"linear-gradient(135deg,#25D366,#128C7E)",color:"#fff",padding:"16px 36px",borderRadius:30,fontSize:16,fontWeight:700,textDecoration:"none",boxShadow:"0 4px 16px rgba(37,211,102,0.3)",marginBottom:12}}>
               📱 Register Free — WhatsApp Us
             </a>
             <p style={{fontSize:12,color:"rgba(255,255,255,0.5)"}}>Or call: +91-8088434425 · Takes 2 minutes</p>

@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — Aayojan | Our Story & Mission</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #E8760A;
+    --saffron-light: #F59E3F;
+    --cream: #FDF6ED;
+    --dark: #1A1208;
+    --brown: #4A2C0A;
+    --muted: #8B6E52;
+    --green: #2D7A4F;
+    --card-bg: #FFFAF3;
+    --border: #EDD8BC;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 5%;
+    background: var(--dark);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--saffron-light);
+    text-decoration: none;
+  }
+  .nav-links a {
+    color: #ccc;
+    text-decoration: none;
+    margin-left: 2rem;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--saffron-light); }
+  .nav-cta {
+    background: var(--saffron);
+    color: white !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600 !important;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--dark);
+    padding: 6rem 5% 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute;
+    top: -120px; left: 50%;
+    transform: translateX(-50%);
+    width: 700px; height: 400px;
+    background: radial-gradient(ellipse, rgba(232,118,10,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-glow-2 {
+    position: absolute;
+    bottom: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(245,158,63,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(232,118,10,0.2);
+    color: var(--saffron-light);
+    border: 1px solid rgba(232,118,10,0.4);
+    padding: 0.3rem 1rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 900;
+    color: white;
+    line-height: 1.15;
+    max-width: 700px;
+    margin: 0 auto 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--saffron-light);
+  }
+  .hero-sub {
+    color: #aaa;
+    font-size: 1.05rem;
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.75;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  /* decorative plate */
+  .hero-decoration {
+    margin-top: 3.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .deco-pill {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #ccc;
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── STORY ── */
+  .story-section {
+    padding: 6rem 5%;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .story-label {
+    color: var(--saffron);
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .story-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: var(--dark);
+  }
+  .story-section h2 span { color: var(--saffron); }
+  .story-section p {
+    color: var(--muted);
+    font-size: 0.97rem;
+    line-height: 1.85;
+    margin-bottom: 1.2rem;
+  }
+  .story-visual {
+    position: relative;
+  }
+  .story-card-main {
+    background: var(--dark);
+    border-radius: 24px;
+    padding: 2.5rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .story-card-main::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(232,118,10,0.25), transparent 70%);
+  }
+  .story-card-main .big-emoji { font-size: 3.5rem; margin-bottom: 1.2rem; display: block; }
+  .story-card-main blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: #eee;
+    margin-bottom: 1.5rem;
+  }
+  .story-card-main blockquote span { color: var(--saffron-light); }
+  .story-card-author { color: #888; font-size: 0.85rem; }
+
+  .story-card-float {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.2rem 1.5rem;
+    position: absolute;
+    bottom: -1.5rem;
+    right: -1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+    min-width: 220px;
+  }
+  .float-icon { font-size: 2rem; }
+  .float-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--saffron);
+  }
+  .float-label { color: var(--muted); font-size: 0.8rem; }
+
+  /* ── MISSION / VALUES ── */
+  .values-section {
+    background: var(--dark);
+    padding: 6rem 5%;
+  }
+  .section-header { text-align: center; margin-bottom: 3.5rem; }
+  .section-label {
+    color: var(--saffron-light);
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.8rem;
+  }
+  .section-sub {
+    color: #888;
+    font-size: 0.97rem;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .value-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 2rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .value-card:hover {
+    border-color: rgba(232,118,10,0.4);
+    transform: translateY(-4px);
+  }
+  .value-icon {
+    font-size: 2.2rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .value-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.6rem;
+  }
+  .value-card p { color: #888; font-size: 0.88rem; line-height: 1.7; }
+
+  /* ── TEAM ── */
+  .team-section {
+    padding: 6rem 5%;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .team-section .section-header { text-align: center; margin-bottom: 3.5rem; }
+  .team-section .section-label { color: var(--saffron); }
+  .team-section .section-title { color: var(--dark); }
+  .team-section .section-sub { color: var(--muted); }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .team-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 50px rgba(232,118,10,0.12);
+  }
+  .team-avatar {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .team-avatar.c1 { background: linear-gradient(135deg, #2D1A06, #6B3A10); }
+  .team-avatar.c2 { background: linear-gradient(135deg, #0A2D1A, #1A6B3A); }
+  .team-avatar.c3 { background: linear-gradient(135deg, #1A0A2D, #4A1A6B); }
+  .team-avatar-initials {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.2);
+  }
+  .team-info { padding: 1.5rem; }
+  .team-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 0.2rem;
+  }
+  .team-role {
+    color: var(--saffron);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.8rem;
+  }
+  .team-bio { color: var(--muted); font-size: 0.88rem; line-height: 1.65; }
+
+  /* ── NUMBERS ── */
+  .numbers-section {
+    background: #FFF5E8;
+    padding: 5rem 5%;
+  }
+  .numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .number-item {}
+  .number-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--saffron);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .number-label { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+
+  /* ── JOURNEY TIMELINE ── */
+  .timeline-section {
+    padding: 6rem 5%;
+    background: var(--cream);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .timeline-section .section-header { text-align: center; margin-bottom: 3.5rem; }
+  .timeline-section .section-label { color: var(--saffron); }
+  .timeline-section .section-title { color: var(--dark); }
+
+  .timeline {
+    position: relative;
+    padding-left: 2.5rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--saffron), transparent);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding-left: 1.5rem;
+  }
+  .tl-dot {
+    position: absolute;
+    left: -2.5rem;
+    top: 4px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--saffron);
+    border: 3px solid var(--cream);
+    box-shadow: 0 0 0 2px var(--saffron);
+  }
+  .tl-year {
+    color: var(--saffron);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .tl-item h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 0.4rem;
+  }
+  .tl-item p { color: var(--muted); font-size: 0.88rem; line-height: 1.65; }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--dark);
+    padding: 6rem 5%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(232,118,10,0.15), transparent 70%);
+  }
+  .cta-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    color: white;
+    max-width: 620px;
+    margin: 0 auto 1.2rem;
+    position: relative;
+  }
+  .cta-section h2 span { color: var(--saffron-light); }
+  .cta-section p {
+    color: #999;
+    font-size: 0.97rem;
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+    position: relative;
+  }
+  .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+  .btn-primary {
+    background: var(--saffron);
+    color: white;
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.97rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #c9650a; transform: translateY(-2px); }
+  .btn-ghost {
+    border: 1.5px solid rgba(255,255,255,0.25);
+    color: white;
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.97rem;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--saffron-light); background: rgba(232,118,10,0.1); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #100C04;
+    text-align: center;
+    padding: 2rem;
+    color: #555;
+    font-size: 0.85rem;
+  }
+  footer a { color: var(--saffron); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .story-section { grid-template-columns: 1fr; gap: 3rem; }
+    .story-card-float { position: static; margin-top: 1rem; }
+    .values-grid, .team-grid { grid-template-columns: 1fr 1fr; }
+    .numbers-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .values-grid, .team-grid, .numbers-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .timeline { padding-left: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://aayojan.online" class="nav-logo">Aayojan</a>
+  <div class="nav-links">
+    <a href="https://aayojan.online">Home</a>
+    <a href="partners.html">For Partners</a>
+    <a href="faq.html">FAQ</a>
+    <a href="partners.html#register" class="nav-cta">Join as Partner</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-badge">🍛 About Aayojan</div>
+  <h1>Connecting Kolkata's <em>best caterers</em> with people who need them</h1>
+  <p class="hero-sub">An AI-powered catering platform built for Newtown, Rajarhat & Salt Lake — making it effortless for customers to find trusted caterers, and for caterers to grow their business.</p>
+  <div class="hero-decoration">
+    <div class="deco-pill">📍 Newtown, Kolkata</div>
+    <div class="deco-pill">🤝 Partner-first platform</div>
+    <div class="deco-pill">🤖 AI-powered matching</div>
+    <div class="deco-pill">🎉 Weddings to office lunches</div>
+  </div>
+</section>
+
+<!-- STORY + JOURNEY (merged) -->
+<section style="padding: 5rem 5%; background: var(--cream);">
+  <div style="max-width:1000px; margin:0 auto;">
+
+    <div style="text-align:center; margin-bottom:3rem;">
+      <div class="story-label">Why We Built This</div>
+      <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3vw,2.6rem); font-weight:900; line-height:1.2; color:var(--dark);">
+        Two real problems. <span style="color:var(--saffron)">One platform.</span>
+      </h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem;">
+
+      <!-- Customer -->
+      <div style="background:var(--card-bg); border:1px solid var(--border); border-radius:20px; padding:2rem; position:relative; overflow:hidden;">
+        <div style="position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--saffron),var(--saffron-light));"></div>
+        <div style="font-size:1.8rem; margin-bottom:0.8rem;">🙋</div>
+        <div style="color:var(--saffron); font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5rem;">Customer Pain</div>
+        <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--dark); margin-bottom:1rem;">Booking a caterer felt like guesswork</h3>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:0.6rem;">
+          <li style="display:flex; align-items:flex-start; gap:0.6rem; color:var(--muted); font-size:0.88rem;"><span style="color:var(--saffron); margin-top:2px;">✕</span> Days spent chasing referrals on WhatsApp</li>
+          <li style="display:flex; align-items:flex-start; gap:0.6rem; color:var(--muted); font-size:0.88rem;"><span style="color:var(--saffron); margin-top:2px;">✕</span> No way to compare quality or pricing</li>
+          <li style="display:flex; align-items:flex-start; gap:0.6rem; color:var(--muted); font-size:0.88rem;"><span style="color:var(--saffron); margin-top:2px;">✕</span> Booking blind with no verified reviews</li>
+          <li style="display:flex; align-items:flex-start; gap:0.6rem; color:var(--muted); font-size:0.88rem;"><span style="color:var(--saffron); margin-top:2px;">✕</span> Quotes took days — or never came at all</li>
+        </ul>
+      </div>
+
+      <!-- Partner -->
+      <div style="background:var(--card-bg); border:1px solid var(--border); border-radius:20px; padding:2rem; position:relative; overflow:hidden;">
+        <div style="position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--green),#4CAF82);"></div>
+        <div style="font-size:1.8rem; margin-bottom:0.8rem;">🍳</div>
+        <div style="color:var(--green); font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5rem;">Partner Pain</div>
+        <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--dark); margin-bottom:1rem;">Great caterers were invisible to new customers</h3>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:0.6rem;">
+          <li style="display:flex; align-items:flex-start; gap:0.6rem; color:var(--muted); font-size:0.88rem;"><span style="color:var(--saffron); margin-top:2px;">✕</span> 100% dependent on word-of-mouth referrals</li>
+          <li style="display:flex; align-items:flex-start; gap:0.6rem; color:var(--muted); font-size:0.88rem;"><span style="color:var(--saffron); margin-top:2px;">✕</span> Empty calendars in off-peak seasons</li>
+          <li style="display:flex; align-items:flex-start; gap:0.6rem; color:var(--muted); font-size:0.88rem;"><span style="color:var(--saffron); margin-top:2px;">✕</span> No digital presence or customer pipeline</li>
+          <li style="display:flex; align-items:flex-start; gap:0.6rem; color:var(--muted); font-size:0.88rem;"><span style="color:var(--saffron); margin-top:2px;">✕</span> No platform built for how they work</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Aayojan fix -->
+    <div style="background:var(--dark); border-radius:20px; padding:2rem 2.5rem; display:grid; grid-template-columns:auto 1fr; gap:2rem; align-items:center; position:relative; overflow:hidden;">
+      <div style="position:absolute; top:50%; right:-60px; transform:translateY(-50%); width:250px; height:250px; background:radial-gradient(circle, rgba(232,118,10,0.12), transparent 70%); pointer-events:none;"></div>
+      <div style="text-align:center;">
+        <div style="font-size:2.5rem;">⚡</div>
+      </div>
+      <div>
+        <div style="color:var(--saffron-light); font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5rem;">The Aayojan Fix</div>
+        <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:white; margin-bottom:0.8rem;">We put both sides on one platform and let AI bridge the gap</h3>
+        <div style="display:flex; flex-wrap:wrap; gap:0.6rem;">
+          <span style="background:rgba(232,118,10,0.15); border:1px solid rgba(232,118,10,0.3); color:var(--saffron-light); padding:0.3rem 0.9rem; border-radius:100px; font-size:0.82rem;">✓ Verified caterer network</span>
+          <span style="background:rgba(232,118,10,0.15); border:1px solid rgba(232,118,10,0.3); color:var(--saffron-light); padding:0.3rem 0.9rem; border-radius:100px; font-size:0.82rem;">✓ Quotes in 48 hours</span>
+          <span style="background:rgba(232,118,10,0.15); border:1px solid rgba(232,118,10,0.3); color:var(--saffron-light); padding:0.3rem 0.9rem; border-radius:100px; font-size:0.82rem;">✓ Leads on WhatsApp</span>
+          <span style="background:rgba(232,118,10,0.15); border:1px solid rgba(232,118,10,0.3); color:var(--saffron-light); padding:0.3rem 0.9rem; border-radius:100px; font-size:0.82rem;">✓ Free for customers</span>
+          <span style="background:rgba(232,118,10,0.15); border:1px solid rgba(232,118,10,0.3); color:var(--saffron-light); padding:0.3rem 0.9rem; border-radius:100px; font-size:0.82rem;">✓ Zero joining fee</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section class="numbers-section">
+  <div class="section-header" style="margin-bottom:3rem;">
+    <div class="section-label" style="color:var(--saffron);">By the Numbers</div>
+    <h2 class="section-title" style="color:var(--dark);">Aayojan at a glance</h2>
+  </div>
+  <div class="numbers-grid">
+    <div class="number-item">
+      <span class="number-val">3</span>
+      <div class="number-label">Zones served<br>Newtown · Rajarhat · Salt Lake</div>
+    </div>
+    <div class="number-item">
+      <span class="number-val">48h</span>
+      <div class="number-label">Guaranteed quote<br>delivery time</div>
+    </div>
+    <div class="number-item">
+      <span class="number-val">₹0</span>
+      <div class="number-label">Cost to join<br>for catering partners</div>
+    </div>
+    <div class="number-item">
+      <span class="number-val">5+</span>
+      <div class="number-label">Cuisine types<br>across our network</div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION & VALUES -->
+<section class="values-section">
+  <div class="section-header">
+    <div class="section-label">What We Stand For</div>
+    <h2 class="section-title">Our mission & values</h2>
+    <p class="section-sub">We're building a platform where both customers and caterers come away better off every time.</p>
+  </div>
+  <div class="values-grid">
+    <div class="value-card">
+      <span class="value-icon">🤝</span>
+      <h3>Partner-First</h3>
+      <p>Caterers are not suppliers — they're our partners. We only succeed when they grow. Every product decision is filtered through this lens.</p>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🔍</span>
+      <h3>Radical Transparency</h3>
+      <p>No hidden fees, no buried clauses. Customers know exactly what they're getting; partners know exactly what they'll pay. Trust is non-negotiable.</p>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">⚡</span>
+      <h3>Speed Over Perfection</h3>
+      <p>A quote delivered in 48 hours beats a perfect quote that takes a week. We obsess over reducing friction at every step of the process.</p>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">📍</span>
+      <h3>Deeply Local</h3>
+      <p>We're not trying to solve catering globally. We're building something that works brilliantly for Kolkata first — then expanding thoughtfully.</p>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🌱</span>
+      <h3>Grow Together</h3>
+      <p>Our commission model means we only earn when our partners earn. Aligned incentives create better outcomes for everyone on the platform.</p>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🍱</span>
+      <h3>Food is Culture</h3>
+      <p>Bengali wedding food is not just a meal — it's memory. We treat every event we support as something meaningful, not transactional.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section style="padding: 6rem 5%; background: var(--cream);">
+  <div style="max-width:1000px; margin:0 auto;">
+    <div class="section-header" style="margin-bottom:3.5rem;">
+      <div class="section-label" style="color:var(--saffron);">The People</div>
+      <h2 class="section-title" style="color:var(--dark);">Meet the team</h2>
+      <p class="section-sub" style="color:var(--muted);">A small team with deep roots in Kolkata and a shared obsession with making catering discovery effortless.</p>
+    </div>
+    <div class="team-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 700px; margin: 0 auto;">
+      <div class="team-card">
+        <div class="team-avatar c1">
+          <div class="team-avatar-initials">SB</div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Suparna Basak</div>
+          <div class="team-role">Founder & Operations</div>
+          <p class="team-bio">16 years in MNC IT, specialising in customer-facing roles. Suparna brings first-hand understanding of what customers truly need — and built Aayojan's operations around eliminating every friction point they face.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar c3">
+          <div class="team-avatar-initials">GC</div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Gourav Chatterjee</div>
+          <div class="team-role">AI Architecture</div>
+          <p class="team-bio">Principal Engineer at a leading MNC with 17 years of experience. Gourav architected the AI matching engine at the heart of Aayojan — the system that intelligently connects the right customer to the right caterer, every time.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Ready to be part of the <span>Aayojan story?</span></h2>
+  <p>Whether you're a customer planning your next big event or a caterer looking to grow — we'd love to have you with us.</p>
+  <div class="cta-btns">
+    <a href="partners.html#register" class="btn-primary">🍽️ Join as a Partner</a>
+    <a href="https://aayojan.online" class="btn-ghost">Find a Caterer →</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Aayojan AI — <a href="https://aayojan.online">aayojan.online</a> · Newtown, Kolkata ·
+  <a href="partners.html">Partner with Us</a> · <a href="faq.html">FAQ</a> · <a href="mailto:hello@aayojan.online">hello@aayojan.online</a></p>
+</footer>
+
+</body>
+</html>
