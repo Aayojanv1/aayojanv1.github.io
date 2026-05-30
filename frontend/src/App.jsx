@@ -1168,6 +1168,29 @@ export default function AayojanApp(){
            </div>
          </div>
 
+         {/* ── SHARE & VIRAL SECTION ─────────────────────────────────── */}
+         <div style={{padding:"40px 14px",background:"var(--bg-main)",textAlign:"center"}}>
+           <div style={{maxWidth:600,margin:"0 auto"}}>
+             <div style={{fontSize:32,marginBottom:8}}>📢</div>
+             <h2 style={{fontSize:20,fontWeight:800,color:"var(--text-primary)",marginBottom:8}}>Spread the Word!</h2>
+             <p style={{fontSize:13,color:"var(--text-secondary)",marginBottom:24}}>জানান বন্ধুদের — next party-তে caterer খুঁজতে কষ্ট করতে হবে না!</p>
+              
+             <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
+               <a href="https://api.whatsapp.com/send?text=%F0%9F%8D%BD%EF%B8%8F%20Newtown-এ%20caterer%20খুঁজছো%3F%2030%2B%20caterers%20compare%20করো%2C%20food%20tasting%20%E2%82%B9199%20থেকে!%20%F0%9F%91%89%20aayojan.online" target="_blank" rel="noopener noreferrer" style={{display:"flex",alignItems:"center",gap:8,background:"#25D366",color:"#fff",padding:"12px 20px",borderRadius:12,fontSize:13,fontWeight:600,textDecoration:"none"}}>
+                 <span style={{fontSize:18}}>💬</span> WhatsApp-এ Share
+               </a>
+               <a href="https://www.facebook.com/sharer/sharer.php?u=https://aayojan.online&quote=Newtown-এ%20caterer%20খুঁজছেন%3F%2030%2B%20caterers%20compare%20করুন!%20aayojan.online" target="_blank" rel="noopener noreferrer" style={{display:"flex",alignItems:"center",gap:8,background:"#1877F2",color:"#fff",padding:"12px 20px",borderRadius:12,fontSize:13,fontWeight:600,textDecoration:"none"}}>
+                 <span style={{fontSize:18}}>📘</span> Facebook-এ Share
+               </a>
+               <a href="https://twitter.com/intent/tweet?text=Newtown%20Kolkata-তে%20caterer%20খুঁজছেন%3F%2030%2B%20verified%20caterers%2C%20food%20tasting%20₹199%20থেকে!%20👉%20aayojan.online&hashtags=Aayojan,NewtownKolkata,Catering" target="_blank" rel="noopener noreferrer" style={{display:"flex",alignItems:"center",gap:8,background:"#000",color:"#fff",padding:"12px 20px",borderRadius:12,fontSize:13,fontWeight:600,textDecoration:"none"}}>
+                 <span style={{fontSize:18}}>𝕏</span> Tweet
+               </a>
+             </div>
+
+             <p style={{fontSize:11,color:"var(--text-muted)",marginTop:16}}>Share করলে আপনার বন্ধুরাও next event-এ best caterer পাবে! 🎉</p>
+           </div>
+         </div>
+
          {/* ── PARTNER CATERERS — with revolving food background ─────────── */}
          <div style={{position:"relative",padding:"48px 14px",overflow:"hidden"}}>
            {/* Revolving food background */}

@@ -291,3 +291,86 @@ Thank you! 🙏
 4. **Personalize:** "আমি Google-এ [Business Name] দেখে impressed হলাম..."
 5. **Labels:** Contacted → Interested → Onboarded → Active
 
+
+---
+
+## 🟢 USER-SIDE MESSAGES — Spread Awareness (Facebook/WhatsApp)
+
+### MESSAGE U1 — Facebook Post for Users (Bengali — Community Groups)
+
+```
+🍽️ Newtown-এ party plan করছেন? Caterer খুঁজছেন?
+
+একটাই link মনে রাখুন: 👉 aayojan.online
+
+কি পাবেন:
+✅ 30+ verified caterers — এক জায়গায়
+✅ Price compare করুন (₹200 থেকে ₹1800/plate)
+✅ Food tasting — মাত্র ₹199 থেকে চেখে দেখুন!
+✅ WhatsApp-এ সরাসরি caterer-এর সাথে কথা বলুন
+✅ কোনো app download নেই
+
+Wedding, Birthday, House Party, গৃহপ্রবেশ — যেকোনো event-এর জন্য perfect caterer খুঁজুন 🎉
+
+🌐 aayojan.online
+📱 WhatsApp: 8088434425
+
+Share করুন — আপনার friends-দেরও কাজে লাগবে! 🙏
+
+#NewtownKolkata #Catering #PartyPlanning #Aayojan #KolkataFood #CatererNearMe
+```
+
+---
+
+### MESSAGE U2 — WhatsApp Status / Story (Short & Viral)
+
+```
+🎉 Newtown-এ party? Caterer দরকার?
+
+30+ caterers, price compare, food tasting ₹199 থেকে — সব এক জায়গায়!
+
+👉 aayojan.online
+
+(Share this — next party-তে কাজে লাগবে! 🍛)
+```
+
+---
+
+### MESSAGE U3 — Facebook Post (English — for premium audience)
+
+```
+Planning an event in Newtown/Salt Lake/Rajarhat? 🎊
+
+Tired of calling 10 caterers to compare prices? 
+
+Try Aayojan — Kolkata's first catering aggregator:
+👉 https://aayojan.online
+
+✅ 30+ verified caterers on one platform
+✅ Compare prices (₹200-₹1800 per plate)
+✅ Food tasting from ₹199 — taste before you book!
+✅ Direct WhatsApp chat — no app needed
+✅ Wedding, Birthday, House Party, Gatherings — everything covered
+
+Stop guessing, start comparing. 🍽️
+
+Save this post — you'll thank yourself next time you plan a party!
+
+#NewtownKolkata #EventPlanning #CateringKolkata #Aayojan #PartyPlanning #FindCaterers
+```
+
+---
+
+### MESSAGE U4 — WhatsApp Forward (Ask friends to visit)
+
+```
+Hey! 👋
+
+Quick share — Newtown-এ একটা নতুন catering platform launch হচ্ছে।
+30+ caterers compare করা যায়, food tasting মাত্র ₹199!
+
+Website: aayojan.online
+
+Next party-র জন্য bookmark করে রাখো — useful! 🍛🎉
+```
+
