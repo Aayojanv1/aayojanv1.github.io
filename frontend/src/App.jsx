@@ -2545,7 +2545,7 @@ export default function AayojanApp(){
           <button onClick={()=>navigate("landing")} style={{...S.secondaryBtn,marginBottom:20}}>← Back to Home</button>
           <div style={S.card}>
             <h1 style={{...S.cardTitle,fontSize:22,marginBottom:16}}>Terms of Service</h1>
-            <p style={{fontSize:12,color:"#9ca3af",marginBottom:16}}>Last updated: 29 May 2025</p>
+            <p style={{fontSize:12,color:"#9ca3af",marginBottom:16}}>Last updated: 30 May 2025</p>
             <div style={{fontSize:13,color:"var(--text-secondary)",lineHeight:1.8}}>
               <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>1. About Aayojan</h3>
               <p>Aayojan is a technology platform that connects customers with independent caterers in the Newtown/Rajarhat/Salt Lake area of Kolkata. We are a marketplace — we do NOT prepare or serve food ourselves.</p>
@@ -2557,22 +2557,26 @@ export default function AayojanApp(){
                 <li>One account per person; no shared or bot accounts</li>
               </ul>
 
-              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>3. Orders & Payments</h3>
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>3. Charges & Fees</h3>
+              <p><strong>We believe in transparent pricing with no hidden charges.</strong></p>
               <ul style={{paddingLeft:20,margin:"8px 0"}}>
-                <li>Prices quoted by caterers are estimates and may vary based on final requirements</li>
-                <li>A platform fee (₹99–₹299) applies per booking</li>
-                <li>Payment is made directly to the caterer or via our escrow system (when available)</li>
+                <li><strong>For Customers:</strong> A small platform fee is charged per booking to cover matching, support, and operations</li>
+                <li><strong>Gold Membership (optional):</strong> Customers can subscribe to Gold membership for priority matching, exclusive caterer access, and waived platform fees</li>
+                <li><strong>For Partner Caterers:</strong> A flat 3% commission on successfully closed bookings — no joining fee, no monthly subscription, no hidden charges</li>
+                <li>Payment for catering services is made directly to the caterer</li>
                 <li>Aayojan is not responsible for food quality — that liability rests with the caterer</li>
               </ul>
 
               <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>4. Caterer Listings</h3>
               <p>We vet our partner caterers but do not guarantee their services. Ratings, reviews, and match scores are algorithmically generated and meant as guidance, not guarantees.</p>
 
-              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>5. Cancellation</h3>
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>5. Cancellation & Refunds</h3>
+              <p><strong>Cancellation of bookings is handled directly between the customer and the partner caterer.</strong> Aayojan facilitates the connection but does not manage or guarantee refunds for catering services.</p>
               <ul style={{paddingLeft:20,margin:"8px 0"}}>
-                <li>Free cancellation up to 72 hours before event</li>
-                <li>50% charge for cancellation 24–72 hours before event</li>
-                <li>No refund for cancellation less than 24 hours before event</li>
+                <li>Cancellation terms (notice period, refund percentage) are set by each partner caterer individually</li>
+                <li>Customers should confirm cancellation terms with their caterer before finalizing the booking</li>
+                <li>Aayojan's platform fee is non-refundable once a caterer has been successfully matched and contacted</li>
+                <li>If no caterer responds to your inquiry, the platform fee is fully refundable</li>
               </ul>
 
               <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>6. Prohibited Use</h3>
@@ -2596,32 +2600,42 @@ export default function AayojanApp(){
           <button onClick={()=>navigate("landing")} style={{...S.secondaryBtn,marginBottom:20}}>← Back to Home</button>
           <div style={S.card}>
             <h1 style={{...S.cardTitle,fontSize:22,marginBottom:16}}>Refund & Cancellation Policy</h1>
-            <p style={{fontSize:12,color:"#9ca3af",marginBottom:16}}>Last updated: 29 May 2025</p>
+            <p style={{fontSize:12,color:"#9ca3af",marginBottom:16}}>Last updated: 30 May 2025</p>
             <div style={{fontSize:13,color:"var(--text-secondary)",lineHeight:1.8}}>
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>Our Charging Model</h3>
+              <p><strong>Aayojan keeps it simple and transparent:</strong></p>
+              <ul style={{paddingLeft:20,margin:"8px 0"}}>
+                <li><strong>Customers:</strong> Platform fee per booking (covers AI matching, support & coordination)</li>
+                <li><strong>Customers (optional):</strong> Gold Membership for priority access, exclusive caterers, and waived platform fees</li>
+                <li><strong>Partner Caterers:</strong> 3% commission on successful bookings only — no other charges</li>
+              </ul>
+              <p style={{marginTop:8,fontWeight:600}}>No hidden charges. No surprises. That's a promise.</p>
+
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>Booking Cancellations</h3>
+              <p><strong>All booking cancellations are handled directly between the customer and the partner caterer.</strong></p>
+              <ul style={{paddingLeft:20,margin:"8px 0"}}>
+                <li>Each caterer sets their own cancellation terms (notice period, refund eligibility, penalties)</li>
+                <li>Customers should confirm cancellation terms with their caterer before placing the booking</li>
+                <li>Aayojan does not hold catering payments and cannot process refunds on behalf of caterers</li>
+                <li>If a dispute arises, Aayojan will make reasonable efforts to mediate but is not liable for outcomes</li>
+              </ul>
+
               <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>Platform Fee Refund</h3>
               <ul style={{paddingLeft:20,margin:"8px 0"}}>
-                <li><strong>No caterer responded:</strong> Full refund of platform fee</li>
-                <li><strong>You cancel before accepting a quote:</strong> Full refund</li>
-                <li><strong>You cancel after accepting but 72+ hours before event:</strong> 80% refund of platform fee</li>
-                <li><strong>You cancel 24–72 hours before event:</strong> 50% refund</li>
-                <li><strong>Less than 24 hours:</strong> No refund</li>
+                <li><strong>No caterer responded to your inquiry:</strong> Full refund of platform fee</li>
+                <li><strong>You cancel before any caterer is matched:</strong> Full refund</li>
+                <li><strong>After a caterer has been matched and contacted:</strong> Platform fee is non-refundable (the service has been delivered)</li>
               </ul>
 
-              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>Caterer Payment Refunds</h3>
-              <p>Refunds for payments made directly to caterers must be resolved with the caterer. Aayojan will assist in dispute resolution but cannot guarantee refunds from third-party caterers.</p>
-
-              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>Phone Unlock Fee (₹49)</h3>
-              <p>Non-refundable once the caterer's phone number has been revealed.</p>
-
-              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>Food Tasting Fee (₹199)</h3>
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>Gold Membership</h3>
               <ul style={{paddingLeft:20,margin:"8px 0"}}>
-                <li>Refundable if caterer cancels the tasting session</li>
-                <li>Non-refundable if you don't show up for a confirmed session</li>
-                <li>Adjusted against final order if you book the caterer</li>
+                <li>Gold Membership is a recurring subscription and can be cancelled anytime</li>
+                <li>No refund for the current billing period upon cancellation</li>
+                <li>Benefits remain active until the end of the paid period</li>
               </ul>
 
-              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>How to Request a Refund</h3>
-              <p>Email <strong>aayojan1@gmail.com</strong> with your order ID. Refunds are processed within 5–7 business days to the original payment method.</p>
+              <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>How to Reach Us</h3>
+              <p>For any refund requests or disputes, email <strong>aayojan1@gmail.com</strong> or WhatsApp us at <strong>+91 8088434425</strong>. We respond within 24 hours.</p>
             </div>
           </div>
         </div>
