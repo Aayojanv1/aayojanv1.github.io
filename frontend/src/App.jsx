@@ -1055,7 +1055,7 @@ export default function AayojanApp(){
           <button className="theme-toggle" onClick={()=>setDarkMode(!darkMode)} title={darkMode?"Switch to light mode":"Switch to dark mode"}>{darkMode?"☀️":"🌙"}</button>
           {view!=="landing"&&<button onClick={()=>navigate("landing")} style={S.ghostBtn}>← Home</button>}
           <button onClick={()=>navigate("about")} style={S.ghostBtn}>About Us</button>
-          <button onClick={()=>navigate("chat")} style={{...S.ghostBtn,borderColor:"#FF6B35",color:"#FF6B35",background:"#FFF7ED"}}>💬 Hey Partner, Chat with us</button>
+          <button onClick={()=>navigate("chat")} style={{...S.ghostBtn,borderColor:"rgba(232,118,10,0.4)",color:"#F3C869",background:"rgba(232,118,10,0.1)"}}>💬 Hey Partner, Chat with us</button>
           {user?.isAdmin&&<button onClick={()=>{loadAdminData();navigate("admin");}} style={{...S.ghostBtn,borderColor:"#bbf7d0",color:"#16a34a",background:"#f0fdf4"}}>👑 Admin</button>}
           {user?<div style={{display:"flex",alignItems:"center",gap:8}}>
             <button onClick={openProfile} style={{display:"flex",alignItems:"center",gap:5,background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"6px 10px",fontSize:12,color:"#16a34a",cursor:"pointer"}}>
