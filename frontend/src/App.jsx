@@ -1097,9 +1097,9 @@ export default function AayojanApp(){
 
              {/* Trust stats — partner focused */}
              <div style={{display:"flex",justifyContent:"center",gap:32,marginTop:24}}>
-               {[["₹0","To Join Forever"],["8","Founding Spots Left"],["97%","Revenue You Keep"]].map(([val,lbl])=>(
+               {[["3%","Our Commission"],["vs 30%","Zomato/Swiggy"],["₹0","Joining Fee"]].map(([val,lbl])=>(
                  <div key={lbl} style={{textAlign:"center"}}>
-                   <div style={{fontSize:22,fontWeight:900,color:"#E8760A"}}>{val}</div>
+                   <div style={{fontSize:22,fontWeight:900,color:val==="vs 30%"?"#e74c3c":"#E8760A"}}>{val}</div>
                    <div style={{fontSize:11,color:"var(--text-muted)",textTransform:"uppercase",letterSpacing:1}}>{lbl}</div>
                  </div>
                ))}
