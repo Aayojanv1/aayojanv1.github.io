@@ -1150,12 +1150,12 @@ export default function AayojanApp(){
            <div style={{position:"relative",zIndex:2,maxWidth:700,margin:"0 auto"}}>
              <div style={{textAlign:"center",marginBottom:24}}>
                <div style={{display:"inline-block",background:"rgba(255,107,53,0.15)",border:"1px solid rgba(255,107,53,0.4)",borderRadius:20,padding:"5px 16px",marginBottom:14}}>
-                 <span style={{fontSize:11,color:"#FF6B35",fontWeight:700,letterSpacing:1}}>👨‍🍳 FOR CATERERS IN NEWTOWN & RAJARHAT</span>
+                 <span style={{fontSize:11,color:"#FF6B35",fontWeight:700,letterSpacing:1}}>👨‍🍳 FOR CATERERS IN NEWTOWN, SALT LAKE & RAJARHAT</span>
                </div>
                <h2 style={{fontFamily:"'Playfair Display',Georgia,serif",fontSize:"clamp(24px,5vw,36px)",fontWeight:900,color:"#fff",lineHeight:1.2,marginBottom:10}}>
                  Great Food, But <span style={{color:"#FDE68A"}}>No Marketing Budget?</span>
                </h2>
-               <p style={{fontSize:14,color:"rgba(255,255,255,0.7)",maxWidth:520,margin:"0 auto"}}>You make amazing food — we make sure Newtown knows about it. No pamphlets, no Swiggy 30% cut. Just direct WhatsApp leads.</p>
+               <p style={{fontSize:14,color:"rgba(255,255,255,0.7)",maxWidth:520,margin:"0 auto"}}>You make amazing food — we make sure Newtown, Salt Lake & Rajarhat knows about it. No pamphlets, no Swiggy 30% cut. Just direct WhatsApp leads.</p>
              </div>
 
              {/* Two big stat cards */}
