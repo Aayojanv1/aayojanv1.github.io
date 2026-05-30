@@ -1389,30 +1389,6 @@ export default function AayojanApp(){
            </div>
          </div>
 
-         {/* ── TESTIMONIALS — Clean cards ─────────────────────────────────── */}
-         <div style={{padding:"0 14px 40px",maxWidth:820,margin:"0 auto"}}>
-           <div style={{textAlign:"center",marginBottom:20}}>
-             <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"var(--text-primary)"}}>Customer Reviews</h2>
-             <p style={{fontSize:12,color:"var(--text-muted)"}}>সন্তুষ্ট গ্রাহকদের কথা — What our customers say</p>
-           </div>
-           <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14}} className="feat-grid">
-             {[
-               {name:"Anima Das",event:"Wedding Reception",text:"Amazing food! The Ilish and Mishti Doi were just like homemade. All 200 guests were delighted.",rating:5},
-               {name:"Rajesh Sharma",event:"Corporate Event",text:"Got 5 competitive quotes within 48 hours. The AI matching was spot-on. Very smooth process!",rating:5},
-               {name:"Priya Mukherjee",event:"Puja Bhog (500 guests)",text:"Catering for 500 at our Durga Puja — perfect timing, perfect taste. Highly recommend!",rating:5},
-             ].map((t,i)=>(
-               <div key={i} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:16,padding:"18px",boxShadow:"0 2px 12px rgba(0,0,0,0.04)"}}>
-                 <div style={{fontSize:12,marginBottom:8,color:"#f59e0b"}}>{"★".repeat(t.rating)}</div>
-                 <div style={{fontSize:12,color:"var(--text-secondary)",lineHeight:1.7,marginBottom:12,fontStyle:"italic"}}>"{t.text}"</div>
-                 <div style={{borderTop:"1px solid var(--border-light)",paddingTop:10}}>
-                   <div style={{fontSize:12,fontWeight:700,color:"var(--text-primary)"}}>{t.name}</div>
-                   <div style={{fontSize:10,color:"#c0392b"}}>{t.event}</div>
-                 </div>
-               </div>
-             ))}
-           </div>
-         </div>
-
          {/* ── FOOTER ─────────────────────────────────────────────────────── */}
          <div style={{background:"var(--bg-card)",borderTop:"1px solid var(--border-light)",padding:"32px 14px",marginTop:20}}>
           <div style={{maxWidth:820,margin:"0 auto",display:"grid",gridTemplateColumns:"2fr 1fr 1fr",gap:24}} className="feat-grid">
