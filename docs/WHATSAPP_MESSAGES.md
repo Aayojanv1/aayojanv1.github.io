@@ -17,7 +17,7 @@
 
 গত মাসে কতগুলো order আপনি হারিয়েছেন শুধুমাত্র customer আপনাকে খুঁজে পায়নি বলে? 🤔
 
-আমরা Aayojan (aayojan.online) — Newtown-এর একমাত্র catering aggregator। প্রতিদিন customers আমাদের platform-এ caterer খুঁজছে wedding, birthday, corporate event-এর জন্য।
+আমরা Aayojan (aayojan.online) — Newtown-এর একমাত্র catering aggregator। প্রতিদিন customers আমাদের platform-এ caterer খুঁজছে wedding, birthday, house party-এর জন্য।
 
 🔥 আমাদের offer:
 • আপনার listing = 100% FREE (আজীবন)
@@ -40,7 +40,7 @@
 
 ---
 
-## 🟢 MESSAGE 1B — English Version (Premium/Corporate Caterers)
+## 🟢 MESSAGE 1B — English Version (Premium/House Party Caterers)
 
 ```
 Hi! 🙏
@@ -51,7 +51,7 @@ I'm Suparna from Aayojan (aayojan.online) — Newtown Kolkata's ONLY catering ag
 
 👉 See our platform: https://aayojan.online
 
-Every day, customers come to us looking for caterers for weddings, birthdays & corporate events. Right now we have MORE demand than supply.
+Every day, customers come to us looking for caterers for weddings, birthdays & house partys. Right now we have MORE demand than supply.
 
 🔥 Here's what we offer you — FREE:
 • Permanent listing on our platform (₹0, forever)
@@ -153,7 +153,7 @@ Welcome aboard! 🚀
 ```
 🔔 *নতুন Customer Request!*
 
-🎊 Event: [Wedding/Birthday/Corporate]
+🎊 Event: [Wedding/Birthday/House Party]
 👥 Guests: [100]
 💰 Budget: ₹[400]/plate
 📍 Location: [Newtown, Action Area I]  
