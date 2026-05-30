@@ -1046,178 +1046,203 @@ export default function AayojanApp(){
           LANDING
       ══════════════════════════════════════════════════════════════════════ */}
       {view==="landing"&&(
-        <div style={{...S.page,...anim}}>
-         {/* Hero — Clean, Visual, Partner-focused */}
-         <div style={{textAlign:"center",padding:"28px 0 20px",position:"relative"}}>
-           <div style={{fontSize:14,letterSpacing:3,color:"#c0392b",marginBottom:6,opacity:0.5,fontFamily:"serif"}}>꧁ ✿ ❀ ✿ ꧂</div>
-           <h1 className="hero-title" style={{fontFamily:"'Playfair Display',serif",fontSize:38,fontWeight:700,lineHeight:1.15,marginBottom:6}}>
-             <span style={{background:"linear-gradient(135deg,#c0392b,#e74c3c)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>আয়োজন</span>
-           </h1>
-           <p style={{fontSize:15,color:"#374151",fontWeight:600,marginBottom:4}}>নিউটাউনের সেরা ক্যাটারিং প্ল্যাটফর্ম</p>
-           <p style={{fontSize:13,color:"#6b7280",marginBottom:20}}>Annaprashan থেকে Biye Bari — সব উৎসবে আমরা আছি</p>
+        <div style={{...anim,overflowX:"hidden"}}>
 
-           {/* Partner Caterers — The Heroes */}
-           <div style={{background:"linear-gradient(135deg,#fff5f5,#fffbeb)",border:"1px solid #fde8d8",borderRadius:18,padding:"18px 20px",marginBottom:20}}>
-             <div style={{fontSize:10,fontWeight:800,color:"#c0392b",textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:12}}>🏆 আমাদের পার্টনার ক্যাটারার</div>
-             <div style={{display:"flex",justifyContent:"center",gap:12,flexWrap:"wrap",marginBottom:10}}>
-               {allCaterers.slice(0,6).map(c=>(
-                 <div key={c.id} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:4,minWidth:70}}>
-                   <div style={{width:48,height:48,borderRadius:"50%",background:"#fff",border:"2px solid #fca5a5",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,boxShadow:"0 2px 8px rgba(192,57,43,0.1)"}}>{c.logo}</div>
-                   <div style={{fontSize:9,fontWeight:700,color:"#374151",textAlign:"center",lineHeight:1.2,maxWidth:70}}>{c.name.split(" ").slice(0,2).join(" ")}</div>
-                   <div style={{fontSize:8,color:"#c0392b"}}>⭐{c.rating}</div>
+         {/* ── HERO SECTION — Full-width background banner ─────────────────── */}
+         <div className="landing-hero" style={{position:"relative",minHeight:"85vh",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
+           {/* Animated background images — rotating */}
+           <div className="hero-bg-slider" style={{position:"absolute",inset:0,zIndex:0}}>
+             <div className="hero-slide hero-slide-1" style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1400&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 18s ease-in-out infinite"}}/>
+             <div className="hero-slide hero-slide-2" style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=1400&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 18s ease-in-out 6s infinite",opacity:0}}/>
+             <div className="hero-slide hero-slide-3" style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1567337710282-00832b415979?w=1400&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 18s ease-in-out 12s infinite",opacity:0}}/>
+           </div>
+           {/* Dark gradient overlay */}
+           <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(15,15,20,0.6) 0%,rgba(15,15,20,0.85) 60%,rgba(15,15,20,0.95) 100%)",zIndex:1}}/>
+           {/* Floating particles */}
+           <div style={{position:"absolute",inset:0,zIndex:1,overflow:"hidden",pointerEvents:"none"}}>
+             {[...Array(6)].map((_,i)=><div key={i} className="float-particle" style={{position:"absolute",width:4+i*2,height:4+i*2,borderRadius:"50%",background:"rgba(252,165,165,0.3)",left:`${15+i*14}%`,top:`${20+i*10}%`,animation:`floatUp ${4+i*1.2}s ease-in-out infinite alternate`,animationDelay:`${i*0.5}s`}}/>)}
+           </div>
+
+           {/* Hero Content */}
+           <div style={{position:"relative",zIndex:2,textAlign:"center",padding:"40px 20px",maxWidth:700}}>
+             <div className="hero-anim-1" style={{animation:"fadeSlideUp 0.8s ease-out"}}>
+               <div style={{fontSize:12,letterSpacing:4,color:"#fca5a5",marginBottom:12,textTransform:"uppercase",fontWeight:600}}>নিউটাউন, কলকাতা</div>
+               <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(42px,8vw,64px)",fontWeight:700,lineHeight:1.1,marginBottom:12,color:"#fff"}}>
+                 আয়োজন
+               </h1>
+               <p style={{fontSize:"clamp(16px,3vw,20px)",color:"rgba(255,255,255,0.9)",fontWeight:500,marginBottom:6}}>
+                 AI-Powered Catering Platform
+               </p>
+               <p style={{fontSize:14,color:"rgba(255,255,255,0.6)",marginBottom:32,maxWidth:480,margin:"0 auto 32px"}}>
+                 Annaprashan থেকে Biye Bari — ৩১+ verified caterers, ৪৮ ঘণ্টায় quote
+               </p>
+             </div>
+
+             {/* CTA buttons — glass morphism */}
+             <div className="hero-anim-2" style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",animation:"fadeSlideUp 0.8s ease-out 0.3s both"}}>
+               <button onClick={()=>{navigate("app");setServiceType("full");setStep(1);}} style={{background:"linear-gradient(135deg,#c0392b,#e74c3c)",color:"#fff",border:"none",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:700,cursor:"pointer",boxShadow:"0 8px 32px rgba(192,57,43,0.4)",transition:"transform 0.2s"}}>🛎️ Book Catering</button>
+               <button onClick={()=>navigate("chat")} style={{background:"rgba(255,255,255,0.1)",color:"#fff",border:"1px solid rgba(255,255,255,0.3)",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:600,cursor:"pointer",backdropFilter:"blur(10px)",transition:"transform 0.2s"}}>🤖 AI Chat</button>
+               <button onClick={()=>{navigate("app");setServiceType("bulk");setStep(1);}} style={{background:"rgba(255,255,255,0.1)",color:"#fff",border:"1px solid rgba(255,255,255,0.3)",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:600,cursor:"pointer",backdropFilter:"blur(10px)",transition:"transform 0.2s"}}>📦 Bulk Order</button>
+             </div>
+
+             {/* Stats bar — glass */}
+             <div className="hero-anim-3" style={{display:"flex",justifyContent:"center",gap:24,marginTop:36,animation:"fadeSlideUp 0.8s ease-out 0.6s both"}}>
+               {[["500+","Events"],["48hr","Quotes"],["31+","Caterers"],["₹200–1800","Per Plate"]].map(([val,lbl])=>(
+                 <div key={lbl} style={{textAlign:"center"}}>
+                   <div style={{fontSize:20,fontWeight:900,color:"#fca5a5"}}>{val}</div>
+                   <div style={{fontSize:10,color:"rgba(255,255,255,0.5)",textTransform:"uppercase",letterSpacing:1}}>{lbl}</div>
                  </div>
                ))}
              </div>
-             <div style={{fontSize:11,color:"#6b7280"}}>{allCaterers.length}+ verified caterers in Newtown & surroundings</div>
            </div>
 
-           {/* Quick Stats — one line */}
-           <div style={{display:"flex",justifyContent:"center",gap:20,marginBottom:20}}>
-             {[["500+","Events"],["48hr","Quotes"],["10+","Areas"],["₹200-1800","Range"]].map(([val,lbl])=>(
-               <div key={lbl} style={{textAlign:"center"}}>
-                 <div style={{fontSize:18,fontWeight:900,color:"#c0392b"}}>{val}</div>
-                 <div style={{fontSize:9,color:"#9ca3af",textTransform:"uppercase"}}>{lbl}</div>
+           {/* Scroll indicator */}
+           <div style={{position:"absolute",bottom:24,left:"50%",transform:"translateX(-50%)",zIndex:2,animation:"bounceDown 2s infinite"}}>
+             <div style={{width:24,height:38,borderRadius:12,border:"2px solid rgba(255,255,255,0.3)",display:"flex",justifyContent:"center",paddingTop:6}}>
+               <div style={{width:3,height:8,borderRadius:3,background:"#fca5a5",animation:"scrollDot 2s infinite"}}/>
+             </div>
+           </div>
+         </div>
+
+         {/* ── PARTNER CATERERS — Scrolling ribbon ─────────────────────────── */}
+         <div style={{padding:"40px 14px",maxWidth:820,margin:"0 auto"}}>
+           <div style={{textAlign:"center",marginBottom:24}}>
+             <div style={{fontSize:10,fontWeight:800,color:"#c0392b",textTransform:"uppercase",letterSpacing:3,marginBottom:6}}>Our Partner Caterers</div>
+             <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:700,color:"var(--text-primary)"}}>🏆 আমাদের পার্টনার ক্যাটারার</h2>
+           </div>
+           <div className="caterer-scroll" style={{display:"flex",gap:16,overflowX:"auto",paddingBottom:12,scrollSnapType:"x mandatory",scrollbarWidth:"none"}}>
+             {allCaterers.slice(0,8).map(c=>(
+               <div key={c.id} style={{minWidth:140,scrollSnapAlign:"start",background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:16,padding:"18px 14px",textAlign:"center",boxShadow:"0 2px 12px rgba(192,57,43,0.06)",transition:"transform 0.2s",flexShrink:0}}>
+                 <div style={{width:56,height:56,borderRadius:"50%",background:"linear-gradient(135deg,#fff5f5,#fee2e2)",border:"2px solid #fca5a5",display:"flex",alignItems:"center",justifyContent:"center",fontSize:26,margin:"0 auto 8px",boxShadow:"0 4px 12px rgba(192,57,43,0.1)"}}>{c.logo}</div>
+                 <div style={{fontSize:11,fontWeight:700,color:"var(--text-primary)",marginBottom:2,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{c.name.split(" ").slice(0,2).join(" ")}</div>
+                 <div style={{fontSize:10,color:"#c0392b",fontWeight:600}}>⭐ {c.rating}</div>
+                 <div style={{fontSize:9,color:"var(--text-muted)",marginTop:2}}>{c.cuisineSpecialties?.[0]}</div>
                </div>
              ))}
            </div>
+           <div style={{textAlign:"center",marginTop:10,fontSize:12,color:"var(--text-muted)"}}>{allCaterers.length}+ verified caterers in Newtown & surroundings</div>
+         </div>
 
-           {/* CTA buttons */}
-           <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
-             <button onClick={()=>{navigate("app");setServiceType("full");setStep(1);}} style={{...S.primaryBtn,width:"auto",padding:"12px 24px",fontSize:14}}>🛎️ Book Full Catering</button>
-             <button onClick={()=>{navigate("app");setServiceType("bulk");setStep(1);}} style={{...S.secondaryBtn,width:"auto",padding:"12px 24px",fontSize:14,borderColor:"#c0392b",color:"#c0392b"}}>📦 Bulk Order</button>
-             <button onClick={()=>navigate("chat")} style={{...S.ghostBtn,width:"auto",padding:"12px 24px",fontSize:14,borderColor:"#fca5a5",color:"#c0392b",background:"#fff5f5"}}>🤖 AI Chat</button>
+         {/* ── FOOD SHOWCASE — Horizontal scroll with gradient bg ──────────── */}
+         <div style={{position:"relative",padding:"36px 0",overflow:"hidden"}}>
+           <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(192,57,43,0.03),rgba(249,115,22,0.03))",zIndex:0}}/>
+           <div style={{position:"relative",zIndex:1,maxWidth:820,margin:"0 auto",padding:"0 14px"}}>
+             <div style={{textAlign:"center",marginBottom:16}}>
+               <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:20,color:"var(--text-primary)"}}>বাংলার স্বাদ — Taste of Bengal</h3>
+             </div>
+             <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap"}}>
+               {[["🍚","Biryani"],["🐟","Ilish"],["🍖","Kosha Mangsho"],["🦐","Chingri"],["🍮","Mishti Doi"],["🍡","Rasgolla"],["🫓","Luchi"],["🍲","Shukto"]].map(([emoji,name])=>(
+                 <span key={name} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:24,padding:"8px 16px",fontSize:13,display:"flex",alignItems:"center",gap:6,boxShadow:"0 2px 8px rgba(0,0,0,0.04)",transition:"transform 0.2s",cursor:"default"}}>
+                   <span style={{fontSize:18}}>{emoji}</span><span style={{fontWeight:600,color:"var(--text-primary)"}}>{name}</span>
+                 </span>
+               ))}
+             </div>
+             {/* Occasions */}
+             <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap",marginTop:14}}>
+               {[["👶","অন্নপ্রাশন"],["💍","বিয়ে"],["🙏","পূজা"],["🎂","জন্মদিন"],["🏠","গৃহপ্রবেশ"],["👨‍💼","Corporate"]].map(([icon,label])=>(
+                 <span key={label} style={{background:"linear-gradient(135deg,#fff5f5,#fffbeb)",border:"1px solid #fde8d8",borderRadius:24,padding:"7px 14px",fontSize:12,display:"flex",alignItems:"center",gap:5,fontWeight:600,color:"var(--text-secondary)"}}>
+                   <span>{icon}</span>{label}
+                 </span>
+               ))}
+             </div>
            </div>
          </div>
 
-         {/* Bengali food chips — compact */}
-         <div style={{display:"flex",justifyContent:"center",gap:6,marginBottom:20,flexWrap:"wrap"}}>
-           {[["🍚","Biryani"],["🐟","Ilish"],["🍖","Kosha Mangsho"],["🦐","Chingri"],["🍮","Mishti Doi"],["🍡","Rasgolla"],["🫓","Luchi"]].map(([emoji,name])=>(
-             <span key={name} style={{background:"#fff",border:"1px solid #fde8d8",borderRadius:20,padding:"4px 10px",fontSize:11,display:"flex",alignItems:"center",gap:4}}>
-               <span>{emoji}</span><span style={{fontWeight:600,color:"#374151"}}>{name}</span>
-             </span>
-           ))}
-         </div>
-
-         {/* Bengali Occasions — compact chips */}
-         <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center",gap:6,marginBottom:24}}>
-           {[["👶","অন্নপ্রাশন"],["💍","বিয়ে"],["🙏","পূজা"],["🎂","জন্মদিন"],["🏠","গৃহপ্রবেশ"],["👨‍💼","Corporate"]].map(([icon,label])=>(
-             <span key={label} style={{background:"#fffbeb",border:"1px solid #fde8d8",borderRadius:20,padding:"5px 12px",fontSize:11,display:"flex",alignItems:"center",gap:4}}>
-               <span>{icon}</span><span style={{fontWeight:600,color:"#374151"}}>{label}</span>
-             </span>
-           ))}
-         </div>
-
-         {/* ── Bengali Culture Gallery ─────────────────────────────────────── */}
-         <div style={{marginBottom:28}}>
-           <div style={{fontSize:12,fontWeight:800,color:"#c0392b",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12,textAlign:"center"}}>📸 বাংলার রঙ — Colors of Bengal</div>
-           <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:8,borderRadius:16,overflow:"hidden"}}>
+         {/* ── HOW IT WORKS — Modern steps with bg image sections ──────────── */}
+         <div style={{position:"relative",padding:"48px 14px",maxWidth:820,margin:"0 auto"}}>
+           <div style={{textAlign:"center",marginBottom:28}}>
+             <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:700,color:"var(--text-primary)",marginBottom:6}}>কিভাবে কাজ করে?</h2>
+             <p style={{fontSize:13,color:"var(--text-muted)"}}>4 simple steps to your perfect event</p>
+           </div>
+           <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14}} className="feat-grid">
              {[
-               {src:"https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400&h=260&fit=crop",label:"দুর্গা পূজা",sub:"Durga Puja Pandal"},
-               {src:"https://images.unsplash.com/photo-1596797038530-2c107229654b?w=400&h=260&fit=crop",label:"বাংলার খাবার",sub:"Bengali Feast"},
-               {src:"https://images.unsplash.com/photo-1558431382-27e303142255?w=400&h=260&fit=crop",label:"হাওড়া ব্রিজ",sub:"Howrah Bridge"},
-             ].map((img,i)=>(
-               <div key={i} style={{position:"relative",overflow:"hidden",borderRadius:12,aspectRatio:"3/2"}}>
-                 <img src={img.src} alt={img.sub} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover"}}/>
-                 <div style={{position:"absolute",bottom:0,left:0,right:0,background:"linear-gradient(transparent,rgba(0,0,0,0.7))",padding:"12px 10px 8px",textAlign:"center"}}>
-                   <div style={{fontSize:12,fontWeight:700,color:"#fff"}}>{img.label}</div>
-                   <div style={{fontSize:9,color:"rgba(255,255,255,0.8)"}}>{img.sub}</div>
+               {icon:"🛎️",title:"সেবা বাছুন",sub:"Full catering or bulk order",num:"01"},
+               {icon:"🤖",title:"AI Chat",sub:"Describe your event naturally",num:"02"},
+               {icon:"📍",title:"এলাকা দিন",sub:"Newtown & surroundings",num:"03"},
+               {icon:"📲",title:"48hr Quote",sub:"5 caterers compete for you",num:"04"},
+             ].map((s,i)=>(
+               <div key={i} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:16,padding:"20px 14px",textAlign:"center",position:"relative",boxShadow:"0 2px 12px rgba(0,0,0,0.04)"}}>
+                 <div style={{position:"absolute",top:8,right:10,fontSize:24,fontWeight:900,color:"rgba(192,57,43,0.08)",fontFamily:"monospace"}}>{s.num}</div>
+                 <div style={{fontSize:28,marginBottom:8}}>{s.icon}</div>
+                 <div style={{fontSize:12,fontWeight:700,color:"var(--text-primary)",marginBottom:3}}>{s.title}</div>
+                 <div style={{fontSize:10,color:"var(--text-muted)"}}>{s.sub}</div>
+               </div>
+             ))}
+           </div>
+         </div>
+
+         {/* ── FEATURED CATERERS — Cards ──────────────────────────────────── */}
+         <div style={{padding:"0 14px 40px",maxWidth:820,margin:"0 auto"}}>
+           <h2 style={{...S.sectionTitle,textAlign:"center"}}>Featured Caterers</h2>
+           <div className="feat-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14}}>
+             {allCaterers.slice(0,3).map(c=>(
+               <div key={c.id} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:16,padding:"18px",boxShadow:"0 2px 12px rgba(192,57,43,0.06)",transition:"transform 0.2s"}}>
+                 <div style={{display:"flex",gap:10,alignItems:"flex-start",marginBottom:10}}>
+                   <div style={{fontSize:26,background:"linear-gradient(135deg,#fff5f5,#fee2e2)",borderRadius:12,width:44,height:44,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{c.logo}</div>
+                   <div><div style={{fontSize:13,fontWeight:700,color:"var(--text-primary)",marginBottom:2}}>{c.name}</div><div style={{fontSize:11,color:"var(--text-muted)"}}>⭐{c.rating} · 📍{PINCODE_COORDS[c.pincode]?.area}</div></div>
+                 </div>
+                 <div style={{display:"flex",flexWrap:"wrap",gap:5,marginBottom:8}}>
+                   {(c.serviceTypes||["full"]).map(st=><span key={st} style={{fontSize:10,padding:"2px 8px",borderRadius:10,background:"#fff5f5",color:SVC[st].color,border:`1px solid ${SVC[st].border}`}}>{SVC[st].icon} {SVC[st].label}</span>)}
+                 </div>
+                 <div style={{display:"flex",flexWrap:"wrap",gap:4}}>{c.cuisineSpecialties?.slice(0,3).map(cs=><span key={cs} style={{fontSize:10,padding:"2px 7px",borderRadius:10,background:"var(--bg-secondary)",color:"var(--text-muted)",border:"1px solid var(--border-light)"}}>{cs}</span>)}</div>
+                 <div style={{fontSize:13,color:"#c0392b",fontWeight:700,marginTop:8}}>{c.priceRange}</div>
+               </div>
+             ))}
+           </div>
+         </div>
+
+         {/* ── TASTING BANNER — with background image ─────────────────────── */}
+         <div style={{position:"relative",margin:"0 14px 36px",borderRadius:20,overflow:"hidden",maxWidth:820,marginLeft:"auto",marginRight:"auto"}}>
+           <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1596797038530-2c107229654b?w=1000&q=80')",backgroundSize:"cover",backgroundPosition:"center"}}/>
+           <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(192,57,43,0.92),rgba(180,50,20,0.88))"}}/>
+           <div style={{position:"relative",zIndex:1,padding:"32px 28px",display:"flex",gap:20,alignItems:"center",justifyContent:"space-between",flexWrap:"wrap"}}>
+             <div style={{flex:1}}>
+               <div style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.7)",textTransform:"uppercase",letterSpacing:2,marginBottom:6}}>✨ বিশেষ অফার</div>
+               <div style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"#fff",marginBottom:8}}>Food Tasting Session — ₹199</div>
+               <div style={{fontSize:13,color:"rgba(255,255,255,0.85)",lineHeight:1.6}}>আগে চেখে দেখুন! 5–7 sample dishes বাড়িতে পৌঁছে যাবে।</div>
+             </div>
+             <button onClick={()=>{navigate("app");setServiceType("bulk");setStep(1);}} style={{background:"#fff",border:"none",borderRadius:12,padding:"12px 24px",color:"#c0392b",fontWeight:800,fontSize:14,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,0.2)",flexShrink:0}}>Book Tasting →</button>
+           </div>
+         </div>
+
+         {/* ── TESTIMONIALS — Clean cards ─────────────────────────────────── */}
+         <div style={{padding:"0 14px 40px",maxWidth:820,margin:"0 auto"}}>
+           <div style={{textAlign:"center",marginBottom:20}}>
+             <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"var(--text-primary)"}}>সন্তুষ্ট গ্রাহকদের কথা</h2>
+             <p style={{fontSize:12,color:"var(--text-muted)"}}>What our customers say</p>
+           </div>
+           <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14}} className="feat-grid">
+             {[
+               {name:"অনিমা দাস",event:"বিয়ের রিসেপশন",text:"অসাধারণ খাবার! ইলিশ আর মিষ্টি দই একদম বাড়ির মতো। 200 জন গেস্ট সবাই খুশি।",rating:5},
+               {name:"সুব্রত ঘোষ",event:"অন্নপ্রাশন",text:"48 ঘণ্টার মধ্যে 5টা caterer-এর quote পেয়ে গেলাম। Process টা খুব smooth।",rating:5},
+               {name:"প্রিয়া মুখার্জি",event:"পূজার ভোগ",text:"পূজায় 500 জনের ভোগ — perfect timing, perfect taste। Highly recommend!",rating:5},
+             ].map((t,i)=>(
+               <div key={i} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:16,padding:"18px",boxShadow:"0 2px 12px rgba(0,0,0,0.04)"}}>
+                 <div style={{fontSize:12,marginBottom:8,color:"#f59e0b"}}>{"★".repeat(t.rating)}</div>
+                 <div style={{fontSize:12,color:"var(--text-secondary)",lineHeight:1.7,marginBottom:12,fontStyle:"italic"}}>"{t.text}"</div>
+                 <div style={{borderTop:"1px solid var(--border-light)",paddingTop:10}}>
+                   <div style={{fontSize:12,fontWeight:700,color:"var(--text-primary)"}}>{t.name}</div>
+                   <div style={{fontSize:10,color:"#c0392b"}}>{t.event}</div>
                  </div>
                </div>
              ))}
            </div>
-           <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginTop:8}}>
-             {[
-               {src:"https://images.unsplash.com/photo-1567337710282-00832b415979?w=300&h=200&fit=crop",label:"ভিক্টোরিয়া",sub:"Victoria Memorial"},
-               {src:"https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=300&h=200&fit=crop",label:"মিষ্টি",sub:"Bengali Sweets"},
-               {src:"https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=300&h=200&fit=crop",label:"বিয়ের খাবার",sub:"Wedding Feast"},
-               {src:"https://images.unsplash.com/photo-1606491956689-2ea866880049?w=300&h=200&fit=crop",label:"সন্ধ্যারতি",sub:"Ganga Aarti"},
-             ].map((img,i)=>(
-               <div key={i} style={{position:"relative",overflow:"hidden",borderRadius:10,aspectRatio:"3/2"}}>
-                 <img src={img.src} alt={img.sub} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover"}}/>
-                 <div style={{position:"absolute",bottom:0,left:0,right:0,background:"linear-gradient(transparent,rgba(0,0,0,0.7))",padding:"8px 6px 5px",textAlign:"center"}}>
-                   <div style={{fontSize:10,fontWeight:700,color:"#fff"}}>{img.label}</div>
-                 </div>
-               </div>
-             ))}
+         </div>
+
+         {/* ── CATERER CTA — with background image ────────────────────────── */}
+         <div style={{position:"relative",margin:"0 14px 40px",borderRadius:20,overflow:"hidden",maxWidth:820,marginLeft:"auto",marginRight:"auto"}}>
+           <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1558431382-27e303142255?w=1200&q=80')",backgroundSize:"cover",backgroundPosition:"center"}}/>
+           <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(192,57,43,0.93),rgba(120,30,15,0.9))"}}/>
+           <div style={{position:"relative",zIndex:1,padding:"36px 32px",display:"flex",gap:24,alignItems:"center",justifyContent:"space-between",flexWrap:"wrap"}}>
+             <div style={{flex:1}}>
+               <div style={{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:700,color:"#fff",marginBottom:8}}>আপনি কি ক্যাটারার? 👨‍🍳</div>
+               <div style={{fontSize:14,color:"rgba(255,255,255,0.85)",marginBottom:12,lineHeight:1.6}}>Join Aayojan — receive WhatsApp quotation requests from customers in Newtown, Kolkata.</div>
+               {["✓ ফ্রি রেজিস্ট্রেশন","✓ WhatsApp-এ সরাসরি request","✓ Full Service বা Bulk Delivery"].map(p=><div key={p} style={{fontSize:13,color:"rgba(255,255,255,0.9)",marginBottom:4}}>{p}</div>)}
+             </div>
+             <button onClick={()=>navigate("register")} style={{background:"#fff",border:"none",borderRadius:12,padding:"14px 28px",color:"#c0392b",fontWeight:800,fontSize:15,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,0.2)",flexShrink:0}}>Register Your Business →</button>
            </div>
          </div>
 
-         {/* ── FOOD TASTING BANNER ─────────────────────────────────────────── */}
-         <div className="tasting-banner" style={S.tastingBanner}>
-           <div style={{display:"flex",gap:14,alignItems:"flex-start",flex:1}}>
-             <div style={{fontSize:40,flexShrink:0}}>🍱</div>
-             <div>
-               <div style={{fontSize:11,fontWeight:700,color:"#fff",textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:4,opacity:0.85}}>✨ বিশেষ অফার</div>
-               <div style={{fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:700,color:"#fff",marginBottom:6}}>Food Tasting Session — ₹199</div>
-               <div style={{fontSize:12,color:"rgba(255,255,255,0.85)",lineHeight:1.5}}>
-                 আগে চেখে দেখুন! 5–7 sample dishes বাড়িতে পৌঁছে যাবে।
-               </div>
-             </div>
-           </div>
-           <button onClick={()=>{navigate("app");setServiceType("bulk");setStep(1);}} style={{background:"#fff",border:"none",borderRadius:10,padding:"10px 20px",color:"#c0392b",fontWeight:800,fontSize:14,cursor:"pointer",boxShadow:"0 4px 12px rgba(0,0,0,0.15)",flexShrink:0}}>Book Tasting →</button>
-         </div>
-
-         {/* How it works — compact 4 icons */}
-         <div style={{display:"flex",justifyContent:"space-around",margin:"24px 0",padding:"16px",background:"#fff",border:"1px solid #fde8d8",borderRadius:14}}>
-           {[["🛎️","সেবা বাছুন"],["💬","AI Chat"],["📍","পিনকোড"],["📲","48hr Quote"]].map(([icon,label],i)=>(
-             <div key={i} style={{textAlign:"center"}}>
-               <div style={{fontSize:22,marginBottom:2}}>{icon}</div>
-               <div style={{fontSize:10,fontWeight:700,color:"#374151"}}>{label}</div>
-             </div>
-           ))}
-         </div>
-
-          {/* Featured caterers */}
-          <div style={{marginBottom:40}}>
-            <h2 style={S.sectionTitle}>Featured Caterers</h2>
-            <div className="feat-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
-              {allCaterers.slice(0,3).map(c=>(
-                <div key={c.id} style={{background:"#fff",border:"1px solid #fde8d8",borderRadius:14,padding:"16px",boxShadow:"0 1px 6px rgba(192,57,43,0.07)"}}>
-                  <div style={{display:"flex",gap:10,alignItems:"flex-start",marginBottom:10}}>
-                    <div style={{fontSize:26,background:"#fff5f5",borderRadius:10,width:42,height:42,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{c.logo}</div>
-                    <div><div style={{fontSize:13,fontWeight:700,color:"#1f2937",marginBottom:2}}>{c.name}</div><div style={{fontSize:11,color:"#9ca3af"}}>⭐{c.rating} · 📍{PINCODE_COORDS[c.pincode]?.area}</div></div>
-                  </div>
-                  <div style={{display:"flex",flexWrap:"wrap",gap:5,marginBottom:8}}>
-                    {(c.serviceTypes||["full"]).map(st=><span key={st} style={{fontSize:10,padding:"2px 8px",borderRadius:10,background:"#fff5f5",color:SVC[st].color,border:`1px solid ${SVC[st].border}`}}>{SVC[st].icon} {SVC[st].label}</span>)}
-                  </div>
-                  <div style={{display:"flex",flexWrap:"wrap",gap:4}}>{c.cuisineSpecialties?.slice(0,3).map(cs=><span key={cs} style={{fontSize:10,padding:"2px 7px",borderRadius:10,background:"#f9fafb",color:"#6b7280",border:"1px solid #e5e7eb"}}>{cs}</span>)}</div>
-                  <div style={{fontSize:13,color:"#c0392b",fontWeight:700,marginTop:8}}>{c.priceRange}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ── Bengali Testimonials ─────────────────────────────────────────── */}
-          <div style={{marginBottom:40}}>
-            <h2 style={{...S.sectionTitle,textAlign:"center"}}>সন্তুষ্ট গ্রাহকদের কথা</h2>
-            <p style={{textAlign:"center",color:"#6b7280",fontSize:12,marginBottom:16}}>What our customers say</p>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}} className="feat-grid">
-              {[
-                {name:"অনিমা দাস",event:"বিয়ের রিসেপশন",text:"অসাধারণ খাবার! ইলিশ আর মিষ্টি দই একদম বাড়ির মতো। 200 জন গেস্ট সবাই খুশি।",rating:"⭐⭐⭐⭐⭐"},
-                {name:"সুব্রত ঘোষ",event:"অন্নপ্রাশন",text:"48 ঘণ্টার মধ্যে 5টা caterer-এর quote পেয়ে গেলাম। Process টা খুব smooth।",rating:"⭐⭐⭐⭐⭐"},
-                {name:"প্রিয়া মুখার্জি",event:"পূজার ভোগ",text:"পূজায় 500 জনের ভোগ — perfect timing, perfect taste। Highly recommend!",rating:"⭐⭐⭐⭐⭐"},
-              ].map((t,i)=>(
-                <div key={i} style={{background:"#fff",border:"1px solid #fde8d8",borderRadius:14,padding:"16px",boxShadow:"0 1px 6px rgba(192,57,43,0.07)"}}>
-                  <div style={{fontSize:11,marginBottom:8}}>{t.rating}</div>
-                  <div style={{fontSize:12,color:"#374151",lineHeight:1.6,marginBottom:10,fontStyle:"italic"}}> "{t.text}"</div>
-                  <div style={{borderTop:"1px solid #fde8d8",paddingTop:8}}>
-                    <div style={{fontSize:12,fontWeight:700,color:"#1f2937"}}>{t.name}</div>
-                    <div style={{fontSize:10,color:"#c0392b"}}>{t.event}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Caterer CTA */}
-          <div className="caterer-cta" style={{background:"linear-gradient(135deg,#c0392b,#e74c3c)",borderRadius:18,padding:"32px 36px",display:"flex",gap:24,alignItems:"center",justifyContent:"space-between",flexWrap:"wrap"}}>
-            <div style={{flex:1}}>
-              <div style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"#fff",marginBottom:8}}>আপনি কি ক্যাটারার? 👨‍🍳</div>
-              <div style={{fontSize:14,color:"rgba(255,255,255,0.85)",marginBottom:12,lineHeight:1.6}}>Join Aayojan — receive WhatsApp quotation requests from customers in Newtown, Kolkata.</div>
-              {["✓ ফ্রি রেজিস্ট্রেশন","✓ WhatsApp-এ সরাসরি request","✓ Full Service বা Bulk Delivery"].map(p=><div key={p} style={{fontSize:13,color:"rgba(255,255,255,0.9)",marginBottom:3}}>{p}</div>)}
-            </div>
-            <button onClick={()=>navigate("register")} style={{background:"#fff",border:"none",borderRadius:12,padding:"14px 28px",color:"#c0392b",fontWeight:800,fontSize:15,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,0.15)",flexShrink:0}}>Register Your Business →</button>
-          </div>
         </div>
       )}
 
@@ -2611,8 +2636,22 @@ export default function AayojanApp(){
         @keyframes loadSlide{from{width:0%}to{width:90%}}
         @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
         @keyframes pgSpin{to{transform:rotate(360deg)}}
+        @keyframes heroSlide{0%,25%{opacity:1}33%,92%{opacity:0}100%{opacity:0}}
+        @keyframes fadeSlideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes floatUp{from{transform:translateY(0) scale(1);opacity:0.3}to{transform:translateY(-40px) scale(1.5);opacity:0.6}}
+        @keyframes bounceDown{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+        @keyframes scrollDot{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(10px)}}
         button:hover{opacity:0.9;} input:focus{outline:none;border-color:#c0392b !important;} a{text-decoration:none;}
         ::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-track{background:#fef9f7;} ::-webkit-scrollbar-thumb{background:#fca5a5;border-radius:2px;}
+        .caterer-scroll::-webkit-scrollbar{display:none;}
+        .landing-hero button:hover{transform:scale(1.03);}
+        @media(max-width:700px){
+          .feat-grid{grid-template-columns:1fr !important;}
+          .landing-hero{min-height:90vh !important;}
+        }
+        @media(max-width:500px){
+          .feat-grid{grid-template-columns:1fr !important;}
+        }
       `}</style>
     </div>
   );
