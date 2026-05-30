@@ -2772,11 +2772,11 @@ export default function AayojanApp(){
                 {icon:"⚡",title:"Response Time",desc:"How quickly you reply to inquiries"},
                 {icon:"✅",title:"Order Completion",desc:"Successful delivery track record"}
               ].map((item,i)=>(
-                <div key={i} style={{display:"flex",alignItems:"center",gap:12,background:"#F9FAFB",borderRadius:10,padding:"10px 14px"}}>
+                <div key={i} style={{display:"flex",alignItems:"center",gap:12,background:"var(--bg-card, #F9FAFB)",border:"1px solid var(--border-color, #E5E7EB)",borderRadius:10,padding:"10px 14px"}}>
                   <span style={{fontSize:20}}>{item.icon}</span>
                   <div>
                     <div style={{fontSize:13,fontWeight:600,color:"var(--text-primary)"}}>{item.title}</div>
-                    <div style={{fontSize:11,color:"#6B7280"}}>{item.desc}</div>
+                    <div style={{fontSize:11,color:"var(--text-secondary)"}}>{item.desc}</div>
                   </div>
                 </div>
               ))}
