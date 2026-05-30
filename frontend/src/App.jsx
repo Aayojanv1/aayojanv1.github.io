@@ -1053,6 +1053,7 @@ export default function AayojanApp(){
         <div className="header-right" style={{display:"flex",alignItems:"center",gap:8}}>
           <button className="theme-toggle" onClick={()=>setDarkMode(!darkMode)} title={darkMode?"Switch to light mode":"Switch to dark mode"}>{darkMode?"☀️":"🌙"}</button>
           {view!=="landing"&&<button onClick={()=>navigate("landing")} style={S.ghostBtn}>← Home</button>}
+          <button onClick={()=>navigate("about")} style={S.ghostBtn}>About Us</button>
           <button onClick={()=>navigate("chat")} style={{...S.ghostBtn,borderColor:"#FF6B35",color:"#FF6B35",background:"#FFF7ED"}}>💬 Hey Partner, Chat with us</button>
           {user?.isAdmin&&<button onClick={()=>{loadAdminData();navigate("admin");}} style={{...S.ghostBtn,borderColor:"#bbf7d0",color:"#16a34a",background:"#f0fdf4"}}>👑 Admin</button>}
           {user?<div style={{display:"flex",alignItems:"center",gap:8}}>
@@ -3187,6 +3188,7 @@ export default function AayojanApp(){
           <button onClick={()=>navigate("privacy")} style={{background:"none",border:"none",color:"#9ca3af",fontSize:11,cursor:"pointer",textDecoration:"underline"}}>Privacy Policy</button>
           <button onClick={()=>navigate("terms")} style={{background:"none",border:"none",color:"#9ca3af",fontSize:11,cursor:"pointer",textDecoration:"underline"}}>Terms of Service</button>
           <button onClick={()=>navigate("refund")} style={{background:"none",border:"none",color:"#9ca3af",fontSize:11,cursor:"pointer",textDecoration:"underline"}}>Refund Policy</button>
+          <button onClick={()=>navigate("about")} style={{background:"none",border:"none",color:"#FF6B35",fontSize:11,cursor:"pointer",textDecoration:"underline",fontWeight:600}}>About Us</button>
           <a href="/partners.html" style={{color:"#FF6B35",fontSize:11,textDecoration:"underline",fontWeight:600}}>Partner with Us</a>
           <a href="/faq.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>FAQ</a>
         </div>
