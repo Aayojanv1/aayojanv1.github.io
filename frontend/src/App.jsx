@@ -311,7 +311,7 @@ KEY FACTS ABOUT AAYOJAN (use these in responses):
 - Aayojan is Kolkata's first AI-powered catering aggregator
 - We bring customers to caterers via WhatsApp — no app needed
 - Areas: Newtown (Action Area I, II, III), Rajarhat, Salt Lake, Eco Park zone
-- 12 caterers already onboarded, 500+ events covered
+- 12 caterers already onboarded, building towards 500+ events/month capacity
 - Average partner gets 15-30 qualified leads/month
 - Average revenue per partner: ₹80,000+/month from Aayojan leads
 
@@ -1101,7 +1101,7 @@ export default function AayojanApp(){
                  AI-Powered Catering Platform
                </p>
                <p style={{fontSize:14,color:"rgba(255,255,255,0.6)",marginBottom:32,maxWidth:500,margin:"0 auto 32px"}}>
-                 From baby showers to grand weddings — 31+ verified caterers, quotes in 48 hours
+                 Newtown's first catering aggregator — compare caterers, taste before you book
                </p>
                 {/* Value prop badge */}
                 <div style={{display:"inline-block",background:"rgba(255,255,255,0.1)",border:"1px solid rgba(252,165,165,0.3)",borderRadius:24,padding:"6px 16px",marginBottom:20,backdropFilter:"blur(8px)"}}>
@@ -1123,7 +1123,7 @@ export default function AayojanApp(){
 
              {/* Stats bar — glass */}
              <div className="hero-anim-3" style={{display:"flex",justifyContent:"center",gap:24,marginTop:36,animation:"fadeSlideUp 0.8s ease-out 0.6s both"}}>
-               {[["500+","Events"],["48hr","Quotes"],["31+","Caterers"],["₹200–1800","Per Plate"]].map(([val,lbl])=>(
+               {[["31+","Caterers Joining"],["48hr","Quote Delivery"],["₹199","Food Tasting"],["3%","Only Commission"]].map(([val,lbl])=>(
                  <div key={lbl} style={{textAlign:"center"}}>
                    <div style={{fontSize:20,fontWeight:900,color:"#fca5a5"}}>{val}</div>
                    <div style={{fontSize:10,color:"rgba(255,255,255,0.5)",textTransform:"uppercase",letterSpacing:1}}>{lbl}</div>
@@ -1132,7 +1132,7 @@ export default function AayojanApp(){
              </div>
              {/* Urgency */}
              <div style={{marginTop:18,animation:"fadeSlideUp 0.8s ease-out 0.9s both"}}>
-               <span style={{fontSize:12,color:"rgba(255,255,255,0.6)"}}>🔥 <strong style={{color:"#fca5a5"}}>12 events booked</strong> this week in Newtown</span>
+               <span style={{fontSize:12,color:"rgba(255,255,255,0.6)"}}>🔥 <strong style={{color:"#fca5a5"}}>12 caterers onboarded</strong> — launching user bookings soon!</span>
              </div>
            </div>
 
@@ -2877,7 +2877,7 @@ export default function AayojanApp(){
           <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10,marginBottom:24}} className="feat-grid">
             {[
               {num:"12",label:"Caterers Onboarded",icon:"👨‍🍳"},
-              {num:"500+",label:"Events Covered",icon:"🎉"},
+              {num:"500+",label:"Events Capacity/Month",icon:"🎉"},
               {num:"48hr",label:"Avg Lead Response",icon:"⚡"},
               {num:"₹80K+",label:"Revenue/Partner/Month",icon:"💰"}
             ].map((s,i)=>(
