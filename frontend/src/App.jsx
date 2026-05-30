@@ -1050,11 +1050,13 @@ export default function AayojanApp(){
 
          {/* ── HERO SECTION — Full-width background banner ─────────────────── */}
          <div className="landing-hero" style={{position:"relative",minHeight:"85vh",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
-           {/* Animated background images — rotating */}
+           {/* Animated background images — rotating (Bengali culture + personalities) */}
            <div className="hero-bg-slider" style={{position:"absolute",inset:0,zIndex:0}}>
-             <div className="hero-slide hero-slide-1" style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1400&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 18s ease-in-out infinite"}}/>
-             <div className="hero-slide hero-slide-2" style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=1400&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 18s ease-in-out 6s infinite",opacity:0}}/>
-             <div className="hero-slide hero-slide-3" style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1567337710282-00832b415979?w=1400&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 18s ease-in-out 12s infinite",opacity:0}}/>
+             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Rabindranath_Tagore_in_1909.jpg/800px-Rabindranath_Tagore_in_1909.jpg')",backgroundSize:"cover",backgroundPosition:"top center",animation:"heroSlide 30s ease-in-out infinite"}}/>
+             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1400&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 30s ease-in-out 6s infinite",opacity:0}}/>
+             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Satyendra_Nath_Bose_1925.jpg/800px-Satyendra_Nath_Bose_1925.jpg')",backgroundSize:"cover",backgroundPosition:"top center",animation:"heroSlide 30s ease-in-out 12s infinite",opacity:0}}/>
+             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ravi_Shankar_-_1960s_cropped.jpg/800px-Ravi_Shankar_-_1960s_cropped.jpg')",backgroundSize:"cover",backgroundPosition:"top center",animation:"heroSlide 30s ease-in-out 18s infinite",opacity:0}}/>
+             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1567337710282-00832b415979?w=1400&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 30s ease-in-out 24s infinite",opacity:0}}/>
            </div>
            {/* Dark gradient overlay */}
            <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(15,15,20,0.6) 0%,rgba(15,15,20,0.85) 60%,rgba(15,15,20,0.95) 100%)",zIndex:1}}/>
@@ -1104,23 +1106,33 @@ export default function AayojanApp(){
            </div>
          </div>
 
-         {/* ── PARTNER CATERERS — Scrolling ribbon ─────────────────────────── */}
-         <div style={{padding:"40px 14px",maxWidth:820,margin:"0 auto"}}>
-           <div style={{textAlign:"center",marginBottom:24}}>
-             <div style={{fontSize:10,fontWeight:800,color:"#c0392b",textTransform:"uppercase",letterSpacing:3,marginBottom:6}}>Our Partner Caterers</div>
-             <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:700,color:"var(--text-primary)"}}>🏆 আমাদের পার্টনার ক্যাটারার</h2>
+         {/* ── PARTNER CATERERS — with revolving food background ─────────── */}
+         <div style={{position:"relative",padding:"48px 14px",overflow:"hidden"}}>
+           {/* Revolving food background */}
+           <div style={{position:"absolute",inset:0,zIndex:0}}>
+             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=1200&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 24s ease-in-out infinite"}}/>
+             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=1200&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 24s ease-in-out 8s infinite",opacity:0}}/>
+             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1596797038530-2c107229654b?w=1200&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 24s ease-in-out 16s infinite",opacity:0}}/>
            </div>
-           <div className="caterer-scroll" style={{display:"flex",gap:16,overflowX:"auto",paddingBottom:12,scrollSnapType:"x mandatory",scrollbarWidth:"none"}}>
-             {allCaterers.slice(0,8).map(c=>(
-               <div key={c.id} style={{minWidth:140,scrollSnapAlign:"start",background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:16,padding:"18px 14px",textAlign:"center",boxShadow:"0 2px 12px rgba(192,57,43,0.06)",transition:"transform 0.2s",flexShrink:0}}>
-                 <div style={{width:56,height:56,borderRadius:"50%",background:"linear-gradient(135deg,#fff5f5,#fee2e2)",border:"2px solid #fca5a5",display:"flex",alignItems:"center",justifyContent:"center",fontSize:26,margin:"0 auto 8px",boxShadow:"0 4px 12px rgba(192,57,43,0.1)"}}>{c.logo}</div>
-                 <div style={{fontSize:11,fontWeight:700,color:"var(--text-primary)",marginBottom:2,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{c.name.split(" ").slice(0,2).join(" ")}</div>
-                 <div style={{fontSize:10,color:"#c0392b",fontWeight:600}}>⭐ {c.rating}</div>
-                 <div style={{fontSize:9,color:"var(--text-muted)",marginTop:2}}>{c.cuisineSpecialties?.[0]}</div>
-               </div>
-             ))}
+           <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(10,10,15,0.88),rgba(10,10,15,0.92))",zIndex:1}}/>
+           
+           <div style={{position:"relative",zIndex:2,maxWidth:820,margin:"0 auto"}}>
+             <div style={{textAlign:"center",marginBottom:24}}>
+               <div style={{fontSize:10,fontWeight:800,color:"#fca5a5",textTransform:"uppercase",letterSpacing:3,marginBottom:6}}>Our Partner Caterers</div>
+               <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:700,color:"#fff"}}>🏆 আমাদের পার্টনার ক্যাটারার</h2>
+             </div>
+             <div className="caterer-scroll" style={{display:"flex",gap:16,overflowX:"auto",paddingBottom:12,scrollSnapType:"x mandatory",scrollbarWidth:"none"}}>
+               {allCaterers.slice(0,8).map(c=>(
+                 <div key={c.id} style={{minWidth:150,scrollSnapAlign:"start",background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.15)",borderRadius:16,padding:"20px 16px",textAlign:"center",backdropFilter:"blur(12px)",transition:"transform 0.2s",flexShrink:0}}>
+                   <div style={{width:56,height:56,borderRadius:"50%",background:"rgba(255,255,255,0.12)",border:"2px solid #fca5a5",display:"flex",alignItems:"center",justifyContent:"center",fontSize:26,margin:"0 auto 10px",boxShadow:"0 4px 16px rgba(192,57,43,0.2)"}}>{c.logo}</div>
+                   <div style={{fontSize:12,fontWeight:700,color:"#fff",marginBottom:3,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{c.name.split(" ").slice(0,2).join(" ")}</div>
+                   <div style={{fontSize:11,color:"#fca5a5",fontWeight:600}}>⭐ {c.rating}</div>
+                   <div style={{fontSize:10,color:"rgba(255,255,255,0.6)",marginTop:3}}>{c.cuisineSpecialties?.[0]}</div>
+                 </div>
+               ))}
+             </div>
+             <div style={{textAlign:"center",marginTop:12,fontSize:12,color:"rgba(255,255,255,0.5)"}}>{allCaterers.length}+ verified caterers in Newtown & surroundings</div>
            </div>
-           <div style={{textAlign:"center",marginTop:10,fontSize:12,color:"var(--text-muted)"}}>{allCaterers.length}+ verified caterers in Newtown & surroundings</div>
          </div>
 
          {/* ── FOOD SHOWCASE — Horizontal scroll with gradient bg ──────────── */}
@@ -2636,7 +2648,7 @@ export default function AayojanApp(){
         @keyframes loadSlide{from{width:0%}to{width:90%}}
         @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
         @keyframes pgSpin{to{transform:rotate(360deg)}}
-        @keyframes heroSlide{0%,25%{opacity:1}33%,92%{opacity:0}100%{opacity:0}}
+        @keyframes heroSlide{0%,15%{opacity:1}20%,95%{opacity:0}100%{opacity:0}}
         @keyframes fadeSlideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
         @keyframes floatUp{from{transform:translateY(0) scale(1);opacity:0.3}to{transform:translateY(-40px) scale(1.5);opacity:0.6}}
         @keyframes bounceDown{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
