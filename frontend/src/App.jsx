@@ -1036,7 +1036,7 @@ export default function AayojanApp(){
         <div className="header-right" style={{display:"flex",alignItems:"center",gap:8}}>
           <button className="theme-toggle" onClick={()=>setDarkMode(!darkMode)} title={darkMode?"Switch to light mode":"Switch to dark mode"}>{darkMode?"☀️":"🌙"}</button>
           {view!=="landing"&&<button onClick={()=>navigate("landing")} style={S.ghostBtn}>← Home</button>}
-          <button onClick={()=>navigate("chat")} style={{...S.ghostBtn,borderColor:"#fca5a5",color:"#c0392b",background:"#fff5f5"}}>🤖 AI Chat</button>
+          <button onClick={()=>navigate("chat")} style={{...S.ghostBtn,borderColor:"#e5e7eb",color:"#9ca3af",background:"#f9fafb",cursor:"not-allowed",opacity:0.6}} title="Coming soon!">🤖 AI Chat</button>
           {user?.isAdmin&&<button onClick={()=>{loadAdminData();navigate("admin");}} style={{...S.ghostBtn,borderColor:"#bbf7d0",color:"#16a34a",background:"#f0fdf4"}}>👑 Admin</button>}
           {user?<div style={{display:"flex",alignItems:"center",gap:8}}>
             <button onClick={openProfile} style={{display:"flex",alignItems:"center",gap:5,background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"6px 10px",fontSize:12,color:"#16a34a",cursor:"pointer"}}>
@@ -1092,11 +1092,16 @@ export default function AayojanApp(){
                 </div>
              </div>
 
-             {/* CTA buttons — glass morphism */}
-             <div className="hero-anim-2" style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",animation:"fadeSlideUp 0.8s ease-out 0.3s both"}}>
-               <button onClick={()=>{navigate("app");setServiceType("full");setStep(1);}} style={{background:"linear-gradient(135deg,#c0392b,#e74c3c)",color:"#fff",border:"none",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:700,cursor:"pointer",boxShadow:"0 8px 32px rgba(192,57,43,0.4)",transition:"transform 0.2s"}}>🛎️ Book Catering</button>
-               <button onClick={()=>navigate("chat")} style={{background:"rgba(255,255,255,0.1)",color:"#fff",border:"1px solid rgba(255,255,255,0.3)",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:600,cursor:"pointer",backdropFilter:"blur(10px)",transition:"transform 0.2s"}}>🤖 AI Chat</button>
-               <button onClick={()=>{navigate("app");setServiceType("bulk");setStep(1);}} style={{background:"rgba(255,255,255,0.1)",color:"#fff",border:"1px solid rgba(255,255,255,0.3)",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:600,cursor:"pointer",backdropFilter:"blur(10px)",transition:"transform 0.2s"}}>📦 Bulk Order</button>
+             {/* CTA buttons — Coming Soon + Partner Join */}
+             <div className="hero-anim-2" style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",animation:"fadeSlideUp 0.8s ease-out 0.3s both",flexDirection:"column",alignItems:"center"}}>
+               <div style={{background:"rgba(255,255,255,0.08)",backdropFilter:"blur(12px)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:16,padding:"20px 36px",textAlign:"center"}}>
+                 <div style={{fontSize:14,color:"#FDE68A",fontWeight:600,letterSpacing:2,textTransform:"uppercase",marginBottom:8}}>🚀 Launching Soon for Users</div>
+                 <div style={{fontSize:13,color:"rgba(255,255,255,0.7)"}}>We're onboarding the best caterers first — so you get top quality from Day 1</div>
+               </div>
+               <div style={{display:"flex",gap:12,marginTop:8}}>
+                 <button onClick={()=>navigate("partner-terms")} style={{background:"linear-gradient(135deg,#FF6B35,#D4380D)",color:"#fff",border:"none",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:700,cursor:"pointer",boxShadow:"0 8px 32px rgba(255,107,53,0.4)",transition:"transform 0.2s"}}>🤝 Join as Partner Caterer</button>
+                 <a href="https://wa.me/918088434425?text=Hi!%20Notify%20me%20when%20Aayojan%20launches%20for%20users" target="_blank" rel="noopener noreferrer" style={{background:"rgba(255,255,255,0.1)",color:"#fff",border:"1px solid rgba(255,255,255,0.3)",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:600,cursor:"pointer",backdropFilter:"blur(10px)",textDecoration:"none",display:"flex",alignItems:"center"}}>🔔 Notify Me at Launch</a>
+               </div>
              </div>
 
              {/* Stats bar — glass */}
@@ -1287,7 +1292,7 @@ export default function AayojanApp(){
             </div>
             <div>
               <div style={{fontSize:12,fontWeight:700,color:"var(--text-primary)",marginBottom:10,textTransform:"uppercase",letterSpacing:1}}>Quick Links</div>
-              {[["Book Catering",()=>{navigate("app");setServiceType("full");setStep(1);}],["AI Chat",()=>navigate("chat")],["Register as Caterer",()=>navigate("register")]].map(([label,fn])=>(
+              {[["Partner with Us",()=>navigate("partner-terms")],["Notify Me at Launch",()=>window.open("https://wa.me/918088434425?text=Hi!%20Notify%20me%20when%20Aayojan%20launches","_blank")],["Register as Caterer",()=>navigate("register")]].map(([label,fn])=>(
                 <div key={label} style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,cursor:"pointer"}} onClick={fn}>{label}</div>
               ))}
             </div>
