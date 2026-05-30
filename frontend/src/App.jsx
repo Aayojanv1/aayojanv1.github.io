@@ -1092,6 +1092,41 @@ export default function AayojanApp(){
            </div>
          </div>
 
+         {/* ── Bengali Culture Gallery ─────────────────────────────────────── */}
+         <div style={{marginBottom:28}}>
+           <div style={{fontSize:12,fontWeight:800,color:"#c0392b",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12,textAlign:"center"}}>📸 বাংলার রঙ — Colors of Bengal</div>
+           <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:8,borderRadius:16,overflow:"hidden"}}>
+             {[
+               {src:"https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400&h=260&fit=crop",label:"দুর্গা পূজা",sub:"Durga Puja Pandal"},
+               {src:"https://images.unsplash.com/photo-1596797038530-2c107229654b?w=400&h=260&fit=crop",label:"বাংলার খাবার",sub:"Bengali Feast"},
+               {src:"https://images.unsplash.com/photo-1558431382-27e303142255?w=400&h=260&fit=crop",label:"হাওড়া ব্রিজ",sub:"Howrah Bridge"},
+             ].map((img,i)=>(
+               <div key={i} style={{position:"relative",overflow:"hidden",borderRadius:12,aspectRatio:"3/2"}}>
+                 <img src={img.src} alt={img.sub} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+                 <div style={{position:"absolute",bottom:0,left:0,right:0,background:"linear-gradient(transparent,rgba(0,0,0,0.7))",padding:"12px 10px 8px",textAlign:"center"}}>
+                   <div style={{fontSize:12,fontWeight:700,color:"#fff"}}>{img.label}</div>
+                   <div style={{fontSize:9,color:"rgba(255,255,255,0.8)"}}>{img.sub}</div>
+                 </div>
+               </div>
+             ))}
+           </div>
+           <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginTop:8}}>
+             {[
+               {src:"https://images.unsplash.com/photo-1567337710282-00832b415979?w=300&h=200&fit=crop",label:"ভিক্টোরিয়া",sub:"Victoria Memorial"},
+               {src:"https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=300&h=200&fit=crop",label:"মিষ্টি",sub:"Bengali Sweets"},
+               {src:"https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=300&h=200&fit=crop",label:"বিয়ের খাবার",sub:"Wedding Feast"},
+               {src:"https://images.unsplash.com/photo-1606491956689-2ea866880049?w=300&h=200&fit=crop",label:"সন্ধ্যারতি",sub:"Ganga Aarti"},
+             ].map((img,i)=>(
+               <div key={i} style={{position:"relative",overflow:"hidden",borderRadius:10,aspectRatio:"3/2"}}>
+                 <img src={img.src} alt={img.sub} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+                 <div style={{position:"absolute",bottom:0,left:0,right:0,background:"linear-gradient(transparent,rgba(0,0,0,0.7))",padding:"8px 6px 5px",textAlign:"center"}}>
+                   <div style={{fontSize:10,fontWeight:700,color:"#fff"}}>{img.label}</div>
+                 </div>
+               </div>
+             ))}
+           </div>
+         </div>
+
          {/* ── FOOD TASTING BANNER ─────────────────────────────────────────── */}
          <div className="tasting-banner" style={S.tastingBanner}>
             <div style={{display:"flex",gap:14,alignItems:"flex-start",flex:1}}>
@@ -1173,6 +1208,28 @@ export default function AayojanApp(){
                   </div>
                   <div style={{display:"flex",flexWrap:"wrap",gap:4}}>{c.cuisineSpecialties?.slice(0,3).map(cs=><span key={cs} style={{fontSize:10,padding:"2px 7px",borderRadius:10,background:"#f9fafb",color:"#6b7280",border:"1px solid #e5e7eb"}}>{cs}</span>)}</div>
                   <div style={{fontSize:13,color:"#c0392b",fontWeight:700,marginTop:8}}>{c.priceRange}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Bengali Testimonials ─────────────────────────────────────────── */}
+          <div style={{marginBottom:40}}>
+            <h2 style={{...S.sectionTitle,textAlign:"center"}}>সন্তুষ্ট গ্রাহকদের কথা</h2>
+            <p style={{textAlign:"center",color:"#6b7280",fontSize:12,marginBottom:16}}>What our customers say</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}} className="feat-grid">
+              {[
+                {name:"অনিমা দাস",event:"বিয়ের রিসেপশন",text:"অসাধারণ খাবার! ইলিশ আর মিষ্টি দই একদম বাড়ির মতো। 200 জন গেস্ট সবাই খুশি।",rating:"⭐⭐⭐⭐⭐"},
+                {name:"সুব্রত ঘোষ",event:"অন্নপ্রাশন",text:"48 ঘণ্টার মধ্যে 5টা caterer-এর quote পেয়ে গেলাম। Process টা খুব smooth।",rating:"⭐⭐⭐⭐⭐"},
+                {name:"প্রিয়া মুখার্জি",event:"পূজার ভোগ",text:"পূজায় 500 জনের ভোগ — perfect timing, perfect taste। Highly recommend!",rating:"⭐⭐⭐⭐⭐"},
+              ].map((t,i)=>(
+                <div key={i} style={{background:"#fff",border:"1px solid #fde8d8",borderRadius:14,padding:"16px",boxShadow:"0 1px 6px rgba(192,57,43,0.07)"}}>
+                  <div style={{fontSize:11,marginBottom:8}}>{t.rating}</div>
+                  <div style={{fontSize:12,color:"#374151",lineHeight:1.6,marginBottom:10,fontStyle:"italic"}}> "{t.text}"</div>
+                  <div style={{borderTop:"1px solid #fde8d8",paddingTop:8}}>
+                    <div style={{fontSize:12,fontWeight:700,color:"#1f2937"}}>{t.name}</div>
+                    <div style={{fontSize:10,color:"#c0392b"}}>{t.event}</div>
+                  </div>
                 </div>
               ))}
             </div>
