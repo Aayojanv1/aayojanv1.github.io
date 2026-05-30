@@ -11,7 +11,7 @@
 ```
 নমস্কার! 🙏
 
-আমি Aayojan থেকে Gourav বলছি।
+আমি Aayojan থেকে Suparna বলছি।
 
 আপনাকে একটাই প্রশ্ন করি —
 
@@ -33,7 +33,7 @@
 
 "YES" reply করুন — 5 মিনিটে onboard হয়ে যাবেন! 👇
 
-— Gourav, Aayojan
+— Suparna, Aayojan
 📱 8088434425
 🌐 aayojan.online
 ```
@@ -47,7 +47,7 @@ Hi! 🙏
 
 Quick question — How many orders did you lose last month simply because customers couldn't find you online?
 
-I'm Gourav from Aayojan (aayojan.online) — Newtown Kolkata's ONLY catering aggregator.
+I'm Suparna from Aayojan (aayojan.online) — Newtown Kolkata's ONLY catering aggregator.
 
 👉 See our platform: https://aayojan.online
 
@@ -68,7 +68,7 @@ Our listing fee? ₹0. Zero. Nothing.
 👀 Visit the platform first: https://aayojan.online
 Then reply "YES" — takes 5 minutes to get listed!
 
-— Gourav, Aayojan
+— Suparna, Aayojan
 📱 +91-8088434425
 🌐 aayojan.online
 ```
@@ -97,7 +97,7 @@ FREE listing। No risk। No catch।
 
 Reply "YES" — আমি 2 মিনিটে setup করে দিচ্ছি! 
 
-— Gourav, Aayojan 📱 8088434425
+— Suparna, Aayojan 📱 8088434425
 ```
 
 ---
