@@ -1422,7 +1422,7 @@ export default function AayojanApp(){
               <div style={{display:"flex",gap:12}}>
                 <a href="https://wa.me/918088434425?text=Hi%20Aayojan" target="_blank" rel="noopener noreferrer" style={{fontSize:20,textDecoration:"none"}}>💬</a>
                 <a href="https://instagram.com/aayojan.online" target="_blank" rel="noopener noreferrer" style={{fontSize:20,textDecoration:"none"}}>📸</a>
-                <a href="mailto:hello@aayojan.online" style={{fontSize:20,textDecoration:"none"}}>✉️</a>
+                <a href="mailto:aayojan1@gmail.com" style={{fontSize:20,textDecoration:"none"}}>✉️</a>
               </div>
             </div>
             <div>
@@ -2730,7 +2730,7 @@ export default function AayojanApp(){
               <p>We use Firebase Analytics to understand usage patterns. No third-party advertising cookies are used.</p>
 
               <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>7. Contact</h3>
-              <p>For privacy concerns, email us at: <strong>privacy@aayojan.in</strong></p>
+              <p>For privacy concerns, email us at: <strong>aayojan1@gmail.com</strong></p>
             </div>
           </div>
         </div>
@@ -2781,7 +2781,7 @@ export default function AayojanApp(){
               <p>These terms are governed by the laws of India. Disputes shall be subject to the jurisdiction of courts in Kolkata, West Bengal.</p>
 
               <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>9. Contact</h3>
-              <p>For questions about these terms: <strong>legal@aayojan.in</strong></p>
+              <p>For questions about these terms: <strong>aayojan1@gmail.com</strong></p>
             </div>
           </div>
         </div>
@@ -2817,7 +2817,7 @@ export default function AayojanApp(){
               </ul>
 
               <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>How to Request a Refund</h3>
-              <p>Email <strong>support@aayojan.in</strong> with your order ID. Refunds are processed within 5–7 business days to the original payment method.</p>
+              <p>Email <strong>aayojan1@gmail.com</strong> with your order ID. Refunds are processed within 5–7 business days to the original payment method.</p>
             </div>
           </div>
         </div>
