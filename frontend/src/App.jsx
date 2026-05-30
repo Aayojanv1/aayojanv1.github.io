@@ -1079,6 +1079,10 @@ export default function AayojanApp(){
                <p style={{fontSize:14,color:"rgba(255,255,255,0.6)",marginBottom:32,maxWidth:500,margin:"0 auto 32px"}}>
                  From baby showers to grand weddings — 31+ verified caterers, quotes in 48 hours
                </p>
+                {/* Value prop badge */}
+                <div style={{display:"inline-block",background:"rgba(255,255,255,0.1)",border:"1px solid rgba(252,165,165,0.3)",borderRadius:24,padding:"6px 16px",marginBottom:20,backdropFilter:"blur(8px)"}}>
+                  <span style={{fontSize:12,color:"#fca5a5",fontWeight:600}}>🎯 Get 5 Quotes in 48hrs — Free, No Commitment</span>
+                </div>
              </div>
 
              {/* CTA buttons — glass morphism */}
@@ -1096,6 +1100,10 @@ export default function AayojanApp(){
                    <div style={{fontSize:10,color:"rgba(255,255,255,0.5)",textTransform:"uppercase",letterSpacing:1}}>{lbl}</div>
                  </div>
                ))}
+             </div>
+             {/* Urgency */}
+             <div style={{marginTop:18,animation:"fadeSlideUp 0.8s ease-out 0.9s both"}}>
+               <span style={{fontSize:12,color:"rgba(255,255,255,0.6)"}}>🔥 <strong style={{color:"#fca5a5"}}>12 events booked</strong> this week in Newtown</span>
              </div>
            </div>
 
@@ -1123,9 +1131,9 @@ export default function AayojanApp(){
                <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:700,color:"#fff"}}>🏆 Trusted Caterer Partners</h2>
                <p style={{fontSize:12,color:"rgba(255,255,255,0.5)",marginTop:4}}>আমাদের পার্টনার ক্যাটারার</p>
              </div>
-             <div className="caterer-scroll" style={{display:"flex",gap:16,overflowX:"auto",paddingBottom:12,scrollSnapType:"x mandatory",scrollbarWidth:"none"}}>
-               {allCaterers.slice(0,8).map(c=>(
-                 <div key={c.id} style={{minWidth:150,scrollSnapAlign:"start",background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.15)",borderRadius:16,padding:"20px 16px",textAlign:"center",backdropFilter:"blur(12px)",transition:"transform 0.2s",flexShrink:0}}>
+             <div className="caterer-scroll" style={{display:"flex",gap:16,paddingBottom:12,animation:"scrollRibbon 30s linear infinite",width:"max-content"}}>
+               {[...allCaterers.slice(0,8),...allCaterers.slice(0,8)].map((c,idx)=>(
+                 <div key={`${c.id}-${idx}`} style={{minWidth:150,background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.15)",borderRadius:16,padding:"20px 16px",textAlign:"center",backdropFilter:"blur(12px)",transition:"transform 0.2s",flexShrink:0}}>
                    <div style={{width:56,height:56,borderRadius:"50%",background:"rgba(255,255,255,0.12)",border:"2px solid #fca5a5",display:"flex",alignItems:"center",justifyContent:"center",fontSize:26,margin:"0 auto 10px",boxShadow:"0 4px 16px rgba(192,57,43,0.2)"}}>{c.logo}</div>
                    <div style={{fontSize:12,fontWeight:700,color:"#fff",marginBottom:3,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{c.name.split(" ").slice(0,2).join(" ")}</div>
                    <div style={{fontSize:11,color:"#fca5a5",fontWeight:600}}>⭐ {c.rating}</div>
@@ -1212,8 +1220,9 @@ export default function AayojanApp(){
            <div style={{position:"relative",zIndex:1,padding:"32px 28px",display:"flex",gap:20,alignItems:"center",justifyContent:"space-between",flexWrap:"wrap"}}>
              <div style={{flex:1}}>
                <div style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.7)",textTransform:"uppercase",letterSpacing:2,marginBottom:6}}>✨ Special Offer</div>
-               <div style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"#fff",marginBottom:8}}>Food Tasting Session — ₹199</div>
+               <div style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"#fff",marginBottom:8}}>Food Tasting Session — <span style={{textDecoration:"line-through",opacity:0.6,fontSize:16}}>₹500</span> ₹199</div>
                <div style={{fontSize:13,color:"rgba(255,255,255,0.85)",lineHeight:1.6}}>Try before you book! 5–7 sample dishes delivered to your doorstep.</div>
+               <div style={{fontSize:11,color:"#fca5a5",marginTop:6,fontWeight:600}}>⏳ Limited slots — only 8 left this week</div>
              </div>
              <button onClick={()=>{navigate("app");setServiceType("bulk");setStep(1);}} style={{background:"#fff",border:"none",borderRadius:12,padding:"12px 24px",color:"#c0392b",fontWeight:800,fontSize:14,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,0.2)",flexShrink:0}}>Book Tasting →</button>
            </div>
@@ -1253,8 +1262,42 @@ export default function AayojanApp(){
                <div style={{fontSize:14,color:"rgba(255,255,255,0.85)",marginBottom:12,lineHeight:1.6}}>Join Aayojan — receive WhatsApp quotation requests from customers in Newtown, Kolkata.</div>
                {["✓ Free registration","✓ Direct WhatsApp requests","✓ Full Service or Bulk Delivery"].map(p=><div key={p} style={{fontSize:13,color:"rgba(255,255,255,0.9)",marginBottom:4}}>{p}</div>)}
              </div>
-             <button onClick={()=>navigate("register")} style={{background:"#fff",border:"none",borderRadius:12,padding:"14px 28px",color:"#c0392b",fontWeight:800,fontSize:15,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,0.2)",flexShrink:0}}>Register Your Business →</button>
+           <button onClick={()=>navigate("register")} style={{background:"#fff",border:"none",borderRadius:12,padding:"14px 28px",color:"#c0392b",fontWeight:800,fontSize:15,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,0.2)",flexShrink:0}}>Register Your Business →</button>
            </div>
+         </div>
+
+         {/* ── FOOTER ─────────────────────────────────────────────────────── */}
+         <div style={{background:"var(--bg-card)",borderTop:"1px solid var(--border-light)",padding:"32px 14px",marginTop:20}}>
+          <div style={{maxWidth:820,margin:"0 auto",display:"grid",gridTemplateColumns:"2fr 1fr 1fr",gap:24}} className="feat-grid">
+            <div>
+              <div style={{fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:700,color:"var(--text-primary)",marginBottom:8}}>আয়োজন</div>
+              <p style={{fontSize:12,color:"var(--text-muted)",lineHeight:1.7,marginBottom:12}}>AI-powered catering platform for Newtown, Kolkata. Connecting you with the best caterers for every celebration.</p>
+              <div style={{display:"flex",gap:12}}>
+                <a href="https://wa.me/919830012345?text=Hi%20Aayojan" target="_blank" rel="noopener noreferrer" style={{fontSize:20,textDecoration:"none"}}>💬</a>
+                <a href="https://instagram.com/aayojan.online" target="_blank" rel="noopener noreferrer" style={{fontSize:20,textDecoration:"none"}}>📸</a>
+                <a href="mailto:hello@aayojan.online" style={{fontSize:20,textDecoration:"none"}}>✉️</a>
+              </div>
+            </div>
+            <div>
+              <div style={{fontSize:12,fontWeight:700,color:"var(--text-primary)",marginBottom:10,textTransform:"uppercase",letterSpacing:1}}>Quick Links</div>
+              {[["Book Catering",()=>{navigate("app");setServiceType("full");setStep(1);}],["AI Chat",()=>navigate("chat")],["Register as Caterer",()=>navigate("register")]].map(([label,fn])=>(
+                <div key={label} style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,cursor:"pointer"}} onClick={fn}>{label}</div>
+              ))}
+            </div>
+            <div>
+              <div style={{fontSize:12,fontWeight:700,color:"var(--text-primary)",marginBottom:10,textTransform:"uppercase",letterSpacing:1}}>Areas Served</div>
+              {["Newtown","Rajarhat","Salt Lake","Action Area I-III","Eco Park Zone"].map(a=>(
+                <div key={a} style={{fontSize:12,color:"var(--text-muted)",marginBottom:6}}>📍 {a}</div>
+              ))}
+            </div>
+          </div>
+          <div style={{maxWidth:820,margin:"20px auto 0",paddingTop:16,borderTop:"1px solid var(--border-light)",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}}>
+            <div style={{fontSize:11,color:"var(--text-muted)"}}>© 2025 Aayojan AI. Made with ❤️ in Kolkata</div>
+            <div style={{display:"flex",gap:16}}>
+              <span style={{fontSize:11,color:"var(--text-muted)",cursor:"pointer"}}>Privacy Policy</span>
+              <span style={{fontSize:11,color:"var(--text-muted)",cursor:"pointer"}}>Terms of Service</span>
+            </div>
+          </div>
          </div>
 
         </div>
@@ -2641,6 +2684,11 @@ export default function AayojanApp(){
         </div>
       </footer>
 
+      {/* Floating WhatsApp Button */}
+      <a href="https://wa.me/919830012345?text=Hi%20Aayojan!%20I%20need%20catering%20help" target="_blank" rel="noopener noreferrer" style={{position:"fixed",bottom:24,right:24,width:56,height:56,borderRadius:"50%",background:"#25D366",display:"flex",alignItems:"center",justifyContent:"center",boxShadow:"0 4px 16px rgba(37,211,102,0.4)",zIndex:200,transition:"transform 0.2s",textDecoration:"none"}}>
+        <span style={{fontSize:28}}>💬</span>
+      </a>
+
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap');
         * { box-sizing:border-box;margin:0;padding:0; }
@@ -2655,6 +2703,7 @@ export default function AayojanApp(){
         @keyframes floatUp{from{transform:translateY(0) scale(1);opacity:0.3}to{transform:translateY(-40px) scale(1.5);opacity:0.6}}
         @keyframes bounceDown{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
         @keyframes scrollDot{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(10px)}}
+        @keyframes scrollRibbon{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
         button:hover{opacity:0.9;} input:focus{outline:none;border-color:#c0392b !important;} a{text-decoration:none;}
         ::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-track{background:#fef9f7;} ::-webkit-scrollbar-thumb{background:#fca5a5;border-radius:2px;}
         .caterer-scroll::-webkit-scrollbar{display:none;}
