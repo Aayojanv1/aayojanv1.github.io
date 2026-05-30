@@ -647,6 +647,12 @@ export default function AayojanApp(){
   useEffect(()=>{DB.init();setAnimIn(false);const t=setTimeout(()=>setAnimIn(true),60);return()=>clearTimeout(t);},[view,step]);
   useEffect(()=>{if(serviceType) setPerPlateBudget(SVC[serviceType].priceRange.min+100);},[serviceType]);
 
+  // Hash-based deep linking (e.g. #partner-terms)
+  useEffect(()=>{
+    const h=window.location.hash.replace("#","");
+    if(h&&["privacy","terms","refund","partner-terms"].includes(h)) setView(h);
+  },[]);
+
   // Keep-alive ping to prevent Render cold starts (every 14 min)
   useEffect(()=>{
     const API_URL=import.meta.env.VITE_API_URL||"http://localhost:8000";
@@ -2675,6 +2681,124 @@ export default function AayojanApp(){
         </div>
       )}
 
+      {/* ── PARTNER TERMS PAGE ─────────────────────────────────── */}
+      {view==="partner-terms"&&(
+        <div style={{...S.page,...anim}}>
+          <button onClick={()=>navigate("landing")} style={{...S.secondaryBtn,marginBottom:20}}>← Back to Home</button>
+          
+          {/* Hero Banner */}
+          <div style={{background:"linear-gradient(135deg,#FF6B35 0%,#D4380D 50%,#8B1A00 100%)",borderRadius:16,padding:"40px 24px",textAlign:"center",marginBottom:24,position:"relative",overflow:"hidden"}}>
+            <div style={{position:"absolute",inset:0,background:"url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=60')",backgroundSize:"cover",opacity:0.15}}/>
+            <div style={{position:"relative",zIndex:1}}>
+              <div style={{fontSize:48,marginBottom:12}}>🤝</div>
+              <h1 style={{fontSize:"clamp(24px,5vw,36px)",fontWeight:800,color:"#fff",marginBottom:8,fontFamily:"'Playfair Display',serif"}}>Partner with Aayojan</h1>
+              <p style={{fontSize:16,color:"rgba(255,255,255,0.9)",marginBottom:4}}>Grow your catering business — <strong>Zero Risk</strong></p>
+              <p style={{fontSize:13,color:"rgba(255,255,255,0.7)"}}>If you get paid, we get paid. Simple.</p>
+            </div>
+          </div>
+
+          {/* Launch Offer Card */}
+          <div style={{background:"linear-gradient(135deg,#FFF7ED,#FEF3C7)",border:"2px solid #F59E0B",borderRadius:16,padding:24,marginBottom:20,textAlign:"center",position:"relative"}}>
+            <div style={{position:"absolute",top:-12,left:"50%",transform:"translateX(-50%)",background:"#F59E0B",color:"#fff",fontSize:11,fontWeight:700,padding:"4px 16px",borderRadius:20}}>🔥 LAUNCH OFFER</div>
+            <h2 style={{fontSize:20,fontWeight:700,color:"#92400E",marginTop:8,marginBottom:12}}>First 10 Partners — FREE Forever</h2>
+            <div style={{display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap"}}>
+              <div style={{background:"#fff",borderRadius:12,padding:"12px 20px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
+                <div style={{fontSize:24,fontWeight:800,color:"#16A34A"}}>₹0</div>
+                <div style={{fontSize:11,color:"#666"}}>Onboarding Fee</div>
+              </div>
+              <div style={{background:"#fff",borderRadius:12,padding:"12px 20px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
+                <div style={{fontSize:24,fontWeight:800,color:"#16A34A"}}>₹0</div>
+                <div style={{fontSize:11,color:"#666"}}>Listing Fee</div>
+              </div>
+              <div style={{background:"#fff",borderRadius:12,padding:"12px 20px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
+                <div style={{fontSize:24,fontWeight:800,color:"#16A34A"}}>100%</div>
+                <div style={{fontSize:11,color:"#666"}}>Features Access</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Commission Structure */}
+          <div style={{...S.card,marginBottom:20}}>
+            <h2 style={{fontSize:18,fontWeight:700,color:"var(--text-primary)",marginBottom:16,display:"flex",alignItems:"center",gap:8}}>💰 Commission — Pay Only When You Earn</h2>
+            
+            <div style={{background:"#F0FDF4",border:"1px solid #BBF7D0",borderRadius:12,padding:16,marginBottom:16}}>
+              <div style={{fontSize:14,fontWeight:600,color:"#166534",marginBottom:8}}>📦 First 10 Orders</div>
+              <div style={{fontSize:28,fontWeight:800,color:"#16A34A"}}>3% <span style={{fontSize:14,fontWeight:400,color:"#666"}}>per successful order</span></div>
+              <p style={{fontSize:12,color:"#666",marginTop:8}}>Only charged when customer pays you. No order = No charge.</p>
+            </div>
+
+            <div style={{fontSize:14,fontWeight:600,color:"var(--text-primary)",marginBottom:12,textAlign:"center"}}>⬇️ After 10 successful orders, choose your plan:</div>
+
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
+              <div style={{background:"linear-gradient(135deg,#FEF9C3,#FDE68A)",border:"2px solid #F59E0B",borderRadius:12,padding:16,textAlign:"center"}}>
+                <div style={{fontSize:11,fontWeight:700,color:"#92400E",marginBottom:4}}>⭐ GOLD MEMBERSHIP</div>
+                <div style={{fontSize:24,fontWeight:800,color:"#92400E"}}>₹3,999</div>
+                <div style={{fontSize:11,color:"#92400E"}}>/year (₹333/mo)</div>
+                <div style={{marginTop:12,fontSize:11,color:"#666",lineHeight:1.6}}>
+                  ✅ 0% commission<br/>
+                  ✅ Priority listing<br/>
+                  ✅ Gold badge ⭐<br/>
+                  ✅ Homepage feature
+                </div>
+              </div>
+              <div style={{background:"#F9FAFB",border:"1px solid #E5E7EB",borderRadius:12,padding:16,textAlign:"center"}}>
+                <div style={{fontSize:11,fontWeight:700,color:"#6B7280",marginBottom:4}}>PAY AS YOU GO</div>
+                <div style={{fontSize:24,fontWeight:800,color:"#374151"}}>3%</div>
+                <div style={{fontSize:11,color:"#6B7280"}}>per order (continues)</div>
+                <div style={{marginTop:12,fontSize:11,color:"#666",lineHeight:1.6}}>
+                  ✅ No annual fee<br/>
+                  ✅ Standard listing<br/>
+                  ✅ Cancel anytime<br/>
+                  ✅ No commitment
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Ranking Policy */}
+          <div style={{...S.card,marginBottom:20}}>
+            <h2 style={{fontSize:18,fontWeight:700,color:"var(--text-primary)",marginBottom:16,display:"flex",alignItems:"center",gap:8}}>📋 How We Rank Partners</h2>
+            <p style={{fontSize:13,color:"var(--text-secondary)",marginBottom:16}}>Your listing position is based on merit — not money:</p>
+            <div style={{display:"flex",flexDirection:"column",gap:10}}>
+              {[
+                {icon:"🍽️",title:"Food Quality",desc:"Customer reviews & ratings"},
+                {icon:"📸",title:"Food Presentation",desc:"Photos, plating & hygiene standards"},
+                {icon:"💰",title:"Best Pricing",desc:"Competitive rates for quality offered"},
+                {icon:"⚡",title:"Response Time",desc:"How quickly you reply to inquiries"},
+                {icon:"✅",title:"Order Completion",desc:"Successful delivery track record"}
+              ].map((item,i)=>(
+                <div key={i} style={{display:"flex",alignItems:"center",gap:12,background:"#F9FAFB",borderRadius:10,padding:"10px 14px"}}>
+                  <span style={{fontSize:20}}>{item.icon}</span>
+                  <div>
+                    <div style={{fontSize:13,fontWeight:600,color:"var(--text-primary)"}}>{item.title}</div>
+                    <div style={{fontSize:11,color:"#6B7280"}}>{item.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p style={{fontSize:12,color:"#16A34A",fontWeight:600,marginTop:12,textAlign:"center"}}>Better quality + presentation + pricing = Higher visibility = More orders 📈</p>
+          </div>
+
+          {/* Referral Programme */}
+          <div style={{background:"linear-gradient(135deg,#EDE9FE,#DDD6FE)",border:"2px solid #8B5CF6",borderRadius:16,padding:24,marginBottom:20,textAlign:"center"}}>
+            <div style={{fontSize:36,marginBottom:8}}>🎁</div>
+            <h2 style={{fontSize:18,fontWeight:700,color:"#5B21B6",marginBottom:8}}>Referral Programme</h2>
+            <p style={{fontSize:14,color:"#6D28D9",marginBottom:12}}>Refer a caterer partner → <strong>Your next order is commission-FREE!</strong></p>
+            <div style={{background:"#fff",borderRadius:10,padding:12,fontSize:12,color:"#666",lineHeight:1.6}}>
+              Example: You refer "ABC Caterers" → They join Aayojan → Your very next order = 0% commission (you keep 100%)
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div style={{textAlign:"center",marginTop:24,marginBottom:32}}>
+            <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20want%20to%20become%20a%20partner%20caterer" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:"linear-gradient(135deg,#25D366,#128C7E)",color:"#fff",padding:"16px 32px",borderRadius:30,fontSize:16,fontWeight:700,textDecoration:"none",boxShadow:"0 4px 16px rgba(37,211,102,0.3)"}}>
+              📱 Join as Partner — WhatsApp Us
+            </a>
+            <p style={{fontSize:12,color:"#9ca3af",marginTop:12}}>Or call: +91-8088434425</p>
+          </div>
+        </div>
+      )}
+
       <footer style={{textAlign:"center",marginTop:44,padding:"20px 20px 0",borderTop:"2px solid #fde8d8",fontSize:12,color:"#9ca3af",letterSpacing:"0.04em"}}>
         <div style={{fontSize:18,letterSpacing:10,color:"#fca5a5",marginBottom:6}}>✦ ✦ ✦ ✦ ✦</div>
         Aayojan © 2025 · Newtown, Kolkata · আয়োজন
@@ -2682,6 +2806,7 @@ export default function AayojanApp(){
           <button onClick={()=>navigate("privacy")} style={{background:"none",border:"none",color:"#9ca3af",fontSize:11,cursor:"pointer",textDecoration:"underline"}}>Privacy Policy</button>
           <button onClick={()=>navigate("terms")} style={{background:"none",border:"none",color:"#9ca3af",fontSize:11,cursor:"pointer",textDecoration:"underline"}}>Terms of Service</button>
           <button onClick={()=>navigate("refund")} style={{background:"none",border:"none",color:"#9ca3af",fontSize:11,cursor:"pointer",textDecoration:"underline"}}>Refund Policy</button>
+          <button onClick={()=>navigate("partner-terms")} style={{background:"none",border:"none",color:"#FF6B35",fontSize:11,cursor:"pointer",textDecoration:"underline",fontWeight:600}}>Partner T&C</button>
         </div>
       </footer>
 

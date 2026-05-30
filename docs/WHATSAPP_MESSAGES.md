@@ -36,11 +36,8 @@
 — Suparna, Aayojan
 📱 8088434425
 🌐 aayojan.online
+📋 Partner T&C: https://aayojan.online/#partner-terms
 ```
-
----
-
-## 🟢 MESSAGE 1B — English Version (Premium/House Party Caterers)
 
 ```
 Hi! 🙏
@@ -71,11 +68,8 @@ Then reply "YES" — takes 5 minutes to get listed!
 — Suparna, Aayojan
 📱 +91-8088434425
 🌐 aayojan.online
+📋 Partner T&C: https://aayojan.online/#partner-terms
 ```
-
----
-
-## 🟡 MESSAGE 2 — Follow-up (24hrs later — create FOMO)
 
 ```
 Hi! 🙏
