@@ -283,7 +283,7 @@ function BudgetSlider({svcType,value,onChange}){
 
 // ─── AI Chatbot ───────────────────────────────────────────────────────────────
 function AayojanChatbot({onOrderCreated,user,onLoginRequired,allCaterers,onStartOrderFlow}){
-  const [msgs,setMsgs]=useState([{role:"assistant",text:"নমস্কার! 🙏 I'm **Aayojan AI** — your catering assistant for Newtown, Kolkata!\n\nTell me about your event: guests, budget, cuisine preferences, and I'll create your custom catering order.\n\nTry: *\"I need catering for 150 guests at a wedding, budget ₹600 per plate, Action Area I\"*"}]);
+  const [msgs,setMsgs]=useState([{role:"assistant",text:"নমস্কার! Aayojan Partner Advisor-এ আপনাকে স্বাগতম! 👋\n\nI'm here to help you grow your catering business with Aayojan — Kolkata's first AI-powered catering platform.\n\nAsk me about: **registration**, **pricing**, **how leads work**, or **the launch offer** 🚀"}]);
   const [input,setInput]=useState("");
   const [loading,setLoading]=useState(false);
   const [orderData,setOrderData]=useState(null);
@@ -530,11 +530,11 @@ TONE: Professional yet friendly. Use Bengali phrases occasionally (e.g., "আপ
         <div ref={bottomRef}/>
       </div>
       {msgs.length===1&&<div style={{padding:"6px 12px 4px",display:"flex",gap:6,flexWrap:"wrap",borderTop:"1px solid var(--border-default)",background:"var(--bg-card)"}}>
-        {["🎂 Birthday party, 50 guests","💍 Wedding, 200 guests","📦 Bulk delivery, 30 portions","🪔 Durga Puja feast, 100 people"].map(p=><button key={p} onClick={()=>{setInput(p);setTimeout(()=>inputRef.current?.focus(),50);}} style={{fontSize:11,padding:"5px 10px",borderRadius:12,background:"var(--bg-accent-light)",border:"1px solid var(--border-accent)",color:"var(--text-accent)",cursor:"pointer",whiteSpace:"nowrap"}}>{p}</button>)}
+        {["🚀 How do I register?","💰 What's the commission?","📲 How do leads work?","🎁 Tell me about the launch offer"].map(p=><button key={p} onClick={()=>{setInput(p);setTimeout(()=>inputRef.current?.focus(),50);}} style={{fontSize:11,padding:"5px 10px",borderRadius:12,background:"var(--bg-accent-light)",border:"1px solid var(--border-accent)",color:"var(--text-accent)",cursor:"pointer",whiteSpace:"nowrap"}}>{p}</button>)}
       </div>}
       <div style={{display:"flex",gap:8,padding:"10px 12px",borderTop:"1px solid var(--border-default)",background:"var(--bg-card)",flexDirection:"column"}}>
         <div style={{display:"flex",gap:8}}>
-          <input ref={inputRef} value={input} onChange={e=>setInput(e.target.value.slice(0,MAX_MSG_LENGTH))} onKeyDown={e=>e.key==="Enter"&&!e.shiftKey&&sendMessage()} placeholder={blocked?"Session paused — refresh to start over":"Describe your event, guests, budget..."} disabled={blocked} style={{flex:1,background:"var(--bg-hover)",border:"1px solid var(--border-default)",borderRadius:12,padding:"10px 14px",color:"var(--text-primary)",fontSize:13,outline:"none",opacity:blocked?0.5:1}}/>
+          <input ref={inputRef} value={input} onChange={e=>setInput(e.target.value.slice(0,MAX_MSG_LENGTH))} onKeyDown={e=>e.key==="Enter"&&!e.shiftKey&&sendMessage()} placeholder={blocked?"Session paused — refresh to start over":"Ask about registration, pricing, leads..."} disabled={blocked} style={{flex:1,background:"var(--bg-hover)",border:"1px solid var(--border-default)",borderRadius:12,padding:"10px 14px",color:"var(--text-primary)",fontSize:13,outline:"none",opacity:blocked?0.5:1}}/>
           <button onClick={sendMessage} disabled={!input.trim()||loading||blocked} style={{width:42,height:42,borderRadius:12,background:"linear-gradient(135deg,#c0392b,#e74c3c)",border:"none",color:"#fff",fontSize:18,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",opacity:input.trim()&&!loading&&!blocked?1:0.4}}>➤</button>
         </div>
         <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:"var(--text-muted)",padding:"0 4px"}}>
