@@ -1109,26 +1109,39 @@ export default function AayojanApp(){
            </div>
          </div>
 
-         {/* ── HOW IT WORKS — 4 clear steps ──────────────────────────────── */}
-         <div style={{padding:"48px 14px",maxWidth:820,margin:"0 auto"}}>
-           <div style={{textAlign:"center",marginBottom:28}}>
-             <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:700,color:"var(--text-primary)",marginBottom:6}}>How It Works</h2>
-             <p style={{fontSize:13,color:"var(--text-muted)"}}>4 simple steps — কিভাবে কাজ করে?</p>
+         {/* ── HOW IT WORKS — Interactive, sticky for users ──────────────── */}
+         <div style={{padding:"56px 14px",maxWidth:820,margin:"0 auto"}}>
+           <div style={{textAlign:"center",marginBottom:32}}>
+             <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(22px,5vw,30px)",fontWeight:800,color:"var(--text-primary)",marginBottom:8}}>Book Your Perfect Caterer in Minutes</h2>
+             <p style={{fontSize:14,color:"var(--text-muted)",maxWidth:460,margin:"0 auto"}}>No calls, no haggling. Tell us what you need → get matched → compare quotes → done.</p>
            </div>
-           <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14}} className="feat-grid">
+
+           {/* Steps with connecting line */}
+           <div style={{position:"relative",display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14}} className="feat-grid">
+             {/* Connecting line */}
+             <div style={{position:"absolute",top:40,left:"12%",right:"12%",height:2,background:"linear-gradient(90deg,#E8760A,#e74c3c,#E8760A)",opacity:0.2,zIndex:0}} className="hide-mobile"/>
              {[
-               {icon:"🛎️",title:"Choose Service",sub:"Full catering or bulk delivery",num:"01"},
-               {icon:"🤖",title:"Tell Us Your Needs",sub:"Event type, guests, budget",num:"02"},
-               {icon:"📍",title:"AI Matches Caterers",sub:"Based on your area & cuisine",num:"03"},
-               {icon:"📲",title:"Get Quotes in 48hr",sub:"Compare & book directly",num:"04"},
+               {icon:"🎉",title:"Pick Your Event",sub:"Wedding, birthday, house party, corporate — you choose",num:"01",color:"#FFF0E8"},
+               {icon:"🤖",title:"AI Finds Best Matches",sub:"We scan 12+ verified caterers for your area, budget & menu",num:"02",color:"#FFF0F0"},
+               {icon:"📱",title:"Get Quotes on WhatsApp",sub:"Real prices from real caterers, delivered in under 48 hours",num:"03",color:"#F0FFF4"},
+               {icon:"🍽️",title:"Taste & Book",sub:"Free tasting from ₹199. Love it? Lock in your date.",num:"04",color:"#FFF8E0"},
              ].map((s,i)=>(
-               <div key={i} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:16,padding:"20px 14px",textAlign:"center",position:"relative",boxShadow:"0 2px 12px rgba(0,0,0,0.04)"}}>
-                 <div style={{position:"absolute",top:8,right:10,fontSize:24,fontWeight:900,color:"rgba(192,57,43,0.08)",fontFamily:"monospace"}}>{s.num}</div>
-                 <div style={{fontSize:28,marginBottom:8}}>{s.icon}</div>
-                 <div style={{fontSize:12,fontWeight:700,color:"var(--text-primary)",marginBottom:3}}>{s.title}</div>
-                 <div style={{fontSize:10,color:"var(--text-muted)"}}>{s.sub}</div>
+               <div key={i} style={{background:s.color,border:"1px solid var(--border-light)",borderRadius:20,padding:"24px 16px",textAlign:"center",position:"relative",zIndex:1,boxShadow:"0 4px 20px rgba(0,0,0,0.04)",transition:"transform 0.2s",cursor:"default"}}
+                 onMouseEnter={e=>e.currentTarget.style.transform="translateY(-4px)"}
+                 onMouseLeave={e=>e.currentTarget.style.transform="translateY(0)"}>
+                 <div style={{position:"absolute",top:8,right:10,fontSize:20,fontWeight:900,color:"rgba(0,0,0,0.05)",fontFamily:"monospace"}}>{s.num}</div>
+                 <div style={{fontSize:36,marginBottom:10}}>{s.icon}</div>
+                 <div style={{fontSize:13,fontWeight:700,color:"var(--text-primary)",marginBottom:5}}>{s.title}</div>
+                 <div style={{fontSize:11,color:"var(--text-muted)",lineHeight:1.5}}>{s.sub}</div>
                </div>
              ))}
+           </div>
+
+           {/* Sticky CTA below steps */}
+           <div style={{marginTop:28,textAlign:"center",background:"linear-gradient(135deg,#FDF6ED,#FFF0D5)",border:"1px solid #EDD8BC",borderRadius:20,padding:"24px 20px"}}>
+             <div style={{fontSize:14,fontWeight:700,color:"#1C130A",marginBottom:6}}>🕐 Most caterers respond within 4 hours</div>
+             <p style={{fontSize:12,color:"#7B634E",marginBottom:14,maxWidth:400,margin:"0 auto 14px"}}>Tell us your event details once — we'll handle the back-and-forth with caterers so you don't have to.</p>
+             <button onClick={()=>navigate("app")} style={{background:"linear-gradient(135deg,#c0392b,#e74c3c)",color:"#fff",border:"none",padding:"12px 28px",borderRadius:12,fontSize:14,fontWeight:700,cursor:"pointer",boxShadow:"0 4px 16px rgba(192,57,43,0.25)"}}>Start Now — It's Free →</button>
            </div>
          </div>
 
