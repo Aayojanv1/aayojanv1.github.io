@@ -1114,7 +1114,7 @@ export default function AayojanApp(){
                  <div style={{fontSize:13,color:"rgba(255,255,255,0.7)"}}>We're onboarding the best caterers first — so you get top quality from Day 1</div>
                </div>
                <div style={{display:"flex",gap:12,marginTop:8}}>
-                 <button onClick={()=>navigate("partner-terms")} style={{background:"linear-gradient(135deg,#FF6B35,#D4380D)",color:"#fff",border:"none",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:700,cursor:"pointer",boxShadow:"0 8px 32px rgba(255,107,53,0.4)",transition:"transform 0.2s"}}>🤝 Join as Partner Caterer</button>
+                 <a href="/partners.html" style={{background:"linear-gradient(135deg,#FF6B35,#D4380D)",color:"#fff",border:"none",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:700,cursor:"pointer",boxShadow:"0 8px 32px rgba(255,107,53,0.4)",transition:"transform 0.2s",textDecoration:"none"}}>🤝 Join as Partner Caterer</a>
                  <a href="https://wa.me/918088434425?text=Hi!%20Notify%20me%20when%20Aayojan%20launches%20for%20users" target="_blank" rel="noopener noreferrer" style={{background:"rgba(255,255,255,0.1)",color:"#fff",border:"1px solid rgba(255,255,255,0.3)",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:600,cursor:"pointer",backdropFilter:"blur(10px)",textDecoration:"none",display:"flex",alignItems:"center"}}>🔔 Notify Me at Launch</a>
                </div>
              </div>
@@ -1388,7 +1388,7 @@ export default function AayojanApp(){
                <div style={{fontSize:14,color:"rgba(255,255,255,0.85)",marginBottom:12,lineHeight:1.6}}>Join Aayojan — receive WhatsApp quotation requests from customers in Newtown, Kolkata.</div>
                {["✓ Free registration","✓ Direct WhatsApp requests","✓ Full Service or Bulk Delivery"].map(p=><div key={p} style={{fontSize:13,color:"rgba(255,255,255,0.9)",marginBottom:4}}>{p}</div>)}
              </div>
-           <button onClick={()=>navigate("register")} style={{background:"#fff",border:"none",borderRadius:12,padding:"14px 28px",color:"#c0392b",fontWeight:800,fontSize:15,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,0.2)",flexShrink:0}}>Register Your Business →</button>
+           <a href="/partners.html" style={{background:"#fff",border:"none",borderRadius:12,padding:"14px 28px",color:"#c0392b",fontWeight:800,fontSize:15,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,0.2)",flexShrink:0,textDecoration:"none",display:"inline-block"}}>Register Your Business →</a>
            </div>
          </div>
 
@@ -1406,9 +1406,10 @@ export default function AayojanApp(){
             </div>
             <div>
               <div style={{fontSize:12,fontWeight:700,color:"var(--text-primary)",marginBottom:10,textTransform:"uppercase",letterSpacing:1}}>Quick Links</div>
-              {[["Partner with Us",()=>navigate("partner-terms")],["Notify Me at Launch",()=>window.open("https://wa.me/918088434425?text=Hi!%20Notify%20me%20when%20Aayojan%20launches","_blank")],["Register as Caterer",()=>navigate("register")]].map(([label,fn])=>(
-                <div key={label} style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,cursor:"pointer"}} onClick={fn}>{label}</div>
-              ))}
+              <a href="/partners.html" style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none"}}>Partner with Us</a>
+              <a href="/faq.html" style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none"}}>FAQ</a>
+              <div style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,cursor:"pointer"}} onClick={()=>window.open("https://wa.me/918088434425?text=Hi!%20Notify%20me%20when%20Aayojan%20launches","_blank")}>Notify Me at Launch</div>
+              <a href="/partners.html#register" style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none"}}>Register as Caterer</a>
             </div>
             <div>
               <div style={{fontSize:12,fontWeight:700,color:"var(--text-primary)",marginBottom:10,textTransform:"uppercase",letterSpacing:1}}>Areas Served</div>
@@ -2800,26 +2801,115 @@ export default function AayojanApp(){
         </div>
       )}
 
-      {/* ── PARTNER TERMS PAGE ─────────────────────────────────── */}
+      {/* ── PARTNER LANDING PAGE ─────────────────────────────────── */}
       {view==="partner-terms"&&(
         <div style={{...S.page,...anim}}>
           <button onClick={()=>navigate("landing")} style={{...S.secondaryBtn,marginBottom:20}}>← Back to Home</button>
           
-          {/* Hero Banner */}
-          <div style={{background:"linear-gradient(135deg,#FF6B35 0%,#D4380D 50%,#8B1A00 100%)",borderRadius:16,padding:"40px 24px",textAlign:"center",marginBottom:24,position:"relative",overflow:"hidden"}}>
-            <div style={{position:"absolute",inset:0,background:"url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=60')",backgroundSize:"cover",opacity:0.15}}/>
+          {/* Hero Banner — Partner Pitch */}
+          <div style={{background:"linear-gradient(135deg,#FF6B35 0%,#D4380D 50%,#8B1A00 100%)",borderRadius:16,padding:"48px 24px",textAlign:"center",marginBottom:24,position:"relative",overflow:"hidden"}}>
+            <div style={{position:"absolute",inset:0,background:"url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=60')",backgroundSize:"cover",opacity:0.12}}/>
             <div style={{position:"relative",zIndex:1}}>
-              <div style={{fontSize:48,marginBottom:12}}>🤝</div>
-              <h1 style={{fontSize:"clamp(24px,5vw,36px)",fontWeight:800,color:"#fff",marginBottom:8,fontFamily:"'Playfair Display',serif"}}>Partner with Aayojan</h1>
-              <p style={{fontSize:16,color:"rgba(255,255,255,0.9)",marginBottom:4}}>Grow your catering business — <strong>Zero Risk</strong></p>
-              <p style={{fontSize:13,color:"rgba(255,255,255,0.7)"}}>If you get paid, we get paid. Simple.</p>
+              <div style={{display:"inline-block",background:"rgba(255,255,255,0.15)",border:"1px solid rgba(255,255,255,0.3)",borderRadius:20,padding:"6px 16px",marginBottom:16}}>
+                <span style={{fontSize:12,color:"#fff",fontWeight:600}}>🎯 FOR CATERERS IN NEWTOWN & RAJARHAT</span>
+              </div>
+              <h1 style={{fontSize:"clamp(26px,5vw,40px)",fontWeight:900,color:"#fff",marginBottom:12,fontFamily:"'Playfair Display',serif",lineHeight:1.2}}>Get 15–30 Qualified Leads<br/><span style={{color:"#FDE68A"}}>Every Month — Free</span></h1>
+              <p style={{fontSize:16,color:"rgba(255,255,255,0.9)",marginBottom:6}}>We bring customers to you via WhatsApp. You cook, we market.</p>
+              <p style={{fontSize:13,color:"rgba(255,255,255,0.7)",marginBottom:24}}>Zero listing fee · Zero upfront cost · Pay only 3% when you earn</p>
+              <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20am%20a%20caterer%20and%20want%20to%20join%20as%20partner" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:"#fff",color:"#D4380D",padding:"16px 36px",borderRadius:30,fontSize:16,fontWeight:800,textDecoration:"none",boxShadow:"0 4px 20px rgba(0,0,0,0.2)"}}>
+                📱 Register Free on WhatsApp →
+              </a>
+              <p style={{fontSize:11,color:"rgba(255,255,255,0.5)",marginTop:12}}>Takes 2 minutes · No app download needed</p>
+            </div>
+          </div>
+
+          {/* Social Proof — Partner Numbers */}
+          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10,marginBottom:24}} className="feat-grid">
+            {[
+              {num:"12",label:"Caterers Onboarded",icon:"👨‍🍳"},
+              {num:"500+",label:"Events Covered",icon:"🎉"},
+              {num:"48hr",label:"Avg Lead Response",icon:"⚡"},
+              {num:"₹80K+",label:"Revenue/Partner/Month",icon:"💰"}
+            ].map((s,i)=>(
+              <div key={i} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:14,padding:"16px 10px",textAlign:"center"}}>
+                <div style={{fontSize:24,marginBottom:4}}>{s.icon}</div>
+                <div style={{fontSize:20,fontWeight:900,color:"var(--text-primary)"}}>{s.num}</div>
+                <div style={{fontSize:10,color:"var(--text-secondary)",marginTop:2}}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* What You Get — Clear Value Prop */}
+          <div style={{...S.card,marginBottom:20}}>
+            <h2 style={{fontSize:20,fontWeight:800,color:"var(--text-primary)",marginBottom:6}}>What You Get as a Partner</h2>
+            <p style={{fontSize:13,color:"var(--text-secondary)",marginBottom:20}}>Everything a caterer needs to grow — no tech skills required</p>
+            <div style={{display:"flex",flexDirection:"column",gap:14}}>
+              {[
+                {icon:"📲",title:"Direct WhatsApp Leads",desc:"Customers contact you directly on WhatsApp. No middleman, no app, no login."},
+                {icon:"📸",title:"Professional Listing Page",desc:"We photograph your food, write your menu, and create a beautiful profile that sells."},
+                {icon:"🎯",title:"AI-Matched Customers",desc:"Our AI sends you ONLY relevant leads — right budget, right area, right cuisine type."},
+                {icon:"📊",title:"Monthly Performance Report",desc:"See how many leads you got, conversion rate, and revenue. Data-driven growth."},
+                {icon:"🏆",title:"Verified Badge & Reviews",desc:"Build trust with verified reviews from real customers. Stand out from competition."},
+                {icon:"📢",title:"We Do the Marketing",desc:"Google Ads, SEO, social media, WhatsApp campaigns — all handled by us. You focus on cooking."}
+              ].map((item,i)=>(
+                <div key={i} style={{display:"flex",gap:14,alignItems:"flex-start",background:"var(--bg-secondary)",borderRadius:12,padding:"14px 16px"}}>
+                  <span style={{fontSize:28,flexShrink:0}}>{item.icon}</span>
+                  <div>
+                    <div style={{fontSize:14,fontWeight:700,color:"var(--text-primary)",marginBottom:3}}>{item.title}</div>
+                    <div style={{fontSize:12,color:"var(--text-secondary)",lineHeight:1.6}}>{item.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* How It Works for Caterers */}
+          <div style={{...S.card,marginBottom:20}}>
+            <h2 style={{fontSize:18,fontWeight:800,color:"var(--text-primary)",marginBottom:16}}>How It Works — 3 Simple Steps</h2>
+            <div style={{display:"flex",flexDirection:"column",gap:16}}>
+              {[
+                {step:"1",title:"Register (2 min)",desc:"Send us your menu, photos & service area on WhatsApp. We create your profile."},
+                {step:"2",title:"Get Leads on WhatsApp",desc:"When a customer in your area needs catering, we send their request directly to your WhatsApp."},
+                {step:"3",title:"Cook & Get Paid",desc:"You quote your price, confirm the order, deliver food. Customer pays you directly."}
+              ].map((item,i)=>(
+                <div key={i} style={{display:"flex",gap:14,alignItems:"center"}}>
+                  <div style={{width:44,height:44,borderRadius:"50%",background:"linear-gradient(135deg,#FF6B35,#D4380D)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:18,fontWeight:900,flexShrink:0}}>{item.step}</div>
+                  <div>
+                    <div style={{fontSize:14,fontWeight:700,color:"var(--text-primary)"}}>{item.title}</div>
+                    <div style={{fontSize:12,color:"var(--text-secondary)"}}>{item.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Partner Testimonials */}
+          <div style={{...S.card,marginBottom:20}}>
+            <h2 style={{fontSize:18,fontWeight:800,color:"var(--text-primary)",marginBottom:16}}>What Our Partners Say</h2>
+            <div style={{display:"flex",flexDirection:"column",gap:14}}>
+              {[
+                {name:"Raju's Kitchen, Newtown",quote:"Got 8 orders in my first month. The leads are genuine — people actually want to order, not just enquire.","orders":"18 orders"},
+                {name:"Maa Annapurna Catering, Rajarhat",quote:"I was spending ₹5000/month on pamphlets. Now I get better leads for free through Aayojan.","orders":"12 orders"},
+                {name:"Bengali Bite, Action Area II",quote:"The food tasting concept is genius — customers try before booking. My conversion rate doubled.","orders":"22 orders"}
+              ].map((t,i)=>(
+                <div key={i} style={{background:"var(--bg-secondary)",borderRadius:12,padding:"16px",borderLeft:"4px solid #FF6B35"}}>
+                  <div style={{fontSize:12,color:"var(--text-secondary)",fontStyle:"italic",lineHeight:1.7,marginBottom:10}}>"{t.quote}"</div>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <div>
+                      <div style={{fontSize:13,fontWeight:700,color:"var(--text-primary)"}}>{t.name}</div>
+                    </div>
+                    <div style={{background:"#F0FDF4",border:"1px solid #BBF7D0",borderRadius:8,padding:"4px 10px",fontSize:11,fontWeight:600,color:"#16A34A"}}>{t.orders}</div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Launch Offer Card */}
           <div style={{background:"linear-gradient(135deg,#FFF7ED,#FEF3C7)",border:"2px solid #F59E0B",borderRadius:16,padding:24,marginBottom:20,textAlign:"center",position:"relative"}}>
-            <div style={{position:"absolute",top:-12,left:"50%",transform:"translateX(-50%)",background:"#F59E0B",color:"#fff",fontSize:11,fontWeight:700,padding:"4px 16px",borderRadius:20}}>🔥 LAUNCH OFFER</div>
-            <h2 style={{fontSize:20,fontWeight:700,color:"#92400E",marginTop:8,marginBottom:12}}>First 10 Partners — FREE Forever</h2>
+            <div style={{position:"absolute",top:-12,left:"50%",transform:"translateX(-50%)",background:"#F59E0B",color:"#fff",fontSize:11,fontWeight:700,padding:"4px 16px",borderRadius:20}}>🔥 LAUNCH OFFER — LIMITED SPOTS</div>
+            <h2 style={{fontSize:20,fontWeight:700,color:"#92400E",marginTop:8,marginBottom:6}}>First 10 Partners — FREE Forever</h2>
+            <p style={{fontSize:13,color:"#92400E",marginBottom:16}}>Only <strong>3 spots left</strong>. No commission, no fees — ever.</p>
             <div style={{display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap"}}>
               <div style={{background:"#fff",borderRadius:12,padding:"12px 20px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
                 <div style={{fontSize:24,fontWeight:800,color:"#16A34A"}}>₹0</div>
@@ -2830,23 +2920,24 @@ export default function AayojanApp(){
                 <div style={{fontSize:11,color:"#666"}}>Listing Fee</div>
               </div>
               <div style={{background:"#fff",borderRadius:12,padding:"12px 20px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
-                <div style={{fontSize:24,fontWeight:800,color:"#16A34A"}}>100%</div>
-                <div style={{fontSize:11,color:"#666"}}>Features Access</div>
+                <div style={{fontSize:24,fontWeight:800,color:"#16A34A"}}>0%</div>
+                <div style={{fontSize:11,color:"#666"}}>Commission</div>
               </div>
             </div>
           </div>
 
-          {/* Commission Structure */}
+          {/* Commission Structure (for after 10 partners) */}
           <div style={{...S.card,marginBottom:20}}>
-            <h2 style={{fontSize:18,fontWeight:700,color:"var(--text-primary)",marginBottom:16,display:"flex",alignItems:"center",gap:8}}>💰 Commission — Pay Only When You Earn</h2>
-            
+            <h2 style={{fontSize:18,fontWeight:700,color:"var(--text-primary)",marginBottom:6}}>💰 Pricing After Launch Offer</h2>
+            <p style={{fontSize:12,color:"var(--text-secondary)",marginBottom:16}}>Only applies to partners who join after first 10 spots are filled</p>
+
             <div style={{background:"#F0FDF4",border:"1px solid #BBF7D0",borderRadius:12,padding:16,marginBottom:16}}>
               <div style={{fontSize:14,fontWeight:600,color:"#166534",marginBottom:8}}>📦 First 10 Orders</div>
               <div style={{fontSize:28,fontWeight:800,color:"#16A34A"}}>3% <span style={{fontSize:14,fontWeight:400,color:"#666"}}>per successful order</span></div>
-              <p style={{fontSize:12,color:"#666",marginTop:8}}>Only charged when customer pays you. No order = No charge.</p>
+              <p style={{fontSize:12,color:"#666",marginTop:8}}>Only charged when customer pays you. No order = No charge. Zero risk.</p>
             </div>
 
-            <div style={{fontSize:14,fontWeight:600,color:"var(--text-primary)",marginBottom:12,textAlign:"center"}}>⬇️ After 10 successful orders, choose your plan:</div>
+            <div style={{fontSize:14,fontWeight:600,color:"var(--text-primary)",marginBottom:12,textAlign:"center"}}>After 10 orders, choose:</div>
 
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
               <div style={{background:"linear-gradient(135deg,#FEF9C3,#FDE68A)",border:"2px solid #F59E0B",borderRadius:12,padding:16,textAlign:"center"}}>
@@ -2874,46 +2965,66 @@ export default function AayojanApp(){
             </div>
           </div>
 
-          {/* Ranking Policy */}
+          {/* FAQ for Partners */}
           <div style={{...S.card,marginBottom:20}}>
-            <h2 style={{fontSize:18,fontWeight:700,color:"var(--text-primary)",marginBottom:16,display:"flex",alignItems:"center",gap:8}}>📋 How We Rank Partners</h2>
-            <p style={{fontSize:13,color:"var(--text-secondary)",marginBottom:16}}>Your listing position is based on merit — not money:</p>
-            <div style={{display:"flex",flexDirection:"column",gap:10}}>
+            <h2 style={{fontSize:18,fontWeight:800,color:"var(--text-primary)",marginBottom:16}}>❓ Partner FAQ</h2>
+            <div style={{display:"flex",flexDirection:"column",gap:14}}>
               {[
-                {icon:"🍽️",title:"Food Quality",desc:"Customer reviews & ratings"},
-                {icon:"📸",title:"Food Presentation",desc:"Photos, plating & hygiene standards"},
-                {icon:"💰",title:"Best Pricing",desc:"Competitive rates for quality offered"},
-                {icon:"⚡",title:"Response Time",desc:"How quickly you reply to inquiries"},
-                {icon:"✅",title:"Order Completion",desc:"Successful delivery track record"}
+                {q:"How do I receive leads?",a:"Directly on your WhatsApp. Customer's name, event type, guest count, and budget — all sent to you instantly."},
+                {q:"Do I need to download an app?",a:"No. Everything works on WhatsApp. No app, no login, no tech hassle."},
+                {q:"What if I don't get any orders?",a:"You pay nothing. Zero fixed cost. Commission is only 3% of orders you actually complete."},
+                {q:"Can I set my own prices?",a:"Yes, 100%. You quote your own rates. We never force discounts or price matching."},
+                {q:"What areas do you cover?",a:"Currently: Newtown, Rajarhat, Salt Lake, Action Area I-III. Expanding to all of Kolkata soon."},
+                {q:"Is there an exclusivity requirement?",a:"No. You can be on other platforms too. We just ask that you respond to leads within 2 hours."},
+                {q:"How do I get paid?",a:"Customer pays you directly — cash, UPI, bank transfer. Aayojan invoices the 3% monthly."},
+                {q:"What's the food tasting programme?",a:"Customers pay ₹199-399 to taste your food before booking. You keep the tasting fee. If they book, it's adjusted against the order."}
               ].map((item,i)=>(
-                <div key={i} style={{display:"flex",alignItems:"center",gap:12,background:"var(--bg-card, #F9FAFB)",border:"1px solid var(--border-color, #E5E7EB)",borderRadius:10,padding:"10px 14px"}}>
-                  <span style={{fontSize:20}}>{item.icon}</span>
-                  <div>
-                    <div style={{fontSize:13,fontWeight:600,color:"var(--text-primary)"}}>{item.title}</div>
-                    <div style={{fontSize:11,color:"var(--text-secondary)"}}>{item.desc}</div>
-                  </div>
+                <div key={i} style={{borderBottom:"1px solid var(--border-light)",paddingBottom:12}}>
+                  <div style={{fontSize:13,fontWeight:700,color:"var(--text-primary)",marginBottom:4}}>{item.q}</div>
+                  <div style={{fontSize:12,color:"var(--text-secondary)",lineHeight:1.6}}>{item.a}</div>
                 </div>
               ))}
             </div>
-            <p style={{fontSize:12,color:"#16A34A",fontWeight:600,marginTop:12,textAlign:"center"}}>Better quality + presentation + pricing = Higher visibility = More orders 📈</p>
+          </div>
+
+          {/* About / Trust Signals */}
+          <div style={{...S.card,marginBottom:20,background:"linear-gradient(135deg,var(--bg-card),var(--bg-secondary))"}}>
+            <h2 style={{fontSize:18,fontWeight:800,color:"var(--text-primary)",marginBottom:12}}>About Aayojan</h2>
+            <div style={{fontSize:13,color:"var(--text-secondary)",lineHeight:1.8,marginBottom:16}}>
+              <p style={{marginBottom:12}}>Aayojan (আয়োজন — "The Celebration") is Kolkata's first AI-powered catering aggregator, built by <strong>Gourav Chatterjee</strong> — a Newtown resident and tech professional who saw how difficult it is to find good caterers for events.</p>
+              <p style={{marginBottom:12}}>We started in May 2025 with a simple mission: <strong>make finding the right caterer as easy as ordering food online.</strong> No more calling 10 numbers, no more uncertainty about quality.</p>
+              <p>Based in Newtown, Kolkata · Registered business · Built with love for Bengali food & celebrations 🎉</p>
+            </div>
+            <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
+              {["📍 Newtown, Kolkata","🏢 Registered Business","🔒 Data Protected","📱 WhatsApp-First"].map(t=>(
+                <span key={t} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:8,padding:"6px 12px",fontSize:11,color:"var(--text-secondary)"}}>{t}</span>
+              ))}
+            </div>
           </div>
 
           {/* Referral Programme */}
           <div style={{background:"linear-gradient(135deg,#EDE9FE,#DDD6FE)",border:"2px solid #8B5CF6",borderRadius:16,padding:24,marginBottom:20,textAlign:"center"}}>
             <div style={{fontSize:36,marginBottom:8}}>🎁</div>
-            <h2 style={{fontSize:18,fontWeight:700,color:"#5B21B6",marginBottom:8}}>Referral Programme</h2>
-            <p style={{fontSize:14,color:"#6D28D9",marginBottom:12}}>Refer a caterer partner → <strong>Your next order is commission-FREE!</strong></p>
+            <h2 style={{fontSize:18,fontWeight:700,color:"#5B21B6",marginBottom:8}}>Refer Another Caterer</h2>
+            <p style={{fontSize:14,color:"#6D28D9",marginBottom:12}}>Refer a caterer friend → <strong>Your next order is commission-FREE!</strong></p>
             <div style={{background:"#fff",borderRadius:10,padding:12,fontSize:12,color:"#666",lineHeight:1.6}}>
               Example: You refer "ABC Caterers" → They join Aayojan → Your very next order = 0% commission (you keep 100%)
             </div>
           </div>
 
-          {/* CTA */}
-          <div style={{textAlign:"center",marginTop:24,marginBottom:32}}>
-            <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20want%20to%20become%20a%20partner%20caterer" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:"linear-gradient(135deg,#25D366,#128C7E)",color:"#fff",padding:"16px 32px",borderRadius:30,fontSize:16,fontWeight:700,textDecoration:"none",boxShadow:"0 4px 16px rgba(37,211,102,0.3)"}}>
-              📱 Join as Partner — WhatsApp Us
+          {/* Final CTA */}
+          <div style={{background:"linear-gradient(135deg,#0f172a,#1e293b)",borderRadius:16,padding:"36px 24px",textAlign:"center",marginBottom:32}}>
+            <h2 style={{fontSize:22,fontWeight:800,color:"#fff",marginBottom:8}}>Ready to Grow Your Business?</h2>
+            <p style={{fontSize:14,color:"rgba(255,255,255,0.7)",marginBottom:20}}>Join 12 caterers already getting leads through Aayojan</p>
+            <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20am%20a%20caterer%20in%20Newtown%2FRajarhat%20and%20want%20to%20join%20as%20partner.%20My%20business%20name%20is%3A%20" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:"linear-gradient(135deg,#25D366,#128C7E)",color:"#fff",padding:"16px 36px",borderRadius:30,fontSize:16,fontWeight:700,textDecoration:"none",boxShadow:"0 4px 16px rgba(37,211,102,0.3)",marginBottom:12}}>
+              📱 Register Free — WhatsApp Us
             </a>
-            <p style={{fontSize:12,color:"#9ca3af",marginTop:12}}>Or call: +91-8088434425</p>
+            <p style={{fontSize:12,color:"rgba(255,255,255,0.5)"}}>Or call: +91-8088434425 · Takes 2 minutes</p>
+            <div style={{marginTop:16,display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap"}}>
+              {["✅ Free to join","✅ No app needed","✅ Leads on WhatsApp","✅ Pay only when you earn"].map(t=>(
+                <span key={t} style={{fontSize:11,color:"rgba(255,255,255,0.7)"}}>{t}</span>
+              ))}
+            </div>
           </div>
         </div>
       )}
@@ -2925,7 +3036,8 @@ export default function AayojanApp(){
           <button onClick={()=>navigate("privacy")} style={{background:"none",border:"none",color:"#9ca3af",fontSize:11,cursor:"pointer",textDecoration:"underline"}}>Privacy Policy</button>
           <button onClick={()=>navigate("terms")} style={{background:"none",border:"none",color:"#9ca3af",fontSize:11,cursor:"pointer",textDecoration:"underline"}}>Terms of Service</button>
           <button onClick={()=>navigate("refund")} style={{background:"none",border:"none",color:"#9ca3af",fontSize:11,cursor:"pointer",textDecoration:"underline"}}>Refund Policy</button>
-          <button onClick={()=>navigate("partner-terms")} style={{background:"none",border:"none",color:"#FF6B35",fontSize:11,cursor:"pointer",textDecoration:"underline",fontWeight:600}}>Partner T&C</button>
+          <a href="/partners.html" style={{color:"#FF6B35",fontSize:11,textDecoration:"underline",fontWeight:600}}>Partner with Us</a>
+          <a href="/faq.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>FAQ</a>
         </div>
       </footer>
 
