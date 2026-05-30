@@ -1068,15 +1068,16 @@ export default function AayojanApp(){
            {/* Hero Content */}
            <div style={{position:"relative",zIndex:2,textAlign:"center",padding:"40px 20px",maxWidth:700}}>
              <div className="hero-anim-1" style={{animation:"fadeSlideUp 0.8s ease-out"}}>
-               <div style={{fontSize:12,letterSpacing:4,color:"#fca5a5",marginBottom:12,textTransform:"uppercase",fontWeight:600}}>নিউটাউন, কলকাতা</div>
-               <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(42px,8vw,64px)",fontWeight:700,lineHeight:1.1,marginBottom:12,color:"#fff"}}>
+               <div style={{fontSize:12,letterSpacing:4,color:"#fca5a5",marginBottom:12,textTransform:"uppercase",fontWeight:600}}>Newtown, Kolkata</div>
+               <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(42px,8vw,64px)",fontWeight:700,lineHeight:1.1,marginBottom:8,color:"#fff"}}>
                  আয়োজন
                </h1>
+               <p style={{fontSize:13,color:"rgba(255,255,255,0.5)",marginBottom:8,fontStyle:"italic"}}>Aayojan — "The Celebration"</p>
                <p style={{fontSize:"clamp(16px,3vw,20px)",color:"rgba(255,255,255,0.9)",fontWeight:500,marginBottom:6}}>
                  AI-Powered Catering Platform
                </p>
-               <p style={{fontSize:14,color:"rgba(255,255,255,0.6)",marginBottom:32,maxWidth:480,margin:"0 auto 32px"}}>
-                 Annaprashan থেকে Biye Bari — ৩১+ verified caterers, ৪৮ ঘণ্টায় quote
+               <p style={{fontSize:14,color:"rgba(255,255,255,0.6)",marginBottom:32,maxWidth:500,margin:"0 auto 32px"}}>
+                 From baby showers to grand weddings — 31+ verified caterers, quotes in 48 hours
                </p>
              </div>
 
@@ -1119,7 +1120,8 @@ export default function AayojanApp(){
            <div style={{position:"relative",zIndex:2,maxWidth:820,margin:"0 auto"}}>
              <div style={{textAlign:"center",marginBottom:24}}>
                <div style={{fontSize:10,fontWeight:800,color:"#fca5a5",textTransform:"uppercase",letterSpacing:3,marginBottom:6}}>Our Partner Caterers</div>
-               <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:700,color:"#fff"}}>🏆 আমাদের পার্টনার ক্যাটারার</h2>
+               <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:700,color:"#fff"}}>🏆 Trusted Caterer Partners</h2>
+               <p style={{fontSize:12,color:"rgba(255,255,255,0.5)",marginTop:4}}>আমাদের পার্টনার ক্যাটারার</p>
              </div>
              <div className="caterer-scroll" style={{display:"flex",gap:16,overflowX:"auto",paddingBottom:12,scrollSnapType:"x mandatory",scrollbarWidth:"none"}}>
                {allCaterers.slice(0,8).map(c=>(
@@ -1140,7 +1142,7 @@ export default function AayojanApp(){
            <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(192,57,43,0.03),rgba(249,115,22,0.03))",zIndex:0}}/>
            <div style={{position:"relative",zIndex:1,maxWidth:820,margin:"0 auto",padding:"0 14px"}}>
              <div style={{textAlign:"center",marginBottom:16}}>
-               <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:20,color:"var(--text-primary)"}}>বাংলার স্বাদ — Taste of Bengal</h3>
+               <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:20,color:"var(--text-primary)"}}>Taste of Bengal — বাংলার স্বাদ</h3>
              </div>
              <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap"}}>
                {[["🍚","Biryani"],["🐟","Ilish"],["🍖","Kosha Mangsho"],["🦐","Chingri"],["🍮","Mishti Doi"],["🍡","Rasgolla"],["🫓","Luchi"],["🍲","Shukto"]].map(([emoji,name])=>(
@@ -1151,7 +1153,7 @@ export default function AayojanApp(){
              </div>
              {/* Occasions */}
              <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap",marginTop:14}}>
-               {[["👶","অন্নপ্রাশন"],["💍","বিয়ে"],["🙏","পূজা"],["🎂","জন্মদিন"],["🏠","গৃহপ্রবেশ"],["👨‍💼","Corporate"]].map(([icon,label])=>(
+               {[["👶","Baby Shower"],["💍","Wedding"],["🙏","Puja"],["🎂","Birthday"],["🏠","Housewarming"],["👨‍💼","Corporate"]].map(([icon,label])=>(
                  <span key={label} style={{background:"linear-gradient(135deg,#fff5f5,#fffbeb)",border:"1px solid #fde8d8",borderRadius:24,padding:"7px 14px",fontSize:12,display:"flex",alignItems:"center",gap:5,fontWeight:600,color:"var(--text-secondary)"}}>
                    <span>{icon}</span>{label}
                  </span>
@@ -1163,14 +1165,14 @@ export default function AayojanApp(){
          {/* ── HOW IT WORKS — Modern steps with bg image sections ──────────── */}
          <div style={{position:"relative",padding:"48px 14px",maxWidth:820,margin:"0 auto"}}>
            <div style={{textAlign:"center",marginBottom:28}}>
-             <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:700,color:"var(--text-primary)",marginBottom:6}}>কিভাবে কাজ করে?</h2>
-             <p style={{fontSize:13,color:"var(--text-muted)"}}>4 simple steps to your perfect event</p>
+             <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:700,color:"var(--text-primary)",marginBottom:6}}>How It Works</h2>
+             <p style={{fontSize:13,color:"var(--text-muted)"}}>4 simple steps to your perfect event — কিভাবে কাজ করে?</p>
            </div>
            <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14}} className="feat-grid">
              {[
-               {icon:"🛎️",title:"সেবা বাছুন",sub:"Full catering or bulk order",num:"01"},
+               {icon:"🛎️",title:"Choose Service",sub:"Full catering or bulk delivery",num:"01"},
                {icon:"🤖",title:"AI Chat",sub:"Describe your event naturally",num:"02"},
-               {icon:"📍",title:"এলাকা দিন",sub:"Newtown & surroundings",num:"03"},
+               {icon:"📍",title:"Your Area",sub:"Newtown & surroundings",num:"03"},
                {icon:"📲",title:"48hr Quote",sub:"5 caterers compete for you",num:"04"},
              ].map((s,i)=>(
                <div key={i} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:16,padding:"20px 14px",textAlign:"center",position:"relative",boxShadow:"0 2px 12px rgba(0,0,0,0.04)"}}>
@@ -1209,9 +1211,9 @@ export default function AayojanApp(){
            <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(192,57,43,0.92),rgba(180,50,20,0.88))"}}/>
            <div style={{position:"relative",zIndex:1,padding:"32px 28px",display:"flex",gap:20,alignItems:"center",justifyContent:"space-between",flexWrap:"wrap"}}>
              <div style={{flex:1}}>
-               <div style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.7)",textTransform:"uppercase",letterSpacing:2,marginBottom:6}}>✨ বিশেষ অফার</div>
+               <div style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.7)",textTransform:"uppercase",letterSpacing:2,marginBottom:6}}>✨ Special Offer</div>
                <div style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"#fff",marginBottom:8}}>Food Tasting Session — ₹199</div>
-               <div style={{fontSize:13,color:"rgba(255,255,255,0.85)",lineHeight:1.6}}>আগে চেখে দেখুন! 5–7 sample dishes বাড়িতে পৌঁছে যাবে।</div>
+               <div style={{fontSize:13,color:"rgba(255,255,255,0.85)",lineHeight:1.6}}>Try before you book! 5–7 sample dishes delivered to your doorstep.</div>
              </div>
              <button onClick={()=>{navigate("app");setServiceType("bulk");setStep(1);}} style={{background:"#fff",border:"none",borderRadius:12,padding:"12px 24px",color:"#c0392b",fontWeight:800,fontSize:14,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,0.2)",flexShrink:0}}>Book Tasting →</button>
            </div>
@@ -1220,14 +1222,14 @@ export default function AayojanApp(){
          {/* ── TESTIMONIALS — Clean cards ─────────────────────────────────── */}
          <div style={{padding:"0 14px 40px",maxWidth:820,margin:"0 auto"}}>
            <div style={{textAlign:"center",marginBottom:20}}>
-             <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"var(--text-primary)"}}>সন্তুষ্ট গ্রাহকদের কথা</h2>
-             <p style={{fontSize:12,color:"var(--text-muted)"}}>What our customers say</p>
+             <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:700,color:"var(--text-primary)"}}>Customer Reviews</h2>
+             <p style={{fontSize:12,color:"var(--text-muted)"}}>সন্তুষ্ট গ্রাহকদের কথা — What our customers say</p>
            </div>
            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14}} className="feat-grid">
              {[
-               {name:"অনিমা দাস",event:"বিয়ের রিসেপশন",text:"অসাধারণ খাবার! ইলিশ আর মিষ্টি দই একদম বাড়ির মতো। 200 জন গেস্ট সবাই খুশি।",rating:5},
-               {name:"সুব্রত ঘোষ",event:"অন্নপ্রাশন",text:"48 ঘণ্টার মধ্যে 5টা caterer-এর quote পেয়ে গেলাম। Process টা খুব smooth।",rating:5},
-               {name:"প্রিয়া মুখার্জি",event:"পূজার ভোগ",text:"পূজায় 500 জনের ভোগ — perfect timing, perfect taste। Highly recommend!",rating:5},
+               {name:"Anima Das",event:"Wedding Reception",text:"Amazing food! The Ilish and Mishti Doi were just like homemade. All 200 guests were delighted.",rating:5},
+               {name:"Rajesh Sharma",event:"Corporate Event",text:"Got 5 competitive quotes within 48 hours. The AI matching was spot-on. Very smooth process!",rating:5},
+               {name:"Priya Mukherjee",event:"Puja Bhog (500 guests)",text:"Catering for 500 at our Durga Puja — perfect timing, perfect taste. Highly recommend!",rating:5},
              ].map((t,i)=>(
                <div key={i} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:16,padding:"18px",boxShadow:"0 2px 12px rgba(0,0,0,0.04)"}}>
                  <div style={{fontSize:12,marginBottom:8,color:"#f59e0b"}}>{"★".repeat(t.rating)}</div>
@@ -1247,9 +1249,9 @@ export default function AayojanApp(){
            <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(192,57,43,0.93),rgba(120,30,15,0.9))"}}/>
            <div style={{position:"relative",zIndex:1,padding:"36px 32px",display:"flex",gap:24,alignItems:"center",justifyContent:"space-between",flexWrap:"wrap"}}>
              <div style={{flex:1}}>
-               <div style={{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:700,color:"#fff",marginBottom:8}}>আপনি কি ক্যাটারার? 👨‍🍳</div>
+               <div style={{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:700,color:"#fff",marginBottom:8}}>Are You a Caterer? 👨‍🍳</div>
                <div style={{fontSize:14,color:"rgba(255,255,255,0.85)",marginBottom:12,lineHeight:1.6}}>Join Aayojan — receive WhatsApp quotation requests from customers in Newtown, Kolkata.</div>
-               {["✓ ফ্রি রেজিস্ট্রেশন","✓ WhatsApp-এ সরাসরি request","✓ Full Service বা Bulk Delivery"].map(p=><div key={p} style={{fontSize:13,color:"rgba(255,255,255,0.9)",marginBottom:4}}>{p}</div>)}
+               {["✓ Free registration","✓ Direct WhatsApp requests","✓ Full Service or Bulk Delivery"].map(p=><div key={p} style={{fontSize:13,color:"rgba(255,255,255,0.9)",marginBottom:4}}>{p}</div>)}
              </div>
              <button onClick={()=>navigate("register")} style={{background:"#fff",border:"none",borderRadius:12,padding:"14px 28px",color:"#c0392b",fontWeight:800,fontSize:15,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,0.2)",flexShrink:0}}>Register Your Business →</button>
            </div>
