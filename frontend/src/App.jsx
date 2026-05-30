@@ -1068,6 +1068,7 @@ export default function AayojanApp(){
            {/* Hero Content */}
            <div style={{position:"relative",zIndex:2,textAlign:"center",padding:"40px 20px",maxWidth:700}}>
              <div className="hero-anim-1" style={{animation:"fadeSlideUp 0.8s ease-out"}}>
+               <img src="/logo-aayojan-compact.svg" alt="Aayojan Logo" style={{width:80,height:80,margin:"0 auto 12px",display:"block",borderRadius:"50%",boxShadow:"0 4px 20px rgba(0,0,0,0.3)"}}/>
                <div style={{fontSize:12,letterSpacing:4,color:"#fca5a5",marginBottom:12,textTransform:"uppercase",fontWeight:600}}>Newtown, Kolkata</div>
                <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(42px,8vw,64px)",fontWeight:700,lineHeight:1.1,marginBottom:8,color:"#fff"}}>
                  আয়োজন
