@@ -1072,293 +1072,53 @@ export default function AayojanApp(){
       {view==="landing"&&(
         <div style={{...anim,overflowX:"hidden"}}>
 
-         {/* ── HERO SECTION — Full-width background banner ─────────────────── */}
-         <div className="landing-hero" style={{position:"relative",minHeight:"85vh",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
-           {/* Animated background images — rotating (Bengali culture + personalities) */}
-           <div className="hero-bg-slider" style={{position:"absolute",inset:0,zIndex:0}}>
-             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1400&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 30s ease-in-out infinite"}}/>
-             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1596797038530-2c107229654b?w=1400&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 30s ease-in-out 6s infinite",opacity:0}}/>
-             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 30s ease-in-out 12s infinite",opacity:0}}/>
-             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1567337710282-00832b415979?w=1400&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 30s ease-in-out 18s infinite",opacity:0}}/>
-             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 30s ease-in-out 24s infinite",opacity:0}}/>
-           </div>
-           {/* Dark gradient overlay */}
-           <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(15,15,20,0.6) 0%,rgba(15,15,20,0.85) 60%,rgba(15,15,20,0.95) 100%)",zIndex:1}}/>
-           {/* Floating particles */}
-           <div style={{position:"absolute",inset:0,zIndex:1,overflow:"hidden",pointerEvents:"none"}}>
-             {[...Array(6)].map((_,i)=><div key={i} className="float-particle" style={{position:"absolute",width:4+i*2,height:4+i*2,borderRadius:"50%",background:"rgba(252,165,165,0.3)",left:`${15+i*14}%`,top:`${20+i*10}%`,animation:`floatUp ${4+i*1.2}s ease-in-out infinite alternate`,animationDelay:`${i*0.5}s`}}/>)}
-           </div>
+         {/* ── HERO SECTION — Clean, bright, focused ─────────────────── */}
+         <div style={{position:"relative",minHeight:"70vh",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",background:"linear-gradient(180deg,var(--bg-primary) 0%,var(--bg-secondary) 100%)"}}>
+           {/* Subtle accent glow */}
+           <div style={{position:"absolute",top:"-100px",left:"50%",transform:"translateX(-50%)",width:600,height:400,background:"radial-gradient(ellipse, rgba(192,57,43,0.08) 0%, transparent 60%)",pointerEvents:"none"}}/>
 
            {/* Hero Content */}
-           <div style={{position:"relative",zIndex:2,textAlign:"center",padding:"40px 20px",maxWidth:700}}>
-             <div className="hero-anim-1" style={{animation:"fadeSlideUp 0.8s ease-out"}}>
-               <img src="/logo-aayojan-compact.svg" alt="Aayojan Logo" style={{width:80,height:80,margin:"0 auto 12px",display:"block",borderRadius:"50%",boxShadow:"0 4px 20px rgba(0,0,0,0.3)"}}/>
-               <div style={{fontSize:12,letterSpacing:4,color:"#fca5a5",marginBottom:12,textTransform:"uppercase",fontWeight:600}}>Newtown, Salt Lake & Rajarhat, Kolkata</div>
-               <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(42px,8vw,64px)",fontWeight:700,lineHeight:1.1,marginBottom:8,color:"#fff"}}>
-                 আয়োজন
-               </h1>
-               <p style={{fontSize:13,color:"rgba(255,255,255,0.5)",marginBottom:8,fontStyle:"italic"}}>Aayojan — "The Celebration"</p>
-               <p style={{fontSize:"clamp(16px,3vw,20px)",color:"rgba(255,255,255,0.9)",fontWeight:500,marginBottom:6}}>
-                 AI-Powered Catering Platform
-               </p>
-               <p style={{fontSize:14,color:"rgba(255,255,255,0.6)",marginBottom:32,maxWidth:500,margin:"0 auto 32px"}}>
-                 Newtown & Salt Lake's first catering aggregator — compare caterers, taste before you book
-               </p>
-                {/* Value prop badge */}
-                <div style={{display:"inline-block",background:"rgba(255,255,255,0.1)",border:"1px solid rgba(252,165,165,0.3)",borderRadius:24,padding:"6px 16px",marginBottom:20,backdropFilter:"blur(8px)"}}>
-                  <span style={{fontSize:12,color:"#fca5a5",fontWeight:600}}>🎯 Get 5 Quotes in 48hrs — Free, No Commitment</span>
-                </div>
+           <div style={{position:"relative",zIndex:2,textAlign:"center",padding:"60px 20px",maxWidth:680}}>
+             <div style={{display:"inline-block",background:"rgba(192,57,43,0.08)",border:"1px solid rgba(192,57,43,0.2)",borderRadius:24,padding:"6px 16px",marginBottom:20}}>
+               <span style={{fontSize:12,color:"var(--text-accent)",fontWeight:600}}>📍 Newtown · Salt Lake · Rajarhat, Kolkata</span>
              </div>
-
-             {/* CTA buttons — Coming Soon + Partner Join */}
-             <div className="hero-anim-2" style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",animation:"fadeSlideUp 0.8s ease-out 0.3s both",flexDirection:"column",alignItems:"center"}}>
-               <div style={{background:"rgba(255,255,255,0.08)",backdropFilter:"blur(12px)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:16,padding:"20px 36px",textAlign:"center"}}>
-                 <div style={{fontSize:14,color:"#FDE68A",fontWeight:600,letterSpacing:2,textTransform:"uppercase",marginBottom:8}}>🚀 Launching Soon for Users</div>
-                 <div style={{fontSize:13,color:"rgba(255,255,255,0.7)"}}>We're onboarding the best caterers first — so you get top quality from Day 1</div>
-               </div>
-               <div style={{display:"flex",gap:12,marginTop:8}}>
-                 <a href="/partners.html" style={{background:"linear-gradient(135deg,#FF6B35,#D4380D)",color:"#fff",border:"none",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:700,cursor:"pointer",boxShadow:"0 8px 32px rgba(255,107,53,0.4)",transition:"transform 0.2s",textDecoration:"none"}}>🤝 Join as Partner Caterer</a>
-                 <a href="https://wa.me/918088434425?text=Hi!%20Notify%20me%20when%20Aayojan%20launches%20for%20users" target="_blank" rel="noopener noreferrer" style={{background:"rgba(255,255,255,0.1)",color:"#fff",border:"1px solid rgba(255,255,255,0.3)",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:600,cursor:"pointer",backdropFilter:"blur(10px)",textDecoration:"none",display:"flex",alignItems:"center"}}>🔔 Notify Me at Launch</a>
-               </div>
-             </div>
-
-             {/* Stats bar — glass */}
-             <div className="hero-anim-3" style={{display:"flex",justifyContent:"center",gap:24,marginTop:36,animation:"fadeSlideUp 0.8s ease-out 0.6s both"}}>
-               {[["31+","Caterers Joining"],["48hr","Quote Delivery"],["₹199","Food Tasting"],["3%","Only Commission"]].map(([val,lbl])=>(
-                 <div key={lbl} style={{textAlign:"center"}}>
-                   <div style={{fontSize:20,fontWeight:900,color:"#fca5a5"}}>{val}</div>
-                   <div style={{fontSize:10,color:"rgba(255,255,255,0.5)",textTransform:"uppercase",letterSpacing:1}}>{lbl}</div>
-                 </div>
-               ))}
-             </div>
-             {/* Urgency */}
-             <div style={{marginTop:18,animation:"fadeSlideUp 0.8s ease-out 0.9s both"}}>
-               <span style={{fontSize:12,color:"rgba(255,255,255,0.6)"}}>🔥 <strong style={{color:"#fca5a5"}}>12 caterers onboarded</strong> — launching user bookings soon!</span>
-             </div>
-           </div>
-
-           {/* Scroll indicator */}
-           <div style={{position:"absolute",bottom:24,left:"50%",transform:"translateX(-50%)",zIndex:2,animation:"bounceDown 2s infinite"}}>
-             <div style={{width:24,height:38,borderRadius:12,border:"2px solid rgba(255,255,255,0.3)",display:"flex",justifyContent:"center",paddingTop:6}}>
-               <div style={{width:3,height:8,borderRadius:3,background:"#fca5a5",animation:"scrollDot 2s infinite"}}/>
-             </div>
-           </div>
-         </div>
-
-         {/* ── PARTNER PITCH — Bold catchy banner ────────────────────── */}
-         <div style={{padding:"36px 14px",background:"linear-gradient(135deg,#1a0800,#2d1200)",position:"relative",overflow:"hidden"}}>
-           <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse at 80% 20%,rgba(255,107,53,0.12),transparent 50%)"}}/>
-           <div style={{position:"relative",zIndex:2,maxWidth:700,margin:"0 auto"}}>
-             <div style={{textAlign:"center",marginBottom:24}}>
-               <div style={{display:"inline-block",background:"rgba(255,107,53,0.15)",border:"1px solid rgba(255,107,53,0.4)",borderRadius:20,padding:"5px 16px",marginBottom:14}}>
-                 <span style={{fontSize:11,color:"#FF6B35",fontWeight:700,letterSpacing:1}}>👨‍🍳 FOR CATERERS IN NEWTOWN, SALT LAKE & RAJARHAT</span>
-               </div>
-               <h2 style={{fontFamily:"'Playfair Display',Georgia,serif",fontSize:"clamp(24px,5vw,36px)",fontWeight:900,color:"#fff",lineHeight:1.2,marginBottom:10}}>
-                 Great Food, But <span style={{color:"#FDE68A"}}>No Marketing Budget?</span>
-               </h2>
-               <p style={{fontSize:14,color:"rgba(255,255,255,0.7)",maxWidth:520,margin:"0 auto"}}>You make amazing food — we make sure Newtown, Salt Lake & Rajarhat knows about it. No pamphlets, no Swiggy 30% cut. Just direct WhatsApp leads.</p>
-             </div>
-
-             {/* Two big stat cards */}
-             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,marginBottom:24}} className="feat-grid">
-               <div style={{background:"rgba(255,255,255,0.04)",border:"2px solid rgba(74,222,128,0.4)",borderRadius:20,padding:"28px 20px",textAlign:"center",backdropFilter:"blur(8px)"}}>
-                 <div style={{fontSize:48,fontWeight:900,color:"#4ADE80",fontFamily:"'Playfair Display',serif",lineHeight:1}}>₹0</div>
-                 <div style={{fontSize:14,fontWeight:700,color:"#fff",marginTop:8}}>To Join</div>
-                 <div style={{fontSize:12,color:"rgba(255,255,255,0.5)",marginTop:4}}>No registration fee · No monthly charge · No app to install</div>
-               </div>
-               <div style={{background:"rgba(255,255,255,0.04)",border:"2px solid rgba(253,224,71,0.4)",borderRadius:20,padding:"28px 20px",textAlign:"center",backdropFilter:"blur(8px)"}}>
-                 <div style={{fontSize:48,fontWeight:900,color:"#FDE68A",fontFamily:"'Playfair Display',serif",lineHeight:1}}>3%</div>
-                 <div style={{fontSize:14,fontWeight:700,color:"#fff",marginTop:8}}>Only When You Earn</div>
-                 <div style={{fontSize:12,color:"rgba(255,255,255,0.5)",marginTop:4}}>No order = No charge · You get paid first, we invoice later</div>
-               </div>
-             </div>
-
-             {/* Bullet points — mid-tier pain points */}
-             <div style={{display:"flex",flexWrap:"wrap",gap:12,justifyContent:"center",marginBottom:24}}>
-               {["📲 Leads direct on WhatsApp","🚫 No Swiggy/Zomato 30% cut","⚡ 15-30 leads/month","🔓 No lock-in, no exclusivity","🏆 First 10 partners: 0% forever"].map(t=>(
-                 <span key={t} style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.12)",borderRadius:24,padding:"8px 16px",fontSize:12,color:"rgba(255,255,255,0.85)",fontWeight:500}}>{t}</span>
-               ))}
-             </div>
-
-             {/* CTA */}
-             <div style={{textAlign:"center"}}>
-               <a href="/partners.html" style={{display:"inline-block",background:"linear-gradient(135deg,#FF6B35,#D4380D)",color:"#fff",padding:"15px 32px",borderRadius:30,fontSize:15,fontWeight:700,textDecoration:"none",boxShadow:"0 6px 24px rgba(255,107,53,0.35)",marginRight:12}}>
-                 🤝 Join as Partner — Free
-               </a>
-               <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20am%20a%20caterer%20and%20want%20to%20know%20more" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:"rgba(255,255,255,0.08)",color:"#fff",border:"1px solid rgba(255,255,255,0.25)",padding:"15px 24px",borderRadius:30,fontSize:14,fontWeight:600,textDecoration:"none"}}>
-                 💬 WhatsApp Us
-               </a>
-             </div>
-             <p style={{textAlign:"center",fontSize:11,color:"rgba(255,255,255,0.4)",marginTop:14}}>Already <strong style={{color:"#fca5a5"}}>12 caterers</strong> earning through Aayojan · Only 3 free-forever spots left</p>
-           </div>
-         </div>
-
-         {/* ── LAUNCH COUNTDOWN + REFERRAL ─────────────────────────── */}
-         <div style={{padding:"32px 14px",background:"linear-gradient(135deg,#0f172a,#1e293b)",textAlign:"center",position:"relative",overflow:"hidden"}}>
-           <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse at 50% 0%,rgba(192,57,43,0.15),transparent 60%)"}}/>
-           <div style={{position:"relative",zIndex:2,maxWidth:600,margin:"0 auto"}}>
-             <div style={{display:"inline-block",background:"rgba(252,165,165,0.1)",border:"1px solid rgba(252,165,165,0.3)",borderRadius:20,padding:"4px 14px",marginBottom:16}}>
-               <span style={{fontSize:11,color:"#fca5a5",fontWeight:600}}>🔥 LIMITED EARLY ACCESS</span>
-             </div>
-             <h2 style={{fontFamily:"'Playfair Display',Georgia,serif",fontSize:"clamp(22px,4vw,32px)",fontWeight:900,color:"#fff",marginBottom:8}}>User Bookings Opening <span style={{color:"#FDE68A"}}>Soon!</span></h2>
-             <p style={{fontSize:13,color:"rgba(255,255,255,0.6)",marginBottom:20}}>We're onboarding top caterers now. Be the first to book when we launch!</p>
-              
-             {/* Countdown */}
-             <div style={{display:"flex",gap:12,justifyContent:"center",marginBottom:24}}>
-               {[["15","Days"],["08","Hours"],["42","Min"]].map(([val,lbl])=>(
-                 <div key={lbl} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:12,padding:"12px 18px",minWidth:70}}>
-                   <div style={{fontSize:28,fontWeight:900,color:"#FDE68A",fontFamily:"monospace"}}>{val}</div>
-                   <div style={{fontSize:10,color:"rgba(255,255,255,0.5)",textTransform:"uppercase",letterSpacing:1}}>{lbl}</div>
-                 </div>
-               ))}
-             </div>
-
-             {/* Referral CTA */}
-             <div style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(252,165,165,0.2)",borderRadius:16,padding:"20px",marginBottom:16}}>
-               <div style={{fontSize:14,color:"#fff",fontWeight:700,marginBottom:8}}>🎁 Share & Get VIP Early Access</div>
-               <p style={{fontSize:12,color:"rgba(255,255,255,0.6)",marginBottom:14}}>Share Aayojan with 3 friends on WhatsApp → Get priority booking + ₹100 off your first order</p>
-               <a href="https://api.whatsapp.com/send?text=%F0%9F%8D%BD%EF%B8%8F%20Newtown-এ%20best%20caterers%20খুঁজছো%3F%20Aayojan-এ%2030%2B%20verified%20caterers%20compare%20করো%2C%20food%20tasting%20মাত্র%20%E2%82%B9199!%20%F0%9F%91%89%20https%3A%2F%2Faayojan.online%20%23NewtownKolkata" target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:8,background:"linear-gradient(135deg,#25D366,#128C7E)",color:"#fff",padding:"12px 24px",borderRadius:30,fontSize:13,fontWeight:700,textDecoration:"none",boxShadow:"0 4px 16px rgba(37,211,102,0.3)"}}>
-                 💬 Share on WhatsApp Now
-               </a>
-             </div>
-             <div style={{fontSize:11,color:"rgba(255,255,255,0.4)"}}>Already shared by <strong style={{color:"#fca5a5"}}>47 people</strong> this week 🚀</div>
-           </div>
-         </div>
-
-         {/* ── FOOD TASTING BANNER ─────────────────────────────────── */}
-         <div style={{padding:"48px 14px",background:"linear-gradient(135deg,#1a0a00,#2d1600)",position:"relative",overflow:"hidden"}}>
-           <div style={{position:"absolute",inset:0,background:"url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=60')",backgroundSize:"cover",backgroundPosition:"center",opacity:0.12}}/>
-           <div style={{position:"relative",zIndex:2,maxWidth:720,margin:"0 auto",textAlign:"center"}}>
-             <div style={{display:"inline-block",background:"linear-gradient(135deg,#F59E0B,#D97706)",color:"#fff",fontSize:11,fontWeight:700,padding:"6px 20px",borderRadius:20,letterSpacing:2,textTransform:"uppercase",marginBottom:16}}>✨ New on Aayojan</div>
-             <h2 style={{fontFamily:"'Playfair Display',Georgia,serif",fontSize:"clamp(28px,5vw,42px)",fontWeight:900,color:"#fff",marginBottom:8}}>Taste Before <span style={{color:"#FDE68A"}}>You Book!</span></h2>
-             <p style={{fontSize:14,color:"rgba(255,255,255,0.6)",marginBottom:32}}>বুক করার আগে চেখে দেখুন — আপনার পছন্দের caterer-এর রান্না</p>
-              
-             <div style={{display:"flex",gap:20,justifyContent:"center",flexWrap:"wrap",marginBottom:24}}>
-               {/* Veg Card */}
-               <div style={{background:"rgba(22,163,74,0.12)",border:"2px solid rgba(74,222,128,0.5)",borderRadius:20,padding:"28px 32px",textAlign:"center",minWidth:220}}>
-                 <div style={{fontSize:36,marginBottom:8}}>🥗</div>
-                 <div style={{fontSize:12,fontWeight:700,color:"#4ADE80",textTransform:"uppercase",letterSpacing:2,marginBottom:12,display:"flex",alignItems:"center",justifyContent:"center",gap:6}}>
-                   <span style={{width:12,height:12,border:"2px solid #4ADE80",borderRadius:2,display:"inline-flex",alignItems:"center",justifyContent:"center"}}><span style={{width:6,height:6,background:"#4ADE80",borderRadius:"50%"}}/></span>
-                   Veg Tasting
-                 </div>
-                 <div style={{fontSize:42,fontWeight:900,color:"#4ADE80",lineHeight:1}}>₹199</div>
-                 <div style={{fontSize:14,color:"rgba(255,255,255,0.8)",fontWeight:600,marginTop:8}}>2 Sample Items</div>
-                 <div style={{fontSize:11,color:"rgba(255,255,255,0.5)",marginTop:4}}>Choose any 2 veg dishes</div>
-               </div>
-               {/* Non-Veg Card */}
-               <div style={{background:"rgba(220,38,38,0.12)",border:"2px solid rgba(252,165,165,0.5)",borderRadius:20,padding:"28px 32px",textAlign:"center",minWidth:220}}>
-                 <div style={{fontSize:36,marginBottom:8}}>🍗</div>
-                 <div style={{fontSize:12,fontWeight:700,color:"#FCA5A5",textTransform:"uppercase",letterSpacing:2,marginBottom:12,display:"flex",alignItems:"center",justifyContent:"center",gap:6}}>
-                   <span style={{width:12,height:12,border:"2px solid #EF4444",borderRadius:2,display:"inline-flex",alignItems:"center",justifyContent:"center"}}><span style={{width:6,height:6,background:"#EF4444",borderRadius:"50%"}}/></span>
-                   Non-Veg Tasting
-                 </div>
-                 <div style={{fontSize:42,fontWeight:900,color:"#FCA5A5",lineHeight:1}}>₹399</div>
-                 <div style={{fontSize:14,color:"rgba(255,255,255,0.8)",fontWeight:600,marginTop:8}}>2 Sample Items</div>
-                 <div style={{fontSize:11,color:"rgba(255,255,255,0.5)",marginTop:4}}>Choose any 2 non-veg dishes</div>
-               </div>
-             </div>
-
-             <p style={{fontSize:13,color:"rgba(255,255,255,0.6)",marginBottom:20,lineHeight:1.8}}>
-               <strong style={{color:"#FDE68A"}}>How it works:</strong> Pick a caterer → Pay tasting fee → Get 2 dishes →<br/>
-               Love it? <strong style={{color:"#4ADE80"}}>Tasting fee adjusted against your final order ✅</strong>
+             <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(36px,7vw,56px)",fontWeight:900,lineHeight:1.1,marginBottom:16,color:"var(--text-primary)"}}>
+               Find the perfect caterer<br/><span style={{color:"var(--text-accent)"}}>for your next event</span>
+             </h1>
+             <p style={{fontSize:16,color:"var(--text-secondary)",marginBottom:32,maxWidth:480,margin:"0 auto 32px",lineHeight:1.7}}>
+               Compare 12+ verified caterers, get quotes in 48 hours, and taste before you book. Weddings, parties, corporate — all covered.
              </p>
-             <a href="https://wa.me/918088434425?text=Hi!%20I%20want%20to%20book%20a%20food%20tasting" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:"linear-gradient(135deg,#25D366,#128C7E)",color:"#fff",padding:"14px 36px",borderRadius:30,fontSize:15,fontWeight:700,textDecoration:"none",boxShadow:"0 4px 16px rgba(37,211,102,0.3)"}}>📱 Book a Tasting — WhatsApp Us</a>
-           </div>
-         </div>
 
-         {/* ── SHARE & VIRAL SECTION ─────────────────────────────────── */}
-         <div style={{padding:"40px 14px",background:"var(--bg-main)",textAlign:"center"}}>
-           <div style={{maxWidth:600,margin:"0 auto"}}>
-             <div style={{fontSize:32,marginBottom:8}}>📢</div>
-             <h2 style={{fontSize:20,fontWeight:800,color:"var(--text-primary)",marginBottom:8}}>Spread the Word!</h2>
-             <p style={{fontSize:13,color:"var(--text-secondary)",marginBottom:24}}>জানান বন্ধুদের — next party-তে caterer খুঁজতে কষ্ট করতে হবে না!</p>
-               
-             <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
-               <a href="https://api.whatsapp.com/send?text=%F0%9F%8D%BD%EF%B8%8F%20Newtown-এ%20caterer%20খুঁজছো%3F%2030%2B%20caterers%20compare%20করো%2C%20food%20tasting%20%E2%82%B9199%20থেকে!%20%F0%9F%91%89%20aayojan.online" target="_blank" rel="noopener noreferrer" style={{display:"flex",alignItems:"center",gap:8,background:"#25D366",color:"#fff",padding:"12px 20px",borderRadius:12,fontSize:13,fontWeight:600,textDecoration:"none"}}>
-                 <span style={{fontSize:18}}>💬</span> WhatsApp-এ Share
-               </a>
-               <a href="https://www.facebook.com/sharer/sharer.php?u=https://aayojan.online&quote=Newtown-এ%20caterer%20খুঁজছেন%3F%2030%2B%20caterers%20compare%20করুন!%20aayojan.online" target="_blank" rel="noopener noreferrer" style={{display:"flex",alignItems:"center",gap:8,background:"#1877F2",color:"#fff",padding:"12px 20px",borderRadius:12,fontSize:13,fontWeight:600,textDecoration:"none"}}>
-                 <span style={{fontSize:18}}>📘</span> Facebook-এ Share
-               </a>
-               <a href="https://twitter.com/intent/tweet?text=Newtown%20Kolkata-তে%20caterer%20খুঁজছেন%3F%2030%2B%20verified%20caterers%2C%20food%20tasting%20₹199%20থেকে!%20👉%20aayojan.online&hashtags=Aayojan,NewtownKolkata,Catering" target="_blank" rel="noopener noreferrer" style={{display:"flex",alignItems:"center",gap:8,background:"#000",color:"#fff",padding:"12px 20px",borderRadius:12,fontSize:13,fontWeight:600,textDecoration:"none"}}>
-                 <span style={{fontSize:18}}>𝕏</span> Tweet
-               </a>
-               <button onClick={()=>{navigator.clipboard.writeText("https://aayojan.online — Newtown Kolkata's #1 catering aggregator. 30+ caterers, food tasting ₹199!");alert("Link copied! Paste anywhere 📋");}} style={{display:"flex",alignItems:"center",gap:8,background:"var(--bg-card)",color:"var(--text-primary)",padding:"12px 20px",borderRadius:12,fontSize:13,fontWeight:600,border:"1px solid var(--border-default)",cursor:"pointer"}}>
-                 <span style={{fontSize:18}}>📋</span> Copy Link
-               </button>
+             {/* CTA buttons */}
+             <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",marginBottom:24}}>
+               <button onClick={()=>navigate("app")} style={{background:"linear-gradient(135deg,#c0392b,#e74c3c)",color:"#fff",border:"none",padding:"14px 32px",borderRadius:12,fontSize:15,fontWeight:700,cursor:"pointer",boxShadow:"0 4px 16px rgba(192,57,43,0.3)"}}>🍽️ Find a Caterer</button>
+               <a href="/partners.html" style={{background:"var(--bg-card)",color:"var(--text-accent)",border:"2px solid var(--border-accent)",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:700,cursor:"pointer",textDecoration:"none"}}>🤝 Join as Partner</a>
              </div>
 
-             <p style={{fontSize:11,color:"var(--text-muted)",marginTop:16}}>Share করলে আপনার বন্ধুরাও next event-এ best caterer পাবে! 🎉</p>
-           </div>
-         </div>
-
-         {/* ── PARTNER CATERERS — with revolving food background ─────────── */}
-         <div style={{position:"relative",padding:"48px 14px",overflow:"hidden"}}>
-           {/* Revolving food background */}
-           <div style={{position:"absolute",inset:0,zIndex:0}}>
-             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=1200&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 24s ease-in-out infinite"}}/>
-             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=1200&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 24s ease-in-out 8s infinite",opacity:0}}/>
-             <div style={{position:"absolute",inset:0,backgroundImage:"url('https://images.unsplash.com/photo-1596797038530-2c107229654b?w=1200&q=80')",backgroundSize:"cover",backgroundPosition:"center",animation:"heroSlide 24s ease-in-out 16s infinite",opacity:0}}/>
-           </div>
-           <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(10,10,15,0.88),rgba(10,10,15,0.92))",zIndex:1}}/>
-           
-           <div style={{position:"relative",zIndex:2,maxWidth:820,margin:"0 auto"}}>
-             <div style={{textAlign:"center",marginBottom:24}}>
-               <div style={{fontSize:10,fontWeight:800,color:"#fca5a5",textTransform:"uppercase",letterSpacing:3,marginBottom:6}}>Our Partner Caterers</div>
-               <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:700,color:"#fff"}}>🏆 Trusted Caterer Partners</h2>
-               <p style={{fontSize:12,color:"rgba(255,255,255,0.5)",marginTop:4}}>আমাদের পার্টনার ক্যাটারার</p>
-             </div>
-             <div className="caterer-scroll" style={{display:"flex",gap:16,paddingBottom:12,animation:"scrollRibbon 30s linear infinite",width:"max-content"}}>
-               {[...allCaterers.slice(0,8),...allCaterers.slice(0,8)].map((c,idx)=>(
-                 <div key={`${c.id}-${idx}`} style={{minWidth:150,background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.15)",borderRadius:16,padding:"20px 16px",textAlign:"center",backdropFilter:"blur(12px)",transition:"transform 0.2s",flexShrink:0}}>
-                   <div style={{width:56,height:56,borderRadius:"50%",background:"rgba(255,255,255,0.12)",border:"2px solid #fca5a5",display:"flex",alignItems:"center",justifyContent:"center",fontSize:26,margin:"0 auto 10px",boxShadow:"0 4px 16px rgba(192,57,43,0.2)"}}>{c.logo}</div>
-                   <div style={{fontSize:12,fontWeight:700,color:"#fff",marginBottom:3,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{c.name.split(" ").slice(0,2).join(" ")}</div>
-                   <div style={{fontSize:11,color:"#fca5a5",fontWeight:600}}>⭐ {c.rating}</div>
-                   <div style={{fontSize:10,color:"rgba(255,255,255,0.6)",marginTop:3}}>{c.cuisineSpecialties?.[0]}</div>
+             {/* Trust stats */}
+             <div style={{display:"flex",justifyContent:"center",gap:32,marginTop:24}}>
+               {[["12+","Verified Caterers"],["48hr","Quote Delivery"],["₹0","To Join as Partner"]].map(([val,lbl])=>(
+                 <div key={lbl} style={{textAlign:"center"}}>
+                   <div style={{fontSize:22,fontWeight:900,color:"var(--text-accent)"}}>{val}</div>
+                   <div style={{fontSize:11,color:"var(--text-muted)",textTransform:"uppercase",letterSpacing:1}}>{lbl}</div>
                  </div>
                ))}
              </div>
-            <div style={{textAlign:"center",marginTop:12,fontSize:12,color:"rgba(255,255,255,0.5)"}}>{allCaterers.length}+ verified caterers in Newtown, Salt Lake & surroundings</div>
            </div>
          </div>
 
-         {/* ── FOOD SHOWCASE — Horizontal scroll with gradient bg ──────────── */}
-         <div style={{position:"relative",padding:"36px 0",overflow:"hidden"}}>
-           <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(192,57,43,0.03),rgba(249,115,22,0.03))",zIndex:0}}/>
-           <div style={{position:"relative",zIndex:1,maxWidth:820,margin:"0 auto",padding:"0 14px"}}>
-             <div style={{textAlign:"center",marginBottom:16}}>
-               <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:20,color:"var(--text-primary)"}}>Taste of Bengal — বাংলার স্বাদ</h3>
-             </div>
-             <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap"}}>
-               {[["🍚","Biryani"],["🐟","Ilish"],["🍖","Kosha Mangsho"],["🦐","Chingri"],["🍮","Mishti Doi"],["🍡","Rasgolla"],["🫓","Luchi"],["🍲","Shukto"]].map(([emoji,name])=>(
-                 <span key={name} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:24,padding:"8px 16px",fontSize:13,display:"flex",alignItems:"center",gap:6,boxShadow:"0 2px 8px rgba(0,0,0,0.04)",transition:"transform 0.2s",cursor:"default"}}>
-                   <span style={{fontSize:18}}>{emoji}</span><span style={{fontWeight:600,color:"var(--text-primary)"}}>{name}</span>
-                 </span>
-               ))}
-             </div>
-             {/* Occasions */}
-             <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap",marginTop:14}}>
-               {[["👶","Baby Shower"],["💍","Wedding"],["🙏","Puja"],["🎂","Birthday"],["🏠","Housewarming"],["👨‍💼","Corporate"]].map(([icon,label])=>(
-                 <span key={label} style={{background:"linear-gradient(135deg,#fff5f5,#fffbeb)",border:"1px solid #fde8d8",borderRadius:24,padding:"7px 14px",fontSize:12,display:"flex",alignItems:"center",gap:5,fontWeight:600,color:"var(--text-secondary)"}}>
-                   <span>{icon}</span>{label}
-                 </span>
-               ))}
-             </div>
-           </div>
-         </div>
-
-         {/* ── HOW IT WORKS — Modern steps with bg image sections ──────────── */}
-         <div style={{position:"relative",padding:"48px 14px",maxWidth:820,margin:"0 auto"}}>
+         {/* ── HOW IT WORKS — 4 clear steps ──────────────────────────────── */}
+         <div style={{padding:"48px 14px",maxWidth:820,margin:"0 auto"}}>
            <div style={{textAlign:"center",marginBottom:28}}>
              <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:700,color:"var(--text-primary)",marginBottom:6}}>How It Works</h2>
-             <p style={{fontSize:13,color:"var(--text-muted)"}}>4 simple steps to your perfect event — কিভাবে কাজ করে?</p>
+             <p style={{fontSize:13,color:"var(--text-muted)"}}>4 simple steps — কিভাবে কাজ করে?</p>
            </div>
            <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14}} className="feat-grid">
              {[
                {icon:"🛎️",title:"Choose Service",sub:"Full catering or bulk delivery",num:"01"},
-               {icon:"🤖",title:"AI Chat",sub:"Describe your event naturally",num:"02"},
-               {icon:"📍",title:"Your Area",sub:"Newtown, Salt Lake & Rajarhat",num:"03"},
-               {icon:"📲",title:"48hr Quote",sub:"5 caterers compete for you",num:"04"},
+               {icon:"🤖",title:"Tell Us Your Needs",sub:"Event type, guests, budget",num:"02"},
+               {icon:"📍",title:"AI Matches Caterers",sub:"Based on your area & cuisine",num:"03"},
+               {icon:"📲",title:"Get Quotes in 48hr",sub:"Compare & book directly",num:"04"},
              ].map((s,i)=>(
                <div key={i} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:16,padding:"20px 14px",textAlign:"center",position:"relative",boxShadow:"0 2px 12px rgba(0,0,0,0.04)"}}>
                  <div style={{position:"absolute",top:8,right:10,fontSize:24,fontWeight:900,color:"rgba(192,57,43,0.08)",fontFamily:"monospace"}}>{s.num}</div>
@@ -1370,22 +1130,39 @@ export default function AayojanApp(){
            </div>
          </div>
 
-         {/* ── FEATURED CATERERS — Cards ──────────────────────────────────── */}
-         <div style={{padding:"0 14px 40px",maxWidth:820,margin:"0 auto"}}>
-           <h2 style={{...S.sectionTitle,textAlign:"center"}}>Featured Caterers</h2>
-           <div className="feat-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14}}>
-             {allCaterers.slice(0,3).map(c=>(
-               <div key={c.id} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:16,padding:"18px",boxShadow:"0 2px 12px rgba(192,57,43,0.06)",transition:"transform 0.2s"}}>
-                 <div style={{display:"flex",gap:10,alignItems:"flex-start",marginBottom:10}}>
-                   <div style={{fontSize:26,background:"linear-gradient(135deg,#fff5f5,#fee2e2)",borderRadius:12,width:44,height:44,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{c.logo}</div>
-                   <div><div style={{fontSize:13,fontWeight:700,color:"var(--text-primary)",marginBottom:2}}>{c.name}</div><div style={{fontSize:11,color:"var(--text-muted)"}}>⭐{c.rating} · 📍{PINCODE_COORDS[c.pincode]?.area}</div></div>
-                 </div>
-                 <div style={{display:"flex",flexWrap:"wrap",gap:5,marginBottom:8}}>
-                   {(c.serviceTypes||["full"]).map(st=><span key={st} style={{fontSize:10,padding:"2px 8px",borderRadius:10,background:"#fff5f5",color:SVC[st].color,border:`1px solid ${SVC[st].border}`}}>{SVC[st].icon} {SVC[st].label}</span>)}
-                 </div>
-                 <div style={{display:"flex",flexWrap:"wrap",gap:4}}>{c.cuisineSpecialties?.slice(0,3).map(cs=><span key={cs} style={{fontSize:10,padding:"2px 7px",borderRadius:10,background:"var(--bg-secondary)",color:"var(--text-muted)",border:"1px solid var(--border-light)"}}>{cs}</span>)}</div>
-                 <div style={{fontSize:13,color:"#c0392b",fontWeight:700,marginTop:8}}>{c.priceRange}</div>
+         {/* ── PARTNER CATERERS — Scrolling ribbon ────────────────────────── */}
+         <div style={{padding:"40px 14px",background:"var(--bg-secondary)",overflow:"hidden"}}>
+           <div style={{textAlign:"center",marginBottom:20}}>
+             <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:700,color:"var(--text-primary)"}}>Our Partner Caterers</h2>
+             <p style={{fontSize:12,color:"var(--text-muted)",marginTop:4}}>12+ verified caterers across Newtown, Salt Lake & Rajarhat</p>
+           </div>
+           <div className="caterer-scroll" style={{display:"flex",gap:16,paddingBottom:12,animation:"scrollRibbon 30s linear infinite",width:"max-content"}}>
+             {[...allCaterers.slice(0,8),...allCaterers.slice(0,8)].map((c,idx)=>(
+               <div key={`${c.id}-${idx}`} style={{minWidth:150,background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:16,padding:"20px 16px",textAlign:"center",transition:"transform 0.2s",flexShrink:0}}>
+                 <div style={{width:48,height:48,borderRadius:"50%",background:"var(--bg-accent-light)",border:"2px solid var(--border-accent)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,margin:"0 auto 10px"}}>{c.logo}</div>
+                 <div style={{fontSize:12,fontWeight:700,color:"var(--text-primary)",marginBottom:3,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{c.name.split(" ").slice(0,2).join(" ")}</div>
+                 <div style={{fontSize:11,color:"var(--text-accent)",fontWeight:600}}>⭐ {c.rating}</div>
+                 <div style={{fontSize:10,color:"var(--text-muted)",marginTop:3}}>{c.cuisineSpecialties?.[0]}</div>
                </div>
+             ))}
+           </div>
+         </div>
+
+         {/* ── CUISINES & OCCASIONS — Simple pills ────────────────────────── */}
+         <div style={{padding:"36px 14px",maxWidth:820,margin:"0 auto",textAlign:"center"}}>
+           <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:18,color:"var(--text-primary)",marginBottom:16}}>Cuisines & Occasions</h3>
+           <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap",marginBottom:14}}>
+             {[["🍚","Biryani"],["🐟","Ilish"],["🍖","Kosha Mangsho"],["🦐","Chingri"],["🍮","Mishti Doi"],["🍡","Rasgolla"],["🫓","Luchi"],["🍲","Shukto"]].map(([emoji,name])=>(
+               <span key={name} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:24,padding:"8px 14px",fontSize:13,display:"flex",alignItems:"center",gap:6}}>
+                 <span style={{fontSize:16}}>{emoji}</span><span style={{fontWeight:600,color:"var(--text-primary)"}}>{name}</span>
+               </span>
+             ))}
+           </div>
+           <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap"}}>
+             {[["💍","Wedding"],["🙏","Puja"],["🎂","Birthday"],["👨‍💼","Corporate"],["👶","Baby Shower"]].map(([icon,label])=>(
+               <span key={label} style={{background:"var(--bg-accent-light)",border:"1px solid var(--border-accent)",borderRadius:24,padding:"7px 14px",fontSize:12,display:"flex",alignItems:"center",gap:5,fontWeight:600,color:"var(--text-secondary)"}}>
+                 <span>{icon}</span>{label}
+               </span>
              ))}
            </div>
          </div>
