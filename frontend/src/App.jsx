@@ -1195,17 +1195,29 @@ export default function AayojanApp(){
            </div>
          </div>
 
-         {/* ── CUISINES & OCCASIONS — Simple pills ────────────────────────── */}
-         <div style={{padding:"36px 14px",maxWidth:820,margin:"0 auto",textAlign:"center"}}>
-           <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:18,color:"var(--text-primary)",marginBottom:16}}>Cuisines & Occasions</h3>
-           <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap",marginBottom:14}}>
-             {[["🍚","Biryani"],["🐟","Ilish"],["🍖","Kosha Mangsho"],["🦐","Chingri"],["🍮","Mishti Doi"],["🍡","Rasgolla"],["🫓","Luchi"],["🍲","Shukto"]].map(([emoji,name])=>(
-               <span key={name} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:24,padding:"8px 14px",fontSize:13,display:"flex",alignItems:"center",gap:6}}>
-                 <span style={{fontSize:16}}>{emoji}</span><span style={{fontWeight:600,color:"var(--text-primary)"}}>{name}</span>
-               </span>
+         {/* ── CUISINES — Realistic food photos ────────────────────────── */}
+         <div style={{padding:"36px 14px",maxWidth:900,margin:"0 auto",textAlign:"center"}}>
+           <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:20,color:"var(--text-primary)",marginBottom:20}}>Popular Cuisines We Serve</h3>
+           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(100px,1fr))",gap:14}}>
+             {[
+               {name:"Bengali",img:"https://images.unsplash.com/photo-1596797038530-2c107229654b?w=200&h=200&fit=crop"},
+               {name:"Biryani",img:"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=200&h=200&fit=crop"},
+               {name:"Chinese",img:"https://images.unsplash.com/photo-1585032226651-759b368d7246?w=200&h=200&fit=crop"},
+               {name:"North Indian",img:"https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=200&h=200&fit=crop"},
+               {name:"South Indian",img:"https://images.unsplash.com/photo-1630383249896-424e482df921?w=200&h=200&fit=crop"},
+               {name:"Mughlai",img:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=200&h=200&fit=crop"},
+               {name:"Desserts",img:"https://images.unsplash.com/photo-1551024601-bec78aea704b?w=200&h=200&fit=crop"},
+               {name:"Street Food",img:"https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&h=200&fit=crop"},
+             ].map(c=>(
+               <div key={c.name} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:8}}>
+                 <div style={{width:80,height:80,borderRadius:"50%",overflow:"hidden",boxShadow:"0 2px 8px rgba(0,0,0,0.1)"}}>
+                   <img src={c.img} alt={c.name} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+                 </div>
+                 <span style={{fontSize:12,fontWeight:600,color:"var(--text-primary)"}}>{c.name}</span>
+               </div>
              ))}
            </div>
-           <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap"}}>
+           <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap",marginTop:18}}>
              {[["💍","Wedding"],["🙏","Puja"],["🎂","Birthday"],["👨‍💼","Corporate"],["👶","Baby Shower"]].map(([icon,label])=>(
                <span key={label} style={{background:"var(--bg-accent-light)",border:"1px solid var(--border-accent)",borderRadius:24,padding:"7px 14px",fontSize:12,display:"flex",alignItems:"center",gap:5,fontWeight:600,color:"var(--text-secondary)"}}>
                  <span>{icon}</span>{label}
