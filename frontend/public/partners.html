@@ -1,777 +1,2128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Partner with Aayojan | Grow Your Catering Business</title>
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VSGREVV7RS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-VSGREVV7RS');
-</script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --saffron: #E8760A;
-    --saffron-light: #F59E3F;
-    --cream: #FDF6ED;
-    --dark: #1A1208;
-    --brown: #4A2C0A;
-    --muted: #8B6E52;
-    --green: #2D7A4F;
-    --card-bg: #FFFAF3;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--dark);
-    overflow-x: hidden;
-  }
-
-  /* NAV */
-  nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.2rem 5%;
-    background: var(--dark);
-    position: sticky; top: 0; z-index: 100;
-  }
-  .nav-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    font-weight: 900;
-    color: var(--saffron-light);
-    text-decoration: none;
-  }
-  .nav-links a {
-    color: #ccc;
-    text-decoration: none;
-    margin-left: 2rem;
-    font-size: 0.9rem;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--saffron-light); }
-  .nav-cta {
-    background: var(--saffron);
-    color: white !important;
-    padding: 0.5rem 1.2rem;
-    border-radius: 6px;
-    font-weight: 600 !important;
-  }
-
-  /* HERO */
-  .hero {
-    background: var(--dark);
-    padding: 5rem 5% 4rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -100px; right: -100px;
-    width: 500px; height: 500px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(232,118,10,0.15) 0%, transparent 70%);
-  }
-  .hero-badge {
-    display: inline-block;
-    background: rgba(232,118,10,0.2);
-    color: var(--saffron-light);
-    border: 1px solid rgba(232,118,10,0.4);
-    padding: 0.3rem 1rem;
-    border-radius: 100px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-  }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.2rem, 4vw, 3.5rem);
-    font-weight: 900;
-    color: white;
-    line-height: 1.15;
-    margin-bottom: 1.5rem;
-  }
-  .hero h1 span { color: var(--saffron-light); }
-  .hero p {
-    color: #bbb;
-    font-size: 1.05rem;
-    line-height: 1.7;
-    margin-bottom: 2rem;
-    max-width: 480px;
-  }
-  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn-primary {
-    background: var(--saffron);
-    color: white;
-    padding: 0.9rem 2rem;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1rem;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-    display: inline-block;
-  }
-  .btn-primary:hover { background: #c9650a; transform: translateY(-1px); }
-  .btn-outline {
-    border: 1.5px solid rgba(255,255,255,0.3);
-    color: white;
-    padding: 0.9rem 2rem;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: border-color 0.2s, background 0.2s;
-    display: inline-block;
-  }
-  .btn-outline:hover { border-color: var(--saffron-light); background: rgba(232,118,10,0.1); }
-
-  .hero-stats {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    z-index: 1;
-  }
-  .stat-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 14px;
-    padding: 1.5rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    backdrop-filter: blur(10px);
-    animation: slideInRight 0.6s ease both;
-  }
-  .stat-card:nth-child(2) { animation-delay: 0.1s; margin-left: 1.5rem; }
-  .stat-card:nth-child(3) { animation-delay: 0.2s; margin-left: 3rem; }
-  @keyframes slideInRight { from { opacity:0; transform: translateX(30px); } to { opacity:1; transform: translateX(0); } }
-  .stat-icon { font-size: 2rem; }
-  .stat-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    font-weight: 900;
-    color: var(--saffron-light);
-  }
-  .stat-label { color: #999; font-size: 0.85rem; margin-top: 0.1rem; }
-
-  /* BENEFITS */
-  .section { padding: 5rem 5%; }
-  .section-label {
-    text-align: center;
-    color: var(--saffron);
-    font-weight: 600;
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.8rem;
-  }
-  .section-title {
-    text-align: center;
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 3vw, 2.8rem);
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: var(--dark);
-  }
-  .section-sub {
-    text-align: center;
-    color: var(--muted);
-    font-size: 1rem;
-    max-width: 560px;
-    margin: 0 auto 3.5rem;
-    line-height: 1.7;
-  }
-
-  .benefits-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  .benefit-card {
-    background: var(--card-bg);
-    border: 1px solid #EDD8BC;
-    border-radius: 16px;
-    padding: 2rem 1.8rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .benefit-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(232,118,10,0.12);
-  }
-  .benefit-icon {
-    width: 52px; height: 52px;
-    background: rgba(232,118,10,0.12);
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.6rem;
-    margin-bottom: 1.2rem;
-  }
-  .benefit-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin-bottom: 0.6rem;
-    color: var(--dark);
-  }
-  .benefit-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
-
-  /* HOW IT WORKS */
-  .how-section { background: var(--dark); padding: 5rem 5%; }
-  .how-section .section-title { color: white; }
-  .how-section .section-sub { color: #999; }
-  .how-section .section-label { color: var(--saffron-light); }
-
-  .steps { display: flex; gap: 0; max-width: 900px; margin: 0 auto; position: relative; }
-  .steps::before {
-    content: '';
-    position: absolute;
-    top: 28px; left: 40px; right: 40px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--saffron), transparent);
-    z-index: 0;
-  }
-  .step {
-    flex: 1;
-    text-align: center;
-    padding: 0 1rem;
-    position: relative;
-    z-index: 1;
-  }
-  .step-num {
-    width: 56px; height: 56px;
-    background: var(--saffron);
-    color: white;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    font-weight: 900;
-    margin: 0 auto 1.2rem;
-    border: 3px solid var(--dark);
-  }
-  .step h3 { color: white; font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
-  .step p { color: #888; font-size: 0.85rem; line-height: 1.6; }
-
-  /* TESTIMONIALS */
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  .testimonial-card {
-    background: var(--card-bg);
-    border: 1px solid #EDD8BC;
-    border-radius: 16px;
-    padding: 2rem;
-  }
-  .stars { color: var(--saffron); font-size: 1rem; margin-bottom: 1rem; letter-spacing: 2px; }
-  .testimonial-card blockquote {
-    color: var(--dark);
-    font-size: 0.95rem;
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-    font-style: italic;
-  }
-  .testimonial-author { display: flex; align-items: center; gap: 0.8rem; }
-  .author-avatar {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    background: var(--saffron);
-    color: white;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700;
-    font-size: 0.9rem;
-  }
-  .author-name { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
-  .author-loc { font-size: 0.8rem; color: var(--muted); }
-
-  /* COMMISSION */
-  .commission-section { background: #FFF5E8; padding: 5rem 5%; }
-  .commission-box {
-    max-width: 800px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 20px;
-    padding: 3rem;
-    border: 1px solid #EDD8BC;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-  }
-  .commission-box h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-  }
-  .commission-box p { color: var(--muted); line-height: 1.7; font-size: 0.95rem; margin-bottom: 1rem; }
-  .pricing-pill {
-    display: inline-block;
-    background: var(--green);
-    color: white;
-    padding: 0.4rem 1rem;
-    border-radius: 100px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-  .pricing-table { width: 100%; }
-  .pricing-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.8rem 0;
-    border-bottom: 1px solid #F0E4D4;
-    font-size: 0.9rem;
-  }
-  .pricing-row:last-child { border-bottom: none; }
-  .pricing-row span:first-child { color: var(--muted); }
-  .pricing-row span:last-child { font-weight: 600; color: var(--dark); }
-  .free-tag { color: var(--green) !important; }
-
-  /* FORM */
-  .form-section { background: var(--dark); padding: 5rem 5%; }
-  .form-section .section-title { color: white; }
-  .form-section .section-sub { color: #999; }
-  .form-section .section-label { color: var(--saffron-light); }
-
-  .partner-form {
-    max-width: 640px;
-    margin: 0 auto;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 20px;
-    padding: 2.5rem;
-  }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-  .form-group { margin-bottom: 1rem; }
-  .form-group label {
-    display: block;
-    color: #ccc;
-    font-size: 0.85rem;
-    font-weight: 500;
-    margin-bottom: 0.4rem;
-  }
-  .form-group input, .form-group select, .form-group textarea {
-    width: 100%;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    color: white;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-    border-color: var(--saffron);
-  }
-  .form-group select option { background: #222; }
-  .form-group textarea { resize: vertical; min-height: 90px; }
-  .form-submit {
-    width: 100%;
-    background: var(--saffron);
-    color: white;
-    border: none;
-    padding: 1rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: background 0.2s;
-    margin-top: 0.5rem;
-  }
-  .form-submit:hover { background: #c9650a; }
-  .form-note { text-align: center; color: #666; font-size: 0.82rem; margin-top: 0.8rem; }
-
-  /* FOOTER */
-  footer {
-    background: #100C04;
-    text-align: center;
-    padding: 2rem;
-    color: #555;
-    font-size: 0.85rem;
-  }
-  footer a { color: var(--saffron); text-decoration: none; }
-
-  @media (max-width: 768px) {
-    .hero { grid-template-columns: 1fr; gap: 2rem; }
-    .hero-stats { flex-direction: row; flex-wrap: wrap; }
-    .stat-card { margin-left: 0 !important; flex: 1; min-width: 200px; }
-    .benefits-grid, .testimonials-grid { grid-template-columns: 1fr; }
-    .steps { flex-direction: column; }
-    .steps::before { display: none; }
-    .commission-box { grid-template-columns: 1fr; gap: 2rem; }
-    .form-row { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
-  }
-</style>
-</head>
-<body>
-
-<nav>
-  <a href="https://aayojan.online" class="nav-logo">Aayojan</a>
-  <div class="nav-links">
-    <a href="https://aayojan.online">Home</a>
-    <a href="#">For Customers</a>
-    <a href="faq.html">FAQ</a>
-    <a href="#register" class="nav-cta">Join as Partner</a>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div>
-    <div class="hero-badge">🍽️ Catering Partner Program</div>
-    <h1>Grow Your Catering Business with <span>Aayojan</span></h1>
-    <p>Join Kolkata's fastest-growing catering network. We bring customers to you — weddings, corporate events, parties & more — so you can focus on what you do best: great food.</p>
-    <div class="hero-btns">
-      <a href="#register" class="btn-primary">Register as Partner →</a>
-      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20want%20to%20register%20as%20a%20partner%20caterer" class="btn-outline">💬 WhatsApp Us</a>
-    </div>
-  </div>
-  <div class="hero-stats">
-    <div class="stat-card">
-      <div class="stat-icon">📦</div>
-      <div>
-        <div class="stat-num">48 hrs</div>
-        <div class="stat-label">Average lead delivery time</div>
-      </div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon">🎉</div>
-      <div>
-        <div class="stat-num">₹0</div>
-        <div class="stat-label">Joining fee — free forever</div>
-      </div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon">📍</div>
-      <div>
-        <div class="stat-num">3 zones</div>
-        <div class="stat-label">Newtown · Rajarhat · Salt Lake</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BENEFITS -->
-<section class="section">
-  <div class="section-label">Why Join Us</div>
-  <h2 class="section-title">Everything you need to win more orders</h2>
-  <p class="section-sub">We handle customer acquisition, matching, and follow-ups. You handle the food. Simple.</p>
-
-  <div class="benefits-grid">
-    <div class="benefit-card">
-      <div class="benefit-icon">🎯</div>
-      <h3>Qualified Leads Only</h3>
-      <p>We send you leads that already match your cuisine type, capacity, and service area. No cold calls, no tyre-kickers.</p>
-    </div>
-    <div class="benefit-card">
-      <div class="benefit-icon">💰</div>
-      <h3>Free to Join</h3>
-      <p>Zero registration fee. Zero monthly charge. You only pay a small commission when you successfully close a booking.</p>
-    </div>
-    <div class="benefit-card">
-      <div class="benefit-icon">📲</div>
-      <h3>Leads on WhatsApp</h3>
-      <p>All customer inquiries come directly to your WhatsApp. No app to install, no dashboard to learn.</p>
-    </div>
-    <div class="benefit-card">
-      <div class="benefit-icon">⭐</div>
-      <h3>Build Your Reputation</h3>
-      <p>Get verified ratings and reviews on your Aayojan profile. Highly rated partners appear first in customer matches.</p>
-    </div>
-    <div class="benefit-card">
-      <div class="benefit-icon">📅</div>
-      <h3>You Control Availability</h3>
-      <p>Block dates when you're fully booked. Accept or decline leads on your terms. No pressure, full flexibility.</p>
-    </div>
-    <div class="benefit-card">
-      <div class="benefit-icon">🔒</div>
-      <h3>Hygiene Badge</h3>
-      <p>Pass our simple onboarding checklist and display the Aayojan Verified badge — a trust signal customers actively look for.</p>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="how-section">
-  <div class="section-label">Process</div>
-  <h2 class="section-title" style="color:white">How it works for partners</h2>
-  <p class="section-sub">From registration to your first booking in days, not weeks.</p>
-
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <h3>Register</h3>
-      <p>Fill the form below with your business details, cuisine type, and service areas.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <h3>Get Verified</h3>
-      <p>Our team contacts you within 24 hours for a quick hygiene & capacity check.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <h3>Receive Leads</h3>
-      <p>Matched customer inquiries arrive on your WhatsApp with full event details.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <h3>Close & Cook</h3>
-      <p>Quote your price, win the booking, and deliver a great experience.</p>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="section">
-  <div class="section-label">Partner Stories</div>
-  <h2 class="section-title">Caterers who trust Aayojan</h2>
-  <p class="section-sub">Hear from partners who've grown their business through our platform.</p>
-
-  <div class="testimonials-grid">
-    <div class="testimonial-card">
-      <div class="stars">★★★★★</div>
-      <blockquote>"Aayojan sent me 4 wedding inquiries in my first month. I closed 2 of them. The leads are genuine and the customers already know what they want."</blockquote>
-      <div class="testimonial-author">
-        <div class="author-avatar">RD</div>
-        <div>
-          <div class="author-name">Ratan Das</div>
-          <div class="author-loc">Catering Co., Newtown</div>
-        </div>
-      </div>
-    </div>
-    <div class="testimonial-card">
-      <div class="stars">★★★★★</div>
-      <blockquote>"Before Aayojan I was only getting referrals. Now I have a steady pipeline of corporate lunch orders from Salt Lake offices. Very professional team."</blockquote>
-      <div class="testimonial-author">
-        <div class="author-avatar">PM</div>
-        <div>
-          <div class="author-name">Priya Mondal</div>
-          <div class="author-loc">Home Chef, Rajarhat</div>
-        </div>
-      </div>
-    </div>
-    <div class="testimonial-card">
-      <div class="stars">★★★★☆</div>
-      <blockquote>"The WhatsApp lead system is so simple. I get the details, I reply with my quote, and most of the time it converts. Good platform for small caterers like us."</blockquote>
-      <div class="testimonial-author">
-        <div class="author-avatar">SK</div>
-        <div>
-          <div class="author-name">Suresh Kumar</div>
-          <div class="author-loc">Event Meals, Salt Lake</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COMMISSION -->
-<section class="commission-section">
-  <div class="section-label" style="text-align:center">Pricing</div>
-  <h2 class="section-title">Simple, transparent pricing</h2>
-  <p class="section-sub">No surprises. Pay only when you earn.</p>
-
-  <div class="commission-box">
-    <div>
-      <span class="pricing-pill">✅ Free to Join</span>
-      <h3>Our Partner Pricing</h3>
-      <p>We believe in a true partnership. There's no upfront cost — we only earn when you earn.</p>
-      <p style="font-size:0.85rem; color:#aaa;">Early partners who join now are locked into our founding-partner rates permanently.</p>
-    </div>
-    <div>
-      <div class="pricing-table">
-        <div class="pricing-row">
-          <span>Registration fee</span>
-          <span class="free-tag">₹0 Free</span>
-        </div>
-        <div class="pricing-row">
-          <span>Monthly subscription</span>
-          <span class="free-tag">₹0 Free</span>
-        </div>
-        <div class="pricing-row">
-          <span>Commission per booking</span>
-          <span>3%</span>
-        </div>
-        <div class="pricing-row">
-          <span>Lead delivery</span>
-          <span>WhatsApp</span>
-        </div>
-        <div class="pricing-row">
-          <span>Minimum order value</span>
-          <span>₹3,000</span>
-        </div>
-        <div class="pricing-row">
-          <span>Contract lock-in</span>
-          <span class="free-tag">None</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- REGISTRATION FORM -->
-<section class="form-section" id="register">
-  <div class="section-label">Join Us</div>
-  <h2 class="section-title" style="color:white">Register as a Partner</h2>
-  <p class="section-sub">Takes 2 minutes. Our team will reach out within 24 hours.</p>
-
-  <form class="partner-form" id="partnerForm" onsubmit="handleSubmit(event)">
-    <div class="form-row">
-      <div class="form-group">
-        <label>Business / Your Name *</label>
-        <input type="text" id="bizName" placeholder="e.g. Das Catering Services" required>
-      </div>
-      <div class="form-group">
-        <label>Contact Person *</label>
-        <input type="text" id="contactName" placeholder="Your full name" required>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>WhatsApp Number *</label>
-        <input type="tel" id="whatsapp" placeholder="+91 XXXXX XXXXX" required>
-      </div>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" id="email" placeholder="you@email.com">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>Primary Cuisine *</label>
-        <select id="cuisine" required>
-          <option value="" disabled selected>Select cuisine</option>
-          <option>Bengali</option>
-          <option>North Indian</option>
-          <option>Chinese</option>
-          <option>Continental</option>
-          <option>South Indian</option>
-          <option>Multi-cuisine</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Max Guests per Event *</label>
-        <select id="capacity" required>
-          <option value="" disabled selected>Select capacity</option>
-          <option>Up to 50</option>
-          <option>50–150</option>
-          <option>150–300</option>
-          <option>300–500</option>
-          <option>500+</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group">
-      <label>Service Areas (select all that apply)</label>
-      <select id="areas">
-        <option>Newtown (Action Area I, II, III)</option>
-        <option>Rajarhat</option>
-        <option>Salt Lake (Sector V)</option>
-        <option>All of the above</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Tell us about your catering experience</label>
-      <textarea id="experience" placeholder="e.g. 5 years in wedding catering, specialize in Bengali + Continental menus, have our own service staff..."></textarea>
-    </div>
-    <button type="submit" class="form-submit">Submit My Application →</button>
-    <p class="form-note">🔒 Your information is private. We'll never share it without your consent.</p>
-  </form>
-</section>
-
-<footer>
-  <p>© 2025 Aayojan AI — <a href="https://aayojan.online">aayojan.online</a> · Newtown, Kolkata · 
-  <a href="faq.html">FAQ</a> · <a href="mailto:aayojan1@gmail.com">aayojan1@gmail.com</a></p>
-</footer>
-
-<!-- Firebase SDK for Firestore storage -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script>
-  // Initialize Firebase (same config as main app)
-  firebase.initializeApp({
-    apiKey: "AIzaSyBPvK0452Kgkp0Oevxm1zMRUWiqKdhmaZA",
-    authDomain: "aayojan-a8c4f.firebaseapp.com",
-    projectId: "aayojan-a8c4f",
-    storageBucket: "aayojan-a8c4f.firebasestorage.app",
-    messagingSenderId: "673829788583",
-    appId: "1:673829788583:web:9f140241bf0466b197b482"
-  });
-  const db = firebase.firestore();
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('.form-submit');
-    btn.textContent = 'Submitting...';
-    btn.disabled = true;
-
-    // Collect form data
-    const data = {
-      businessName: document.getElementById('bizName').value.trim(),
-      contactPerson: document.getElementById('contactName').value.trim(),
-      whatsapp: document.getElementById('whatsapp').value.trim(),
-      email: document.getElementById('email').value.trim(),
-      cuisine: document.getElementById('cuisine').value,
-      capacity: document.getElementById('capacity').value,
-      serviceAreas: document.getElementById('areas').value,
-      experience: document.getElementById('experience').value.trim(),
-      submittedAt: new Date().toISOString(),
-      status: 'new'
-    };
-
-    // Save to Firestore
-    try {
-      await db.collection('partnerApplications').add(data);
-    } catch (err) {
-      console.log('Firestore save error (non-blocking):', err);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partner with Aayojan | Founding Caterer Network in Kolkata</title>
+  <meta name="description" content="Aayojan helps caterers in Newtown, Rajarhat and Salt Lake fill their order book with verified event leads on WhatsApp.">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VSGREVV7RS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-VSGREVV7RS');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #FDF6ED;
+      --cream-2: #FFF9F1;
+      --saffron: #E8760A;
+      --saffron-deep: #C95F08;
+      --gold: #F3C869;
+      --dark: #1C130A;
+      --brown: #513117;
+      --muted: #7B634E;
+      --line: #E8D8C4;
+      --green: #236B43;
+      --shadow: 0 18px 50px rgba(76, 43, 10, 0.12);
+      --radius: 22px;
+      --container: 1180px;
     }
 
-    // Show success
-    btn.textContent = '✅ Application Received!';
-    btn.style.background = '#2D7A4F';
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(180deg, #FFF8EF 0%, var(--cream) 35%, #FFFDF8 100%);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
 
-    // Open WhatsApp with pre-filled message to owner
-    const msg = `🆕 New Partner Application!\n\n👤 ${data.businessName}\n📞 ${data.whatsapp}\n🍽️ ${data.cuisine} | ${data.capacity} guests\n📍 ${data.serviceAreas}\n💬 ${data.experience || 'No details'}`;
-    const waLink = `https://wa.me/918088434425?text=${encodeURIComponent(msg)}`;
-    
-    // Show confirmation message
-    const form = document.getElementById('partnerForm');
-    form.innerHTML = `
-      <div style="text-align:center;padding:2rem;">
-        <div style="font-size:3rem;margin-bottom:1rem;">🎉</div>
-        <h3 style="color:white;font-size:1.3rem;margin-bottom:0.8rem;">Application Received!</h3>
-        <p style="color:#aaa;margin-bottom:1.5rem;">We'll WhatsApp you within 24 hours to complete onboarding.</p>
-        <a href="${waLink}" target="_blank" style="display:inline-block;background:#25D366;color:white;padding:0.8rem 1.5rem;border-radius:8px;font-weight:600;text-decoration:none;">💬 Chat with us now on WhatsApp</a>
-        <p style="color:#666;font-size:0.8rem;margin-top:1rem;">Or we'll reach out to you at ${data.whatsapp}</p>
+    a { color: inherit; }
+    img { max-width: 100%; }
+    button, input, select, textarea { font: inherit; }
+
+    .container {
+      width: min(var(--container), calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(253, 246, 237, 0.92);
+      border-bottom: 1px solid rgba(81, 49, 23, 0.08);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 72px;
+    }
+
+    .brand {
+      text-decoration: none;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: var(--brown);
+    }
+
+    .brand span { color: var(--saffron); }
+
+    .topbar-meta {
+      display: none;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .tagline-chip,
+    .cta-link,
+    .ghost-link,
+    .pill,
+    .mini-pill,
+    .step-dot,
+    .faq-item,
+    .benefit-card,
+    .testimonial-card,
+    .calc-card,
+    .compare-card,
+    .lead-card,
+    .commission-card,
+    .form-shell,
+    .badge-card,
+    .stat-card,
+    .floating-cta,
+    .urgency-card,
+    .trust-card {
+      border-radius: var(--radius);
+    }
+
+    .ghost-link,
+    .cta-link,
+    .button,
+    .step-button,
+    .final-submit {
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .ghost-link,
+    .cta-link {
+      padding: 0.8rem 1rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .ghost-link {
+      border: 1px solid rgba(81, 49, 23, 0.15);
+      background: rgba(255,255,255,0.7);
+      color: var(--brown);
+    }
+
+    .cta-link {
+      background: var(--saffron);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(232, 118, 10, 0.22);
+    }
+
+    .ghost-link:hover,
+    .cta-link:hover,
+    .button:hover,
+    .step-button:hover,
+    .final-submit:hover {
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      padding: 2rem 0 1rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    .hero-copy,
+    .hero-visual {
+      position: relative;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(232, 118, 10, 0.1);
+      color: var(--saffron-deep);
+      border: 1px solid rgba(232, 118, 10, 0.18);
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      line-height: 1.08;
+    }
+
+    .hero h1 {
+      margin-top: 1rem;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      max-width: 12ch;
+    }
+
+    .hero h1 span {
+      display: block;
+      margin-top: 0.5rem;
+      color: var(--saffron);
+    }
+
+    .lead {
+      margin: 1rem 0 0;
+      max-width: 62ch;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .hero-points {
+      display: grid;
+      gap: 0.8rem;
+      margin: 1.5rem 0;
+    }
+
+    .hero-point {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      color: var(--brown);
+      font-weight: 500;
+    }
+
+    .hero-point strong { color: var(--dark); }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .button,
+    .step-button,
+    .final-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 1rem 1.15rem;
+      border-radius: 16px;
+      font-weight: 700;
+    }
+
+    .button.primary,
+    .final-submit,
+    .step-button.primary {
+      background: var(--saffron);
+      color: white;
+      box-shadow: 0 14px 28px rgba(232, 118, 10, 0.22);
+    }
+
+    .button.secondary,
+    .step-button.secondary {
+      background: white;
+      color: var(--brown);
+      border: 1px solid rgba(81, 49, 23, 0.12);
+    }
+
+    .hero-footnote {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .urgency-card {
+      margin-top: 1.25rem;
+      background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,246,237,0.95));
+      border: 1px solid rgba(232, 118, 10, 0.18);
+      padding: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .urgency-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.96rem;
+      font-weight: 700;
+    }
+
+    .urgency-top span:last-child {
+      color: var(--saffron-deep);
+    }
+
+    .progress-track,
+    .form-progress-track {
+      overflow: hidden;
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(81, 49, 23, 0.1);
+      margin: 0.85rem 0 0.7rem;
+    }
+
+    .progress-fill,
+    .form-progress-fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--saffron), #F3B24C);
+      transition: width 0.9s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .urgency-card p {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .hero-visual {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .badge-card {
+      background: linear-gradient(180deg, #fff8ed 0%, #fff0d5 100%);
+      border: 1px solid rgba(232, 118, 10, 0.2);
+      box-shadow: var(--shadow);
+      padding: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .badge-card::before {
+      content: '';
+      position: absolute;
+      inset: auto -30% -45% auto;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,118,10,0.16) 0%, rgba(232,118,10,0) 72%);
+    }
+
+    .badge-layout {
+      display: grid;
+      gap: 1rem;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .founding-badge {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background:
+        radial-gradient(circle at 30% 30%, #FFF9E8 0%, #F7D98D 30%, #E8B64A 72%, #D09320 100%);
+      box-shadow:
+        inset 0 3px 18px rgba(255,255,255,0.5),
+        inset 0 -10px 24px rgba(139, 92, 10, 0.28),
+        0 18px 40px rgba(201, 95, 8, 0.24);
+      border: 8px solid rgba(255,255,255,0.45);
+    }
+
+    .founding-badge::before,
+    .founding-badge::after {
+      content: '';
+      position: absolute;
+      inset: -18px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255,255,255,0.42);
+    }
+
+    .founding-badge::after {
+      inset: 14px;
+      border-style: solid;
+      border-color: rgba(139, 92, 10, 0.18);
+    }
+
+    .badge-ribbon {
+      position: absolute;
+      bottom: -20px;
+      width: 56px;
+      height: 82px;
+      background: linear-gradient(180deg, #C95F08 0%, #974104 100%);
+      clip-path: polygon(0 0, 100% 0, 100% 72%, 50% 100%, 0 72%);
+      box-shadow: 0 10px 20px rgba(151, 65, 4, 0.22);
+    }
+
+    .badge-ribbon.left { left: 44px; }
+    .badge-ribbon.right { right: 44px; }
+
+    .badge-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .badge-kicker {
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(81, 49, 23, 0.8);
+    }
+
+    .badge-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--brown);
+      line-height: 0.95;
+    }
+
+    .badge-sub {
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--brown);
+      text-transform: uppercase;
+    }
+
+    .badge-copy {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 0.65rem;
+      text-align: left;
+    }
+
+    .badge-copy h3 {
+      font-size: 1.6rem;
+    }
+
+    .badge-copy p {
+      margin: 0;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .mini-grid {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(81,49,23,0.08);
+      padding: 1rem;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(232,118,10,0.1);
+      font-size: 1.35rem;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 1.05rem;
+    }
+
+    .stat-card small {
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .section {
+      padding: 4.25rem 0;
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-label {
+      color: var(--saffron-deep);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.55rem;
+    }
+
+    .section-head h2 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      margin-bottom: 0.9rem;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 1rem;
+    }
+
+    .calc-card {
+      background: linear-gradient(180deg, #FFFFFF 0%, #FFF8EE 100%);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 1.25rem;
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    .calc-controls {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .control {
+      background: rgba(253,246,237,0.95);
+      border: 1px solid rgba(81,49,23,0.08);
+      border-radius: 18px;
+      padding: 1rem;
+    }
+
+    .control-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 0.85rem;
+    }
+
+    .control-top label {
+      font-weight: 700;
+      color: var(--brown);
+    }
+
+    .value-chip {
+      padding: 0.38rem 0.7rem;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid rgba(81,49,23,0.08);
+      font-weight: 800;
+      color: var(--saffron-deep);
+      font-size: 0.92rem;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--saffron);
+      cursor: pointer;
+    }
+
+    .calc-output {
+      background: var(--dark);
+      color: white;
+      padding: 1.2rem;
+      border-radius: 20px;
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .calc-kicker {
+      color: #FDB76C;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .calc-amount {
+      font-size: clamp(2rem, 7vw, 4rem);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .calc-output p {
+      margin: 0;
+      color: #E3D5C5;
+      line-height: 1.65;
+    }
+
+    .calc-note-grid {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .trust-card,
+    .benefit-card,
+    .compare-card,
+    .lead-card,
+    .commission-card,
+    .testimonial-card,
+    .faq-item,
+    .form-shell {
+      background: rgba(255,255,255,0.92);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .benefit-grid,
+    .trust-grid,
+    .testimonial-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .trust-card,
+    .benefit-card,
+    .testimonial-card {
+      padding: 1.15rem;
+    }
+
+    .benefit-card h3,
+    .trust-card h3,
+    .lead-copy h3,
+    .commission-copy h3,
+    .testimonial-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .benefit-card p,
+    .trust-card p,
+    .lead-copy p,
+    .commission-copy p,
+    .testimonial-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .icon-pill {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: rgba(232,118,10,0.1);
+      margin-bottom: 0.9rem;
+      font-size: 1.35rem;
+    }
+
+    .compare-card {
+      overflow: hidden;
+    }
+
+    .compare-grid {
+      display: grid;
+    }
+
+    .compare-col {
+      padding: 1.2rem;
+    }
+
+    .compare-col.negative {
+      background: linear-gradient(180deg, #FFF7F2 0%, #FFF 100%);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .compare-col.positive {
+      background: linear-gradient(180deg, #FFF8EA 0%, #FFFDF7 100%);
+    }
+
+    .compare-col h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .compare-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .compare-list li {
+      display: flex;
+      gap: 0.7rem;
+      align-items: flex-start;
+      line-height: 1.6;
+      color: var(--brown);
+    }
+
+    .compare-list span {
+      width: 1.55rem;
+      height: 1.55rem;
+      border-radius: 999px;
+      display: inline-grid;
+      place-items: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      flex: 0 0 auto;
+      margin-top: 0.1rem;
+    }
+
+    .compare-col.negative span {
+      background: rgba(163, 66, 43, 0.1);
+      color: #A3422B;
+    }
+
+    .compare-col.positive span {
+      background: rgba(35, 107, 67, 0.12);
+      color: var(--green);
+    }
+
+    .lead-layout,
+    .commission-layout,
+    .form-layout {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .lead-card {
+      padding: 1.2rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .lead-steps {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .lead-step {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+    }
+
+    .lead-step strong {
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .lead-step p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .step-num {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 999px;
+      background: rgba(232,118,10,0.14);
+      color: var(--saffron-deep);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      flex: 0 0 auto;
+      margin-top: 0.05rem;
+    }
+
+    .phone {
+      background: #21160D;
+      border-radius: 32px;
+      padding: 0.7rem;
+      max-width: 390px;
+      width: 100%;
+      margin-inline: auto;
+      box-shadow: 0 26px 60px rgba(28, 19, 10, 0.28);
+    }
+
+    .phone-screen {
+      background: linear-gradient(180deg, #FDF4E8 0%, #FFFDF8 100%);
+      border-radius: 24px;
+      padding: 1rem;
+      min-height: 560px;
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .phone-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--brown);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .phone-contact {
+      background: white;
+      border-radius: 18px;
+      padding: 0.85rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 10px 28px rgba(76,43,10,0.08);
+    }
+
+    .phone-contact strong { display: block; }
+    .phone-contact small { color: var(--muted); }
+
+    .bubble {
+      max-width: 92%;
+      padding: 0.95rem 1rem;
+      border-radius: 18px;
+      line-height: 1.6;
+      box-shadow: 0 8px 20px rgba(76,43,10,0.08);
+      white-space: pre-line;
+    }
+
+    .bubble.incoming {
+      background: white;
+      border-top-left-radius: 8px;
+      color: var(--brown);
+    }
+
+    .bubble.outgoing {
+      margin-left: auto;
+      background: #E0F8E6;
+      border-top-right-radius: 8px;
+      color: #14452B;
+    }
+
+    .bubble time {
+      display: block;
+      margin-top: 0.6rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .message-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: auto;
+    }
+
+    .mini-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 0.95rem;
+      background: white;
+      border: 1px solid rgba(81,49,23,0.08);
+      color: var(--brown);
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    .testimonial-card .quote {
+      color: var(--brown);
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    .partner-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, var(--saffron) 0%, var(--saffron-deep) 100%);
+      color: white;
+      font-weight: 800;
+    }
+
+    .partner-meta strong {
+      display: block;
+      color: var(--dark);
+    }
+
+    .partner-meta small {
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .stars {
+      color: var(--saffron);
+      letter-spacing: 0.12em;
+      font-size: 0.95rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .commission-card {
+      padding: 1.25rem;
+    }
+
+    .commission-highlight {
+      background: var(--dark);
+      color: white;
+      padding: 1.4rem;
+      border-radius: 24px;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .commission-highlight small {
+      color: #FDB76C;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 800;
+    }
+
+    .commission-highlight strong {
+      font-size: clamp(2rem, 7vw, 4rem);
+      line-height: 1;
+    }
+
+    .commission-table {
+      margin-top: 1rem;
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .commission-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(81,49,23,0.08);
+      color: var(--brown);
+    }
+
+    .commission-row:last-child { border-bottom: none; }
+    .commission-row strong { color: var(--dark); }
+    .green { color: var(--green); }
+
+    .faq-list {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .faq-item {
+      overflow: hidden;
+    }
+
+    .faq-button {
+      width: 100%;
+      border: none;
+      background: transparent;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      padding: 1.1rem 1.15rem;
+      text-align: left;
+      cursor: pointer;
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .faq-button span:last-child {
+      color: var(--saffron);
+      font-size: 1.35rem;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+
+    .faq-button[aria-expanded="true"] span:last-child {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.28s ease;
+    }
+
+    .faq-answer-inner {
+      padding: 0 1.15rem 1.15rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .form-shell {
+      padding: 1.25rem;
+    }
+
+    .form-shell .section-label {
+      margin-bottom: 0.45rem;
+    }
+
+    .form-shell h2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 0.7rem;
+    }
+
+    .form-shell > p {
+      margin-top: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .form-progress-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 1.2rem;
+    }
+
+    .form-progress-head strong {
+      color: var(--brown);
+    }
+
+    .form-progress-head span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .step-dots {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.7rem;
+      margin: 1rem 0 1.1rem;
+    }
+
+    .step-dot {
+      border: 1px solid rgba(81,49,23,0.1);
+      padding: 0.85rem;
+      background: #FFF9F2;
+      color: var(--muted);
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .step-dot.active,
+    .step-dot.complete {
+      color: var(--brown);
+      background: #FFF2DF;
+      border-color: rgba(232,118,10,0.24);
+    }
+
+    .form-step {
+      display: none;
+      gap: 1rem;
+    }
+
+    .form-step.active {
+      display: grid;
+    }
+
+    .field-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .field label,
+    .area-group legend {
+      display: block;
+      margin-bottom: 0.45rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--brown);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid rgba(81,49,23,0.14);
+      background: #FFFDF8;
+      padding: 0.95rem 1rem;
+      color: var(--dark);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .field textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--saffron);
+      box-shadow: 0 0 0 4px rgba(232,118,10,0.1);
+    }
+
+    .helper {
+      margin-top: 0.45rem;
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+
+    .area-group {
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .area-options {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .checkbox-card {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      background: #FFF9F1;
+      border: 1px solid rgba(81,49,23,0.08);
+      border-radius: 16px;
+      padding: 0.9rem 1rem;
+      cursor: pointer;
+    }
+
+    .checkbox-card input {
+      margin-top: 0.15rem;
+      accent-color: var(--saffron);
+    }
+
+    .checkbox-card span {
+      color: var(--brown);
+      line-height: 1.5;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: space-between;
+      margin-top: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .form-note {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-top: 0.6rem;
+      line-height: 1.6;
+    }
+
+    .success-panel {
+      text-align: center;
+      padding: 1rem 0 0;
+    }
+
+    .success-panel .emoji {
+      font-size: 3rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .success-panel p {
+      margin: 0.7rem auto 0;
+      max-width: 40ch;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .footer {
+      padding: 2.3rem 0 7rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .footer a {
+      color: var(--saffron-deep);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .floating-cta {
+      position: fixed;
+      left: 0.8rem;
+      right: 0.8rem;
+      bottom: 0.8rem;
+      z-index: 60;
+      background: rgba(28, 19, 10, 0.96);
+      color: white;
+      padding: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      box-shadow: 0 20px 50px rgba(28, 19, 10, 0.35);
+      transform: translateY(150%);
+      transition: transform 0.28s ease;
+    }
+
+    .floating-cta.show {
+      transform: translateY(0);
+    }
+
+    .floating-cta strong {
+      display: block;
+      font-size: 0.95rem;
+    }
+
+    .floating-cta small {
+      color: #E7D5BF;
+    }
+
+    .floating-cta .button {
+      padding: 0.85rem 1rem;
+      flex: 0 0 auto;
+    }
+
+    .events-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .event-card {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 3/2;
+      box-shadow: var(--shadow);
+    }
+
+    .event-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .event-card:hover img {
+      transform: scale(1.06);
+    }
+
+    .event-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.8rem 1rem;
+      background: linear-gradient(0deg, rgba(28,19,10,0.82) 0%, transparent 100%);
+      color: white;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 760px) {
+      .events-gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .events-gallery {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (min-width: 760px) {
+      .topbar-meta {
+        display: block;
+      }
+
+      .hero {
+        padding-top: 2.8rem;
+      }
+
+      .hero-grid,
+      .lead-layout,
+      .commission-layout,
+      .form-layout,
+      .calc-card,
+      .compare-grid,
+      .badge-layout {
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+
+      .calc-card {
+        align-items: stretch;
+      }
+
+      .trust-grid,
+      .benefit-grid,
+      .testimonial-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .field-grid.two {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .compare-col.negative {
+        border-bottom: none;
+        border-right: 1px solid var(--line);
+      }
+
+      .phone-screen {
+        min-height: 620px;
+      }
+
+      .floating-cta {
+        left: 50%;
+        right: auto;
+        transform: translate(-50%, 150%);
+        width: min(860px, calc(100% - 2rem));
+      }
+
+      .floating-cta.show {
+        transform: translate(-50%, 0);
+      }
+    }
+
+    @media (min-width: 980px) {
+      .hero-grid {
+        grid-template-columns: 1.02fr 0.98fr;
+        gap: 1.4rem;
+      }
+
+      .mini-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .badge-layout {
+        grid-template-columns: auto 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .topbar-actions .ghost-link { display: none; }
+      .hero h1 { max-width: none; }
+      .floating-cta { flex-direction: column; align-items: stretch; }
+      .floating-cta .button { width: 100%; }
+      .form-actions .step-button,
+      .form-actions .final-submit { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="https://aayojan.online" class="brand"><img src="logo-aayojan-compact.svg" alt="Aayojan" style="height:40px;vertical-align:middle;margin-right:0.4rem;border-radius:50%;">Aayo<span>jan</span></a>
+      <div class="topbar-meta">Founding caterer network for Newtown, Rajarhat &amp; Salt Lake</div>
+      <div class="topbar-actions">
+        <a class="ghost-link" href="mailto:aayojan1@gmail.com">aayojan1@gmail.com</a>
+        <a class="cta-link" href="#register">Join as Founding Partner</a>
       </div>
-    `;
-  }
-</script>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">🔥 Founding Caterer Program · Kolkata</div>
+          <h1>Tired of waiting for referrals?<span>Your kitchen is ready. Your order book should be full.</span></h1>
+          <p class="lead">Aayojan helps caterers in Newtown, Rajarhat and Salt Lake get serious event enquiries on WhatsApp — with guest count, cuisine preference, date and budget already in the message. Less chasing. More quoting. More bookings.</p>
+
+          <div class="hero-points">
+            <div class="hero-point"><span>✅</span><div><strong>No joining fee.</strong> Founding partners join free and keep that advantage permanently.</div></div>
+            <div class="hero-point"><span>✅</span><div><strong>Verified visibility.</strong> Stand out to customers looking for trusted local caterers, not random listings.</div></div>
+            <div class="hero-point"><span>✅</span><div><strong>WhatsApp-first workflow.</strong> No new app to learn — just fast lead alerts and direct customer follow-up.</div></div>
+          </div>
+
+          <div class="hero-actions">
+            <a class="button primary" href="#register">Claim my spot</a>
+            <a class="button secondary" target="_blank" rel="noopener" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20want%20to%20join%20as%20a%20founding%20partner%20caterer.">WhatsApp the team</a>
+          </div>
+
+          <div class="hero-footnote">Pre-launch, pilot-stage onboarding means fewer partners, more attention, and a better chance to become the go-to caterer in your pocket of Kolkata.</div>
+
+          <div class="urgency-card">
+            <div class="urgency-top">
+              <span>🔥 <span id="foundingFilled">7</span> of <span id="foundingTotal">15</span> founding partner spots filled</span>
+              <span id="spotsLeftText">Only 8 left</span>
+            </div>
+            <div class="progress-track" aria-hidden="true">
+              <div class="progress-fill" id="foundingProgress"></div>
+            </div>
+            <p>Founding partners get the golden badge, early lead priority and free-forever onboarding support before full public launch.</p>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="badge-card">
+            <div class="badge-layout">
+              <div class="founding-badge" aria-label="Founding Partner badge">
+                <div class="badge-ribbon left"></div>
+                <div class="badge-ribbon right"></div>
+                <div class="badge-inner">
+                  <div class="badge-kicker">Aayojan</div>
+                  <div class="badge-title">Founding<br>Partner</div>
+                  <div class="badge-sub">Free Forever</div>
+                </div>
+              </div>
+              <div class="badge-copy">
+                <h3>The badge that signals “book me first.”</h3>
+                <p>This visual trust marker tells customers you joined early, got verified early and take quality seriously. It is designed to boost response rates before reviews start stacking up.</p>
+                <div class="mini-grid">
+                  <div class="stat-card">
+                    <div class="stat-icon">🏅</div>
+                    <div><strong>Priority ranking</strong><small>Better first visibility in early customer matches.</small></div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon">💬</div>
+                    <div><strong>Leads on WhatsApp</strong><small>Practical and fast for busy kitchen teams.</small></div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon">📍</div>
+                    <div><strong>Local demand focus</strong><small>Newtown, Rajarhat and Salt Lake first.</small></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-label">Revenue lens</div>
+          <h2>Make the upside feel real before you apply.</h2>
+          <p>If Aayojan sends a few solid-fit leads each month, what could that mean for your kitchen? Use the calculator below to see the booking value you could unlock.</p>
+        </div>
+
+        <div class="calc-card reveal">
+          <div class="calc-controls">
+            <div class="control">
+              <div class="control-top">
+                <label for="ordersRange">Average Aayojan orders you could close per month</label>
+                <span class="value-chip"><span id="ordersValue">4</span> orders</span>
+              </div>
+              <input id="ordersRange" type="range" min="1" max="20" step="1" value="4">
+            </div>
+            <div class="control">
+              <div class="control-top">
+                <label for="orderValueRange">Average order value</label>
+                <span class="value-chip" id="orderValueText">₹45,000</span>
+              </div>
+              <input id="orderValueRange" type="range" min="10000" max="150000" step="5000" value="45000">
+            </div>
+            <div class="calc-note-grid">
+              <div class="trust-card">
+                <div class="icon-pill">📈</div>
+                <h3>Small wins compound fast.</h3>
+                <p>Even a handful of extra wedding, rice-ceremony, birthday or office-catering bookings can smooth out empty weeks and reduce dependence on unpredictable referrals.</p>
+              </div>
+              <div class="trust-card">
+                <div class="icon-pill">🤝</div>
+                <h3>We match by fit, not by noise.</h3>
+                <p>The goal is not spammy lead volume. It is better-fit enquiries that match your capacity, cuisine and service area so conversion feels natural.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc-output">
+            <div class="calc-kicker">Potential monthly booking value</div>
+            <div class="calc-amount" id="grossRevenue">₹1,80,000</div>
+            <p><strong id="netRevenue">₹1,74,600</strong> kept after Aayojan’s 3% success fee.</p>
+            <p>That’s <strong id="yearlyRevenue">₹21,60,000</strong> in annual booking value if you sustain this rhythm.</p>
+            <p id="calcNarrative">Four bookings at ₹45,000 each can turn a slow month into a confident one — while you still keep the vast majority of the revenue.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-label">Why caterers stick</div>
+          <h2>From anxious waiting to a clearer pipeline.</h2>
+          <p>This page is built for the real frustrations caterers face: gaps between orders, invisible work quality and too much dependence on word-of-mouth alone.</p>
+        </div>
+
+        <div class="compare-card reveal">
+          <div class="compare-grid">
+            <div class="compare-col negative">
+              <h3>Without Aayojan</h3>
+              <ul class="compare-list">
+                <li><span>×</span><div>Wait for referrals and hope someone remembers your name at the right time.</div></li>
+                <li><span>×</span><div>No visible proof point if you are hygienic, punctual and experienced.</div></li>
+                <li><span>×</span><div>Inconsistent order flow means empty dates and hard-to-plan staffing.</div></li>
+                <li><span>×</span><div>Too much time spent chasing vague enquiries with missing budget or guest count.</div></li>
+                <li><span>×</span><div>Excellent food, but little digital reputation building around it.</div></li>
+              </ul>
+            </div>
+            <div class="compare-col positive">
+              <h3>With Aayojan</h3>
+              <ul class="compare-list">
+                <li><span>✓</span><div>Steady lead flow targeted to your cuisine, capacity and local service area.</div></li>
+                <li><span>✓</span><div>Founding Partner + Verified badge creates trust before customers even call.</div></li>
+                <li><span>✓</span><div>More predictable quoting opportunities across wedding, home and corporate events.</div></li>
+                <li><span>✓</span><div>WhatsApp lead briefs with date, guest count, menu style and budget clues.</div></li>
+                <li><span>✓</span><div>Growing platform reputation that compounds instead of resetting every month.</div></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="benefit-grid reveal" style="margin-top: 1rem;">
+          <article class="benefit-card">
+            <div class="icon-pill">🎯</div>
+            <h3>Better-fit enquiries</h3>
+            <p>No random leads from outside your comfort zone. We focus on matching what you actually want to cook and deliver.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="icon-pill">🛡️</div>
+            <h3>Trust built faster</h3>
+            <p>Your badge, profile and pilot-stage visibility help serious customers shortlist you quicker, especially when they are comparing multiple caterers.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="icon-pill">⏰</div>
+            <h3>Less admin drag</h3>
+            <p>Use the same WhatsApp you already run your business on. Faster first response usually means a better shot at conversion.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-label">How leads work</div>
+          <h2>This is what a real Aayojan lead feels like.</h2>
+          <p>Not a vague “call me.” A structured brief lands on WhatsApp so you know whether to respond, what to quote and how fast to move.</p>
+        </div>
+
+        <div class="lead-layout reveal">
+          <div class="lead-card lead-copy">
+            <div>
+              <div class="icon-pill">📲</div>
+              <h3>Lead alerts arrive where your team already works.</h3>
+              <p>Every strong-fit enquiry is designed to feel actionable. You get the event type, expected guest count, cuisine preference, area and budget signal before the customer conversation starts.</p>
+            </div>
+            <div class="lead-steps">
+              <div class="lead-step"><div class="step-num">1</div><div><strong>You receive the brief.</strong><p>Aayojan sends a lead when the requirement matches your service area and scale.</p></div></div>
+              <div class="lead-step"><div class="step-num">2</div><div><strong>You respond fast.</strong><p>Share menu suggestions, tasting options or a first quote directly on WhatsApp.</p></div></div>
+              <div class="lead-step"><div class="step-num">3</div><div><strong>You close with confidence.</strong><p>When the booking is won, the commission stays simple and transparent.</p></div></div>
+            </div>
+          </div>
+
+          <div class="phone" aria-label="WhatsApp lead preview">
+            <div class="phone-screen">
+              <div class="phone-top">
+                <span>9:41</span>
+                <span>📶 🔋</span>
+              </div>
+              <div class="phone-contact">
+                <div>
+                  <strong>Aayojan Leads</strong>
+                  <small>Verified business account</small>
+                </div>
+                <span>🟢</span>
+              </div>
+              <div class="bubble incoming">New lead: Wedding, 200 guests, Bengali menu, Dec 15, Budget ₹80K
+Area: Newtown
+Need tasting: Yes
+Customer wants quote today.
+<time>10:12 AM</time></div>
+              <div class="bubble incoming">Suggested opener: “Thank you for sharing the requirement. We can propose a Bengali wedding menu for 200 guests and send options in 10 minutes.”
+<time>10:13 AM</time></div>
+              <div class="bubble outgoing">Thanks for the lead. Sending 3 menu options, per-plate estimate and tasting availability now.
+<time>10:17 AM</time></div>
+              <div class="message-actions">
+                <div class="mini-pill">Accept lead</div>
+                <div class="mini-pill">Send menu PDF</div>
+                <div class="mini-pill">Call customer</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Event types we serve — visual gallery -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-label">Events we power</div>
+          <h2>From intimate home parties to grand weddings.</h2>
+          <p>Aayojan connects caterers with customers across every event type in Kolkata — here's where your next booking could come from.</p>
+        </div>
+
+        <div class="events-gallery reveal">
+          <div class="event-card">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&h=400&fit=crop&q=80" alt="Indian wedding catering setup" loading="lazy">
+            <div class="event-label">Weddings & Receptions</div>
+          </div>
+          <div class="event-card">
+            <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&h=400&fit=crop&q=80" alt="Birthday celebration with food" loading="lazy">
+            <div class="event-label">Birthday Parties</div>
+          </div>
+          <div class="event-card">
+            <img src="https://images.unsplash.com/photo-1529543544006-1526af26fbd3?w=600&h=400&fit=crop&q=80" alt="Family gathering dinner" loading="lazy">
+            <div class="event-label">Family Gatherings</div>
+          </div>
+          <div class="event-card">
+            <img src="https://images.unsplash.com/photo-1536392706976-e486e2ba97af?w=600&h=400&fit=crop&q=80" alt="House party with food spread" loading="lazy">
+            <div class="event-label">House Parties</div>
+          </div>
+          <div class="event-card">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=400&fit=crop&q=80" alt="Corporate catering setup" loading="lazy">
+            <div class="event-label">Corporate Events</div>
+          </div>
+          <div class="event-card">
+            <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=600&h=400&fit=crop&q=80" alt="Annaprashan rice ceremony" loading="lazy">
+            <div class="event-label">Annaprashan & Ceremonies</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-label">Transparent pricing</div>
+          <h2>You keep 97% of every booking.</h2>
+          <p>That is the headline. No joining fee. No monthly subscription. No hidden platform tax before you even prove value.</p>
+        </div>
+
+        <div class="commission-layout reveal">
+          <div class="commission-card commission-copy">
+            <div class="commission-highlight">
+              <small>Simple success model</small>
+              <strong>97%</strong>
+              <div>You keep 97% of every booking you close through Aayojan.</div>
+            </div>
+            <div class="commission-table">
+              <div class="commission-row"><span>Registration fee</span><strong class="green">₹0</strong></div>
+              <div class="commission-row"><span>Monthly fee</span><strong class="green">₹0</strong></div>
+              <div class="commission-row"><span>Commission per successful booking</span><strong>3%</strong></div>
+              <div class="commission-row"><span>Lead delivery</span><strong>WhatsApp</strong></div>
+              <div class="commission-row"><span>Contract lock-in</span><strong class="green">None</strong></div>
+              <div class="commission-row"><span>Founding partner benefit</span><strong>Early visibility + free-forever onboarding</strong></div>
+            </div>
+          </div>
+
+          <div class="lead-card commission-copy">
+            <div class="icon-pill">💰</div>
+            <h3>Fair enough to trust, simple enough to remember.</h3>
+            <p>Aayojan only wins when you win. That keeps incentives aligned: better-fit enquiries, faster conversions and repeat trust instead of bloated listing fees.</p>
+            <div class="trust-grid" style="grid-template-columns: 1fr; margin-top: 1rem;">
+              <div class="trust-card">
+                <h3>Free to join now</h3>
+                <p>We want strong kitchens on the platform early, not a paywall that filters out good caterers.</p>
+              </div>
+              <div class="trust-card">
+                <h3>Local support</h3>
+                <p>If something is unclear, you can WhatsApp or email the Aayojan team directly instead of raising a ticket into the void.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-label">Partner FAQ</div>
+          <h2>Questions caterers usually ask before joining.</h2>
+          <p>Everything below is written to reduce hesitation and make the decision clearer.</p>
+        </div>
+
+        <div class="faq-list reveal">
+          <div class="faq-item">
+            <button class="faq-button" type="button" aria-expanded="false">
+              <span>Do I have to pay anything upfront to join Aayojan?</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">No. Joining is free. There is no registration charge and no monthly subscription. Aayojan only takes a 3% commission when you successfully close a booking from the platform.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-button" type="button" aria-expanded="false">
+              <span>How do I receive leads?</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">Leads are shared on WhatsApp with practical details like event type, guest count, preferred cuisine, area and timing. The idea is to help you decide quickly whether to quote and how to respond.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-button" type="button" aria-expanded="false">
+              <span>What makes founding partners different from later partners?</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">Founding partners are being onboarded before public scale-up. That means early badge visibility, less category crowding, closer support and a stronger chance to build reputation before the marketplace gets busy.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-button" type="button" aria-expanded="false">
+              <span>Can I choose where I want orders from?</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">Yes. During onboarding you share your service areas and scale. Right now we are especially focused on Newtown, Rajarhat and Salt Lake so local-fit matching stays strong.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-button" type="button" aria-expanded="false">
+              <span>What if I am already busy and cannot take every enquiry?</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">You stay in control. You can decline leads that do not fit your capacity, date availability or menu preference. The platform should support your business, not trap it.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-button" type="button" aria-expanded="false">
+              <span>How fast will someone from Aayojan contact me after I apply?</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">Usually within 24 hours on WhatsApp or email. If you want to speed things up, submit the form and then tap the WhatsApp button on the confirmation screen so the team sees your interest immediately.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="register">
+      <div class="container form-layout">
+        <div class="form-shell reveal">
+          <div class="section-label">Apply now</div>
+          <h2>Become an Aayojan founding partner.</h2>
+          <p>Complete the three short steps below. Save your spot, tell us how you cater, and we’ll take the conversation forward on WhatsApp.</p>
+
+          <div class="form-progress-head">
+            <strong id="formStepLabel">Step 1 of 3</strong>
+            <span id="formStepHint">Basic business details</span>
+          </div>
+          <div class="form-progress-track" aria-hidden="true">
+            <div class="form-progress-fill" id="formProgress"></div>
+          </div>
+          <div class="step-dots">
+            <div class="step-dot active" data-step-dot="0">Step 1<br>Business</div>
+            <div class="step-dot" data-step-dot="1">Step 2<br>Operations</div>
+            <div class="step-dot" data-step-dot="2">Step 3<br>Profile</div>
+          </div>
+
+          <form id="partnerForm" novalidate>
+            <div class="form-step active" data-step="0">
+              <div class="field-grid two">
+                <div class="field">
+                  <label for="bizName">Business / brand name *</label>
+                  <input id="bizName" name="businessName" type="text" placeholder="e.g. Das Catering Services" required>
+                </div>
+                <div class="field">
+                  <label for="contactName">Contact person *</label>
+                  <input id="contactName" name="contactPerson" type="text" placeholder="Your full name" required>
+                </div>
+                <div class="field">
+                  <label for="whatsapp">WhatsApp number *</label>
+                  <input id="whatsapp" name="whatsapp" type="tel" placeholder="+91 XXXXXXXXXX" required>
+                </div>
+                <div class="field">
+                  <label for="email">Email address *</label>
+                  <input id="email" name="email" type="email" placeholder="you@example.com" required>
+                </div>
+              </div>
+
+              <fieldset class="area-group">
+                <legend>Service areas *</legend>
+                <div class="area-options">
+                  <label class="checkbox-card"><input type="checkbox" name="serviceArea" value="Newtown"><span>Newtown / Action Area I-II-III</span></label>
+                  <label class="checkbox-card"><input type="checkbox" name="serviceArea" value="Rajarhat"><span>Rajarhat</span></label>
+                  <label class="checkbox-card"><input type="checkbox" name="serviceArea" value="Salt Lake"><span>Salt Lake / Sector V</span></label>
+                </div>
+                <div class="helper">Choose every zone you can reliably serve. We use this to reduce mismatched leads.</div>
+              </fieldset>
+
+              <div class="form-actions">
+                <span class="form-note">Takes about 2 minutes. Your details stay private.</span>
+                <button class="step-button primary" type="button" data-next>Continue to step 2</button>
+              </div>
+            </div>
+
+            <div class="form-step" data-step="1">
+              <div class="field-grid two">
+                <div class="field">
+                  <label for="cuisine">Primary cuisine *</label>
+                  <select id="cuisine" name="cuisine" required>
+                    <option value="">Select cuisine</option>
+                    <option>Bengali</option>
+                    <option>North Indian</option>
+                    <option>Chinese</option>
+                    <option>Continental</option>
+                    <option>South Indian</option>
+                    <option>Multi-cuisine</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="capacity">Max guests per event *</label>
+                  <select id="capacity" name="capacity" required>
+                    <option value="">Select capacity</option>
+                    <option>Up to 50</option>
+                    <option>50–150</option>
+                    <option>150–300</option>
+                    <option>300–500</option>
+                    <option>500+</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="currentMonthlyOrders">Average current orders per month *</label>
+                  <select id="currentMonthlyOrders" name="currentMonthlyOrders" required>
+                    <option value="">Select range</option>
+                    <option>1–3</option>
+                    <option>4–7</option>
+                    <option>8–12</option>
+                    <option>13+</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="avgOrderValue">Typical order value *</label>
+                  <select id="avgOrderValue" name="avgOrderValue" required>
+                    <option value="">Select range</option>
+                    <option>₹10,000–₹25,000</option>
+                    <option>₹25,000–₹50,000</option>
+                    <option>₹50,000–₹1,00,000</option>
+                    <option>₹1,00,000+</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button class="step-button secondary" type="button" data-back>Back</button>
+                <button class="step-button primary" type="button" data-next>Continue to step 3</button>
+              </div>
+            </div>
+
+            <div class="form-step" data-step="2">
+              <div class="field-grid">
+                <div class="field">
+                  <label for="specialties">Best-selling menu or specialty *</label>
+                  <input id="specialties" name="specialties" type="text" placeholder="e.g. Bengali wedding menu, live counters, office lunch trays" required>
+                </div>
+                <div class="field">
+                  <label for="experience">Tell us why customers choose you *</label>
+                  <textarea id="experience" name="experience" placeholder="Mention years in business, signature dishes, service staff, hygiene strengths, tasting support or what makes your food memorable." required></textarea>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button class="step-button secondary" type="button" data-back>Back</button>
+                <button class="final-submit" type="submit">Submit founding partner application</button>
+              </div>
+              <div class="form-note">By applying, you’re asking Aayojan to contact you about onboarding. Support: <a href="mailto:aayojan1@gmail.com">aayojan1@gmail.com</a> · WhatsApp: <a target="_blank" rel="noopener" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20have%20a%20question%20about%20the%20partner%20program.">918088434425</a></div>
+            </div>
+          </form>
+        </div>
+
+        <div class="lead-card reveal">
+          <div class="icon-pill">🌟</div>
+          <h3>Why applying now matters</h3>
+          <p>Once founding spots are filled, future caterers will compete in a much denser list. Right now, early movers get a simpler path to attention, trust and trial bookings.</p>
+          <div class="trust-grid" style="grid-template-columns: 1fr; margin-top: 1rem;">
+            <div class="trust-card">
+              <h3>Only 15 founding slots</h3>
+              <p><span id="sidebarSpotsFilled">7</span> filled so far. The remaining partners shape the first customer impression of Aayojan.</p>
+            </div>
+            <div class="trust-card">
+              <h3>Fast human follow-up</h3>
+              <p>Expect a real WhatsApp or email from the team within 24 hours, not an automated silence.</p>
+            </div>
+            <div class="trust-card">
+              <h3>Warm local positioning</h3>
+              <p>This is not a national directory dump. It is a curated Kolkata-first marketplace built around nearby demand pockets.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© 2025 Aayojan · Built for caterers across Newtown, Rajarhat and Salt Lake.</div>
+      <div><a href="mailto:aayojan1@gmail.com">aayojan1@gmail.com</a> · <a target="_blank" rel="noopener" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20want%20to%20know%20more%20about%20partnering.">WhatsApp 918088434425</a> · <a href="#faq">Partner FAQ</a></div>
+    </div>
+  </footer>
+
+  <div class="floating-cta" id="floatingCta" aria-hidden="true">
+    <div>
+      <strong>Join as Founding Partner — only <span id="stickySpotsLeft">8</span> spots left</strong>
+      <small>Claim early badge visibility before public rollout.</small>
+    </div>
+    <a class="button primary" href="#register">Register now</a>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script>
+    firebase.initializeApp({
+      apiKey: "AIzaSyBPvK0452Kgkp0Oevxm1zMRUWiqKdhmaZA",
+      authDomain: "aayojan-a8c4f.firebaseapp.com",
+      projectId: "aayojan-a8c4f",
+      storageBucket: "aayojan-a8c4f.firebasestorage.app",
+      messagingSenderId: "673829788583",
+      appId: "1:673829788583:web:9f140241bf0466b197b482"
+    });
+
+    const db = firebase.firestore();
+    const foundingFilled = 7;
+    const foundingTotal = 15;
+    const formatCurrency = (value) => new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
+    }).format(value);
+
+    let applicationSubmitted = false;
+
+    function updateFoundingCounter() {
+      const percent = (foundingFilled / foundingTotal) * 100;
+      const spotsLeft = foundingTotal - foundingFilled;
+      document.getElementById('foundingTotal').textContent = foundingTotal;
+      document.getElementById('spotsLeftText').textContent = `Only ${spotsLeft} left`;
+      document.getElementById('stickySpotsLeft').textContent = spotsLeft;
+      const animatedTargets = [
+        document.getElementById('foundingFilled'),
+        document.getElementById('sidebarSpotsFilled')
+      ];
+      const start = performance.now();
+      const duration = 900;
+
+      function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const value = Math.round(foundingFilled * progress);
+        animatedTargets.forEach((element) => {
+          element.textContent = value;
+        });
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        }
+      }
+
+      requestAnimationFrame(tick);
+      requestAnimationFrame(() => {
+        document.getElementById('foundingProgress').style.width = `${percent}%`;
+      });
+    }
+
+    function updateCalculator() {
+      const orders = Number(document.getElementById('ordersRange').value);
+      const orderValue = Number(document.getElementById('orderValueRange').value);
+      const gross = orders * orderValue;
+      const net = Math.round(gross * 0.97);
+      const yearly = gross * 12;
+
+      document.getElementById('ordersValue').textContent = orders;
+      document.getElementById('orderValueText').textContent = formatCurrency(orderValue);
+      document.getElementById('grossRevenue').textContent = formatCurrency(gross);
+      document.getElementById('netRevenue').textContent = formatCurrency(net);
+      document.getElementById('yearlyRevenue').textContent = formatCurrency(yearly);
+      document.getElementById('calcNarrative').textContent = `${orders} bookings at ${formatCurrency(orderValue)} each can create ${formatCurrency(gross)} in monthly booking value while you still keep ${formatCurrency(net)} after commission.`;
+    }
+
+    const form = document.getElementById('partnerForm');
+    const steps = Array.from(form.querySelectorAll('.form-step'));
+    const stepDots = Array.from(document.querySelectorAll('[data-step-dot]'));
+    const stepLabel = document.getElementById('formStepLabel');
+    const stepHint = document.getElementById('formStepHint');
+    const formProgress = document.getElementById('formProgress');
+    const stepHints = ['Basic business details', 'Operational fit', 'Menu and profile'];
+    let currentStep = 0;
+
+    function getServiceAreas() {
+      return Array.from(document.querySelectorAll('input[name="serviceArea"]:checked')).map((input) => input.value);
+    }
+
+    function validateCurrentStep() {
+      const currentPanel = steps[currentStep];
+      const fields = Array.from(currentPanel.querySelectorAll('input, select, textarea'));
+
+      for (const field of fields) {
+        if (field.type === 'checkbox') continue;
+        if (!field.checkValidity()) {
+          field.reportValidity();
+          return false;
+        }
+      }
+
+      if (currentStep === 0 && getServiceAreas().length === 0) {
+        alert('Please select at least one service area.');
+        return false;
+      }
+
+      return true;
+    }
+
+    function updateFormStep() {
+      steps.forEach((step, index) => {
+        step.classList.toggle('active', index === currentStep);
+      });
+
+      stepDots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentStep);
+        dot.classList.toggle('complete', index < currentStep);
+      });
+
+      const progress = ((currentStep + 1) / steps.length) * 100;
+      stepLabel.textContent = `Step ${currentStep + 1} of ${steps.length}`;
+      stepHint.textContent = stepHints[currentStep];
+      formProgress.style.width = `${progress}%`;
+    }
+
+    form.addEventListener('click', (event) => {
+      const nextButton = event.target.closest('[data-next]');
+      const backButton = event.target.closest('[data-back]');
+
+      if (nextButton) {
+        if (!validateCurrentStep()) return;
+        currentStep = Math.min(currentStep + 1, steps.length - 1);
+        updateFormStep();
+      }
+
+      if (backButton) {
+        currentStep = Math.max(currentStep - 1, 0);
+        updateFormStep();
+      }
+    });
+
+    async function handleSubmit(event) {
+      event.preventDefault();
+
+      if (!validateCurrentStep() || !form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const submitButton = form.querySelector('.final-submit');
+      submitButton.disabled = true;
+      submitButton.textContent = 'Submitting application...';
+
+      const data = {
+        businessName: document.getElementById('bizName').value.trim(),
+        contactPerson: document.getElementById('contactName').value.trim(),
+        whatsapp: document.getElementById('whatsapp').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        serviceAreas: getServiceAreas(),
+        cuisine: document.getElementById('cuisine').value,
+        capacity: document.getElementById('capacity').value,
+        currentMonthlyOrders: document.getElementById('currentMonthlyOrders').value,
+        avgOrderValue: document.getElementById('avgOrderValue').value,
+        specialties: document.getElementById('specialties').value.trim(),
+        experience: document.getElementById('experience').value.trim(),
+        submittedAt: new Date().toISOString(),
+        status: 'new',
+        source: 'partners.html',
+        foundingProgram: true
+      };
+
+      try {
+        await db.collection('partnerApplications').add(data);
+      } catch (error) {
+        console.log('Firestore save error (non-blocking):', error);
+      }
+
+      const message = `Hi Aayojan! I just submitted the partner form.\n\nBusiness: ${data.businessName}\nContact: ${data.contactPerson}\nWhatsApp: ${data.whatsapp}\nCuisine: ${data.cuisine}\nCapacity: ${data.capacity}\nAreas: ${data.serviceAreas.join(', ')}\nSpecialty: ${data.specialties}`;
+      const whatsappLink = `https://wa.me/918088434425?text=${encodeURIComponent(message)}`;
+
+      form.innerHTML = `
+        <div class="success-panel">
+          <div class="emoji">🎉</div>
+          <h3>Your founding partner application is in.</h3>
+          <p>Thank you, ${data.contactPerson}. We’ll review your details and reach out within 24 hours on WhatsApp or email.</p>
+          <p><a class="button primary" target="_blank" rel="noopener" href="${whatsappLink}">Open WhatsApp and notify the team</a></p>
+          <p>If you prefer email, write to <a href="mailto:aayojan1@gmail.com">aayojan1@gmail.com</a>. Your registered number: <strong>${data.whatsapp}</strong></p>
+        </div>
+      `;
+
+      const floatingCta = document.getElementById('floatingCta');
+      applicationSubmitted = true;
+      floatingCta.classList.remove('show');
+      floatingCta.setAttribute('aria-hidden', 'true');
+    }
+
+    form.addEventListener('submit', handleSubmit);
+
+    document.querySelectorAll('.faq-button').forEach((button) => {
+      button.addEventListener('click', () => {
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        const answer = button.nextElementSibling;
+        button.setAttribute('aria-expanded', String(!expanded));
+        answer.style.maxHeight = expanded ? '0px' : `${answer.scrollHeight}px`;
+      });
+    });
+
+    const floatingCta = document.getElementById('floatingCta');
+    function toggleFloatingCta() {
+      const show = !applicationSubmitted && window.scrollY > 700;
+      floatingCta.classList.toggle('show', show);
+      floatingCta.setAttribute('aria-hidden', String(!show));
+    }
+
+    let revealObserver = null;
+    if ('IntersectionObserver' in window) {
+      revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+    }
+
+    document.querySelectorAll('.reveal').forEach((element) => {
+      if (revealObserver) {
+        revealObserver.observe(element);
+      } else {
+        element.classList.add('visible');
+      }
+    });
+
+    document.getElementById('ordersRange').addEventListener('input', updateCalculator);
+    document.getElementById('orderValueRange').addEventListener('input', updateCalculator);
+    window.addEventListener('scroll', toggleFloatingCta, { passive: true });
+
+    updateFoundingCounter();
+    updateCalculator();
+    updateFormStep();
+    toggleFloatingCta();
+  </script>
 </body>
 </html>
