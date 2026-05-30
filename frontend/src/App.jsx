@@ -652,7 +652,7 @@ export default function AayojanApp(){
   // Hash-based deep linking (e.g. #partner-terms)
   useEffect(()=>{
     const h=window.location.hash.replace("#","");
-    if(h&&["privacy","terms","refund","partner-terms"].includes(h)) setView(h);
+    if(h&&["privacy","terms","refund","partner-terms","about"].includes(h)) setView(h);
   },[]);
 
   // Keep-alive ping to prevent Render cold starts (every 14 min)
@@ -1429,7 +1429,7 @@ export default function AayojanApp(){
               <div style={{fontSize:12,fontWeight:700,color:"var(--text-primary)",marginBottom:10,textTransform:"uppercase",letterSpacing:1}}>Quick Links</div>
               <a href="/partners.html" style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none"}}>Partner with Us</a>
               <a href="/faq.html" style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none"}}>FAQ</a>
-              <a href="/about.html" style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none"}}>About Us</a>
+              <div onClick={()=>navigate("about")} style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none",cursor:"pointer"}}>About Us</div>
               <div style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,cursor:"pointer"}} onClick={()=>window.open("https://wa.me/918088434425?text=Hi!%20Notify%20me%20when%20Aayojan%20launches","_blank")}>Notify Me at Launch</div>
               <a href="/partners.html#register" style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none"}}>Register as Caterer</a>
             </div>
