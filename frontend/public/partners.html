@@ -1785,7 +1785,7 @@ Customer wants quote today.
                   <label class="checkbox-card"><input type="checkbox" name="serviceArea" value="Rajarhat"><span>Rajarhat</span></label>
                   <label class="checkbox-card"><input type="checkbox" name="serviceArea" value="Salt Lake"><span>Salt Lake / Sector V</span></label>
                 </div>
-                <div class="helper">Choose every zone you can reliably serve. We use this to reduce mismatched leads.</div>
+                <div class="helper" id="serviceAreaHint">Choose every zone you can reliably serve. We use this to reduce mismatched leads.</div>
               </fieldset>
 
               <div class="form-actions">
@@ -2035,7 +2035,9 @@ Customer wants quote today.
       }
 
       if (currentStep === 0 && getServiceAreas().length === 0) {
-        alert('Please select at least one service area.');
+        const hint = document.getElementById('serviceAreaHint');
+        if (hint) { hint.style.color = '#dc2626'; hint.textContent = '⚠️ Please select at least one service area to continue.'; }
+        else { alert('Please select at least one service area.'); }
         return false;
       }
 
@@ -2188,13 +2190,6 @@ Customer wants quote today.
         foundingProgram: true
       };
 
-      // Guard: WhatsApp must be OTP-verified
-      if (document.getElementById(‘waVerified’).value !== ‘1’) {
-        submitButton.disabled = false;
-        submitButton.textContent = ‘Submit Application’;
-        alert(‘Please verify your WhatsApp number with the OTP before submitting.’);
-        return;
-      }
 
       // Primary: Firestore — blocking
       if (!db) {
