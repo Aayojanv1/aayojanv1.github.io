@@ -1769,7 +1769,15 @@ Customer wants quote today.
                 </div>
                 <div class="field">
                   <label for="whatsapp">WhatsApp number *</label>
-                  <input id="whatsapp" name="whatsapp" type="tel" placeholder="+91 XXXXXXXXXX" required>
+                  <div style="display:flex;gap:8px;align-items:flex-start">
+                    <input id="whatsapp" name="whatsapp" type="tel" placeholder="+91 XXXXXXXXXX" required style="flex:1">
+                    <button type="button" id="sendOtpBtn" onclick="sendOTP()" style="white-space:nowrap;padding:10px 14px;background:#25D366;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;flex-shrink:0">Send OTP</button>
+                  </div>
+                  <div id="otpRow" style="display:none;margin-top:10px">
+                    <input id="otpInput" type="text" maxlength="6" placeholder="Enter 6-digit OTP" style="width:100%;padding:10px 14px;border:1.5px solid #e8e8e8;border-radius:10px;font-size:15px;letter-spacing:4px;text-align:center">
+                    <div id="otpMsg" style="font-size:12px;margin-top:6px;color:#666"></div>
+                  </div>
+                  <input type="hidden" id="waVerified" value="0">
                 </div>
                 <div class="field">
                   <label for="email">Email address *</label>
@@ -2044,6 +2052,89 @@ Customer wants quote today.
       }
     });
 
+    const API_BASE = ‘https://aayojan-a1fi.onrender.com’;
+
+    // Google Sheets backup URL — deploy Apps Script and paste the URL here
+    const SHEETS_BACKUP_URL = ‘PASTE_APPS_SCRIPT_URL_HERE’;
+
+    // ── OTP ──
+    let otpSent = false;
+
+    async function sendOTP() {
+      const phone = document.getElementById(‘whatsapp’).value.trim();
+      if (!phone || phone.replace(/\D/g,’’).length < 10) {
+        alert(‘Please enter a valid WhatsApp number first.’);
+        return;
+      }
+      const btn = document.getElementById(‘sendOtpBtn’);
+      btn.disabled = true;
+      btn.textContent = ‘Sending...’;
+
+      try {
+        await fetch(`${API_BASE}/api/otp/send`, {
+          method: ‘POST’,
+          headers: { ‘Content-Type’: ‘application/json’ },
+          body: JSON.stringify({ phone }),
+        });
+        otpSent = true;
+        document.getElementById(‘otpRow’).style.display = ‘block’;
+        document.getElementById(‘otpMsg’).textContent = ‘✅ OTP sent to your WhatsApp. Enter it above.’;
+        btn.textContent = ‘Resend’;
+        btn.disabled = false;
+
+        // Auto-verify as user types
+        document.getElementById(‘otpInput’).addEventListener(‘input’, function() {
+          if (this.value.length === 6) verifyOTP();
+        });
+      } catch (e) {
+        btn.textContent = ‘Send OTP’;
+        btn.disabled = false;
+        document.getElementById(‘otpMsg’).textContent = ‘❌ Could not send OTP. Try again.’;
+        document.getElementById(‘otpRow’).style.display = ‘block’;
+      }
+    }
+
+    async function verifyOTP() {
+      const phone = document.getElementById(‘whatsapp’).value.trim();
+      const otp = document.getElementById(‘otpInput’).value.trim();
+      const msg = document.getElementById(‘otpMsg’);
+      msg.textContent = ‘Verifying...’;
+      try {
+        const res = await fetch(`${API_BASE}/api/otp/verify`, {
+          method: ‘POST’,
+          headers: { ‘Content-Type’: ‘application/json’ },
+          body: JSON.stringify({ phone, otp }),
+        });
+        const data = await res.json();
+        if (data.valid) {
+          document.getElementById(‘waVerified’).value = ‘1’;
+          document.getElementById(‘otpInput’).style.borderColor = ‘#22c55e’;
+          msg.style.color = ‘#16a34a’;
+          msg.textContent = ‘✅ WhatsApp number verified!’;
+          document.getElementById(‘sendOtpBtn’).style.display = ‘none’;
+        } else {
+          document.getElementById(‘otpInput’).style.borderColor = ‘#ef4444’;
+          msg.style.color = ‘#dc2626’;
+          msg.textContent = ‘❌ Wrong OTP. Please try again.’;
+        }
+      } catch (e) {
+        msg.textContent = ‘❌ Verification failed. Try again.’;
+      }
+    }
+
+    async function backupToSheets(data) {
+      if (!SHEETS_BACKUP_URL || SHEETS_BACKUP_URL.startsWith(‘PASTE’)) return;
+      try {
+        await fetch(SHEETS_BACKUP_URL, {
+          method: ‘POST’,
+          headers: { ‘Content-Type’: ‘text/plain’ },
+          body: JSON.stringify(data),
+        });
+      } catch (e) {
+        console.warn(‘Sheets backup failed (non-critical):’, e);
+      }
+    }
+
     async function handleSubmit(event) {
       event.preventDefault();
 
@@ -2052,35 +2143,59 @@ Customer wants quote today.
         return;
       }
 
-      const submitButton = form.querySelector('.final-submit');
+      const submitButton = form.querySelector(‘.final-submit’);
       submitButton.disabled = true;
-      submitButton.textContent = 'Submitting application...';
+      submitButton.textContent = ‘Saving your application...’;
 
       const data = {
-        businessName: document.getElementById('bizName').value.trim(),
-        contactPerson: document.getElementById('contactName').value.trim(),
-        whatsapp: document.getElementById('whatsapp').value.trim(),
-        email: document.getElementById('email').value.trim(),
+        businessName: document.getElementById(‘bizName’).value.trim(),
+        contactPerson: document.getElementById(‘contactName’).value.trim(),
+        whatsapp: document.getElementById(‘whatsapp’).value.trim(),
+        email: document.getElementById(‘email’).value.trim(),
         serviceAreas: getServiceAreas(),
-        cuisine: document.getElementById('cuisine').value,
-        capacity: document.getElementById('capacity').value,
-        currentMonthlyOrders: document.getElementById('currentMonthlyOrders').value,
-        avgOrderValue: document.getElementById('avgOrderValue').value,
-        specialties: document.getElementById('specialties').value.trim(),
-        experience: document.getElementById('experience').value.trim(),
+        cuisine: document.getElementById(‘cuisine’).value,
+        capacity: document.getElementById(‘capacity’).value,
+        currentMonthlyOrders: document.getElementById(‘currentMonthlyOrders’).value,
+        avgOrderValue: document.getElementById(‘avgOrderValue’).value,
+        specialties: document.getElementById(‘specialties’).value.trim(),
+        experience: document.getElementById(‘experience’).value.trim(),
+        fssaiLicense: (document.getElementById(‘fssai’) || {}).value?.trim() || ‘’,
         submittedAt: new Date().toISOString(),
-        status: 'new',
-        source: 'partners.html',
+        status: ‘new’,
+        source: ‘partners.html’,
         foundingProgram: true
       };
 
-      try {
-        await db.collection('partnerApplications').add(data);
-      } catch (error) {
-        console.log('Firestore save error (non-blocking):', error);
+      // Guard: WhatsApp must be OTP-verified
+      if (document.getElementById(‘waVerified’).value !== ‘1’) {
+        submitButton.disabled = false;
+        submitButton.textContent = ‘Submit Application’;
+        alert(‘Please verify your WhatsApp number with the OTP before submitting.’);
+        return;
       }
 
-      const message = `Hi Aayojan! I just submitted the partner form.\n\nBusiness: ${data.businessName}\nContact: ${data.contactPerson}\nWhatsApp: ${data.whatsapp}\nCuisine: ${data.cuisine}\nCapacity: ${data.capacity}\nAreas: ${data.serviceAreas.join(', ')}\nSpecialty: ${data.specialties}`;
+      // Primary: Firestore — blocking
+      try {
+        await db.collection(‘partnerApplications’).add(data);
+      } catch (error) {
+        console.error(‘Firestore save failed:’, error);
+        submitButton.disabled = false;
+        submitButton.textContent = ‘Submit Application’;
+        alert(‘Could not save your application. Please try again or WhatsApp us directly at +91-8088434425.’);
+        return;
+      }
+
+      // Secondary: Google Sheets backup (fire-and-forget)
+      backupToSheets(data);
+
+      // Tertiary: Email + WhatsApp welcome via backend (fire-and-forget)
+      fetch(`${API_BASE}/api/notify-partner`, {
+        method: ‘POST’,
+        headers: { ‘Content-Type’: ‘application/json’ },
+        body: JSON.stringify(data),
+      }).catch(e => console.warn(‘Notify-partner failed:’, e));
+
+      const message = `Hi Aayojan! I just submitted the partner form.\n\nBusiness: ${data.businessName}\nContact: ${data.contactPerson}\nWhatsApp: ${data.whatsapp}\nFSSAI: ${data.fssaiLicense || ‘not provided’}\nCuisine: ${data.cuisine}\nCapacity: ${data.capacity}\nAreas: ${data.serviceAreas.join(‘, ‘)}\nSpecialty: ${data.specialties}`;
       const whatsappLink = `https://wa.me/918088434425?text=${encodeURIComponent(message)}`;
 
       form.innerHTML = `
@@ -2093,10 +2208,10 @@ Customer wants quote today.
         </div>
       `;
 
-      const floatingCta = document.getElementById('floatingCta');
+      const floatingCta = document.getElementById(‘floatingCta’);
       applicationSubmitted = true;
-      floatingCta.classList.remove('show');
-      floatingCta.setAttribute('aria-hidden', 'true');
+      floatingCta.classList.remove(‘show’);
+      floatingCta.setAttribute(‘aria-hidden’, ‘true’);
     }
 
     form.addEventListener('submit', handleSubmit);
