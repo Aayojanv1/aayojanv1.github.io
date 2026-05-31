@@ -1769,19 +1769,19 @@ Customer wants quote today.
                 </div>
                 <div class="field">
                   <label for="whatsapp">WhatsApp number *</label>
-                  <div style="display:flex;gap:8px;align-items:flex-start">
-                    <input id="whatsapp" name="whatsapp" type="tel" placeholder="+91 XXXXXXXXXX" required style="flex:1">
-                    <button type="button" id="sendOtpBtn" onclick="sendOTP()" style="white-space:nowrap;padding:10px 14px;background:#25D366;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;flex-shrink:0">Send OTP</button>
-                  </div>
-                  <div id="otpRow" style="display:none;margin-top:10px">
-                    <input id="otpInput" type="text" maxlength="6" placeholder="Enter 6-digit OTP" style="width:100%;padding:10px 14px;border:1.5px solid #e8e8e8;border-radius:10px;font-size:15px;letter-spacing:4px;text-align:center">
-                    <div id="otpMsg" style="font-size:12px;margin-top:6px;color:#666"></div>
-                  </div>
-                  <input type="hidden" id="waVerified" value="0">
+                  <input id="whatsapp" name="whatsapp" type="tel" placeholder="+91 XXXXXXXXXX" required>
                 </div>
                 <div class="field">
                   <label for="email">Email address *</label>
-                  <input id="email" name="email" type="email" placeholder="you@example.com" required>
+                  <div style="display:flex;gap:8px;align-items:flex-start">
+                    <input id="email" name="email" type="email" placeholder="you@example.com" required style="flex:1">
+                    <button type="button" id="sendOtpBtn" onclick="sendEmailOTP()" style="white-space:nowrap;padding:10px 14px;background:#E8760A;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;flex-shrink:0">Send OTP</button>
+                  </div>
+                  <div id="otpRow" style="display:none;margin-top:10px">
+                    <input id="otpInput" type="text" maxlength="6" placeholder="Enter 6-digit code from your email" style="width:100%;padding:10px 14px;border:1.5px solid #e8e8e8;border-radius:10px;font-size:15px;letter-spacing:6px;text-align:center;font-family:monospace">
+                    <div id="otpMsg" style="font-size:12px;margin-top:6px;color:#666"></div>
+                  </div>
+                  <input type="hidden" id="waVerified" value="0">
                 </div>
               </div>
 
@@ -2057,13 +2057,11 @@ Customer wants quote today.
     // Google Sheets backup URL — deploy Apps Script and paste the URL here
     const SHEETS_BACKUP_URL = ‘PASTE_APPS_SCRIPT_URL_HERE’;
 
-    // ── OTP ──
-    let otpSent = false;
-
-    async function sendOTP() {
-      const phone = document.getElementById(‘whatsapp’).value.trim();
-      if (!phone || phone.replace(/\D/g,’’).length < 10) {
-        alert(‘Please enter a valid WhatsApp number first.’);
+    // ── Email OTP ──
+    async function sendEmailOTP() {
+      const email = document.getElementById(‘email’).value.trim();
+      if (!email || !email.includes(‘@’)) {
+        alert(‘Please enter a valid email address first.’);
         return;
       }
       const btn = document.getElementById(‘sendOtpBtn’);
@@ -2071,46 +2069,47 @@ Customer wants quote today.
       btn.textContent = ‘Sending...’;
 
       try {
-        await fetch(`${API_BASE}/api/otp/send`, {
+        await fetch(`${API_BASE}/api/otp/email/send`, {
           method: ‘POST’,
           headers: { ‘Content-Type’: ‘application/json’ },
-          body: JSON.stringify({ phone }),
+          body: JSON.stringify({ email }),
         });
-        otpSent = true;
         document.getElementById(‘otpRow’).style.display = ‘block’;
-        document.getElementById(‘otpMsg’).textContent = ‘✅ OTP sent to your WhatsApp. Enter it above.’;
+        document.getElementById(‘otpMsg’).textContent = ‘📧 OTP sent! Check your inbox (and spam folder).’;
+        document.getElementById(‘otpMsg’).style.color = ‘#666’;
         btn.textContent = ‘Resend’;
         btn.disabled = false;
 
-        // Auto-verify as user types
         document.getElementById(‘otpInput’).addEventListener(‘input’, function() {
-          if (this.value.length === 6) verifyOTP();
+          if (this.value.length === 6) verifyEmailOTP();
         });
       } catch (e) {
         btn.textContent = ‘Send OTP’;
         btn.disabled = false;
-        document.getElementById(‘otpMsg’).textContent = ‘❌ Could not send OTP. Try again.’;
         document.getElementById(‘otpRow’).style.display = ‘block’;
+        document.getElementById(‘otpMsg’).textContent = ‘❌ Could not send OTP. Try again.’;
+        document.getElementById(‘otpMsg’).style.color = ‘#dc2626’;
       }
     }
 
-    async function verifyOTP() {
-      const phone = document.getElementById(‘whatsapp’).value.trim();
+    async function verifyEmailOTP() {
+      const email = document.getElementById(‘email’).value.trim();
       const otp = document.getElementById(‘otpInput’).value.trim();
       const msg = document.getElementById(‘otpMsg’);
       msg.textContent = ‘Verifying...’;
+      msg.style.color = ‘#666’;
       try {
-        const res = await fetch(`${API_BASE}/api/otp/verify`, {
+        const res = await fetch(`${API_BASE}/api/otp/email/verify`, {
           method: ‘POST’,
           headers: { ‘Content-Type’: ‘application/json’ },
-          body: JSON.stringify({ phone, otp }),
+          body: JSON.stringify({ email, otp }),
         });
         const data = await res.json();
         if (data.valid) {
           document.getElementById(‘waVerified’).value = ‘1’;
           document.getElementById(‘otpInput’).style.borderColor = ‘#22c55e’;
           msg.style.color = ‘#16a34a’;
-          msg.textContent = ‘✅ WhatsApp number verified!’;
+          msg.textContent = ‘✅ Email verified!’;
           document.getElementById(‘sendOtpBtn’).style.display = ‘none’;
         } else {
           document.getElementById(‘otpInput’).style.borderColor = ‘#ef4444’;
@@ -2118,6 +2117,7 @@ Customer wants quote today.
           msg.textContent = ‘❌ Wrong OTP. Please try again.’;
         }
       } catch (e) {
+        msg.style.color = ‘#dc2626’;
         msg.textContent = ‘❌ Verification failed. Try again.’;
       }
     }

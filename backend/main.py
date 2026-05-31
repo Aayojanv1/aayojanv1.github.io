@@ -511,15 +511,88 @@ async def otp_send(req: OTPSendRequest):
         name=req.phone,
     )
     if not sent:
-        # Still return success but log — don't expose internal state
         print(f"[OTP] Failed to send to {req.phone}, OTP={otp}", flush=True)
-    return {"sent": True}  # always return true to avoid phone enumeration
+    return {"sent": True}
 
 
 @app.post("/api/otp/verify")
 async def otp_verify(req: OTPVerifyRequest):
     """Verify OTP. Returns {valid: bool}."""
     valid = otp_store.verify(req.phone, req.otp)
+    return {"valid": valid}
+
+
+class EmailOTPRequest(BaseModel):
+    email: str
+
+    @field_validator("email")
+    @classmethod
+    def validate_email(cls, v):
+        if "@" not in v or "." not in v:
+            raise ValueError("invalid email")
+        return v.strip().lower()
+
+
+class EmailOTPVerifyRequest(BaseModel):
+    email: str
+    otp: str
+
+
+def otp_email_html(otp: str) -> str:
+    return f"""<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8">
+<style>
+  body{{margin:0;padding:0;background:#f5f5f5;font-family:Arial,sans-serif}}
+  .wrap{{max-width:480px;margin:32px auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}}
+  .header{{background:linear-gradient(135deg,#E8760A,#C95F08);padding:28px 32px;text-align:center;color:#fff}}
+  .header h2{{margin:0;font-size:22px;font-weight:800}}
+  .header p{{margin:6px 0 0;opacity:.85;font-size:13px}}
+  .body{{padding:32px;text-align:center}}
+  .otp-box{{background:#fff8f0;border:2px dashed #E8760A;border-radius:14px;padding:24px;margin:20px 0}}
+  .otp{{font-size:42px;font-weight:900;letter-spacing:10px;color:#E8760A;font-family:monospace}}
+  .note{{font-size:13px;color:#888;margin-top:10px}}
+  .footer{{background:#f9f9f9;padding:16px 32px;text-align:center;font-size:11px;color:#aaa;border-top:1px solid #eee}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h2>🍽️ Aayojan Verification</h2>
+    <p>Your one-time password</p>
+  </div>
+  <div class="body">
+    <p style="color:#444;font-size:15px;margin:0 0 4px">Your OTP to verify your email address:</p>
+    <div class="otp-box">
+      <div class="otp">{otp}</div>
+      <div class="note">Valid for 5 minutes · Do not share this code</div>
+    </div>
+    <p style="font-size:13px;color:#888">If you didn't request this, ignore this email.</p>
+  </div>
+  <div class="footer">Aayojan · Newtown, Kolkata · aayojan.online</div>
+</div>
+</body>
+</html>"""
+
+
+@app.post("/api/otp/email/send")
+async def otp_email_send(req: EmailOTPRequest):
+    """Generate OTP and send to email address."""
+    otp = otp_store.generate(req.email)
+    sent = await send_email(
+        to=req.email,
+        subject=f"{otp} is your Aayojan verification code",
+        html=otp_email_html(otp),
+    )
+    if not sent:
+        print(f"[EMAIL OTP] Failed to send to {req.email}, OTP={otp}", flush=True)
+    return {"sent": True}
+
+
+@app.post("/api/otp/email/verify")
+async def otp_email_verify(req: EmailOTPVerifyRequest):
+    """Verify email OTP. Returns {valid: bool}."""
+    valid = otp_store.verify(req.email.strip().lower(), req.otp.strip())
     return {"valid": valid}
 
 
