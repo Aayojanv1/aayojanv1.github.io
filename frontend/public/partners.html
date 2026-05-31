@@ -9,6 +9,7 @@
     if (localStorage.getItem('ga_opt_out') === '1') {
       window['ga-disable-G-VSGREVV7RS'] = true;
     }
+    document.documentElement.classList.add('js');
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VSGREVV7RS"></script>
   <script>
@@ -1271,13 +1272,13 @@
       }
     }
 
-    .reveal {
+    .js .reveal {
       opacity: 0;
       transform: translateY(18px);
       transition: opacity 0.55s ease, transform 0.55s ease;
     }
 
-    .reveal.visible {
+    .js .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
