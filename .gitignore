@@ -30,3 +30,10 @@ app/.flutter-plugins-dependencies
 # Python
 backend/*.egg-info/
 backend/dist/
+
+# Internal strategy docs — keep local only
+docs/
+JSXs/
+*.demo.html
+firebase-debug.log
+firestore-debug.log
