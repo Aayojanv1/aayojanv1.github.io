@@ -1923,16 +1923,45 @@ Customer wants quote today.
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script>
-    firebase.initializeApp({
-      apiKey: "AIzaSyBPvK0452Kgkp0Oevxm1zMRUWiqKdhmaZA",
-      authDomain: "aayojan-a8c4f.firebaseapp.com",
-      projectId: "aayojan-a8c4f",
-      storageBucket: "aayojan-a8c4f.firebasestorage.app",
-      messagingSenderId: "673829788583",
-      appId: "1:673829788583:web:9f140241bf0466b197b482"
-    });
+    // ── Reveal animation — runs FIRST so a Firebase failure never hides the page ──
+    (function() {
+      var obs = null;
+      if ('IntersectionObserver' in window) {
+        obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+      }
+      document.querySelectorAll('.reveal').forEach(function(el) {
+        if (obs) { obs.observe(el); } else { el.classList.add('visible'); }
+      });
+      // Hard fallback: make everything visible after 800ms regardless
+      setTimeout(function() {
+        document.querySelectorAll('.reveal').forEach(function(el) {
+          el.classList.add('visible');
+        });
+      }, 800);
+    })();
 
-    const db = firebase.firestore();
+    // ── Firebase ──
+    var db = null;
+    try {
+      firebase.initializeApp({
+        apiKey: "AIzaSyBPvK0452Kgkp0Oevxm1zMRUWiqKdhmaZA",
+        authDomain: "aayojan-a8c4f.firebaseapp.com",
+        projectId: "aayojan-a8c4f",
+        storageBucket: "aayojan-a8c4f.firebasestorage.app",
+        messagingSenderId: "673829788583",
+        appId: "1:673829788583:web:9f140241bf0466b197b482"
+      });
+      db = firebase.firestore();
+    } catch(e) {
+      console.warn('Firebase init failed:', e);
+    }
     const foundingFilled = 7;
     const foundingTotal = 15;
     const formatCurrency = (value) => new Intl.NumberFormat('en-IN', {
@@ -2176,6 +2205,12 @@ Customer wants quote today.
       }
 
       // Primary: Firestore — blocking
+      if (!db) {
+        submitButton.disabled = false;
+        submitButton.textContent = ‘Submit Application’;
+        alert(‘Database unavailable. Please WhatsApp us directly at +91-8088434425 with your details.’);
+        return;
+      }
       try {
         await db.collection(‘partnerApplications’).add(data);
       } catch (error) {
@@ -2232,26 +2267,6 @@ Customer wants quote today.
       floatingCta.classList.toggle('show', show);
       floatingCta.setAttribute('aria-hidden', String(!show));
     }
-
-    let revealObserver = null;
-    if ('IntersectionObserver' in window) {
-      revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.15 });
-    }
-
-    document.querySelectorAll('.reveal').forEach((element) => {
-      if (revealObserver) {
-        revealObserver.observe(element);
-      } else {
-        element.classList.add('visible');
-      }
-    });
 
     document.getElementById('ordersRange').addEventListener('input', updateCalculator);
     document.getElementById('orderValueRange').addEventListener('input', updateCalculator);
