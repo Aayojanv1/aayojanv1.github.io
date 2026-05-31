@@ -414,38 +414,76 @@ def partner_welcome_email(name: str, business: str) -> str:
   </td></tr>
 
   <!-- WARM INTRO -->
-  <tr><td style="padding:36px 40px 0">
+  <tr><td style="padding:36px 40px 24px">
     <p style="margin:0 0 16px;font-size:16px;color:#333;line-height:1.7">Hi {name},</p>
-    <p style="margin:0 0 16px;font-size:15px;color:#555;line-height:1.75">You're one of the <strong style="color:#1C130A">very first caterers</strong> in Newtown &amp; Rajarhat to join Aayojan — before we open to the public. That's not a small thing. The caterers who join now shape what this platform becomes.</p>
-    <p style="margin:0;font-size:15px;color:#555;line-height:1.75">Here's what being a Founding Partner means for you:</p>
+    <p style="margin:0 0 16px;font-size:15px;color:#555;line-height:1.75">You're one of the <strong style="color:#1C130A">very first caterers</strong> in Newtown &amp; Rajarhat to join Aayojan — before we open to the public. The caterers who join now shape what this platform becomes.</p>
+    <p style="margin:0;font-size:15px;color:#555;line-height:1.75">Here is how it works and what you get as a Founding Partner:</p>
   </td></tr>
 
-  <!-- PERKS -->
+  <!-- HOW IT WORKS -->
+  <tr><td style="padding:0 40px 8px">
+    <div style="background:#FFF8EF;border-radius:16px;overflow:hidden;border:1px solid #f0e4d0">
+
+      <div style="padding:18px 22px;border-bottom:1px solid #f0e4d0">
+        <table cellpadding="0" cellspacing="0" width="100%"><tr>
+          <td style="width:36px;font-size:20px;vertical-align:top;padding-top:2px">🎯</td>
+          <td style="padding-left:12px">
+            <strong style="font-size:14px;color:#1C130A">Customers come to you on WhatsApp</strong><br>
+            <span style="font-size:13px;color:#777;line-height:1.5">When a customer posts an event in your area, Aayojan sends you the brief on WhatsApp — event type, guest count, cuisine and budget. You decide whether to quote.</span>
+          </td>
+        </tr></table>
+      </div>
+
+      <div style="padding:18px 22px;border-bottom:1px solid #f0e4d0">
+        <table cellpadding="0" cellspacing="0" width="100%"><tr>
+          <td style="width:36px;font-size:20px;vertical-align:top;padding-top:2px">💰</td>
+          <td style="padding-left:12px">
+            <strong style="font-size:14px;color:#1C130A">3% only on successful bookings — nothing else</strong><br>
+            <span style="font-size:13px;color:#777;line-height:1.5">No joining fee. No monthly subscription. No hidden charges. Aayojan takes a <strong style="color:#1C130A">3% commission only when you close a booking</strong>. You keep 97%. Zomato and Swiggy take 25–30% — we take 3%.</span>
+          </td>
+        </tr></table>
+      </div>
+
+      <div style="padding:18px 22px;border-bottom:1px solid #f0e4d0">
+        <table cellpadding="0" cellspacing="0" width="100%"><tr>
+          <td style="width:36px;font-size:20px;vertical-align:top;padding-top:2px">🏅</td>
+          <td style="padding-left:12px">
+            <strong style="font-size:14px;color:#1C130A">Founding badge — permanently on your profile</strong><br>
+            <span style="font-size:13px;color:#777;line-height:1.5">Your profile will carry the Founding Partner badge forever. Less category crowding right now means customers are more likely to notice and trust you before the platform fills up.</span>
+          </td>
+        </tr></table>
+      </div>
+
+      <div style="padding:18px 22px;border-bottom:1px solid #f0e4d0">
+        <table cellpadding="0" cellspacing="0" width="100%"><tr>
+          <td style="width:36px;font-size:20px;vertical-align:top;padding-top:2px">⚡</td>
+          <td style="padding-left:12px">
+            <strong style="font-size:14px;color:#1C130A">Early lead priority</strong><br>
+            <span style="font-size:13px;color:#777;line-height:1.5">New customer requests are shown to founding partners first, before the platform opens to everyone.</span>
+          </td>
+        </tr></table>
+      </div>
+
+      <div style="padding:18px 22px">
+        <table cellpadding="0" cellspacing="0" width="100%"><tr>
+          <td style="width:36px;font-size:20px;vertical-align:top;padding-top:2px">🤝</td>
+          <td style="padding-left:12px">
+            <strong style="font-size:14px;color:#1C130A">Free-forever onboarding support + no lock-in</strong><br>
+            <span style="font-size:13px;color:#777;line-height:1.5">Direct access to the Aayojan team on WhatsApp. No contract. Leave anytime. We win only when you win.</span>
+          </td>
+        </tr></table>
+      </div>
+
+    </div>
+  </td></tr>
+
+  <!-- PRICING CALLOUT -->
   <tr><td style="padding:24px 40px">
-    <table width="100%" cellpadding="0" cellspacing="0" style="background:#FFF8EF;border-radius:16px;overflow:hidden">
-      <tr><td style="padding:20px 24px;border-bottom:1px solid #f0e4d0">
-        <table cellpadding="0" cellspacing="0"><tr>
-          <td style="width:40px;font-size:22px;vertical-align:top;padding-top:2px">🎯</td>
-          <td style="padding-left:12px"><strong style="font-size:14px;color:#1C130A">Customers come to you</strong><br><span style="font-size:13px;color:#777;line-height:1.5">You receive verified event leads on WhatsApp. No cold calls, no marketing spend.</span></td>
-        </tr></table>
-      </td></tr>
-      <tr><td style="padding:20px 24px;border-bottom:1px solid #f0e4d0">
-        <table cellpadding="0" cellspacing="0"><tr>
-          <td style="width:40px;font-size:22px;vertical-align:top;padding-top:2px">🏅</td>
-          <td style="padding-left:12px"><strong style="font-size:14px;color:#1C130A">Founding badge — forever</strong><br><span style="font-size:13px;color:#777;line-height:1.5">Shown prominently on your profile. Customers see you joined early and trust you more.</span></td>
-        </tr></table>
-      </td></tr>
-      <tr><td style="padding:20px 24px;border-bottom:1px solid #f0e4d0">
-        <table cellpadding="0" cellspacing="0"><tr>
-          <td style="width:40px;font-size:22px;vertical-align:top;padding-top:2px">💰</td>
-          <td style="padding-left:12px"><strong style="font-size:14px;color:#1C130A">Zero commission on first 3 orders</strong><br><span style="font-size:13px;color:#777;line-height:1.5">Build your reputation and collect your first reviews — risk free.</span></td>
-        </tr></table>
-      </td></tr>
-      <tr><td style="padding:20px 24px">
-        <table cellpadding="0" cellspacing="0"><tr>
-          <td style="width:40px;font-size:22px;vertical-align:top;padding-top:2px">⚡</td>
-          <td style="padding-left:12px"><strong style="font-size:14px;color:#1C130A">Priority in early leads</strong><br><span style="font-size:13px;color:#777;line-height:1.5">New customer requests go to founding partners first, before the platform opens up.</span></td>
-        </tr></table>
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#1C130A,#3d2009);border-radius:14px">
+      <tr><td style="padding:20px 24px;text-align:center">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#F3C869;margin-bottom:6px">Simple pricing</div>
+        <div style="font-size:32px;font-weight:900;color:#fff;margin-bottom:4px">₹0 to join &nbsp;·&nbsp; 3% per booking</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.55)">No registration fee &nbsp;·&nbsp; No monthly fee &nbsp;·&nbsp; No contract</div>
       </td></tr>
     </table>
   </td></tr>
@@ -455,24 +493,24 @@ def partner_welcome_email(name: str, business: str) -> str:
     <p style="margin:0 0 16px;font-size:15px;font-weight:700;color:#1C130A">What happens next?</p>
     <table width="100%" cellpadding="0" cellspacing="0">
       <tr>
-        <td align="center" width="33%" style="padding:0 6px 0 0">
-          <div style="background:#fff;border:1.5px solid #f0e8d8;border-radius:14px;padding:18px 12px;text-align:center">
-            <div style="font-size:24px;margin-bottom:8px">✅</div>
-            <div style="font-size:12px;font-weight:700;color:#1C130A;margin-bottom:4px">Profile Review</div>
+        <td align="center" width="33%" style="padding:0 5px 0 0">
+          <div style="background:#FFF8EF;border:1.5px solid #f0e4d0;border-radius:14px;padding:18px 10px;text-align:center">
+            <div style="font-size:22px;margin-bottom:8px">✅</div>
+            <div style="font-size:12px;font-weight:700;color:#1C130A;margin-bottom:3px">Profile Review</div>
             <div style="font-size:11px;color:#999">Within 24 hours</div>
           </div>
         </td>
-        <td align="center" width="33%" style="padding:0 3px">
-          <div style="background:#fff;border:1.5px solid #f0e8d8;border-radius:14px;padding:18px 12px;text-align:center">
-            <div style="font-size:24px;margin-bottom:8px">💬</div>
-            <div style="font-size:12px;font-weight:700;color:#1C130A;margin-bottom:4px">WhatsApp Intro</div>
-            <div style="font-size:11px;color:#999">We reach out</div>
+        <td align="center" width="33%" style="padding:0 2px">
+          <div style="background:#FFF8EF;border:1.5px solid #f0e4d0;border-radius:14px;padding:18px 10px;text-align:center">
+            <div style="font-size:22px;margin-bottom:8px">💬</div>
+            <div style="font-size:12px;font-weight:700;color:#1C130A;margin-bottom:3px">WhatsApp Intro</div>
+            <div style="font-size:11px;color:#999">Team reaches out</div>
           </div>
         </td>
-        <td align="center" width="33%" style="padding:0 0 0 6px">
-          <div style="background:#fff;border:1.5px solid #f0e8d8;border-radius:14px;padding:18px 12px;text-align:center">
-            <div style="font-size:24px;margin-bottom:8px">🚪</div>
-            <div style="font-size:12px;font-weight:700;color:#1C130A;margin-bottom:4px">First Lead</div>
+        <td align="center" width="33%" style="padding:0 0 0 5px">
+          <div style="background:#FFF8EF;border:1.5px solid #f0e4d0;border-radius:14px;padding:18px 10px;text-align:center">
+            <div style="font-size:22px;margin-bottom:8px">🚪</div>
+            <div style="font-size:12px;font-weight:700;color:#1C130A;margin-bottom:3px">First Lead</div>
             <div style="font-size:11px;color:#999">Customer finds you</div>
           </div>
         </td>
@@ -483,13 +521,15 @@ def partner_welcome_email(name: str, business: str) -> str:
   <!-- CTA -->
   <tr><td style="padding:0 40px 36px;text-align:center">
     <a href="https://aayojan.online" style="display:inline-block;background:linear-gradient(135deg,#E8760A,#C95F08);color:#fff;text-decoration:none;font-size:15px;font-weight:700;padding:16px 40px;border-radius:14px;letter-spacing:0.3px">Explore Aayojan →</a>
-    <p style="margin:20px 0 0;font-size:13px;color:#aaa">Questions? Reply to this email or</p>
-    <a href="https://wa.me/918088434425" style="font-size:13px;color:#E8760A;font-weight:700;text-decoration:none">💬 WhatsApp us at +91-8088434425</a>
+    <p style="margin:20px 0 6px;font-size:13px;color:#aaa">Any questions? We're easy to reach.</p>
+    <a href="https://wa.me/918088434425" style="font-size:13px;color:#E8760A;font-weight:700;text-decoration:none">💬 WhatsApp +91-8088434425</a>
+    &nbsp;&nbsp;
+    <a href="mailto:aayojan11@gmail.com" style="font-size:13px;color:#E8760A;font-weight:700;text-decoration:none">✉️ aayojan11@gmail.com</a>
   </td></tr>
 
   <!-- FOOTER -->
   <tr><td style="background:#1C130A;padding:24px 40px;text-align:center">
-    <p style="margin:0 0 6px;font-size:13px;color:rgba(255,255,255,0.5)">© 2026 Aayojan · Newtown, Kolkata</p>
+    <p style="margin:0 0 6px;font-size:12px;color:rgba(255,255,255,0.4)">© 2026 Aayojan · Newtown, Kolkata</p>
     <a href="https://aayojan.online" style="font-size:12px;color:#E8760A;text-decoration:none">aayojan.online</a>
   </td></tr>
 
