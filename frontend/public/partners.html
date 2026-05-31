@@ -1790,7 +1790,7 @@ Customer wants quote today.
 
               <div class="form-actions">
                 <span class="form-note">Takes about 2 minutes. Your details stay private.</span>
-                <button class="step-button primary" type="button" data-next>Continue to step 2</button>
+                <button class="step-button primary" type="button" id="continueBtn" data-next>🔒 Verify email to continue</button>
               </div>
             </div>
 
@@ -2041,6 +2041,15 @@ Customer wants quote today.
         return false;
       }
 
+      if (currentStep === 0 && document.getElementById('waVerified').value !== '1') {
+        const msg = document.getElementById('otpMsg');
+        document.getElementById('otpRow').style.display = 'block';
+        msg.style.color = '#dc2626';
+        msg.textContent = '⚠️ Please verify your email with the OTP before continuing.';
+        document.getElementById('otpInput').focus();
+        return false;
+      }
+
       return true;
     }
 
@@ -2135,6 +2144,8 @@ Customer wants quote today.
           msg.style.color = '#16a34a';
           msg.textContent = '✅ Email verified!';
           document.getElementById('sendOtpBtn').style.display = 'none';
+          const continueBtn = document.getElementById('continueBtn');
+          if (continueBtn) { continueBtn.textContent = 'Continue to step 2 →'; }
         } else {
           document.getElementById('otpInput').style.borderColor = '#ef4444';
           msg.style.color = '#dc2626';
