@@ -2,6 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import { useAuth, getPartners, getAllPartners, addPartner, updatePartner, deletePartner, createOrder, getAllOrders, getUserOrders, savePayment, updateUserPhone, updateUserPreferences, updateUserProfile } from "./useFirebase";
 import { matchCaterers, anonymize } from "./matchingPipeline";
 
+const track = (event, params = {}) => {
+  if (typeof window.gtag === 'function' && !window['ga-disable-G-VSGREVV7RS']) {
+    window.gtag('event', event, params);
+  }
+};
+
 // ─── Geo Data ─────────────────────────────────────────────────────────────────
 const PINCODE_COORDS = {
   "700156":{ lat:22.5894,lng:88.4802,area:"Action Area I, Newtown" },
@@ -380,6 +386,7 @@ TONE: Professional yet friendly. Use Bengali phrases occasionally (e.g., "আপ
     }
 
     setInput("");setMsgCount(c=>c+1);
+    track('ai_chat_message',{message_number:msgCount+1});
     const newMsgs=[...msgs,{role:"user",text}];setMsgs(newMsgs);setLoading(true);
     try{
       const API_URL=import.meta.env.VITE_API_URL||"http://localhost:8000";
@@ -690,7 +697,7 @@ export default function AayojanApp(){
   // ── Firebase Auth Handlers ──────────────────────────────────────────────
   const handleGoogleLogin=async()=>{
     setLoginError("");setLoginLoading(true);
-    try{ await loginWithGoogle(); setShowLogin(false); }
+    try{ await loginWithGoogle(); setShowLogin(false); track('login',{method:'google'}); }
     catch(e){ setLoginError(e.message); }
     finally{ setLoginLoading(false); }
   };
@@ -700,8 +707,8 @@ export default function AayojanApp(){
     if(loginMode==="signup"&&!loginName){setLoginError("Name is required.");return;}
     setLoginLoading(true);
     try{
-      if(loginMode==="signup") await signupWithEmail(loginEmail,loginPassword,loginName);
-      else await loginWithEmail(loginEmail,loginPassword);
+      if(loginMode==="signup"){ await signupWithEmail(loginEmail,loginPassword,loginName); track('sign_up',{method:'email'}); }
+      else{ await loginWithEmail(loginEmail,loginPassword); track('login',{method:'email'}); }
       setShowLogin(false);setLoginEmail("");setLoginPassword("");setLoginName("");
     }catch(e){
       const msg=e.code==="auth/user-not-found"?"No account found. Sign up instead."
@@ -788,6 +795,7 @@ export default function AayojanApp(){
   // ── Quotes (Pipeline: Retrieve → Rank → Rerank) ────────────────────────────
   const generateQuotes=()=>{
     if(!user){setShowLogin(true);return;}
+    track('quote_requested',{event_type:eventType,service_type:serviceType,guest_count:guestCount,budget_per_plate:perPlateBudget});
     setLoading(true);
     setTimeout(()=>{
       // Run 3-stage matching pipeline
@@ -804,6 +812,7 @@ export default function AayojanApp(){
       }).sort((a,b)=>a.perPlateActual-b.perPlateActual);
       const now=new Date();const qr={id:`QR-${Date.now()}`,customerId:user?.uid,customerEmail:user?.email,catererIds:matched.map(c=>c.id),eventType,eventDate,mealTime,serviceType,dietaryPref,guestCount,perPlateBudget,menuItems:selectedItems,customerPincode,sentAt:now.toISOString(),expiresAt:new Date(now.getTime()+WAIT_HRS*3600000).toISOString(),status:"Awaiting Responses",pipeline:result.pipeline,whatsappLog:matched.map(c=>({catererId:c.id,catererName:c._anonLabel,maskedPhone:"••••••••••",sentAt:now.toISOString(),status:"Sent ✅"}))};
       DB.saveQR(qr);setQuotationRequest(qr);setWhatsappSent(qr.whatsappLog);setQuotes(matched);setLoading(false);setStep(5);
+      track('caterers_matched',{count:matched.length,event_type:eventType,service_type:serviceType});
     },1800);
   };
 
@@ -814,6 +823,7 @@ export default function AayojanApp(){
     setPaymentModal({amount:PHONE_UNLOCK_FEE,purpose:`Unlock ${caterer.name}'s contact number`,catererId:caterer.id,type:"phone_unlock",catererName:caterer.name,
       onSuccess:async()=>{
         await savePayment({customerId:user.uid,catererId:caterer.id,catererName:caterer.name,type:"phone_unlock",amount:PHONE_UNLOCK_FEE,status:"success",paidAt:new Date().toISOString()});
+        track('phone_unlocked',{value:PHONE_UNLOCK_FEE,currency:'INR'});
         setUnlockedPhones(prev=>({...prev,[caterer.id]:caterer.phone}));
         setPaymentModal(null);
       }
@@ -826,6 +836,7 @@ export default function AayojanApp(){
     setPaymentModal({amount:FOOD_TASTING_FEE,purpose:`Book Food Tasting Session with ${caterer.name}`,catererId:caterer.id,type:"food_tasting",catererName:caterer.name,
       onSuccess:async()=>{
         await savePayment({customerId:user.uid,catererId:caterer.id,catererName:caterer.name,type:"food_tasting",amount:FOOD_TASTING_FEE,status:"success",paidAt:new Date().toISOString()});
+        track('food_tasting_booked',{value:FOOD_TASTING_FEE,currency:'INR'});
         setTastingBooked(prev=>({...prev,[caterer.id]:true}));
         setPaymentModal(null);
       }
@@ -834,11 +845,11 @@ export default function AayojanApp(){
 
   // ── Order ─────────────────────────────────────────────────────────────────
   const validateAddress=()=>{const e={};if(!deliveryAddress.flat.trim())e.flat="Required";if(!deliveryAddress.building.trim())e.building="Required";if(!deliveryAddress.street.trim())e.street="Required";if(!deliveryAddress.pincode.trim()||deliveryAddress.pincode.length!==6)e.pincode="Valid 6-digit pincode required";setAddressErrors(e);return Object.keys(e).length===0;};
-  const placeOrder=async()=>{if(!validateAddress())return;const order={quotationRequestId:quotationRequest?.id,customerId:user?.uid,customerEmail:user?.email,customerPhone:user?.phone||"",catererId:selectedQuote.id,catererName:selectedQuote._realName||selectedQuote.name,eventType,serviceType,guestCount,perPlateBudget,perPlateActual:selectedQuote.perPlateActual,menuItems:selectedItems,deliveryAddress:`${deliveryAddress.flat}, ${deliveryAddress.building}, ${deliveryAddress.street}${deliveryAddress.landmark?", "+deliveryAddress.landmark:""}, ${deliveryAddress.city} - ${deliveryAddress.pincode}`,deliveryPincode:deliveryAddress.pincode,distanceKm:selectedQuote.distanceKm,basePrice:selectedQuote.basePrice,travelSurcharge:selectedQuote.travelSurcharge,totalPrice:selectedQuote.totalPrice,quoteCode:selectedQuote.quoteCode,matchScore:selectedQuote._matchPercent,status:"Confirmed",placedAt:new Date().toISOString()};const orderId=await createOrder(order);setOrderPlaced({id:orderId,...order});setStep(6);};
+  const placeOrder=async()=>{if(!validateAddress())return;const order={quotationRequestId:quotationRequest?.id,customerId:user?.uid,customerEmail:user?.email,customerPhone:user?.phone||"",catererId:selectedQuote.id,catererName:selectedQuote._realName||selectedQuote.name,eventType,serviceType,guestCount,perPlateBudget,perPlateActual:selectedQuote.perPlateActual,menuItems:selectedItems,deliveryAddress:`${deliveryAddress.flat}, ${deliveryAddress.building}, ${deliveryAddress.street}${deliveryAddress.landmark?", "+deliveryAddress.landmark:""}, ${deliveryAddress.city} - ${deliveryAddress.pincode}`,deliveryPincode:deliveryAddress.pincode,distanceKm:selectedQuote.distanceKm,basePrice:selectedQuote.basePrice,travelSurcharge:selectedQuote.travelSurcharge,totalPrice:selectedQuote.totalPrice,quoteCode:selectedQuote.quoteCode,matchScore:selectedQuote._matchPercent,status:"Confirmed",placedAt:new Date().toISOString()};const orderId=await createOrder(order);track('order_placed',{event_type:eventType,service_type:serviceType,guest_count:guestCount,total_price:order.totalPrice,currency:'INR'});setOrderPlaced({id:orderId,...order});setStep(6);};
 
   // ── Registration ──────────────────────────────────────────────────────────
   const validateReg=()=>{const e={};if(!regForm.name.trim())e.name="Required";if(!regForm.ownerName.trim())e.ownerName="Required";if(!/^\d{10}$/.test(regForm.phone))e.phone="Valid 10-digit number";if(!regForm.email.includes("@"))e.email="Valid email required";if(!regForm.address.trim())e.address="Required";if(!PINCODE_COORDS[regForm.pincode.trim()])e.pincode="Valid Kolkata pincode";if(regForm.specialty.length===0)e.specialty="Select at least one";if(regForm.cuisineSpecialties.length===0)e.cuisineSpecialties="Select at least one";if(regForm.serviceTypes.length===0)e.serviceTypes="Select at least one";if(regForm.pricePerPlateMin>=regForm.pricePerPlateMax)e.pricing="Min must be less than max";setRegErrors(e);return Object.keys(e).length===0;};
-  const submitReg=async()=>{if(!validateReg())return;const logos=["🍽️","🥘","🫕","🥗","🍛","🥞","🎂"];await addPartner({...regForm,pincode:regForm.pincode.trim(),logo:logos[Math.floor(Math.random()*logos.length)],tags:regForm.cuisineSpecialties.slice(0,3),turnaround:regForm.turnaround,deliveryPincodes:regForm.deliveryPincodes.length>0?regForm.deliveryPincodes:Object.keys(PINCODE_COORDS)});setRegSuccess(true);setRegStep(0);getPartners().then(p=>{if(p.length>0)setFirestoreCaterers(p);});};
+  const submitReg=async()=>{if(!validateReg())return;const logos=["🍽️","🥘","🫕","🥗","🍛","🥞","🎂"];await addPartner({...regForm,pincode:regForm.pincode.trim(),logo:logos[Math.floor(Math.random()*logos.length)],tags:regForm.cuisineSpecialties.slice(0,3),turnaround:regForm.turnaround,deliveryPincodes:regForm.deliveryPincodes.length>0?regForm.deliveryPincodes:Object.keys(PINCODE_COORDS)});track('partner_registered',{cuisine:regForm.cuisineSpecialties[0],pincode:regForm.pincode});setRegSuccess(true);setRegStep(0);getPartners().then(p=>{if(p.length>0)setFirestoreCaterers(p);});};
 
   const copyCode=(code)=>{navigator.clipboard?.writeText(code);setCopiedCode(code);setTimeout(()=>setCopiedCode(null),2000);};
   const toggleItem=(item)=>setSelectedItems(prev=>prev.includes(item)?prev.filter(i=>i!==item):[...prev,item]);
@@ -1635,7 +1646,7 @@ export default function AayojanApp(){
               <p style={{fontSize:14,color:"#6b7280",marginBottom:20}}>How would you like your catering?</p>
               <div className="service-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
                 {Object.values(SVC).map(svc=>(
-                  <button key={svc.id} onClick={()=>{setServiceType(svc.id);setStep(1);}} style={{border:`2px solid ${svc.border}`,borderRadius:16,padding:"22px 18px",cursor:"pointer",background:svc.grad,textAlign:"left",display:"flex",flexDirection:"column",gap:8}}>
+                  <button key={svc.id} onClick={()=>{setServiceType(svc.id);setStep(1);track('service_selected',{service_type:svc.id});}} style={{border:`2px solid ${svc.border}`,borderRadius:16,padding:"22px 18px",cursor:"pointer",background:svc.grad,textAlign:"left",display:"flex",flexDirection:"column",gap:8}}>
                     <div style={{width:50,height:50,borderRadius:12,background:`rgba(${svc.accentRGB},0.12)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:24}}>{svc.icon}</div>
                     <div style={{fontSize:18,fontWeight:800,fontFamily:"'Playfair Display',serif",color:svc.color}}>{svc.label}</div>
                     <div style={{fontSize:12,color:"#6b7280"}}>{svc.tagline}</div>
