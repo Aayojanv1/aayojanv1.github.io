@@ -1317,7 +1317,8 @@ export default function AayojanApp(){
       {/* ══════════════════════════════════════════════════════════════════════
           REGISTRATION
       ══════════════════════════════════════════════════════════════════════ */}
-      {view==="register"&&(
+      {view==="register"&&(()=>{window.location.href="/partners.html";return null;})()}
+      {false&&(
         <div style={{...S.page,...anim}}>
           <div style={{maxWidth:700,margin:"0 auto"}}>
             {!regSuccess?<>

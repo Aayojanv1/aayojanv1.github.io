@@ -9,6 +9,7 @@
     if (localStorage.getItem('ga_opt_out') === '1') {
       window['ga-disable-G-VSGREVV7RS'] = true;
     }
+    document.documentElement.classList.add('js');
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VSGREVV7RS"></script>
   <script>
@@ -1271,13 +1272,13 @@
       }
     }
 
-    .reveal {
+    .js .reveal {
       opacity: 0;
       transform: translateY(18px);
       transition: opacity 0.55s ease, transform 0.55s ease;
     }
 
-    .reveal.visible {
+    .js .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
@@ -1367,7 +1368,7 @@
       <a href="https://aayojan.online" class="brand"><img src="logo-aayojan-compact.svg" alt="Aayojan" style="height:40px;vertical-align:middle;margin-right:0.4rem;border-radius:50%;">Aayo<span>jan</span></a>
       <div class="topbar-meta">Founding caterer network for Newtown, Rajarhat &amp; Salt Lake</div>
       <div class="topbar-actions">
-        <a class="ghost-link" href="mailto:aayojan1@gmail.com">aayojan1@gmail.com</a>
+        <a class="ghost-link" href="mailto:aayojan11@gmail.com">aayojan11@gmail.com</a>
         <a class="cta-link" href="#register">Join as Founding Partner</a>
       </div>
     </div>
@@ -1773,7 +1774,15 @@ Customer wants quote today.
                 </div>
                 <div class="field">
                   <label for="email">Email address *</label>
-                  <input id="email" name="email" type="email" placeholder="you@example.com" required>
+                  <div style="display:flex;gap:8px;align-items:flex-start">
+                    <input id="email" name="email" type="email" placeholder="you@example.com" required style="flex:1">
+                    <button type="button" id="sendOtpBtn" onclick="sendEmailOTP()" style="white-space:nowrap;padding:10px 14px;background:#E8760A;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;flex-shrink:0">Send OTP</button>
+                  </div>
+                  <div id="otpRow" style="display:none;margin-top:10px">
+                    <input id="otpInput" type="text" maxlength="6" placeholder="Enter 6-digit code from your email" style="width:100%;padding:10px 14px;border:1.5px solid #e8e8e8;border-radius:10px;font-size:15px;letter-spacing:6px;text-align:center;font-family:monospace">
+                    <div id="otpMsg" style="font-size:12px;margin-top:6px;color:#666"></div>
+                  </div>
+                  <input type="hidden" id="waVerified" value="0">
                 </div>
               </div>
 
@@ -1839,6 +1848,13 @@ Customer wants quote today.
                   </select>
                 </div>
               </div>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="fssai">FSSAI License Number <span style="font-weight:400;color:#9ca3af;">(optional — boosts your ranking)</span></label>
+                  <input id="fssai" name="fssaiLicense" type="text" maxlength="14" placeholder="14-digit FSSAI number e.g. 21424013000672">
+                  <div style="font-size:11px;color:#9ca3af;margin-top:4px;">Licensed caterers are ranked higher and shown to premium customers first.</div>
+                </div>
+              </div>
               <div class="form-actions">
                 <button class="step-button secondary" type="button" data-back>Back</button>
                 <button class="step-button primary" type="button" data-next>Continue to step 3</button>
@@ -1860,7 +1876,7 @@ Customer wants quote today.
                 <button class="step-button secondary" type="button" data-back>Back</button>
                 <button class="final-submit" type="submit">Submit founding partner application</button>
               </div>
-              <div class="form-note">By applying, you’re asking Aayojan to contact you about onboarding. Support: <a href="mailto:aayojan1@gmail.com">aayojan1@gmail.com</a> · WhatsApp: <a target="_blank" rel="noopener" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20have%20a%20question%20about%20the%20partner%20program.">918088434425</a></div>
+              <div class="form-note">By applying, you’re asking Aayojan to contact you about onboarding. Support: <a href="mailto:aayojan11@gmail.com">aayojan11@gmail.com</a> · WhatsApp: <a target="_blank" rel="noopener" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20have%20a%20question%20about%20the%20partner%20program.">918088434425</a></div>
             </div>
           </form>
         </div>
@@ -1892,7 +1908,7 @@ Customer wants quote today.
     <div class="container footer-inner">
       <div>© 2025 Aayojan Technologies · UDYAM-WB-14-0277694 · MSME Registered</div>
       <div style="font-size:11px;opacity:0.7;margin-top:4px;">Built for caterers across Newtown, Rajarhat and Salt Lake.</div>
-      <div><a href="mailto:aayojan1@gmail.com">aayojan1@gmail.com</a> · <a target="_blank" rel="noopener" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20want%20to%20know%20more%20about%20partnering.">WhatsApp 918088434425</a> · <a href="#faq">Partner FAQ</a></div>
+      <div><a href="mailto:aayojan11@gmail.com">aayojan11@gmail.com</a> · <a target="_blank" rel="noopener" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20want%20to%20know%20more%20about%20partnering.">WhatsApp 918088434425</a> · <a href="#faq">Partner FAQ</a></div>
     </div>
   </footer>
 
@@ -2037,6 +2053,89 @@ Customer wants quote today.
       }
     });
 
+    const API_BASE = ‘https://aayojan-a1fi.onrender.com’;
+
+    // Google Sheets backup URL — deploy Apps Script and paste the URL here
+    const SHEETS_BACKUP_URL = ‘PASTE_APPS_SCRIPT_URL_HERE’;
+
+    // ── Email OTP ──
+    async function sendEmailOTP() {
+      const email = document.getElementById(‘email’).value.trim();
+      if (!email || !email.includes(‘@’)) {
+        alert(‘Please enter a valid email address first.’);
+        return;
+      }
+      const btn = document.getElementById(‘sendOtpBtn’);
+      btn.disabled = true;
+      btn.textContent = ‘Sending...’;
+
+      try {
+        await fetch(`${API_BASE}/api/otp/email/send`, {
+          method: ‘POST’,
+          headers: { ‘Content-Type’: ‘application/json’ },
+          body: JSON.stringify({ email }),
+        });
+        document.getElementById(‘otpRow’).style.display = ‘block’;
+        document.getElementById(‘otpMsg’).textContent = ‘📧 OTP sent! Check your inbox (and spam folder).’;
+        document.getElementById(‘otpMsg’).style.color = ‘#666’;
+        btn.textContent = ‘Resend’;
+        btn.disabled = false;
+
+        document.getElementById(‘otpInput’).addEventListener(‘input’, function() {
+          if (this.value.length === 6) verifyEmailOTP();
+        });
+      } catch (e) {
+        btn.textContent = ‘Send OTP’;
+        btn.disabled = false;
+        document.getElementById(‘otpRow’).style.display = ‘block’;
+        document.getElementById(‘otpMsg’).textContent = ‘❌ Could not send OTP. Try again.’;
+        document.getElementById(‘otpMsg’).style.color = ‘#dc2626’;
+      }
+    }
+
+    async function verifyEmailOTP() {
+      const email = document.getElementById(‘email’).value.trim();
+      const otp = document.getElementById(‘otpInput’).value.trim();
+      const msg = document.getElementById(‘otpMsg’);
+      msg.textContent = ‘Verifying...’;
+      msg.style.color = ‘#666’;
+      try {
+        const res = await fetch(`${API_BASE}/api/otp/email/verify`, {
+          method: ‘POST’,
+          headers: { ‘Content-Type’: ‘application/json’ },
+          body: JSON.stringify({ email, otp }),
+        });
+        const data = await res.json();
+        if (data.valid) {
+          document.getElementById(‘waVerified’).value = ‘1’;
+          document.getElementById(‘otpInput’).style.borderColor = ‘#22c55e’;
+          msg.style.color = ‘#16a34a’;
+          msg.textContent = ‘✅ Email verified!’;
+          document.getElementById(‘sendOtpBtn’).style.display = ‘none’;
+        } else {
+          document.getElementById(‘otpInput’).style.borderColor = ‘#ef4444’;
+          msg.style.color = ‘#dc2626’;
+          msg.textContent = ‘❌ Wrong OTP. Please try again.’;
+        }
+      } catch (e) {
+        msg.style.color = ‘#dc2626’;
+        msg.textContent = ‘❌ Verification failed. Try again.’;
+      }
+    }
+
+    async function backupToSheets(data) {
+      if (!SHEETS_BACKUP_URL || SHEETS_BACKUP_URL.startsWith(‘PASTE’)) return;
+      try {
+        await fetch(SHEETS_BACKUP_URL, {
+          method: ‘POST’,
+          headers: { ‘Content-Type’: ‘text/plain’ },
+          body: JSON.stringify(data),
+        });
+      } catch (e) {
+        console.warn(‘Sheets backup failed (non-critical):’, e);
+      }
+    }
+
     async function handleSubmit(event) {
       event.preventDefault();
 
@@ -2045,35 +2144,59 @@ Customer wants quote today.
         return;
       }
 
-      const submitButton = form.querySelector('.final-submit');
+      const submitButton = form.querySelector(‘.final-submit’);
       submitButton.disabled = true;
-      submitButton.textContent = 'Submitting application...';
+      submitButton.textContent = ‘Saving your application...’;
 
       const data = {
-        businessName: document.getElementById('bizName').value.trim(),
-        contactPerson: document.getElementById('contactName').value.trim(),
-        whatsapp: document.getElementById('whatsapp').value.trim(),
-        email: document.getElementById('email').value.trim(),
+        businessName: document.getElementById(‘bizName’).value.trim(),
+        contactPerson: document.getElementById(‘contactName’).value.trim(),
+        whatsapp: document.getElementById(‘whatsapp’).value.trim(),
+        email: document.getElementById(‘email’).value.trim(),
         serviceAreas: getServiceAreas(),
-        cuisine: document.getElementById('cuisine').value,
-        capacity: document.getElementById('capacity').value,
-        currentMonthlyOrders: document.getElementById('currentMonthlyOrders').value,
-        avgOrderValue: document.getElementById('avgOrderValue').value,
-        specialties: document.getElementById('specialties').value.trim(),
-        experience: document.getElementById('experience').value.trim(),
+        cuisine: document.getElementById(‘cuisine’).value,
+        capacity: document.getElementById(‘capacity’).value,
+        currentMonthlyOrders: document.getElementById(‘currentMonthlyOrders’).value,
+        avgOrderValue: document.getElementById(‘avgOrderValue’).value,
+        specialties: document.getElementById(‘specialties’).value.trim(),
+        experience: document.getElementById(‘experience’).value.trim(),
+        fssaiLicense: (document.getElementById(‘fssai’) || {}).value?.trim() || ‘’,
         submittedAt: new Date().toISOString(),
-        status: 'new',
-        source: 'partners.html',
+        status: ‘new’,
+        source: ‘partners.html’,
         foundingProgram: true
       };
 
-      try {
-        await db.collection('partnerApplications').add(data);
-      } catch (error) {
-        console.log('Firestore save error (non-blocking):', error);
+      // Guard: WhatsApp must be OTP-verified
+      if (document.getElementById(‘waVerified’).value !== ‘1’) {
+        submitButton.disabled = false;
+        submitButton.textContent = ‘Submit Application’;
+        alert(‘Please verify your WhatsApp number with the OTP before submitting.’);
+        return;
       }
 
-      const message = `Hi Aayojan! I just submitted the partner form.\n\nBusiness: ${data.businessName}\nContact: ${data.contactPerson}\nWhatsApp: ${data.whatsapp}\nCuisine: ${data.cuisine}\nCapacity: ${data.capacity}\nAreas: ${data.serviceAreas.join(', ')}\nSpecialty: ${data.specialties}`;
+      // Primary: Firestore — blocking
+      try {
+        await db.collection(‘partnerApplications’).add(data);
+      } catch (error) {
+        console.error(‘Firestore save failed:’, error);
+        submitButton.disabled = false;
+        submitButton.textContent = ‘Submit Application’;
+        alert(‘Could not save your application. Please try again or WhatsApp us directly at +91-8088434425.’);
+        return;
+      }
+
+      // Secondary: Google Sheets backup (fire-and-forget)
+      backupToSheets(data);
+
+      // Tertiary: Email + WhatsApp welcome via backend (fire-and-forget)
+      fetch(`${API_BASE}/api/notify-partner`, {
+        method: ‘POST’,
+        headers: { ‘Content-Type’: ‘application/json’ },
+        body: JSON.stringify(data),
+      }).catch(e => console.warn(‘Notify-partner failed:’, e));
+
+      const message = `Hi Aayojan! I just submitted the partner form.\n\nBusiness: ${data.businessName}\nContact: ${data.contactPerson}\nWhatsApp: ${data.whatsapp}\nFSSAI: ${data.fssaiLicense || ‘not provided’}\nCuisine: ${data.cuisine}\nCapacity: ${data.capacity}\nAreas: ${data.serviceAreas.join(‘, ‘)}\nSpecialty: ${data.specialties}`;
       const whatsappLink = `https://wa.me/918088434425?text=${encodeURIComponent(message)}`;
 
       form.innerHTML = `
@@ -2082,14 +2205,14 @@ Customer wants quote today.
           <h3>Your founding partner application is in.</h3>
           <p>Thank you, ${data.contactPerson}. We’ll review your details and reach out within 24 hours on WhatsApp or email.</p>
           <p><a class="button primary" target="_blank" rel="noopener" href="${whatsappLink}">Open WhatsApp and notify the team</a></p>
-          <p>If you prefer email, write to <a href="mailto:aayojan1@gmail.com">aayojan1@gmail.com</a>. Your registered number: <strong>${data.whatsapp}</strong></p>
+          <p>If you prefer email, write to <a href="mailto:aayojan11@gmail.com">aayojan11@gmail.com</a>. Your registered number: <strong>${data.whatsapp}</strong></p>
         </div>
       `;
 
-      const floatingCta = document.getElementById('floatingCta');
+      const floatingCta = document.getElementById(‘floatingCta’);
       applicationSubmitted = true;
-      floatingCta.classList.remove('show');
-      floatingCta.setAttribute('aria-hidden', 'true');
+      floatingCta.classList.remove(‘show’);
+      floatingCta.setAttribute(‘aria-hidden’, ‘true’);
     }
 
     form.addEventListener('submit', handleSubmit);
