@@ -1254,7 +1254,8 @@ export default function AayojanApp(){
             </div>
           </div>
           <div style={{maxWidth:820,margin:"20px auto 0",paddingTop:16,borderTop:"1px solid var(--border-light)",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}}>
-            <div style={{fontSize:11,color:"var(--text-muted)"}}>© 2025 Aayojan AI. Made with ❤️ in Kolkata</div>
+            <div style={{fontSize:11,color:"var(--text-muted)"}}>© 2025 Aayojan Technologies. Made with ❤️ in Kolkata</div>
+            <div style={{fontSize:10,color:"var(--text-muted)",marginTop:4,opacity:0.8}}>MSME Registered | UDYAM-WB-14-0277694 | Micro Enterprise</div>
             <div style={{display:"flex",gap:16}}>
               <span style={{fontSize:11,color:"var(--text-muted)",cursor:"pointer"}}>Privacy Policy</span>
               <span style={{fontSize:11,color:"var(--text-muted)",cursor:"pointer"}}>Terms of Service</span>
@@ -2798,7 +2799,7 @@ export default function AayojanApp(){
 
           {/* Footer */}
           <footer style={{textAlign:"center",padding:"2rem",color:"var(--text-muted)",fontSize:"0.85rem",borderTop:"1px solid var(--border-default)"}}>
-            <p>© 2025 Aayojan AI — <span style={{cursor:"pointer",color:"var(--text-accent)"}} onClick={()=>navigate("landing")}>aayojan.online</span> · Newtown, Kolkata · <span style={{cursor:"pointer",color:"var(--text-accent)"}} onClick={()=>navigate("partner-terms")}>Partner with Us</span></p>
+            <p>© 2025 Aayojan Technologies (UDYAM-WB-14-0277694) — <span style={{cursor:"pointer",color:"var(--text-accent)"}} onClick={()=>navigate("landing")}>aayojan.online</span> · Newtown, Kolkata · <span style={{cursor:"pointer",color:"var(--text-accent)"}} onClick={()=>navigate("partner-terms")}>Partner with Us</span></p>
           </footer>
         </div>
       )}
