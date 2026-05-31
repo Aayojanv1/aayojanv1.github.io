@@ -1412,7 +1412,7 @@
                 </div>
               </div>
               <div class="badge-copy">
-                <h3>The badge that signals “book me first.”</h3>
+                <h3>The badge that signals "book me first."</h3>
                 <p>This visual trust marker tells customers you joined early, got verified early and take quality seriously. It is designed to boost response rates before reviews start stacking up.</p>
                 <div class="mini-grid">
                   <div class="stat-card">
@@ -1476,8 +1476,8 @@
           <div class="calc-output">
             <div class="calc-kicker">Potential monthly booking value</div>
             <div class="calc-amount" id="grossRevenue">₹1,80,000</div>
-            <p><strong id="netRevenue">₹1,74,600</strong> kept after Aayojan’s 3% success fee.</p>
-            <p>That’s <strong id="yearlyRevenue">₹21,60,000</strong> in annual booking value if you sustain this rhythm.</p>
+            <p><strong id="netRevenue">₹1,74,600</strong> kept after Aayojan's 3% success fee.</p>
+            <p>That's <strong id="yearlyRevenue">₹21,60,000</strong> in annual booking value if you sustain this rhythm.</p>
             <p id="calcNarrative">Four bookings at ₹45,000 each can turn a slow month into a confident one — while you still keep the vast majority of the revenue.</p>
           </div>
         </div>
@@ -1542,7 +1542,7 @@
         <div class="section-head reveal">
           <div class="section-label">How leads work</div>
           <h2>This is what a real Aayojan lead feels like.</h2>
-          <p>Not a vague “call me.” A structured brief lands on WhatsApp so you know whether to respond, what to quote and how fast to move.</p>
+          <p>Not a vague "call me." A structured brief lands on WhatsApp so you know whether to respond, what to quote and how fast to move.</p>
         </div>
 
         <div class="lead-layout reveal">
@@ -1577,7 +1577,7 @@ Area: Newtown
 Need tasting: Yes
 Customer wants quote today.
 <time>10:12 AM</time></div>
-              <div class="bubble incoming">Suggested opener: “Thank you for sharing the requirement. We can propose a Bengali wedding menu for 200 guests and send options in 10 minutes.”
+              <div class="bubble incoming">Suggested opener: "Thank you for sharing the requirement. We can propose a Bengali wedding menu for 200 guests and send options in 10 minutes."
 <time>10:13 AM</time></div>
               <div class="bubble outgoing">Thanks for the lead. Sending 3 menu options, per-plate estimate and tasting availability now.
 <time>10:17 AM</time></div>
@@ -1734,7 +1734,7 @@ Customer wants quote today.
         <div class="form-shell reveal">
           <div class="section-label">Apply now</div>
           <h2>Become an Aayojan founding partner.</h2>
-          <p>Complete the three short steps below. Save your spot, tell us how you cater, and we’ll take the conversation forward on WhatsApp.</p>
+          <p>Complete the three short steps below. Save your spot, tell us how you cater, and we'll take the conversation forward on WhatsApp.</p>
 
           <div class="form-progress-head">
             <strong id="formStepLabel">Step 1 of 3</strong>
@@ -1868,7 +1868,7 @@ Customer wants quote today.
                 <button class="step-button secondary" type="button" data-back>Back</button>
                 <button class="final-submit" type="submit">Submit founding partner application</button>
               </div>
-              <div class="form-note">By applying, you’re asking Aayojan to contact you about onboarding. Support: <a href="mailto:aayojan11@gmail.com">aayojan11@gmail.com</a> · WhatsApp: <a target="_blank" rel="noopener" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20have%20a%20question%20about%20the%20partner%20program.">918088434425</a></div>
+              <div class="form-note">By applying, you're asking Aayojan to contact you about onboarding. Support: <a href="mailto:aayojan11@gmail.com">aayojan11@gmail.com</a> · WhatsApp: <a target="_blank" rel="noopener" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20have%20a%20question%20about%20the%20partner%20program.">918088434425</a></div>
             </div>
           </form>
         </div>
@@ -2076,86 +2076,86 @@ Customer wants quote today.
       }
     });
 
-    const API_BASE = ‘https://aayojan-a1fi.onrender.com’;
+    const API_BASE = 'https://aayojan-a1fi.onrender.com';
 
     // Google Sheets backup URL — deploy Apps Script and paste the URL here
-    const SHEETS_BACKUP_URL = ‘PASTE_APPS_SCRIPT_URL_HERE’;
+    const SHEETS_BACKUP_URL = 'PASTE_APPS_SCRIPT_URL_HERE';
 
     // ── Email OTP ──
     async function sendEmailOTP() {
-      const email = document.getElementById(‘email’).value.trim();
-      if (!email || !email.includes(‘@’)) {
-        alert(‘Please enter a valid email address first.’);
+      const email = document.getElementById('email').value.trim();
+      if (!email || !email.includes('@')) {
+        alert('Please enter a valid email address first.');
         return;
       }
-      const btn = document.getElementById(‘sendOtpBtn’);
+      const btn = document.getElementById('sendOtpBtn');
       btn.disabled = true;
-      btn.textContent = ‘Sending...’;
+      btn.textContent = 'Sending...';
 
       try {
         await fetch(`${API_BASE}/api/otp/email/send`, {
-          method: ‘POST’,
-          headers: { ‘Content-Type’: ‘application/json’ },
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email }),
         });
-        document.getElementById(‘otpRow’).style.display = ‘block’;
-        document.getElementById(‘otpMsg’).textContent = ‘📧 OTP sent! Check your inbox (and spam folder).’;
-        document.getElementById(‘otpMsg’).style.color = ‘#666’;
-        btn.textContent = ‘Resend’;
+        document.getElementById('otpRow').style.display = 'block';
+        document.getElementById('otpMsg').textContent = '📧 OTP sent! Check your inbox (and spam folder).';
+        document.getElementById('otpMsg').style.color = '#666';
+        btn.textContent = 'Resend';
         btn.disabled = false;
 
-        document.getElementById(‘otpInput’).addEventListener(‘input’, function() {
+        document.getElementById('otpInput').addEventListener('input', function() {
           if (this.value.length === 6) verifyEmailOTP();
         });
       } catch (e) {
-        btn.textContent = ‘Send OTP’;
+        btn.textContent = 'Send OTP';
         btn.disabled = false;
-        document.getElementById(‘otpRow’).style.display = ‘block’;
-        document.getElementById(‘otpMsg’).textContent = ‘❌ Could not send OTP. Try again.’;
-        document.getElementById(‘otpMsg’).style.color = ‘#dc2626’;
+        document.getElementById('otpRow').style.display = 'block';
+        document.getElementById('otpMsg').textContent = '❌ Could not send OTP. Try again.';
+        document.getElementById('otpMsg').style.color = '#dc2626';
       }
     }
 
     async function verifyEmailOTP() {
-      const email = document.getElementById(‘email’).value.trim();
-      const otp = document.getElementById(‘otpInput’).value.trim();
-      const msg = document.getElementById(‘otpMsg’);
-      msg.textContent = ‘Verifying...’;
-      msg.style.color = ‘#666’;
+      const email = document.getElementById('email').value.trim();
+      const otp = document.getElementById('otpInput').value.trim();
+      const msg = document.getElementById('otpMsg');
+      msg.textContent = 'Verifying...';
+      msg.style.color = '#666';
       try {
         const res = await fetch(`${API_BASE}/api/otp/email/verify`, {
-          method: ‘POST’,
-          headers: { ‘Content-Type’: ‘application/json’ },
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, otp }),
         });
         const data = await res.json();
         if (data.valid) {
-          document.getElementById(‘waVerified’).value = ‘1’;
-          document.getElementById(‘otpInput’).style.borderColor = ‘#22c55e’;
-          msg.style.color = ‘#16a34a’;
-          msg.textContent = ‘✅ Email verified!’;
-          document.getElementById(‘sendOtpBtn’).style.display = ‘none’;
+          document.getElementById('waVerified').value = '1';
+          document.getElementById('otpInput').style.borderColor = '#22c55e';
+          msg.style.color = '#16a34a';
+          msg.textContent = '✅ Email verified!';
+          document.getElementById('sendOtpBtn').style.display = 'none';
         } else {
-          document.getElementById(‘otpInput’).style.borderColor = ‘#ef4444’;
-          msg.style.color = ‘#dc2626’;
-          msg.textContent = ‘❌ Wrong OTP. Please try again.’;
+          document.getElementById('otpInput').style.borderColor = '#ef4444';
+          msg.style.color = '#dc2626';
+          msg.textContent = '❌ Wrong OTP. Please try again.';
         }
       } catch (e) {
-        msg.style.color = ‘#dc2626’;
-        msg.textContent = ‘❌ Verification failed. Try again.’;
+        msg.style.color = '#dc2626';
+        msg.textContent = '❌ Verification failed. Try again.';
       }
     }
 
     async function backupToSheets(data) {
-      if (!SHEETS_BACKUP_URL || SHEETS_BACKUP_URL.startsWith(‘PASTE’)) return;
+      if (!SHEETS_BACKUP_URL || SHEETS_BACKUP_URL.startsWith('PASTE')) return;
       try {
         await fetch(SHEETS_BACKUP_URL, {
-          method: ‘POST’,
-          headers: { ‘Content-Type’: ‘text/plain’ },
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
           body: JSON.stringify(data),
         });
       } catch (e) {
-        console.warn(‘Sheets backup failed (non-critical):’, e);
+        console.warn('Sheets backup failed (non-critical):', e);
       }
     }
 
@@ -2167,26 +2167,26 @@ Customer wants quote today.
         return;
       }
 
-      const submitButton = form.querySelector(‘.final-submit’);
+      const submitButton = form.querySelector('.final-submit');
       submitButton.disabled = true;
-      submitButton.textContent = ‘Saving your application...’;
+      submitButton.textContent = 'Saving your application...';
 
       const data = {
-        businessName: document.getElementById(‘bizName’).value.trim(),
-        contactPerson: document.getElementById(‘contactName’).value.trim(),
-        whatsapp: document.getElementById(‘whatsapp’).value.trim(),
-        email: document.getElementById(‘email’).value.trim(),
+        businessName: document.getElementById('bizName').value.trim(),
+        contactPerson: document.getElementById('contactName').value.trim(),
+        whatsapp: document.getElementById('whatsapp').value.trim(),
+        email: document.getElementById('email').value.trim(),
         serviceAreas: getServiceAreas(),
-        cuisine: document.getElementById(‘cuisine’).value,
-        capacity: document.getElementById(‘capacity’).value,
-        currentMonthlyOrders: document.getElementById(‘currentMonthlyOrders’).value,
-        avgOrderValue: document.getElementById(‘avgOrderValue’).value,
-        specialties: document.getElementById(‘specialties’).value.trim(),
-        experience: document.getElementById(‘experience’).value.trim(),
-        fssaiLicense: (document.getElementById(‘fssai’) || {}).value?.trim() || ‘’,
+        cuisine: document.getElementById('cuisine').value,
+        capacity: document.getElementById('capacity').value,
+        currentMonthlyOrders: document.getElementById('currentMonthlyOrders').value,
+        avgOrderValue: document.getElementById('avgOrderValue').value,
+        specialties: document.getElementById('specialties').value.trim(),
+        experience: document.getElementById('experience').value.trim(),
+        fssaiLicense: (document.getElementById('fssai') || {}).value?.trim() || '',
         submittedAt: new Date().toISOString(),
-        status: ‘new’,
-        source: ‘partners.html’,
+        status: 'new',
+        source: 'partners.html',
         foundingProgram: true
       };
 
@@ -2194,17 +2194,17 @@ Customer wants quote today.
       // Primary: Firestore — blocking
       if (!db) {
         submitButton.disabled = false;
-        submitButton.textContent = ‘Submit Application’;
-        alert(‘Database unavailable. Please WhatsApp us directly at +91-8088434425 with your details.’);
+        submitButton.textContent = 'Submit Application';
+        alert('Database unavailable. Please WhatsApp us directly at +91-8088434425 with your details.');
         return;
       }
       try {
-        await db.collection(‘partnerApplications’).add(data);
+        await db.collection('partnerApplications').add(data);
       } catch (error) {
-        console.error(‘Firestore save failed:’, error);
+        console.error('Firestore save failed:', error);
         submitButton.disabled = false;
-        submitButton.textContent = ‘Submit Application’;
-        alert(‘Could not save your application. Please try again or WhatsApp us directly at +91-8088434425.’);
+        submitButton.textContent = 'Submit Application';
+        alert('Could not save your application. Please try again or WhatsApp us directly at +91-8088434425.');
         return;
       }
 
@@ -2213,28 +2213,28 @@ Customer wants quote today.
 
       // Tertiary: Email + WhatsApp welcome via backend (fire-and-forget)
       fetch(`${API_BASE}/api/notify-partner`, {
-        method: ‘POST’,
-        headers: { ‘Content-Type’: ‘application/json’ },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
-      }).catch(e => console.warn(‘Notify-partner failed:’, e));
+      }).catch(e => console.warn('Notify-partner failed:', e));
 
-      const message = `Hi Aayojan! I just submitted the partner form.\n\nBusiness: ${data.businessName}\nContact: ${data.contactPerson}\nWhatsApp: ${data.whatsapp}\nFSSAI: ${data.fssaiLicense || ‘not provided’}\nCuisine: ${data.cuisine}\nCapacity: ${data.capacity}\nAreas: ${data.serviceAreas.join(‘, ‘)}\nSpecialty: ${data.specialties}`;
+      const message = `Hi Aayojan! I just submitted the partner form.\n\nBusiness: ${data.businessName}\nContact: ${data.contactPerson}\nWhatsApp: ${data.whatsapp}\nFSSAI: ${data.fssaiLicense || 'not provided'}\nCuisine: ${data.cuisine}\nCapacity: ${data.capacity}\nAreas: ${data.serviceAreas.join(', ')}\nSpecialty: ${data.specialties}`;
       const whatsappLink = `https://wa.me/918088434425?text=${encodeURIComponent(message)}`;
 
       form.innerHTML = `
         <div class="success-panel">
           <div class="emoji">🎉</div>
           <h3>Your founding partner application is in.</h3>
-          <p>Thank you, ${data.contactPerson}. We’ll review your details and reach out within 24 hours on WhatsApp or email.</p>
+          <p>Thank you, ${data.contactPerson}. We'll review your details and reach out within 24 hours on WhatsApp or email.</p>
           <p><a class="button primary" target="_blank" rel="noopener" href="${whatsappLink}">Open WhatsApp and notify the team</a></p>
           <p>If you prefer email, write to <a href="mailto:aayojan11@gmail.com">aayojan11@gmail.com</a>. Your registered number: <strong>${data.whatsapp}</strong></p>
         </div>
       `;
 
-      const floatingCta = document.getElementById(‘floatingCta’);
+      const floatingCta = document.getElementById('floatingCta');
       applicationSubmitted = true;
-      floatingCta.classList.remove(‘show’);
-      floatingCta.setAttribute(‘aria-hidden’, ‘true’);
+      floatingCta.classList.remove('show');
+      floatingCta.setAttribute('aria-hidden', 'true');
     }
 
     form.addEventListener('submit', handleSubmit);
