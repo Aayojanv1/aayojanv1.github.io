@@ -860,6 +860,11 @@ export default function AayojanApp(){
 
   return(
     <div style={S.root}>
+      {import.meta.env.VITE_USE_EMULATORS==="true"&&(
+        <div style={{position:"fixed",top:0,left:0,right:0,zIndex:9999,background:"#dc2626",color:"#fff",textAlign:"center",fontSize:11,fontWeight:700,padding:"3px 0",letterSpacing:"0.1em"}}>
+          LOCAL DEV — Firebase Emulators Active — Not connected to production
+        </div>
+      )}
       {/* Bengali border pattern top */}
       <div style={S.bengaliTopBorder}/>
       <div style={S.bgPattern}/>
