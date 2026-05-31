@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aayojan — User Flow Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:#fdf8f3;color:#1f2937;min-height:100vh;}
+  .screen{display:none;min-height:100vh;padding:24px 16px;max-width:480px;margin:0 auto;flex-direction:column;}
+  .screen.active{display:flex;}
+  .logo{font-family:'Playfair Display',serif;font-size:24px;color:#c0392b;font-weight:800;text-align:center;margin-bottom:4px;}
+  .tagline{text-align:center;font-size:12px;color:#9ca3af;margin-bottom:28px;}
+  .card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.07);margin-bottom:16px;}
+  .title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#1f2937;margin-bottom:6px;}
+  .subtitle{font-size:13px;color:#6b7280;margin-bottom:20px;}
+  .label{font-size:12px;font-weight:600;color:#374151;margin-bottom:6px;display:block;}
+  .inp{width:100%;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border 0.2s;}
+  .inp:focus{border-color:#c0392b;}
+  select.inp{background:#fff;}
+  .btn{width:100%;padding:14px;border-radius:12px;border:none;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:transform 0.1s,box-shadow 0.2s;}
+  .btn:active{transform:scale(0.98);}
+  .btn-primary{background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;box-shadow:0 4px 16px rgba(192,57,43,0.3);}
+  .btn-ghost{background:#fff;color:#c0392b;border:1.5px solid #c0392b;}
+  .btn-green{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;box-shadow:0 4px 16px rgba(22,163,74,0.3);}
+  .step-row{display:flex;gap:6px;margin-bottom:24px;}
+  .step-dot{flex:1;height:4px;border-radius:2px;background:#e5e7eb;transition:background 0.3s;}
+  .step-dot.done{background:#c0392b;}
+  .field{margin-bottom:14px;}
+  .event-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+  .event-btn{padding:14px 10px;border-radius:12px;border:2px solid #e5e7eb;background:#fff;cursor:pointer;text-align:center;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+  .event-btn.sel{border-color:#c0392b;background:#fff5f5;}
+  .event-btn .icon{font-size:24px;margin-bottom:4px;}
+  .event-btn .name{font-size:12px;font-weight:600;color:#374151;}
+  .caterer-card{border:1.5px solid #e5e7eb;border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:all 0.2s;background:#fff;display:flex;align-items:center;justify-content:space-between;}
+  .caterer-card:hover{border-color:#c0392b;background:#fff5f5;}
+  .caterer-card.sel{border-color:#c0392b;background:#fff5f5;}
+  .alias{font-size:15px;font-weight:700;color:#1f2937;}
+  .badge{font-size:10px;padding:2px 8px;border-radius:10px;background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;margin-left:6px;}
+  .price-tag{font-size:18px;font-weight:800;color:#c0392b;}
+  .per{font-size:11px;color:#9ca3af;font-weight:400;}
+  .timer{font-size:11px;color:#f59e0b;font-weight:600;margin-top:2px;}
+  .reveal-card{border-radius:16px;padding:20px;background:linear-gradient(135deg,#fff5f5,#fee2e2);border:2px solid #fca5a5;margin-bottom:16px;}
+  .reveal-name{font-family:'Playfair Display',serif;font-size:22px;color:#c0392b;font-weight:700;}
+  .info-row{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px;color:#374151;}
+  .wa-card{background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:12px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+  .wa-icon{width:36px;height:36px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;flex-shrink:0;}
+  .wa-to{font-size:12px;color:#6b7280;}
+  .wa-msg{font-size:13px;font-weight:600;color:#15803d;}
+  .track-item{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;}
+  .track-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+  .track-icon.done{background:#f0fdf4;border:2px solid #16a34a;}
+  .track-icon.active{background:#fff5f5;border:2px solid #c0392b;}
+  .track-icon.pending{background:#f9fafb;border:2px dashed #d1d5db;}
+  .track-line{width:2px;background:#e5e7eb;height:24px;margin-left:17px;margin-top:-8px;margin-bottom:-8px;}
+  .track-line.done{background:#16a34a;}
+  .summary-row{display:flex;justify-content:space-between;font-size:13px;padding:8px 0;border-bottom:1px solid #f3f4f6;}
+  .summary-row:last-child{border-bottom:none;font-weight:700;font-size:15px;}
+  .pill{display:inline-block;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600;}
+  .pill-red{background:#fff5f5;color:#c0392b;border:1px solid #fca5a5;}
+  .pill-green{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;}
+  .back-btn{background:none;border:none;cursor:pointer;font-size:13px;color:#9ca3af;font-family:'DM Sans',sans-serif;margin-bottom:16px;padding:0;display:flex;align-items:center;gap:4px;}
+  .loading-dots{display:flex;gap:6px;justify-content:center;margin:20px 0;}
+  .dot{width:10px;height:10px;border-radius:50%;background:#c0392b;animation:bounce 1.2s ease-in-out infinite;}
+  .dot:nth-child(2){animation-delay:0.2s;}
+  .dot:nth-child(3){animation-delay:0.4s;}
+  @keyframes bounce{0%,80%,100%{transform:scale(0.7);opacity:0.5;}40%{transform:scale(1);opacity:1;}}
+  .progress-bar{height:4px;background:#e5e7eb;border-radius:2px;margin-bottom:20px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,#c0392b,#e74c3c);border-radius:2px;transition:width 0.5s;}
+  .rupee-big{font-size:48px;font-weight:800;color:#c0392b;font-family:'Playfair Display',serif;text-align:center;}
+  .unlock-benefit{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f3f4f6;font-size:13px;}
+  .unlock-benefit:last-child{border-bottom:none;}
+  .check{width:22px;height:22px;border-radius:50%;background:#f0fdf4;border:1.5px solid #16a34a;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
+  .nav-hint{text-align:center;font-size:11px;color:#d1d5db;margin-top:16px;}
+</style>
+</head>
+<body>
+
+<!-- SCREEN 0: LANDING -->
+<div class="screen active" id="s0">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div style="font-size:56px;margin-bottom:12px;">🍛</div>
+      <div class="logo">Aayojan</div>
+      <div style="font-size:13px;color:#9ca3af;margin-top:4px;">Kolkata's catering marketplace</div>
+    </div>
+    <div class="card" style="text-align:center;padding:28px;">
+      <div class="title" style="font-size:20px;">Find the perfect caterer</div>
+      <div class="subtitle">5 verified caterers bid for your event. You pick the best deal.</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;text-align:left;">
+        <div class="unlock-benefit"><div class="check">✓</div>Tell us your requirement once</div>
+        <div class="unlock-benefit"><div class="check">✓</div>5 verified caterers compete for your event</div>
+        <div class="unlock-benefit"><div class="check">✓</div>Pay ₹99 to unlock the best match</div>
+        <div class="unlock-benefit"><div class="check">✓</div>Instant WhatsApp confirmation to all parties</div>
+      </div>
+      <button class="btn btn-primary" onclick="go('s1')">Get Started →</button>
+    </div>
+    <div class="nav-hint">Demo — tap buttons to walk through the flow</div>
+  </div>
+</div>
+
+<!-- SCREEN 1: REQUIREMENT FORM -->
+<div class="screen" id="s1">
+  <button class="back-btn" onclick="go('s0')">← Back</button>
+  <div class="logo">Aayojan</div>
+  <div class="tagline">Tell us about your event</div>
+  <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
+
+  <div class="card">
+    <div class="title" style="font-size:18px;">What's the occasion?</div>
+    <div class="subtitle">Pick your event type</div>
+    <div class="event-grid">
+      <div class="event-btn sel" onclick="selEvent(this)"><div class="icon">💍</div><div class="name">Wedding</div></div>
+      <div class="event-btn" onclick="selEvent(this)"><div class="icon">🎂</div><div class="name">Birthday</div></div>
+      <div class="event-btn" onclick="selEvent(this)"><div class="icon">🏢</div><div class="name">Corporate</div></div>
+      <div class="event-btn" onclick="selEvent(this)"><div class="icon">🪔</div><div class="name">Religious</div></div>
+      <div class="event-btn" onclick="selEvent(this)"><div class="icon">🎉</div><div class="name">House Party</div></div>
+      <div class="event-btn" onclick="selEvent(this)"><div class="icon">🎓</div><div class="name">Other</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="field">
+      <label class="label">Number of guests</label>
+      <select class="inp"><option>50–100</option><option>100–200</option><option selected>200–300</option><option>300–500</option><option>500+</option></select>
+    </div>
+    <div class="field">
+      <label class="label">Budget per plate (₹)</label>
+      <select class="inp"><option>₹150–300 (Budget)</option><option selected>₹300–500 (Standard)</option><option>₹500–800 (Premium)</option><option>₹800+ (Luxury)</option></select>
+    </div>
+    <div class="field">
+      <label class="label">Event date</label>
+      <input class="inp" type="date" value="2026-06-15">
+    </div>
+    <div class="field" style="margin-bottom:0;">
+      <label class="label">Your pincode</label>
+      <input class="inp" type="text" value="700156" maxlength="6">
+    </div>
+  </div>
+
+  <button class="btn btn-primary" onclick="go('s2')">Find Caterers →</button>
+</div>
+
+<!-- SCREEN 2: LOADING -->
+<div class="screen" id="s2" style="justify-content:center;align-items:center;text-align:center;">
+  <div style="font-size:56px;margin-bottom:20px;">🔍</div>
+  <div class="title">Finding your caterers...</div>
+  <div class="subtitle" style="margin-bottom:0;">Matching 30+ verified caterers in Newtown & Salt Lake</div>
+  <div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  <div style="font-size:12px;color:#9ca3af;margin-bottom:40px;" id="loadMsg">Checking availability for 15 Jun 2026...</div>
+  <button class="btn btn-primary" style="margin-top:20px;" onclick="go('s3')">View Bids →</button>
+  <div class="nav-hint">In production this auto-advances after matching</div>
+</div>
+
+<!-- SCREEN 3: 5 BIDS -->
+<div class="screen" id="s3">
+  <button class="back-btn" onclick="go('s1')">← Edit requirement</button>
+  <div class="logo">Aayojan</div>
+  <div class="tagline">5 caterers are competing for your event</div>
+  <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+
+  <div style="background:#fff9c4;border:1px solid #fde68a;border-radius:10px;padding:10px 14px;font-size:12px;color:#92400e;margin-bottom:16px;">
+    ⏳ Bids close in <strong>41:23:07</strong> · Caterers cannot see each other's bids
+  </div>
+
+  <div style="font-size:12px;color:#6b7280;margin-bottom:10px;">Sorted by best value · Names hidden until you unlock</div>
+
+  <div class="caterer-card sel" onclick="selCaterer(this)">
+    <div>
+      <div><span class="alias">Caterer Alpha</span><span class="badge">⭐ 4.8</span><span class="badge">FSSAI ✓</span></div>
+      <div style="font-size:12px;color:#6b7280;margin-top:4px;">Bengali · Multi-cuisine · 8 yrs · Newtown</div>
+      <div class="timer">✅ Bid submitted · 2.1 km away</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="price-tag">₹420<span class="per">/plate</span></div>
+      <div style="font-size:11px;color:#16a34a;margin-top:2px;">Within budget</div>
+    </div>
+  </div>
+
+  <div class="caterer-card" onclick="selCaterer(this)">
+    <div>
+      <div><span class="alias">Caterer Beta</span><span class="badge">⭐ 4.6</span></div>
+      <div style="font-size:12px;color:#6b7280;margin-top:4px;">Mughlai · North Indian · 5 yrs · Rajarhat</div>
+      <div class="timer">✅ Bid submitted · 3.4 km away</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="price-tag">₹450<span class="per">/plate</span></div>
+      <div style="font-size:11px;color:#16a34a;margin-top:2px;">Within budget</div>
+    </div>
+  </div>
+
+  <div class="caterer-card" onclick="selCaterer(this)">
+    <div>
+      <div><span class="alias">Caterer Gamma</span><span class="badge">⭐ 4.5</span><span class="badge">FSSAI ✓</span></div>
+      <div style="font-size:12px;color:#6b7280;margin-top:4px;">Bengali · 10 yrs · Salt Lake</div>
+      <div class="timer">✅ Bid submitted · 4.8 km away</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="price-tag">₹480<span class="per">/plate</span></div>
+      <div style="font-size:11px;color:#f59e0b;margin-top:2px;">Slightly above</div>
+    </div>
+  </div>
+
+  <div class="caterer-card" onclick="selCaterer(this)">
+    <div>
+      <div><span class="alias">Caterer Delta</span><span class="badge">⭐ 4.3</span></div>
+      <div style="font-size:12px;color:#6b7280;margin-top:4px;">Multi-cuisine · 4 yrs · Newtown</div>
+      <div class="timer" style="color:#9ca3af;">🕐 Awaiting bid...</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="price-tag" style="color:#9ca3af;">TBD</div>
+    </div>
+  </div>
+
+  <div class="caterer-card" onclick="selCaterer(this)">
+    <div>
+      <div><span class="alias">Caterer Epsilon</span><span class="badge">⭐ 4.7</span><span class="badge">FSSAI ✓</span></div>
+      <div style="font-size:12px;color:#6b7280;margin-top:4px;">Bengali · 6 yrs · Newtown</div>
+      <div class="timer" style="color:#9ca3af;">🕐 Awaiting bid...</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="price-tag" style="color:#9ca3af;">TBD</div>
+    </div>
+  </div>
+
+  <div style="margin-top:8px;">
+    <button class="btn btn-primary" onclick="go('s4')">Unlock Best Match — ₹99 →</button>
+    <div style="text-align:center;font-size:11px;color:#9ca3af;margin-top:8px;">₹99 adjusted in your final catering bill</div>
+  </div>
+</div>
+
+<!-- SCREEN 4: PAY ₹99 -->
+<div class="screen" id="s4">
+  <button class="back-btn" onclick="go('s3')">← Back to bids</button>
+  <div class="logo">Aayojan</div>
+  <div class="tagline">Unlock your match</div>
+  <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+
+  <div class="card" style="text-align:center;padding:28px 20px;">
+    <div style="font-size:13px;color:#6b7280;margin-bottom:4px;">You selected</div>
+    <div style="font-family:'Playfair Display',serif;font-size:20px;color:#c0392b;font-weight:700;margin-bottom:16px;">Caterer Alpha</div>
+    <div class="rupee-big">₹99</div>
+    <div style="font-size:12px;color:#9ca3af;margin-top:4px;margin-bottom:20px;">One-time booking fee · Adjusted in final bill</div>
+
+    <div style="text-align:left;margin-bottom:20px;">
+      <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:10px;">What you unlock:</div>
+      <div class="unlock-benefit"><div class="check">✓</div>Real caterer name + business profile</div>
+      <div class="unlock-benefit"><div class="check">✓</div>Direct WhatsApp number</div>
+      <div class="unlock-benefit"><div class="check">✓</div>Full bid breakdown + notes</div>
+      <div class="unlock-benefit"><div class="check">✓</div>FSSAI + verification details</div>
+      <div class="unlock-benefit"><div class="check">✓</div>Instant 3-way WhatsApp confirmation</div>
+    </div>
+
+    <div style="background:#f9fafb;border-radius:10px;padding:14px;margin-bottom:20px;">
+      <div class="summary-row"><span style="color:#6b7280;">Event</span><span>Wedding · 200–300 guests</span></div>
+      <div class="summary-row"><span style="color:#6b7280;">Date</span><span>15 Jun 2026</span></div>
+      <div class="summary-row"><span style="color:#6b7280;">Quote</span><span>₹420/plate</span></div>
+      <div class="summary-row"><span style="color:#6b7280;">Booking fee</span><span style="color:#c0392b;">₹99</span></div>
+      <div class="summary-row"><span>Adjusted in bill</span><span style="color:#16a34a;">Yes ✓</span></div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-bottom:12px;">
+      <button style="flex:1;padding:12px;border-radius:10px;border:1.5px solid #e5e7eb;background:#fff;cursor:pointer;font-size:13px;font-weight:600;">📱 UPI</button>
+      <button style="flex:1;padding:12px;border-radius:10px;border:2px solid #c0392b;background:#fff5f5;cursor:pointer;font-size:13px;font-weight:600;color:#c0392b;">💳 Card</button>
+    </div>
+    <button class="btn btn-primary" onclick="go('s5')">Pay ₹99 & Unlock 🔓</button>
+  </div>
+</div>
+
+<!-- SCREEN 5: REVEAL -->
+<div class="screen" id="s5">
+  <div class="logo" style="margin-bottom:4px;">Aayojan</div>
+  <div class="tagline">Payment successful 🎉</div>
+  <div class="progress-bar"><div class="progress-fill" style="width:88%"></div></div>
+
+  <div style="text-align:center;margin-bottom:20px;">
+    <div style="font-size:48px;">🎉</div>
+    <div style="font-size:16px;font-weight:700;color:#16a34a;margin-top:8px;">Your caterer is revealed!</div>
+  </div>
+
+  <div class="reveal-card">
+    <div style="font-size:32px;margin-bottom:8px;">🍛</div>
+    <div class="reveal-name">Das Catering Services</div>
+    <div style="font-size:13px;color:#6b7280;margin-top:2px;">Owner: Ratan Das · 8 years in business</div>
+    <div class="info-row">📍 Plot 5A, Action Area I, Newtown — 2.1 km away</div>
+    <div class="info-row">📲 +91 98300 12345 (WhatsApp)</div>
+    <div class="info-row">🔖 FSSAI: 21424013000672 ✓</div>
+    <div class="info-row">⭐ 4.8 rating · 45 events completed</div>
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid #fca5a5;">
+      <div style="font-size:12px;color:#6b7280;">Their bid note:</div>
+      <div style="font-size:13px;color:#374151;margin-top:4px;font-style:italic;">"We specialise in Bengali wedding menus with live counters. Happy to arrange a tasting session before the event."</div>
+    </div>
+  </div>
+
+  <div style="font-size:13px;font-weight:700;color:#374151;margin-bottom:10px;">📲 WhatsApp confirmations sent:</div>
+
+  <div class="wa-card">
+    <div class="wa-icon">💬</div>
+    <div>
+      <div class="wa-to">To: You (+91 9XXXXXXXX)</div>
+      <div class="wa-msg">Booking confirmed with Das Catering! Event: 15 Jun · ₹420/plate</div>
+    </div>
+  </div>
+
+  <div class="wa-card">
+    <div class="wa-icon">💬</div>
+    <div>
+      <div class="wa-to">To: Aayojan Team</div>
+      <div class="wa-msg">New booking · Das Catering + Customer #892 · ₹99 received</div>
+    </div>
+  </div>
+
+  <div class="wa-card">
+    <div class="wa-icon">💬</div>
+    <div>
+      <div class="wa-to">To: Ratan Das (Das Catering)</div>
+      <div class="wa-msg">New confirmed lead! Wedding · 200–300 guests · 15 Jun · Customer WhatsApp shared</div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" style="margin-top:8px;" onclick="go('s6')">Track My Order →</button>
+</div>
+
+<!-- SCREEN 6: PROGRESS TRACKER -->
+<div class="screen" id="s6">
+  <div class="logo" style="margin-bottom:4px;">Aayojan</div>
+  <div class="tagline">Order #AYJ-892 · Das Catering Services</div>
+  <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+
+  <div class="card" style="margin-bottom:16px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <div style="font-size:14px;font-weight:700;">Wedding · 15 Jun 2026</div>
+      <span class="pill pill-green">Active</span>
+    </div>
+    <div style="font-size:13px;color:#6b7280;">200–300 guests · ₹420/plate · Newtown 700156</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:14px;font-weight:700;margin-bottom:16px;">Progress</div>
+
+    <div class="track-item">
+      <div class="track-icon done">✅</div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#16a34a;">Booking Confirmed</div>
+        <div style="font-size:11px;color:#9ca3af;">Today · ₹99 booking fee paid</div>
+      </div>
+    </div>
+    <div class="track-line done"></div>
+
+    <div class="track-item">
+      <div class="track-icon done">✅</div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#16a34a;">Advance Paid</div>
+        <div style="font-size:11px;color:#9ca3af;">₹12,600 (20%) · Released to caterer</div>
+      </div>
+    </div>
+    <div class="track-line done"></div>
+
+    <div class="track-item">
+      <div class="track-icon active">🍽️</div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#c0392b;">Menu Finalised</div>
+        <div style="font-size:11px;color:#9ca3af;">Pending · Caterer will share menu in 24 hrs</div>
+      </div>
+    </div>
+    <div class="track-line"></div>
+
+    <div class="track-item">
+      <div class="track-icon pending">🧪</div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#9ca3af;">Food Tasting</div>
+        <div style="font-size:11px;color:#d1d5db;">Optional · Schedule with caterer</div>
+      </div>
+    </div>
+    <div class="track-line"></div>
+
+    <div class="track-item">
+      <div class="track-icon pending">🎊</div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#9ca3af;">Event Day</div>
+        <div style="font-size:11px;color:#d1d5db;">15 Jun 2026 · Balance payment due</div>
+      </div>
+    </div>
+    <div class="track-line"></div>
+
+    <div class="track-item">
+      <div class="track-icon pending">⭐</div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#9ca3af;">Rate & Review</div>
+        <div style="font-size:11px;color:#d1d5db;">After event · Unlocks caterer's rating</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="background:linear-gradient(135deg,#fff5f5,#fee2e2);border:1.5px solid #fca5a5;">
+    <div style="font-size:13px;font-weight:700;color:#c0392b;margin-bottom:8px;">💬 Need help?</div>
+    <div style="font-size:12px;color:#6b7280;margin-bottom:10px;">Aayojan is your intermediary — we handle disputes, delays & escalations.</div>
+    <button class="btn btn-ghost" style="font-size:13px;padding:10px;">WhatsApp Aayojan Support</button>
+  </div>
+
+  <button class="btn btn-primary" style="margin-top:8px;" onclick="go('s0')">← Start Over (Demo)</button>
+</div>
+
+<script>
+  function go(id){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+  }
+  function selEvent(el){
+    document.querySelectorAll('.event-btn').forEach(b=>b.classList.remove('sel'));
+    el.classList.add('sel');
+  }
+  function selCaterer(el){
+    document.querySelectorAll('.caterer-card').forEach(c=>c.classList.remove('sel'));
+    el.classList.add('sel');
+  }
+</script>
+</body>
+</html>
