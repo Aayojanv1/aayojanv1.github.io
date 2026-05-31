@@ -392,53 +392,110 @@ async def send_email(to: str, subject: str, html: str, text: str = "") -> bool:
 def partner_welcome_email(name: str, business: str) -> str:
     return f"""<!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<style>
-  body{{margin:0;padding:0;background:#f5f5f5;font-family:'DM Sans',Arial,sans-serif}}
-  .wrap{{max-width:580px;margin:32px auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08)}}
-  .hero{{background:linear-gradient(135deg,#E8760A,#C95F08);padding:36px 32px;text-align:center;color:#fff}}
-  .hero h1{{font-size:28px;font-weight:800;margin:0 0 8px}}
-  .hero p{{font-size:15px;opacity:.9;margin:0}}
-  .badge{{display:inline-block;background:rgba(255,255,255,.2);border-radius:20px;padding:6px 16px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}}
-  .body{{padding:32px}}
-  .body p{{color:#444;font-size:15px;line-height:1.7;margin:0 0 16px}}
-  .steps{{background:#fff8f0;border-radius:12px;padding:20px 24px;margin:20px 0}}
-  .step{{display:flex;gap:14px;margin-bottom:14px;align-items:flex-start}}
-  .step:last-child{{margin:0}}
-  .step-num{{width:28px;height:28px;border-radius:50%;background:#E8760A;color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}}
-  .step-txt b{{color:#111;font-size:14px}}
-  .step-txt span{{color:#666;font-size:13px;display:block;margin-top:2px}}
-  .cta{{background:#E8760A;color:#fff;border-radius:12px;padding:14px 24px;display:block;text-align:center;font-weight:700;font-size:15px;text-decoration:none;margin:24px 0}}
-  .footer{{background:#f9f9f9;padding:20px 32px;text-align:center;color:#888;font-size:12px;border-top:1px solid #eee}}
-  .footer a{{color:#E8760A;text-decoration:none}}
-</style>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Welcome to Aayojan</title>
 </head>
-<body>
-<div class="wrap">
-  <div class="hero">
-    <div class="badge">🏅 Founding Partner</div>
-    <h1>Welcome to Aayojan, {name}!</h1>
-    <p>You're officially part of our founding caterer network.</p>
-  </div>
-  <div class="body">
-    <p>Hi {name},</p>
-    <p>Thank you for registering <strong>{business}</strong> on Aayojan. You're one of the first caterers to join our network in Newtown & Rajarhat — and that matters.</p>
-    <p>As a <strong>Founding Partner</strong>, you get:</p>
-    <div class="steps">
-      <div class="step"><div class="step-num">1</div><div class="step-txt"><b>Verified badge on your profile</b><span>Customers trust verified caterers first.</span></div></div>
-      <div class="step"><div class="step-num">2</div><div class="step-txt"><b>Priority in early leads</b><span>Founding partners get first look at new customer requests.</span></div></div>
-      <div class="step"><div class="step-num">3</div><div class="step-txt"><b>Zero commission on your first 3 orders</b><span>Build your reputation risk-free.</span></div></div>
-      <div class="step"><div class="step-num">4</div><div class="step-txt"><b>Direct WhatsApp support</b><span>We're at +91-8088434425 — reply anytime.</span></div></div>
-    </div>
-    <p><strong>What happens next?</strong> Our team will review your profile and reach out within 24 hours on WhatsApp. Once approved, you'll start receiving event leads directly on WhatsApp — no app needed.</p>
-    <a href="https://aayojan.online" class="cta">Visit Aayojan →</a>
-    <p style="font-size:13px;color:#888">Questions? Reply to this email or WhatsApp us at <a href="https://wa.me/918088434425" style="color:#E8760A">+91-8088434425</a></p>
-  </div>
-  <div class="footer">
-    © 2026 Aayojan · Newtown, Kolkata<br>
-    <a href="https://aayojan.online">aayojan.online</a>
-  </div>
-</div>
+<body style="margin:0;padding:0;background:#FFF8EF;font-family:'Helvetica Neue',Arial,sans-serif">
+<table width="100%" cellpadding="0" cellspacing="0">
+<tr><td align="center" style="padding:32px 16px">
+<table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 8px 40px rgba(232,118,10,0.13)">
+
+  <!-- TOP STRIPE -->
+  <tr><td style="height:5px;background:linear-gradient(90deg,#E8760A,#F3C869,#E8760A)"></td></tr>
+
+  <!-- DARK HERO -->
+  <tr><td style="background:linear-gradient(160deg,#1C130A 0%,#3d2009 100%);padding:48px 40px 40px;text-align:center">
+    <div style="font-size:56px;margin-bottom:4px">🍽️</div>
+    <div style="display:inline-block;background:rgba(243,200,105,0.2);border:1px solid rgba(243,200,105,0.5);border-radius:20px;padding:6px 18px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#F3C869;margin-bottom:20px">🏅 Founding Partner</div>
+    <h1 style="margin:0 0 10px;font-size:30px;font-weight:800;color:#fff;line-height:1.2">Welcome aboard,<br>{name}!</h1>
+    <p style="margin:0;color:rgba(255,255,255,0.65);font-size:15px;line-height:1.6"><strong style="color:#F3A84E">{business}</strong> is now part of<br>Aayojan's founding caterer network.</p>
+  </td></tr>
+
+  <!-- WARM INTRO -->
+  <tr><td style="padding:36px 40px 0">
+    <p style="margin:0 0 16px;font-size:16px;color:#333;line-height:1.7">Hi {name},</p>
+    <p style="margin:0 0 16px;font-size:15px;color:#555;line-height:1.75">You're one of the <strong style="color:#1C130A">very first caterers</strong> in Newtown &amp; Rajarhat to join Aayojan — before we open to the public. That's not a small thing. The caterers who join now shape what this platform becomes.</p>
+    <p style="margin:0;font-size:15px;color:#555;line-height:1.75">Here's what being a Founding Partner means for you:</p>
+  </td></tr>
+
+  <!-- PERKS -->
+  <tr><td style="padding:24px 40px">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:#FFF8EF;border-radius:16px;overflow:hidden">
+      <tr><td style="padding:20px 24px;border-bottom:1px solid #f0e4d0">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="width:40px;font-size:22px;vertical-align:top;padding-top:2px">🎯</td>
+          <td style="padding-left:12px"><strong style="font-size:14px;color:#1C130A">Customers come to you</strong><br><span style="font-size:13px;color:#777;line-height:1.5">You receive verified event leads on WhatsApp. No cold calls, no marketing spend.</span></td>
+        </tr></table>
+      </td></tr>
+      <tr><td style="padding:20px 24px;border-bottom:1px solid #f0e4d0">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="width:40px;font-size:22px;vertical-align:top;padding-top:2px">🏅</td>
+          <td style="padding-left:12px"><strong style="font-size:14px;color:#1C130A">Founding badge — forever</strong><br><span style="font-size:13px;color:#777;line-height:1.5">Shown prominently on your profile. Customers see you joined early and trust you more.</span></td>
+        </tr></table>
+      </td></tr>
+      <tr><td style="padding:20px 24px;border-bottom:1px solid #f0e4d0">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="width:40px;font-size:22px;vertical-align:top;padding-top:2px">💰</td>
+          <td style="padding-left:12px"><strong style="font-size:14px;color:#1C130A">Zero commission on first 3 orders</strong><br><span style="font-size:13px;color:#777;line-height:1.5">Build your reputation and collect your first reviews — risk free.</span></td>
+        </tr></table>
+      </td></tr>
+      <tr><td style="padding:20px 24px">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="width:40px;font-size:22px;vertical-align:top;padding-top:2px">⚡</td>
+          <td style="padding-left:12px"><strong style="font-size:14px;color:#1C130A">Priority in early leads</strong><br><span style="font-size:13px;color:#777;line-height:1.5">New customer requests go to founding partners first, before the platform opens up.</span></td>
+        </tr></table>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <!-- WHAT HAPPENS NEXT -->
+  <tr><td style="padding:0 40px 32px">
+    <p style="margin:0 0 16px;font-size:15px;font-weight:700;color:#1C130A">What happens next?</p>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="center" width="33%" style="padding:0 6px 0 0">
+          <div style="background:#fff;border:1.5px solid #f0e8d8;border-radius:14px;padding:18px 12px;text-align:center">
+            <div style="font-size:24px;margin-bottom:8px">✅</div>
+            <div style="font-size:12px;font-weight:700;color:#1C130A;margin-bottom:4px">Profile Review</div>
+            <div style="font-size:11px;color:#999">Within 24 hours</div>
+          </div>
+        </td>
+        <td align="center" width="33%" style="padding:0 3px">
+          <div style="background:#fff;border:1.5px solid #f0e8d8;border-radius:14px;padding:18px 12px;text-align:center">
+            <div style="font-size:24px;margin-bottom:8px">💬</div>
+            <div style="font-size:12px;font-weight:700;color:#1C130A;margin-bottom:4px">WhatsApp Intro</div>
+            <div style="font-size:11px;color:#999">We reach out</div>
+          </div>
+        </td>
+        <td align="center" width="33%" style="padding:0 0 0 6px">
+          <div style="background:#fff;border:1.5px solid #f0e8d8;border-radius:14px;padding:18px 12px;text-align:center">
+            <div style="font-size:24px;margin-bottom:8px">🚪</div>
+            <div style="font-size:12px;font-weight:700;color:#1C130A;margin-bottom:4px">First Lead</div>
+            <div style="font-size:11px;color:#999">Customer finds you</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </td></tr>
+
+  <!-- CTA -->
+  <tr><td style="padding:0 40px 36px;text-align:center">
+    <a href="https://aayojan.online" style="display:inline-block;background:linear-gradient(135deg,#E8760A,#C95F08);color:#fff;text-decoration:none;font-size:15px;font-weight:700;padding:16px 40px;border-radius:14px;letter-spacing:0.3px">Explore Aayojan →</a>
+    <p style="margin:20px 0 0;font-size:13px;color:#aaa">Questions? Reply to this email or</p>
+    <a href="https://wa.me/918088434425" style="font-size:13px;color:#E8760A;font-weight:700;text-decoration:none">💬 WhatsApp us at +91-8088434425</a>
+  </td></tr>
+
+  <!-- FOOTER -->
+  <tr><td style="background:#1C130A;padding:24px 40px;text-align:center">
+    <p style="margin:0 0 6px;font-size:13px;color:rgba(255,255,255,0.5)">© 2026 Aayojan · Newtown, Kolkata</p>
+    <a href="https://aayojan.online" style="font-size:12px;color:#E8760A;text-decoration:none">aayojan.online</a>
+  </td></tr>
+
+</table>
+</td></tr>
+</table>
 </body>
 </html>"""
 
@@ -539,38 +596,69 @@ class EmailOTPVerifyRequest(BaseModel):
 
 
 def otp_email_html(otp: str) -> str:
+    digits = list(otp)
+    digit_boxes = "".join(
+        f'<span style="display:inline-block;width:48px;height:60px;line-height:60px;'
+        f'background:#fff;border:2px solid #E8760A;border-radius:12px;'
+        f'font-size:32px;font-weight:900;color:#E8760A;text-align:center;'
+        f'margin:0 4px;font-family:monospace">{d}</span>'
+        for d in digits
+    )
     return f"""<!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8">
-<style>
-  body{{margin:0;padding:0;background:#f5f5f5;font-family:Arial,sans-serif}}
-  .wrap{{max-width:480px;margin:32px auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}}
-  .header{{background:linear-gradient(135deg,#E8760A,#C95F08);padding:28px 32px;text-align:center;color:#fff}}
-  .header h2{{margin:0;font-size:22px;font-weight:800}}
-  .header p{{margin:6px 0 0;opacity:.85;font-size:13px}}
-  .body{{padding:32px;text-align:center}}
-  .otp-box{{background:#fff8f0;border:2px dashed #E8760A;border-radius:14px;padding:24px;margin:20px 0}}
-  .otp{{font-size:42px;font-weight:900;letter-spacing:10px;color:#E8760A;font-family:monospace}}
-  .note{{font-size:13px;color:#888;margin-top:10px}}
-  .footer{{background:#f9f9f9;padding:16px 32px;text-align:center;font-size:11px;color:#aaa;border-top:1px solid #eee}}
-</style>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verify your Aayojan account</title>
 </head>
-<body>
-<div class="wrap">
-  <div class="header">
-    <h2>🍽️ Aayojan Verification</h2>
-    <p>Your one-time password</p>
-  </div>
-  <div class="body">
-    <p style="color:#444;font-size:15px;margin:0 0 4px">Your OTP to verify your email address:</p>
-    <div class="otp-box">
-      <div class="otp">{otp}</div>
-      <div class="note">Valid for 5 minutes · Do not share this code</div>
-    </div>
-    <p style="font-size:13px;color:#888">If you didn't request this, ignore this email.</p>
-  </div>
-  <div class="footer">Aayojan · Newtown, Kolkata · aayojan.online</div>
-</div>
+<body style="margin:0;padding:0;background:#FFF8EF;font-family:'Helvetica Neue',Arial,sans-serif">
+  <table width="100%" cellpadding="0" cellspacing="0">
+    <tr><td align="center" style="padding:32px 16px">
+      <table width="520" cellpadding="0" cellspacing="0" style="max-width:520px;width:100%;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(232,118,10,0.12)">
+
+        <!-- TOP STRIPE -->
+        <tr><td style="height:5px;background:linear-gradient(90deg,#E8760A,#F3A84E,#E8760A)"></td></tr>
+
+        <!-- HERO -->
+        <tr><td style="background:linear-gradient(160deg,#1C130A 0%,#3d2009 100%);padding:40px 40px 32px;text-align:center">
+          <div style="font-size:48px;margin-bottom:12px">🍽️</div>
+          <div style="display:inline-block;background:rgba(232,118,10,0.25);border:1px solid rgba(232,118,10,0.5);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#F3A84E;margin-bottom:16px">Partner Verification</div>
+          <h1 style="margin:0;font-size:26px;font-weight:800;color:#fff;line-height:1.2">One step away from<br>joining Aayojan</h1>
+          <p style="margin:10px 0 0;color:rgba(255,255,255,0.65);font-size:14px">Use this code to verify your email address</p>
+        </td></tr>
+
+        <!-- OTP BLOCK -->
+        <tr><td style="padding:40px 40px 32px;text-align:center;background:#fff">
+          <p style="margin:0 0 24px;color:#555;font-size:15px;line-height:1.6">Enter this code on the Aayojan partner registration page:</p>
+
+          <!-- digit boxes -->
+          <div style="margin:0 0 8px">{digit_boxes}</div>
+
+          <!-- expiry bar -->
+          <div style="margin:20px auto 0;max-width:320px;background:#f5f5f5;border-radius:20px;height:6px;overflow:hidden">
+            <div style="width:100%;height:100%;background:linear-gradient(90deg,#E8760A,#F3A84E);border-radius:20px"></div>
+          </div>
+          <p style="margin:8px 0 0;font-size:12px;color:#bbb">Expires in 5 minutes &nbsp;·&nbsp; One-time use only</p>
+
+          <!-- divider -->
+          <div style="border-top:1px solid #f0f0f0;margin:32px 0"></div>
+
+          <p style="margin:0;font-size:13px;color:#888;line-height:1.6">
+            You're registering <strong style="color:#111">your catering business</strong> on Aayojan as a Founding Partner.<br>
+            If this wasn't you, simply ignore this email.
+          </p>
+        </td></tr>
+
+        <!-- FOOTER -->
+        <tr><td style="background:#FFF8EF;padding:24px 40px;text-align:center;border-top:1px solid #f0e8d8">
+          <p style="margin:0 0 6px;font-size:13px;color:#555">Questions? We're on WhatsApp</p>
+          <a href="https://wa.me/918088434425" style="color:#E8760A;font-weight:700;font-size:13px;text-decoration:none">+91-8088434425</a>
+          <p style="margin:16px 0 0;font-size:11px;color:#bbb">© 2026 Aayojan &nbsp;·&nbsp; Newtown, Kolkata &nbsp;·&nbsp; <a href="https://aayojan.online" style="color:#bbb">aayojan.online</a></p>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
 </body>
 </html>"""
 
