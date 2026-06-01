@@ -1766,18 +1766,7 @@ Customer wants quote today.
                 </div>
                 <div class="field">
                   <label for="email">Email address *</label>
-                  <div style="display:flex;gap:8px;align-items:flex-start">
-                    <input id="email" name="email" type="email" placeholder="you@example.com" required style="flex:1">
-                    <button type="button" id="sendOtpBtn" onclick="sendEmailOTP()" style="white-space:nowrap;padding:10px 14px;background:#E8760A;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;flex-shrink:0">Send OTP</button>
-                  </div>
-                  <div id="otpRow" style="display:none;margin-top:10px">
-                    <div style="display:flex;gap:8px;align-items:center">
-                      <input id="otpInput" type="text" maxlength="6" placeholder="6-digit code" style="flex:1;padding:10px 14px;border:1.5px solid #e8e8e8;border-radius:10px;font-size:15px;letter-spacing:6px;text-align:center;font-family:monospace">
-                      <button type="button" onclick="verifyEmailOTP()" style="padding:10px 16px;background:#236B43;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap">Verify</button>
-                    </div>
-                    <div id="otpMsg" style="font-size:12px;margin-top:6px;color:#666"></div>
-                  </div>
-                  <input type="hidden" id="waVerified" value="0">
+                  <input id="email" name="email" type="email" placeholder="you@example.com" required>
                 </div>
               </div>
 
@@ -1793,7 +1782,7 @@ Customer wants quote today.
 
               <div class="form-actions">
                 <span class="form-note">Takes about 2 minutes. Your details stay private.</span>
-                <button class="step-button primary" type="button" id="continueBtn" data-next>🔒 Verify email to continue</button>
+                <button class="step-button primary" type="button" data-next>Continue to step 2</button>
               </div>
             </div>
 
@@ -2044,15 +2033,6 @@ Customer wants quote today.
         return false;
       }
 
-      if (currentStep === 0 && document.getElementById('waVerified').value !== '1') {
-        const msg = document.getElementById('otpMsg');
-        document.getElementById('otpRow').style.display = 'block';
-        msg.style.color = '#dc2626';
-        msg.textContent = '⚠️ Please verify your email with the OTP before continuing.';
-        document.getElementById('otpInput').focus();
-        return false;
-      }
-
       return true;
     }
 
@@ -2092,88 +2072,6 @@ Customer wants quote today.
 
     // Google Sheets backup URL — deploy Apps Script and paste the URL here
     const SHEETS_BACKUP_URL = 'PASTE_APPS_SCRIPT_URL_HERE';
-
-    // ── Email OTP ──
-    async function sendEmailOTP() {
-      const email = document.getElementById('email').value.trim();
-      if (!email || !email.includes('@')) {
-        alert('Please enter a valid email address first.');
-        return;
-      }
-      const btn = document.getElementById('sendOtpBtn');
-      btn.disabled = true;
-      btn.textContent = 'Sending...';
-
-      try {
-        await fetch(`${API_BASE}/api/otp/email/send`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
-        });
-        document.getElementById('otpRow').style.display = 'block';
-        document.getElementById('otpMsg').textContent = '📧 OTP sent! Check your inbox (and spam folder).';
-        document.getElementById('otpMsg').style.color = '#666';
-        document.getElementById('otpInput').focus();
-        startOtpCooldown(60);
-      } catch (e) {
-        btn.textContent = 'Send OTP';
-        btn.disabled = false;
-        document.getElementById('otpRow').style.display = 'block';
-        document.getElementById('otpMsg').textContent = '❌ Could not send OTP. Try again.';
-        document.getElementById('otpMsg').style.color = '#dc2626';
-      }
-    }
-
-    function startOtpCooldown(seconds) {
-      const btn = document.getElementById('sendOtpBtn');
-      let remaining = seconds;
-      btn.disabled = true;
-      btn.textContent = `Resend in ${remaining}s`;
-      btn.style.opacity = '0.6';
-      const interval = setInterval(() => {
-        remaining -= 1;
-        if (remaining <= 0) {
-          clearInterval(interval);
-          btn.disabled = false;
-          btn.textContent = 'Resend OTP';
-          btn.style.opacity = '1';
-        } else {
-          btn.textContent = `Resend in ${remaining}s`;
-        }
-      }, 1000);
-    }
-
-    async function verifyEmailOTP() {
-      const email = document.getElementById('email').value.trim();
-      const otp = document.getElementById('otpInput').value.trim();
-      const msg = document.getElementById('otpMsg');
-      msg.textContent = 'Verifying...';
-      msg.style.color = '#666';
-      try {
-        const res = await fetch(`${API_BASE}/api/otp/email/verify`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, otp }),
-        });
-        const data = await res.json();
-        if (data.valid) {
-          document.getElementById('waVerified').value = '1';
-          document.getElementById('otpInput').style.borderColor = '#22c55e';
-          msg.style.color = '#16a34a';
-          msg.textContent = '✅ Email verified!';
-          document.getElementById('sendOtpBtn').style.display = 'none';
-          const continueBtn = document.getElementById('continueBtn');
-          if (continueBtn) { continueBtn.textContent = 'Continue to step 2 →'; }
-        } else {
-          document.getElementById('otpInput').style.borderColor = '#ef4444';
-          msg.style.color = '#dc2626';
-          msg.textContent = '❌ Wrong OTP. Please try again.';
-        }
-      } catch (e) {
-        msg.style.color = '#dc2626';
-        msg.textContent = '❌ Verification failed. Try again.';
-      }
-    }
 
     async function backupToSheets(data) {
       if (!SHEETS_BACKUP_URL || SHEETS_BACKUP_URL.startsWith('PASTE')) return;
