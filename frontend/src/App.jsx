@@ -1146,18 +1146,18 @@ export default function AayojanApp(){
              {/* Food gallery — uneven masonry grid for visual interest */}
              <div style={{display:"grid",gridTemplateColumns:"repeat(12,1fr)",gap:12,marginBottom:36}} className="food-grid">
                {[
-                 {q:"biryani",label:"Mutton Biryani",cuisine:"Mughlai",span:"span 4",h:240},
-                 {q:"indian-thali",label:"Festive Thali",cuisine:"Bengali",span:"span 5",h:240},
-                 {q:"kebab-tandoor",label:"Galouti Kebab",cuisine:"Awadhi",span:"span 3",h:240},
-                 {q:"crab-prawn",label:"Crab Wonton",cuisine:"Indo-Chinese",span:"span 3",h:200},
-                 {q:"hilsa-fish-curry",label:"Doi Ilish",cuisine:"Bengali",span:"span 5",h:200},
-                 {q:"continental-platter",label:"Continental",cuisine:"Plated",span:"span 4",h:200},
+                 {img:"https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=800&q=80&auto=format&fit=crop",label:"Mutton Biryani",cuisine:"Mughlai",span:"span 4",h:240},
+                 {img:"https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=800&q=80&auto=format&fit=crop",label:"Festive Thali",cuisine:"Bengali",span:"span 5",h:240},
+                 {img:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=800&q=80&auto=format&fit=crop",label:"Galouti Kebab",cuisine:"Awadhi",span:"span 3",h:240},
+                 {img:"https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=800&q=80&auto=format&fit=crop",label:"Crab Wonton",cuisine:"Indo-Chinese",span:"span 3",h:200},
+                 {img:"https://images.unsplash.com/photo-1604152135912-04a022e23696?w=800&q=80&auto=format&fit=crop",label:"Doi Ilish",cuisine:"Bengali",span:"span 5",h:200},
+                 {img:"https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&q=80&auto=format&fit=crop",label:"Continental",cuisine:"Plated",span:"span 4",h:200},
                ].map((d,i)=>(
-                 <div key={i} style={{gridColumn:d.span,height:d.h,borderRadius:18,overflow:"hidden",position:"relative",boxShadow:"0 14px 32px rgba(76,43,10,0.18)",cursor:"default",transition:"transform 0.4s ease, box-shadow 0.4s ease"}}
+                 <div key={i} style={{gridColumn:d.span,height:d.h,borderRadius:18,overflow:"hidden",position:"relative",boxShadow:"0 14px 32px rgba(76,43,10,0.18)",cursor:"default",transition:"transform 0.4s ease, box-shadow 0.4s ease",background:"linear-gradient(135deg,#513117,#8B4513)"}}
                    onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 22px 44px rgba(232,118,10,0.28)";}}
                    onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 14px 32px rgba(76,43,10,0.18)";}}>
-                   <img src={`https://source.unsplash.com/600x400/?${d.q}`} alt={d.label} style={{width:"100%",height:"100%",objectFit:"cover",display:"block",transition:"transform 0.6s ease"}} loading="lazy" />
-                   <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,transparent 50%,rgba(15,10,5,0.85) 100%)",pointerEvents:"none"}}></div>
+                   <img src={d.img} alt={d.label} style={{width:"100%",height:"100%",objectFit:"cover",display:"block",transition:"transform 0.6s ease"}} loading="lazy" referrerPolicy="no-referrer" />
+                   <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,transparent 45%,rgba(15,10,5,0.88) 100%)",pointerEvents:"none"}}></div>
                    <div style={{position:"absolute",bottom:14,left:16,right:16,color:"white"}}>
                      <div style={{fontSize:10,fontWeight:700,letterSpacing:"0.16em",textTransform:"uppercase",color:"#F3C869",marginBottom:2}}>{d.cuisine}</div>
                      <div style={{fontFamily:"'Playfair Display',serif",fontSize:18,fontWeight:700,letterSpacing:"-0.01em"}}>{d.label}</div>
