@@ -1161,6 +1161,55 @@ export default function AayojanApp(){
            </div>
          </div>
 
+         {/* ── EDITORIAL FEATURE — Munia's Kitchen (compact) ─────────────── */}
+         <div style={{padding:"44px 14px",background:"#0F0A05",position:"relative",overflow:"hidden"}}>
+           <div style={{position:"absolute",inset:0,backgroundImage:"radial-gradient(circle at 80% 50%, rgba(243,200,105,0.10) 0%, transparent 55%)",pointerEvents:"none"}}></div>
+
+           <div style={{maxWidth:1100,margin:"0 auto",position:"relative",zIndex:1}}>
+
+             {/* Tight masthead */}
+             <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:22}}>
+               <div style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",fontSize:11,color:"#F3C869",letterSpacing:"0.18em",textTransform:"uppercase"}}>The Aayojan Edit · 01</div>
+               <div style={{flex:1,height:1,background:"linear-gradient(90deg,rgba(243,200,105,0.3),transparent)"}}></div>
+             </div>
+
+             {/* Compact grid */}
+             <div style={{display:"grid",gridTemplateColumns:"1.3fr 1fr",gap:36,alignItems:"center"}} className="edit-grid">
+
+               {/* LEFT — copy */}
+               <div>
+                 <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4.4vw,46px)",fontWeight:900,color:"#FFF8EF",margin:"0 0 14px",lineHeight:1.02,letterSpacing:"-0.02em"}}>
+                   Karabi Dey is cooking <span style={{fontStyle:"italic",fontWeight:600,color:"#F3C869"}}>the food</span> other caterers <span style={{fontStyle:"italic",fontWeight:600,color:"#F3C869"}}>wish</span> they had made.
+                 </h2>
+
+                 <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(14px,1.7vw,17px)",lineHeight:1.55,color:"rgba(255,248,239,0.82)",margin:"0 0 16px",fontWeight:500,borderLeft:"2px solid rgba(243,200,105,0.5)",paddingLeft:14}}>
+                   The Doi Ilish carries a grandmother's monsoon mustard. The Galouti, an impossible softness. The Crab Wonton — gone before the second tray arrives.
+                 </p>
+
+                 <div style={{fontSize:12,color:"rgba(255,248,239,0.6)",lineHeight:1.7,marginBottom:18}}>
+                   <span style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",color:"#F3C869"}}>Doi Ilish</span> · <span style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",color:"#F3C869"}}>Mutton Galouti</span> · <span style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",color:"#F3C869"}}>Mutton Biryani</span> · <span style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",color:"#F3C869"}}>Crab Wonton</span> · <span style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",color:"#F3C869"}}>Kochu Pata Chingri</span>
+                 </div>
+
+                 <a href="/partners/munias-kitchen.html" style={{display:"inline-flex",alignItems:"center",gap:8,color:"#F3C869",fontFamily:"'Playfair Display',serif",fontSize:14,fontWeight:600,fontStyle:"italic",textDecoration:"none",borderBottom:"1px solid rgba(243,200,105,0.4)",paddingBottom:3,transition:"color 0.2s, border-color 0.2s"}} onMouseEnter={e=>{e.currentTarget.style.color="#FFF8EF";e.currentTarget.style.borderColor="#FFF8EF";}} onMouseLeave={e=>{e.currentTarget.style.color="#F3C869";e.currentTarget.style.borderColor="rgba(243,200,105,0.4)";}}>
+                   Read the profile <span>→</span>
+                 </a>
+               </div>
+
+               {/* RIGHT — logo */}
+               <div style={{position:"relative",display:"flex",justifyContent:"center",alignItems:"center"}}>
+                 <a href="/partners/munias-kitchen.html" style={{display:"block",width:"min(240px,80%)",aspectRatio:"1/1",background:"#F29E1F",borderRadius:6,padding:18,boxShadow:"0 20px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(243,200,105,0.2)",transform:"rotate(-2deg)",transition:"transform 0.4s ease",textDecoration:"none",position:"relative",overflow:"hidden"}} onMouseEnter={e=>e.currentTarget.style.transform="rotate(0deg) scale(1.03)"} onMouseLeave={e=>e.currentTarget.style.transform="rotate(-2deg)"}>
+                   <div style={{width:"100%",height:"100%",border:"1.5px solid #FFF8EF",borderRadius:3,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:14,position:"relative"}}>
+                     <div style={{fontFamily:"'Playfair Display',serif",fontWeight:400,fontSize:"clamp(18px,2.6vw,26px)",letterSpacing:"0.08em",lineHeight:1.05,textAlign:"center",WebkitTextStroke:"0.6px #FFF8EF",color:"transparent"}}>MUNIA'S<br/>KITCHEN</div>
+                     <div style={{position:"absolute",right:"10%",bottom:"-6%",fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontWeight:500,fontSize:"clamp(13px,1.8vw,18px)",color:"#FFF8EF",transform:"rotate(-3deg)"}}>catering</div>
+                   </div>
+                   <div style={{position:"absolute",top:8,right:8,background:"#0F0A05",color:"#F3C869",padding:"3px 8px",borderRadius:3,fontSize:8,fontWeight:700,letterSpacing:"0.14em"}}>FEATURED</div>
+                 </a>
+               </div>
+             </div>
+
+           </div>
+         </div>
+
          {/* ── PARTNER CATERERS — Scrolling ribbon ────────────────────────── */}
          <div style={{padding:"40px 14px",background:"var(--bg-secondary)",overflow:"hidden"}}>
            <div style={{textAlign:"center",marginBottom:20}}>
@@ -1176,56 +1225,6 @@ export default function AayojanApp(){
                  <div style={{fontSize:10,color:"var(--text-muted)",marginTop:3}}>{c.cuisineSpecialties?.[0]}</div>
                </div>
              ))}
-           </div>
-         </div>
-
-         {/* ── FOUNDING PARTNER SPOTLIGHT — Munia's Kitchen ──────────────── */}
-         <div style={{padding:"56px 14px",background:"linear-gradient(135deg,#1C130A 0%,#2B1B0C 100%)",position:"relative",overflow:"hidden"}}>
-           <div style={{position:"absolute",top:"-20%",right:"-10%",width:"60%",height:"140%",background:"radial-gradient(ellipse,rgba(243,200,105,0.18) 0%,transparent 60%)",pointerEvents:"none"}}></div>
-           <div style={{maxWidth:1080,margin:"0 auto",position:"relative",zIndex:1}}>
-             <div style={{textAlign:"center",marginBottom:24}}>
-               <div style={{display:"inline-flex",alignItems:"center",gap:6,background:"rgba(243,200,105,0.14)",border:"1px solid rgba(243,200,105,0.4)",borderRadius:24,padding:"5px 14px",marginBottom:12}}>
-                 <span style={{fontSize:11,fontWeight:700,color:"#F3C869",letterSpacing:1.4}}>✨ FOUNDING PARTNER · SPOTLIGHT</span>
-               </div>
-               <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(24px,5vw,38px)",fontWeight:800,color:"#FFF8EF",marginBottom:8,letterSpacing:"-0.01em"}}>The kitchens that <em style={{color:"#F3C869"}}>define</em> Aayojan</h2>
-               <p style={{fontSize:14,color:"rgba(255,248,239,0.7)",maxWidth:520,margin:"0 auto"}}>Hand-picked, kitchen-audited, customer-approved. Meet the chefs setting the standard.</p>
-             </div>
-
-             <div style={{background:"linear-gradient(135deg,#FFF8EF 0%,#FFF0D5 100%)",borderRadius:28,padding:"28px 22px",display:"grid",gridTemplateColumns:"minmax(180px,260px) 1fr",gap:24,alignItems:"center",boxShadow:"0 30px 60px rgba(0,0,0,0.45)",border:"1px solid rgba(243,200,105,0.3)"}} className="spotlight-card">
-               <a href="/partners/munias-kitchen.html" style={{display:"block",aspectRatio:"1/1",background:"#F29E1F",borderRadius:18,padding:18,boxShadow:"0 16px 32px rgba(242,158,31,0.32)",transform:"rotate(-2deg)",transition:"transform 0.3s ease",textDecoration:"none",position:"relative",overflow:"hidden"}} onMouseEnter={e=>e.currentTarget.style.transform="rotate(0deg) scale(1.02)"} onMouseLeave={e=>e.currentTarget.style.transform="rotate(-2deg)"}>
-                 <div style={{width:"100%",height:"100%",border:"1.5px solid #FFF8EF",borderRadius:6,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"10px",position:"relative"}}>
-                   <div style={{fontFamily:"'Playfair Display',serif",fontWeight:400,fontSize:"clamp(16px,2.4vw,22px)",letterSpacing:"0.08em",lineHeight:1.05,textAlign:"center",WebkitTextStroke:"0.5px #FFF8EF",color:"transparent"}}>MUNIA'S<br/>KITCHEN</div>
-                   <div style={{position:"absolute",right:"10%",bottom:"-6%",fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontWeight:500,fontSize:"clamp(13px,1.8vw,17px)",color:"#FFF8EF",transform:"rotate(-3deg)"}}>catering</div>
-                 </div>
-               </a>
-
-               <div>
-                 <div style={{fontSize:11,fontWeight:700,color:"#C95F08",letterSpacing:1.5,marginBottom:6}}>FOUNDING PARTNER · #1</div>
-                 <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(22px,4vw,32px)",fontWeight:800,color:"#1C130A",margin:"0 0 6px",letterSpacing:"-0.01em"}}>Munia's Kitchen</h3>
-                 <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(14px,2.2vw,18px)",color:"#513117",margin:"0 0 14px",lineHeight:1.4}}>by Chef Karabi Dey · Bengali soul · Mughlai depth · Continental finesse</p>
-
-                 <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:16}}>
-                   {[
-                     {emoji:"🐟",name:"Doi Ilish"},
-                     {emoji:"🍢",name:"Galouti Kebab"},
-                     {emoji:"🍛",name:"Mutton Biryani"},
-                     {emoji:"🥟",name:"Crab Wonton"},
-                     {emoji:"🌿",name:"Kochu Pata Chingri"},
-                   ].map((d,i)=>(
-                     <span key={i} style={{display:"inline-flex",alignItems:"center",gap:4,background:"white",border:"1px solid #EDD8BC",borderRadius:999,padding:"5px 10px",fontSize:11,fontWeight:600,color:"#513117"}}>
-                       <span>{d.emoji}</span>{d.name}
-                     </span>
-                   ))}
-                 </div>
-
-                 <div style={{display:"flex",flexWrap:"wrap",gap:10,alignItems:"center"}}>
-                   <a href="/partners/munias-kitchen.html" style={{display:"inline-flex",alignItems:"center",gap:6,background:"linear-gradient(135deg,#E8760A,#C95F08)",color:"#fff",padding:"11px 22px",borderRadius:12,fontSize:13,fontWeight:700,textDecoration:"none",boxShadow:"0 8px 20px rgba(232,118,10,0.32)"}}>View partner profile →</a>
-                   <span style={{fontSize:11,color:"#7B634E"}}>Newtown · Rajarhat · Salt Lake</span>
-                 </div>
-               </div>
-             </div>
-
-             <p style={{textAlign:"center",marginTop:18,fontSize:12,color:"rgba(255,248,239,0.55)"}}>New founding partners featured every week. <a href="/partners.html" style={{color:"#F3C869",fontWeight:600,textDecoration:"none"}}>Apply to be the next →</a></p>
            </div>
          </div>
 
@@ -3139,8 +3138,8 @@ export default function AayojanApp(){
         @media(max-width:700px){
           .feat-grid{grid-template-columns:1fr !important;}
           .landing-hero{min-height:90vh !important;}
-          .spotlight-card{grid-template-columns:1fr !important;text-align:center;}
-          .spotlight-card>a{max-width:200px;margin:0 auto;}
+          .edit-grid{grid-template-columns:1fr !important;gap:40px !important;}
+          .edit-grid>div:last-child{order:-1;}
         }
         @media(max-width:500px){
           .feat-grid{grid-template-columns:1fr !important;}
