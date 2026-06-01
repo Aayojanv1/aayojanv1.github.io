@@ -8,7 +8,7 @@ const HEADLINES = [
 
   // 🔥 30% memes — punchlines without naming names
   { text: "Other apps: 30%. Us: 3%. The math is mathing. 🧮", lang: "en" },
-  { text: "৩০% কমিশন? ভাই, এটা তো ডাকাতি 😂", lang: "bn" },
+  { text: "৩০% কমিশন? এটা পার্টনারশিপ না, স্পনসরশিপ 🎤", lang: "bn" },
   { text: "Why give 30% to an app? Keep your 27. 💰", lang: "en" },
   { text: "১ লাখের অর্ডার। ৩০ হাজার গায়েব। কাকে? 🙃", lang: "bn" },
 
