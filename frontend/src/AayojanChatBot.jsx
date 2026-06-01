@@ -227,7 +227,10 @@ export default function AayojanChatBot() {
                 Live · Replies in seconds
               </div>
             </div>
-            <button aria-label="Close" onClick={() => setOpen(false)} style={{ background: 'rgba(255,255,255,0.16)', border: 'none', color: 'white', fontSize: 16, cursor: 'pointer', padding: '6px 10px', borderRadius: 8, position: 'relative', zIndex: 1, fontWeight: 700 }}>✕</button>
+            <div style={{ display: 'flex', gap: 6, position: 'relative', zIndex: 1 }}>
+              <button aria-label="Minimize" onClick={() => setOpen(false)} style={{ background: 'rgba(255,255,255,0.16)', border: 'none', color: 'white', fontSize: 18, lineHeight: 1, cursor: 'pointer', width: 30, height: 30, borderRadius: 8, fontWeight: 700, display: 'grid', placeItems: 'center' }}>—</button>
+              <button aria-label="Close" onClick={() => { setOpen(false); reset(); }} style={{ background: 'rgba(255,255,255,0.16)', border: 'none', color: 'white', fontSize: 14, lineHeight: 1, cursor: 'pointer', width: 30, height: 30, borderRadius: 8, fontWeight: 700, display: 'grid', placeItems: 'center' }}>✕</button>
+            </div>
           </div>
 
           {/* Body */}
