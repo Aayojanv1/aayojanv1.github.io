@@ -2113,9 +2113,8 @@ Customer wants quote today.
         document.getElementById('otpRow').style.display = 'block';
         document.getElementById('otpMsg').textContent = '📧 OTP sent! Check your inbox (and spam folder).';
         document.getElementById('otpMsg').style.color = '#666';
-        btn.textContent = 'Resend';
-        btn.disabled = false;
         document.getElementById('otpInput').focus();
+        startOtpCooldown(60);
       } catch (e) {
         btn.textContent = 'Send OTP';
         btn.disabled = false;
@@ -2123,6 +2122,25 @@ Customer wants quote today.
         document.getElementById('otpMsg').textContent = '❌ Could not send OTP. Try again.';
         document.getElementById('otpMsg').style.color = '#dc2626';
       }
+    }
+
+    function startOtpCooldown(seconds) {
+      const btn = document.getElementById('sendOtpBtn');
+      let remaining = seconds;
+      btn.disabled = true;
+      btn.textContent = `Resend in ${remaining}s`;
+      btn.style.opacity = '0.6';
+      const interval = setInterval(() => {
+        remaining -= 1;
+        if (remaining <= 0) {
+          clearInterval(interval);
+          btn.disabled = false;
+          btn.textContent = 'Resend OTP';
+          btn.style.opacity = '1';
+        } else {
+          btn.textContent = `Resend in ${remaining}s`;
+        }
+      }, 1000);
     }
 
     async function verifyEmailOTP() {
