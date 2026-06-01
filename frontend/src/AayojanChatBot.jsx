@@ -51,10 +51,13 @@ export default function AayojanChatBot() {
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
 
-  // Auto-open immediately on landing (every page load)
+  // Auto-open shortly after landing — slight delay lets the page settle first
   useEffect(() => {
-    setOpen(true);
-    track('chatbot_opened', { trigger: 'auto' });
+    const t = setTimeout(() => {
+      setOpen(true);
+      track('chatbot_opened', { trigger: 'auto' });
+    }, 1200);
+    return () => clearTimeout(t);
   }, []);
 
   // Auto-scroll on new message
@@ -197,8 +200,8 @@ export default function AayojanChatBot() {
   };
 
   const panelStyle = isMobile
-    ? { position: 'fixed', inset: 0, background: COLOR.cream, zIndex: 300, display: 'flex', flexDirection: 'column' }
-    : { position: 'fixed', bottom: 24, left: 24, width: 380, height: 580, background: COLOR.cream, zIndex: 300, borderRadius: 22, boxShadow: '0 30px 60px rgba(0,0,0,0.32), 0 0 0 1px rgba(81,49,23,0.12)', display: 'flex', flexDirection: 'column', overflow: 'hidden' };
+    ? { position: 'fixed', inset: 0, background: COLOR.cream, zIndex: 300, display: 'flex', flexDirection: 'column', animation: 'aayojan-slide-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both' }
+    : { position: 'fixed', bottom: 24, left: 24, width: 380, height: 580, background: COLOR.cream, zIndex: 300, borderRadius: 22, boxShadow: '0 30px 60px rgba(0,0,0,0.32), 0 0 0 1px rgba(81,49,23,0.12)', display: 'flex', flexDirection: 'column', overflow: 'hidden', animation: 'aayojan-slide-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both', transformOrigin: 'bottom left' };
 
   return (
     <>
@@ -319,6 +322,15 @@ export default function AayojanChatBot() {
 
       <style>{`
         @keyframes aayojan-dot { 0%, 60%, 100% { opacity: 0.3; } 30% { opacity: 1; } }
+        @keyframes aayojan-slide-in {
+          0% { opacity: 0; transform: translateY(40px) scale(0.92); }
+          60% { opacity: 1; }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes aayojan-slide-up {
+          0% { opacity: 0; transform: translateY(100%); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
       `}</style>
     </>
   );
