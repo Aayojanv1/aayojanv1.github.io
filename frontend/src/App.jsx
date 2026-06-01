@@ -560,9 +560,14 @@ export default function AayojanApp(){
 
   // Dark mode
   const [darkMode,setDarkMode]=useState(()=>{
-    const saved=localStorage.getItem("aayojan-dark-mode");
-    if(saved!==null) return saved==="true";
-    return window.matchMedia?.("(prefers-color-scheme:dark)").matches||false;
+    // Default to LIGHT mode. Ignore OS preference; clear any saved dark setting
+    // so existing visitors who got auto-dark are flipped back to the bright brand.
+    try {
+      if (localStorage.getItem("aayojan-dark-mode") === "true") {
+        localStorage.removeItem("aayojan-dark-mode");
+      }
+    } catch(e) {}
+    return false;
   });
   useEffect(()=>{
     document.documentElement.setAttribute("data-theme",darkMode?"dark":"light");
