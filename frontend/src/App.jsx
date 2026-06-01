@@ -1146,21 +1146,27 @@ export default function AayojanApp(){
              {/* Food gallery — uneven masonry grid for visual interest */}
              <div style={{display:"grid",gridTemplateColumns:"repeat(12,1fr)",gap:12,marginBottom:36}} className="food-grid">
                {[
-                 {img:"https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=800&q=80&auto=format&fit=crop",label:"Mutton Biryani",cuisine:"Mughlai",span:"span 4",h:240},
-                 {img:"https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=800&q=80&auto=format&fit=crop",label:"Festive Thali",cuisine:"Bengali",span:"span 5",h:240},
-                 {img:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=800&q=80&auto=format&fit=crop",label:"Galouti Kebab",cuisine:"Awadhi",span:"span 3",h:240},
-                 {img:"https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=800&q=80&auto=format&fit=crop",label:"Crab Wonton",cuisine:"Indo-Chinese",span:"span 3",h:200},
-                 {img:"https://images.unsplash.com/photo-1604152135912-04a022e23696?w=800&q=80&auto=format&fit=crop",label:"Doi Ilish",cuisine:"Bengali",span:"span 5",h:200},
-                 {img:"https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&q=80&auto=format&fit=crop",label:"Continental",cuisine:"Plated",span:"span 4",h:200},
+                 {emoji:"🍛",label:"Mutton Biryani",cuisine:"Mughlai",note:"Long-grain, slow-dum, hand-trimmed",span:"span 4",h:240,bg:"linear-gradient(135deg,#8B3A0E 0%,#C95F08 60%,#E8760A 100%)"},
+                 {emoji:"🍽️",label:"Festive Thali",cuisine:"Bengali",note:"Mishti doi, kosha mangsho, luchi",span:"span 5",h:240,bg:"linear-gradient(135deg,#5C2A0C 0%,#8B3A0E 50%,#B25917 100%)"},
+                 {emoji:"🍢",label:"Galouti Kebab",cuisine:"Awadhi",note:"Melts on the tongue",span:"span 3",h:240,bg:"linear-gradient(135deg,#4A1F08 0%,#7B3318 50%,#9B4A20 100%)"},
+                 {emoji:"🥟",label:"Crab Wonton",cuisine:"Indo-Chinese",note:"Hand-folded, crisp-fried",span:"span 3",h:200,bg:"linear-gradient(135deg,#1F4A2A 0%,#236B43 60%,#2D8754 100%)"},
+                 {emoji:"🐟",label:"Doi Ilish",cuisine:"Bengali",note:"Hilsa in mustard-yoghurt",span:"span 5",h:200,bg:"linear-gradient(135deg,#3B2410 0%,#6B3A10 50%,#8B5114 100%)"},
+                 {emoji:"🥗",label:"Continental",cuisine:"Plated",note:"Crisp, modern, table-served",span:"span 4",h:200,bg:"linear-gradient(135deg,#2B1B0C 0%,#4A3318 60%,#6B4A20 100%)"},
                ].map((d,i)=>(
-                 <div key={i} style={{gridColumn:d.span,height:d.h,borderRadius:18,overflow:"hidden",position:"relative",boxShadow:"0 14px 32px rgba(76,43,10,0.18)",cursor:"default",transition:"transform 0.4s ease, box-shadow 0.4s ease",background:"linear-gradient(135deg,#513117,#8B4513)"}}
-                   onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 22px 44px rgba(232,118,10,0.28)";}}
-                   onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 14px 32px rgba(76,43,10,0.18)";}}>
-                   <img src={d.img} alt={d.label} style={{width:"100%",height:"100%",objectFit:"cover",display:"block",transition:"transform 0.6s ease"}} loading="lazy" referrerPolicy="no-referrer" />
-                   <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,transparent 45%,rgba(15,10,5,0.88) 100%)",pointerEvents:"none"}}></div>
+                 <div key={i} style={{gridColumn:d.span,height:d.h,borderRadius:18,overflow:"hidden",position:"relative",boxShadow:"0 14px 32px rgba(76,43,10,0.22)",cursor:"default",transition:"transform 0.4s ease, box-shadow 0.4s ease",background:d.bg}}
+                   onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 22px 44px rgba(232,118,10,0.32)";}}
+                   onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 14px 32px rgba(76,43,10,0.22)";}}>
+                   {/* Decorative pattern overlay */}
+                   <div style={{position:"absolute",inset:0,backgroundImage:"radial-gradient(circle at 20% 20%, rgba(243,200,105,0.18) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.06) 0%, transparent 35%)",pointerEvents:"none"}}></div>
+                   {/* Giant emoji */}
+                   <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-58%)",fontSize:d.h>220?78:64,filter:"drop-shadow(0 8px 16px rgba(0,0,0,0.4))",lineHeight:1}}>{d.emoji}</div>
+                   {/* Dark gradient at bottom for legibility */}
+                   <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,transparent 55%,rgba(15,10,5,0.78) 100%)",pointerEvents:"none"}}></div>
+                   {/* Label block */}
                    <div style={{position:"absolute",bottom:14,left:16,right:16,color:"white"}}>
-                     <div style={{fontSize:10,fontWeight:700,letterSpacing:"0.16em",textTransform:"uppercase",color:"#F3C869",marginBottom:2}}>{d.cuisine}</div>
-                     <div style={{fontFamily:"'Playfair Display',serif",fontSize:18,fontWeight:700,letterSpacing:"-0.01em"}}>{d.label}</div>
+                     <div style={{fontSize:10,fontWeight:700,letterSpacing:"0.16em",textTransform:"uppercase",color:"#F3C869",marginBottom:3}}>{d.cuisine}</div>
+                     <div style={{fontFamily:"'Playfair Display',serif",fontSize:19,fontWeight:700,letterSpacing:"-0.01em",lineHeight:1.1,marginBottom:3}}>{d.label}</div>
+                     <div style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:12,color:"rgba(255,255,255,0.78)"}}>{d.note}</div>
                    </div>
                  </div>
                ))}
