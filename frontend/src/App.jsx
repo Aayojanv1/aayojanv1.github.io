@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useAuth, getPartners, getAllPartners, addPartner, updatePartner, deletePartner, createOrder, getAllOrders, getUserOrders, savePayment, updateUserPhone, updateUserPreferences, updateUserProfile } from "./useFirebase";
 import { matchCaterers, anonymize } from "./matchingPipeline";
 import AayojanChatBot from "./AayojanChatBot";
+import RotatingHeadline from "./RotatingHeadline";
 import { getAttribution, getAttributionForEvent } from "./attribution";
 
 const track = (event, params = {}) => {
@@ -1103,8 +1104,9 @@ export default function AayojanApp(){
              <div style={{display:"inline-block",background:"rgba(232,118,10,0.1)",border:"1px solid rgba(232,118,10,0.25)",borderRadius:24,padding:"6px 16px",marginBottom:20}}>
                <span style={{fontSize:12,fontWeight:700,color:"#C95F08",letterSpacing:0.5}}>🔥 NOW ONBOARDING CATERERS · Newtown · Salt Lake · Rajarhat</span>
              </div>
-             <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(32px,7vw,52px)",fontWeight:900,lineHeight:1.1,marginBottom:16,color:"var(--text-primary)"}}>
-               Your kitchen is ready.<br/><span style={{color:"#E8760A"}}>Your order book should be full.</span>
+             <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,6.5vw,48px)",fontWeight:900,lineHeight:1.1,marginBottom:16,color:"var(--text-primary)",minHeight:"2.4em"}}>
+               <span style={{display:"block",color:"var(--text-primary)",marginBottom:6}}>Tired of waiting for referrals?</span>
+               <RotatingHeadline />
              </h1>
              <p style={{fontSize:16,color:"var(--text-secondary)",marginBottom:32,maxWidth:520,margin:"0 auto 32px",lineHeight:1.7}}>
                Aayojan connects caterers in Kolkata with verified event leads on WhatsApp — weddings, birthdays, corporate, house parties. Stop waiting for referrals.
