@@ -345,7 +345,7 @@ FOOD TASTING PROGRAMME:
 OBJECTION HANDLING:
 - "Why should I join?" → "You get qualified leads on WhatsApp for free. No investment, pay only when you earn."
 - "I already have customers" → "Aayojan brings ADDITIONAL leads from people actively searching online. It's extra revenue, not replacement."
-- "3% is too much" → "3% only on orders we bring you. You'd pay 15-40% on Swiggy/Zomato. Plus first 10 partners pay 0% forever."
+- "3% is too much" → "3% only on orders we bring you. Food partners can take up to 30%. Plus first 10 partners pay 0% forever."
 - "How do I know leads are genuine?" → "We pre-qualify customers — they tell us event type, guest count, budget. You only get relevant leads matching your capacity."
 - "What if I want to leave?" → "No contract, no lock-in. Leave anytime. Your data stays private."
 
@@ -1056,7 +1056,7 @@ export default function AayojanApp(){
               <span style={{fontSize:12,color:"#fff",fontWeight:600}}>⚡ Free quotes in 48 hours</span>
               <span style={{fontSize:12,color:"#FDE68A",fontWeight:700}}>🚀 Now Onboarding Partner Caterers!</span>
               <span style={{fontSize:12,color:"#fff",fontWeight:600}}>🎉 Food Tasting from ₹199</span>
-              <span style={{fontSize:12,color:"#FDE68A",fontWeight:700}}>💰 Just 3% commission — not 30%</span>
+              <span style={{fontSize:12,color:"#FDE68A",fontWeight:700}}>💰 Just 3% commission — not up to 30%</span>
             </div>
           ))}
         </div>
