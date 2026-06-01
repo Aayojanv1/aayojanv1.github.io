@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useAuth, getPartners, getAllPartners, addPartner, updatePartner, deletePartner, createOrder, getAllOrders, getUserOrders, savePayment, updateUserPhone, updateUserPreferences, updateUserProfile } from "./useFirebase";
 import { matchCaterers, anonymize } from "./matchingPipeline";
 import AayojanChatBot from "./AayojanChatBot";
+import { getAttribution, getAttributionForEvent } from "./attribution";
 
 const track = (event, params = {}) => {
   if (typeof window.gtag === 'function' && !window['ga-disable-G-VSGREVV7RS']) {
@@ -1189,8 +1190,8 @@ export default function AayojanApp(){
                      try{
                        const {db}=await import('./firebase');
                        const {collection,addDoc}=await import('firebase/firestore');
-                       await addDoc(collection(db,'launchWaitlist'),{whatsapp:ph,source:'landing_launch_teaser',submittedAt:new Date().toISOString()});
-                       track('launch_waitlist_joined',{});
+                       await addDoc(collection(db,'launchWaitlist'),{whatsapp:ph,source:'landing_launch_teaser',submittedAt:new Date().toISOString(),...getAttribution()});
+                       track('launch_waitlist_joined',getAttributionForEvent());
                        btn.textContent='✅ You\'re on the list';
                        btn.style.background='#236B43';btn.style.color='#FFF8EF';
                        document.getElementById('waitlistPhone').value='';

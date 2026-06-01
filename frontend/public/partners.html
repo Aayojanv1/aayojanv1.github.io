@@ -2089,6 +2089,54 @@ Customer wants quote today.
     } catch(e) {
       console.warn('Firebase init failed:', e);
     }
+
+    // ── Attribution capture (once per session) ──
+    function captureAttribution() {
+      try {
+        if (sessionStorage.getItem('aayojan_attribution')) return;
+        const p = new URLSearchParams(location.search);
+        const ref = document.referrer || '';
+        let refHost = ''; try { if (ref) refHost = new URL(ref).hostname; } catch(e) {}
+        const d = {
+          utm_source: p.get('utm_source') || '',
+          utm_medium: p.get('utm_medium') || '',
+          utm_campaign: p.get('utm_campaign') || '',
+          utm_content: p.get('utm_content') || '',
+          utm_term: p.get('utm_term') || '',
+          gclid: p.get('gclid') || '',
+          fbclid: p.get('fbclid') || '',
+          referrer: ref,
+          referrer_host: refHost,
+          landing_page: location.pathname + location.search,
+          landed_at: new Date().toISOString(),
+        };
+        if (d.utm_source) d.channel = 'paid_' + d.utm_source;
+        else if (d.gclid) d.channel = 'google_ads';
+        else if (d.fbclid) d.channel = 'facebook_ads';
+        else if (refHost && !refHost.includes('aayojan')) {
+          if (/google|bing|yahoo|duckduckgo/i.test(refHost)) d.channel = 'organic_search';
+          else if (/facebook|instagram|twitter|linkedin|youtube|t\.co/i.test(refHost)) d.channel = 'social';
+          else if (/wa\.me|whatsapp/i.test(refHost)) d.channel = 'whatsapp';
+          else d.channel = 'referral';
+        } else if (!ref) d.channel = 'direct';
+        else d.channel = 'internal';
+        sessionStorage.setItem('aayojan_attribution', JSON.stringify(d));
+      } catch(e) {}
+    }
+    captureAttribution();
+    function getAttribution() {
+      try { return JSON.parse(sessionStorage.getItem('aayojan_attribution') || '{}'); } catch(e) { return {}; }
+    }
+    function getAttributionForEvent() {
+      const a = getAttribution();
+      return {
+        utm_source: a.utm_source || '', utm_medium: a.utm_medium || '',
+        utm_campaign: a.utm_campaign || '', utm_content: a.utm_content || '',
+        channel: a.channel || '', referrer_host: a.referrer_host || '',
+        landing_page: a.landing_page || '',
+      };
+    }
+
     const foundingFilled = 7;
     const foundingTotal = 15;
     const formatCurrency = (value) => new Intl.NumberFormat('en-IN', {
@@ -2266,7 +2314,8 @@ Customer wants quote today.
         status: 'quick_lead',
         source: 'partners.html_quick_form',
         foundingProgram: true,
-        submittedAt: new Date().toISOString()
+        submittedAt: new Date().toISOString(),
+        ...getAttribution()
       };
 
       if (!db) {
@@ -2293,12 +2342,13 @@ Customer wants quote today.
         body: JSON.stringify(data),
       }).catch(e => console.warn('notify failed:', e));
 
-      // GA — track conversion
+      // GA — track conversion with attribution
       if (typeof gtag === 'function') {
         gtag('event', 'partner_quick_lead_submitted', {
           event_category: 'partner_signup',
           event_label: 'hero_quick_form',
           has_business_name: !!biz,
+          ...getAttributionForEvent(),
         });
       }
 
@@ -2354,7 +2404,8 @@ Customer wants quote today.
         submittedAt: new Date().toISOString(),
         status: 'new',
         source: 'partners.html',
-        foundingProgram: true
+        foundingProgram: true,
+        ...getAttribution()
       };
 
 
@@ -2403,13 +2454,14 @@ Customer wants quote today.
       floatingCta.classList.remove('show');
       floatingCta.setAttribute('aria-hidden', 'true');
 
-      // GA — full application conversion
+      // GA — full application conversion with attribution
       if (typeof gtag === 'function') {
         gtag('event', 'partner_full_application_submitted', {
           event_category: 'partner_signup',
           event_label: 'full_multistep_form',
           service_areas: (data.serviceAreas || []).join(','),
           cuisines: (data.cuisines || []).join(','),
+          ...getAttributionForEvent(),
         });
       }
     }

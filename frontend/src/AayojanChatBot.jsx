@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { db } from "./firebase";
 import { collection, addDoc } from "firebase/firestore";
+import { getAttribution, getAttributionForEvent } from "./attribution";
 
 const track = (event, params = {}) => {
   if (typeof window.gtag === 'function' && !window['ga-disable-G-VSGREVV7RS']) {
@@ -55,7 +56,7 @@ export default function AayojanChatBot() {
   useEffect(() => {
     const t = setTimeout(() => {
       setOpen(true);
-      track('chatbot_opened', { trigger: 'auto' });
+      track('chatbot_opened', { trigger: 'auto', ...getAttributionForEvent() });
     }, 1200);
     return () => clearTimeout(t);
   }, []);
@@ -76,13 +77,13 @@ export default function AayojanChatBot() {
   const openBot = () => {
     setOpen(true);
     if (messages.length === 0) {
-      track('chatbot_opened', { trigger: 'fab' });
+      track('chatbot_opened', { trigger: 'fab', ...getAttributionForEvent() });
     }
   };
 
   const pickMode = (m) => {
     setMode(m);
-    track('chatbot_mode_selected', { mode: m });
+    track('chatbot_mode_selected', { mode: m, ...getAttributionForEvent() });
     if (m === 'partner') {
       // Partner flow: skip AI conversation, go straight to capture
       setMessages([{
@@ -160,6 +161,7 @@ export default function AayojanChatBot() {
       source: 'landing_ai_chatbot',
       foundingProgram: mode === 'partner',
       submittedAt: new Date().toISOString(),
+      ...getAttribution(),
     };
 
     try {
@@ -170,7 +172,7 @@ export default function AayojanChatBot() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       }).catch(() => {});
-      track('chatbot_lead_captured', { mode, has_name: !!name.trim() });
+      track('chatbot_lead_captured', { mode, has_name: !!name.trim(), ...getAttributionForEvent() });
       setPhase('done');
     } catch (e) {
       alert('Could not save right now. Please WhatsApp us at +91-8088434425.');
