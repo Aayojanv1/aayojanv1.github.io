@@ -1114,7 +1114,7 @@ export default function AayojanApp(){
                <p style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",fontSize:"clamp(18px,2.6vw,26px)",fontWeight:600,color:"var(--text-primary)",lineHeight:1.35,margin:"0 0 10px",letterSpacing:"-0.01em"}}>
                  The next kitchen featured on Aayojan <span style={{color:"#E8760A"}}>could be yours.</span>
                </p>
-               <p style={{fontSize:13,color:"var(--text-muted)",margin:0,lineHeight:1.6}}>Stop chasing referrals. Start being one. <span style={{color:"var(--text-secondary)",fontWeight:600}}>₹0 to join · 3% only when you earn.</span></p>
+               <p style={{fontSize:13,color:"var(--text-muted)",margin:0,lineHeight:1.6}}>Stop chasing referrals. Start being one.</p>
              </div>
            </div>
          </div>
