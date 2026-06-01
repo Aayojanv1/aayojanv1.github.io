@@ -215,7 +215,7 @@ export default function AayojanChatBot() {
 
       {/* Panel */}
       {open && (
-        <div style={panelStyle}>
+        <div className="aayojan-chat-panel" style={panelStyle}>
           {/* Header — vivid saffron */}
           <div style={{ padding: '16px 18px', background: `linear-gradient(135deg, ${COLOR.saffron} 0%, ${COLOR.saffronDeep} 100%)`, color: 'white', display: 'flex', alignItems: 'center', gap: 12, position: 'relative', overflow: 'hidden' }}>
             <div style={{ position: 'absolute', top: '-50%', right: '-20%', width: '70%', height: '200%', background: `radial-gradient(ellipse, rgba(243,200,105,0.4) 0%, transparent 60%)`, pointerEvents: 'none' }}></div>
@@ -334,6 +334,28 @@ export default function AayojanChatBot() {
         @keyframes aayojan-slide-up {
           0% { opacity: 0; transform: translateY(100%); }
           100% { opacity: 1; transform: translateY(0); }
+        }
+        /* Force light theme on chat — wins over browser dark mode */
+        .aayojan-chat-panel { color-scheme: light !important; }
+        .aayojan-chat-panel input,
+        .aayojan-chat-panel textarea {
+          background-color: #FFFCF5 !important;
+          color: #1C130A !important;
+          -webkit-text-fill-color: #1C130A !important;
+          color-scheme: light !important;
+          -webkit-appearance: none !important;
+          appearance: none !important;
+        }
+        .aayojan-chat-panel input::placeholder,
+        .aayojan-chat-panel textarea::placeholder {
+          color: #A0937B !important;
+          opacity: 1 !important;
+        }
+        .aayojan-chat-panel input:-webkit-autofill,
+        .aayojan-chat-panel input:-webkit-autofill:hover,
+        .aayojan-chat-panel input:-webkit-autofill:focus {
+          -webkit-box-shadow: 0 0 0 30px #FFFCF5 inset !important;
+          -webkit-text-fill-color: #1C130A !important;
         }
       `}</style>
     </>
