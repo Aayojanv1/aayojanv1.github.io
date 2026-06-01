@@ -1356,6 +1356,7 @@
       .success-card { grid-template-columns: 1fr !important; text-align: center; }
       .success-card > a { max-width: 180px; margin: 0 auto; }
       .success-card ul { text-align: left; }
+      .vs-grid { grid-template-columns: 1fr !important; }
     }
     #quickForm input:focus { border-color: rgba(243,200,105,0.55) !important; background: rgba(255,248,239,0.10) !important; }
     #quickForm input::placeholder { color: rgba(255,248,239,0.35); }
@@ -1408,35 +1409,34 @@
         </div>
 
         <div class="hero-visual reveal">
-          <div class="badge-card">
-            <div class="badge-layout">
-              <div class="founding-badge" aria-label="Founding Partner badge">
-                <div class="badge-ribbon left"></div>
-                <div class="badge-ribbon right"></div>
-                <div class="badge-inner">
-                  <div class="badge-kicker">Aayojan</div>
-                  <div class="badge-title">Founding<br>Partner</div>
-                  <div class="badge-sub">Free Forever</div>
+          <div style="background:linear-gradient(135deg,#1C130A 0%,#2B1B0C 100%);border-radius:24px;padding:30px;box-shadow:0 30px 60px rgba(76,43,10,0.32),0 0 0 1px rgba(243,200,105,0.2);position:relative;overflow:hidden">
+            <div style="position:absolute;top:-30%;right:-20%;width:80%;height:140%;background:radial-gradient(ellipse,rgba(243,200,105,0.18) 0%,transparent 60%);pointer-events:none"></div>
+
+            <div style="position:relative;z-index:1">
+              <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:12px;color:#F3C869;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px">Quick onboarding</div>
+              <h3 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:800;color:#FFF8EF;margin:0 0 6px;line-height:1.15;letter-spacing:-0.01em">Get on Aayojan's radar in <em style="color:#F3C869">two minutes</em>.</h3>
+              <p style="font-size:13px;color:rgba(255,248,239,0.7);margin:0 0 18px;line-height:1.5">Drop your name and WhatsApp. We'll reach out within <strong style="color:#FFF8EF">24 hours</strong>.</p>
+
+              <form id="quickForm" style="display:grid;gap:10px">
+                <div>
+                  <label for="quickName" style="display:block;font-size:10px;color:rgba(255,248,239,0.6);letter-spacing:0.14em;text-transform:uppercase;font-weight:600;margin-bottom:5px">Your name</label>
+                  <input id="quickName" type="text" placeholder="e.g. Karabi Dey" required style="width:100%;padding:11px 13px;background:rgba(255,248,239,0.06);border:1px solid rgba(243,200,105,0.2);border-radius:10px;color:#FFF8EF;font-size:14px;outline:none;font-family:inherit">
                 </div>
-              </div>
-              <div class="badge-copy">
-                <h3>The badge that signals "book me first."</h3>
-                <p>This visual trust marker tells customers you joined early, got verified early and take quality seriously. It is designed to boost response rates before reviews start stacking up.</p>
-                <div class="mini-grid">
-                  <div class="stat-card">
-                    <div class="stat-icon">🏅</div>
-                    <div><strong>Priority ranking</strong><small>Better first visibility in early customer matches.</small></div>
-                  </div>
-                  <div class="stat-card">
-                    <div class="stat-icon">💬</div>
-                    <div><strong>Leads on WhatsApp</strong><small>Practical and fast for busy kitchen teams.</small></div>
-                  </div>
-                  <div class="stat-card">
-                    <div class="stat-icon">📍</div>
-                    <div><strong>Local demand focus</strong><small>Newtown, Rajarhat and Salt Lake first.</small></div>
-                  </div>
+                <div>
+                  <label for="quickPhone" style="display:block;font-size:10px;color:rgba(255,248,239,0.6);letter-spacing:0.14em;text-transform:uppercase;font-weight:600;margin-bottom:5px">WhatsApp number</label>
+                  <input id="quickPhone" type="tel" placeholder="+91 XXXXXXXXXX" required pattern="[0-9+\s]{10,15}" style="width:100%;padding:11px 13px;background:rgba(255,248,239,0.06);border:1px solid rgba(243,200,105,0.2);border-radius:10px;color:#FFF8EF;font-size:14px;outline:none;font-family:inherit">
                 </div>
-              </div>
+                <div>
+                  <label for="quickBiz" style="display:block;font-size:10px;color:rgba(255,248,239,0.6);letter-spacing:0.14em;text-transform:uppercase;font-weight:600;margin-bottom:5px">Catering name <span style="color:rgba(255,248,239,0.4);text-transform:none;letter-spacing:0;font-weight:400">(optional)</span></label>
+                  <input id="quickBiz" type="text" placeholder="e.g. Munia's Kitchen" style="width:100%;padding:11px 13px;background:rgba(255,248,239,0.06);border:1px solid rgba(243,200,105,0.2);border-radius:10px;color:#FFF8EF;font-size:14px;outline:none;font-family:inherit">
+                </div>
+
+                <button type="button" id="quickSubmit" onclick="submitQuick()" style="margin-top:6px;padding:13px;background:linear-gradient(135deg,#F3C869,#E8760A);color:#0F0A05;border:none;border-radius:11px;font-family:'Playfair Display',serif;font-weight:800;font-size:15px;cursor:pointer;box-shadow:0 14px 28px rgba(232,118,10,0.32);transition:transform 0.2s">📱 Call me within 24 hours</button>
+
+                <div id="quickMsg" style="font-size:12px;color:rgba(255,248,239,0.7);text-align:center;min-height:16px;margin-top:2px"></div>
+              </form>
+
+              <p style="font-size:11px;color:rgba(255,248,239,0.45);margin:14px 0 0;text-align:center">No commitment. No joining fee.</p>
             </div>
           </div>
         </div>
@@ -1475,38 +1475,39 @@
       </div>
     </section>
 
-    <!-- ── QUICK ONBOARDING — Name + Phone ─────────────────────────────── -->
-    <section style="padding:56px 0;background:#0F0A05;position:relative;overflow:hidden">
-      <div style="position:absolute;inset:0;background-image:radial-gradient(circle at 50% 0%,rgba(243,200,105,0.10) 0%,transparent 50%);pointer-events:none"></div>
+    <!-- ── 3% vs 30% INNOVATIVE CATCHPHRASE ─────────────────────────────── -->
+    <section style="padding:56px 0;background:linear-gradient(135deg,#FFF8EF 0%,#FFE9C7 100%);border-top:1px solid #EDD8BC;border-bottom:1px solid #EDD8BC">
+      <div class="container">
+        <div style="max-width:880px;margin:0 auto;text-align:center">
+          <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:12px;color:#C95F08;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:14px">The maths that matters</div>
+          <h2 style="font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,44px);font-weight:900;color:#1C130A;margin:0 0 18px;line-height:1.1;letter-spacing:-0.02em">
+            Keep <em style="color:#E8760A;font-style:italic">97 paise</em> of every rupee.<br>
+            Not <span style="color:#9B2C2C">70 paise</span>.
+          </h2>
+          <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,2.2vw,20px);color:#513117;margin:0 0 28px;line-height:1.55;max-width:640px;margin-left:auto;margin-right:auto">
+            Zomato takes 30%. Swiggy takes 30%. Aayojan takes <strong style="color:#E8760A;font-style:normal">3%</strong> — and only when you actually get paid. Your kitchen keeps the rest.
+          </p>
 
-      <div class="container" style="position:relative;z-index:1">
-        <div style="max-width:560px;margin:0 auto;text-align:center">
-          <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:12px;color:#F3C869;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px">Quick onboarding</div>
-          <h2 style="font-family:'Playfair Display',serif;font-size:clamp(24px,4.4vw,38px);font-weight:800;color:#FFF8EF;margin:0 0 12px;line-height:1.1;letter-spacing:-0.01em">Get on Aayojan's radar in <em style="color:#F3C869">two minutes</em>.</h2>
-          <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:rgba(255,248,239,0.7);margin:0 0 26px;line-height:1.5">Drop your name and WhatsApp number. Our partner team will reach out within 24 hours — kitchen audit, brand page, first lead within the week.</p>
-
-          <form id="quickForm" style="background:rgba(255,248,239,0.04);border:1px solid rgba(243,200,105,0.25);border-radius:18px;padding:20px;display:grid;gap:12px;text-align:left;backdrop-filter:blur(10px)">
-            <div>
-              <label for="quickName" style="display:block;font-size:11px;color:rgba(255,248,239,0.6);letter-spacing:0.14em;text-transform:uppercase;font-weight:600;margin-bottom:6px">Your name</label>
-              <input id="quickName" type="text" placeholder="e.g. Karabi Dey" required style="width:100%;padding:12px 14px;background:rgba(255,248,239,0.06);border:1px solid rgba(243,200,105,0.2);border-radius:10px;color:#FFF8EF;font-size:15px;outline:none;transition:border-color 0.2s">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:680px;margin:0 auto" class="vs-grid">
+            <div style="background:white;border-radius:18px;padding:20px 14px;border:1px solid #EDD8BC">
+              <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:#9B2C2C;line-height:1">30%</div>
+              <div style="font-size:11px;color:#7B634E;text-transform:uppercase;letterspacing:0.1em;font-weight:600;margin-top:4px">Zomato / Swiggy</div>
+              <div style="font-size:11px;color:#9B2C2C;font-style:italic;margin-top:6px">Every booking. Forever.</div>
             </div>
-            <div>
-              <label for="quickPhone" style="display:block;font-size:11px;color:rgba(255,248,239,0.6);letter-spacing:0.14em;text-transform:uppercase;font-weight:600;margin-bottom:6px">WhatsApp number</label>
-              <input id="quickPhone" type="tel" placeholder="+91 XXXXXXXXXX" required pattern="[0-9+\s]{10,15}" style="width:100%;padding:12px 14px;background:rgba(255,248,239,0.06);border:1px solid rgba(243,200,105,0.2);border-radius:10px;color:#FFF8EF;font-size:15px;outline:none;transition:border-color 0.2s">
+            <div style="background:linear-gradient(135deg,#FFE9C7,#FFD898);border-radius:18px;padding:20px 14px;border:2px solid #E8760A;box-shadow:0 12px 24px rgba(232,118,10,0.18);position:relative">
+              <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#E8760A;color:white;font-size:9px;font-weight:700;letter-spacing:0.14em;padding:3px 10px;border-radius:99px">AAYOJAN</div>
+              <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:#E8760A;line-height:1">3%</div>
+              <div style="font-size:11px;color:#7B634E;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;margin-top:4px">Only what we earn for you</div>
+              <div style="font-size:11px;color:#236B43;font-style:italic;margin-top:6px">Only when you get paid.</div>
             </div>
-            <div>
-              <label for="quickBiz" style="display:block;font-size:11px;color:rgba(255,248,239,0.6);letter-spacing:0.14em;text-transform:uppercase;font-weight:600;margin-bottom:6px">Catering / kitchen name <span style="color:rgba(255,248,239,0.4);text-transform:none;letter-spacing:0">(optional)</span></label>
-              <input id="quickBiz" type="text" placeholder="e.g. Munia's Kitchen" style="width:100%;padding:12px 14px;background:rgba(255,248,239,0.06);border:1px solid rgba(243,200,105,0.2);border-radius:10px;color:#FFF8EF;font-size:15px;outline:none;transition:border-color 0.2s">
+            <div style="background:white;border-radius:18px;padding:20px 14px;border:1px solid #EDD8BC">
+              <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:#236B43;line-height:1">₹0</div>
+              <div style="font-size:11px;color:#7B634E;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;margin-top:4px">To join</div>
+              <div style="font-size:11px;color:#236B43;font-style:italic;margin-top:6px">No subscription. No lock-in.</div>
             </div>
+          </div>
 
-            <button type="button" id="quickSubmit" onclick="submitQuick()" style="margin-top:6px;padding:14px;background:linear-gradient(135deg,#F3C869,#E8760A);color:#0F0A05;border:none;border-radius:12px;font-family:'Playfair Display',serif;font-weight:800;font-size:16px;cursor:pointer;box-shadow:0 16px 30px rgba(232,118,10,0.32);transition:transform 0.2s">📱 Call me within 24 hours</button>
-
-            <div id="quickMsg" style="font-size:13px;color:rgba(255,248,239,0.7);text-align:center;min-height:18px;margin-top:4px"></div>
-          </form>
-
-          <p style="font-size:11px;color:rgba(255,248,239,0.4);margin-top:14px">No commitment. No joining fee. Just a real conversation about your kitchen.</p>
-
-          <p style="font-size:12px;color:rgba(255,248,239,0.55);margin-top:22px"><a href="#register" style="color:#F3C869;font-weight:600;text-decoration:none">Or fill the full application now →</a></p>
+          <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:15px;color:#7B634E;margin:26px 0 0">On ₹1 lakh of bookings, that's <strong style="color:#1C130A;font-style:normal">₹27,000</strong> more in your hand. Every month.</p>
         </div>
       </div>
     </section>
