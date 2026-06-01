@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 
-// English + Bengali rotation — anchors, emotions, and 30% memes
+// English + Bengali rotation — built for the intelligent Bengali reader
+// Style: wit over volume. Wordplay over confrontation. Let the math do the punching.
 const HEADLINES = [
-  // 🔧 Anchors — the value prop
+  // 🔧 Anchors — the value prop, clean
   { text: "Cook. Quote. Get paid. Repeat.", lang: "en" },
   { text: "রান্না করো। অর্ডার নাও। টাকা গোনো।", lang: "bn" },
 
-  // 🔥 30% memes — punchlines without naming names
-  { text: "Other apps: 30%. Us: 3%. The math is mathing. 🧮", lang: "en" },
+  // 🧠 The 30% comparison — intelligent, not loud
+  { text: "₹1L on the menu — keep ₹97K with us, ₹70K elsewhere. Same kitchen, different math. 🧮", lang: "en" },
   { text: "৩০% কমিশন? এটা পার্টনারশিপ না, স্পনসরশিপ 🎤", lang: "bn" },
-  { text: "Why give 30% to an app? Keep your 27. 💰", lang: "en" },
-  { text: "১ লাখের অর্ডার। ৩০ হাজার গায়েব। কাকে? 🙃", lang: "bn" },
+  { text: "Same dish. Same effort. 27% more in your pocket. ✨", lang: "en" },
+  { text: "অ্যাপ বলে 'পার্টনার'। চুক্তি বলে অন্য কিছু 📜", lang: "bn" },
 
-  // ❤️ Emotional pulls — speak to the pain
+  // ❤️ Emotional — the gentle truths
   { text: "Your kitchen's been ready. Your phone hasn't.", lang: "en" },
   { text: "এবার বাজবে আপনার ফোন।", lang: "bn" },
   { text: "Cook more. Chase less.", lang: "en" },
