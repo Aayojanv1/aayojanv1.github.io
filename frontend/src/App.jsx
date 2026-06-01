@@ -1126,35 +1126,75 @@ export default function AayojanApp(){
            <span style={{position:"relative",background:"var(--bg-primary)",padding:"8px 20px",borderRadius:24,border:"1px solid var(--border-light)",fontSize:13,fontWeight:700,color:"var(--text-muted)",letterSpacing:0.5}}>👇 FOR CUSTOMERS</span>
          </div>
 
-         {/* ── HOW IT WORKS — Interactive, sticky for users ──────────────── */}
-         <div style={{padding:"56px 14px",maxWidth:820,margin:"0 auto"}}>
-           <div style={{textAlign:"center",marginBottom:32}}>
-             <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(22px,5vw,30px)",fontWeight:800,color:"var(--text-primary)",marginBottom:8}}>Book Your Perfect Caterer in Minutes</h2>
-             <p style={{fontSize:14,color:"var(--text-muted)",maxWidth:460,margin:"0 auto"}}>No calls, no haggling. Tell us what you need → get matched → compare quotes → done.</p>
-           </div>
+         {/* ── LAUNCHING SOON — Excitement teaser with food gallery ──────── */}
+         <div style={{padding:"64px 14px",background:"linear-gradient(180deg,#FFF8EF 0%,#FFF0D5 60%,#FFE9C7 100%)",position:"relative",overflow:"hidden"}}>
+           {/* Decorative blobs */}
+           <div style={{position:"absolute",top:"-20%",left:"-10%",width:"50%",height:"60%",background:"radial-gradient(ellipse,rgba(232,118,10,0.10) 0%,transparent 60%)",pointerEvents:"none"}}></div>
+           <div style={{position:"absolute",bottom:"-20%",right:"-10%",width:"50%",height:"60%",background:"radial-gradient(ellipse,rgba(243,200,105,0.18) 0%,transparent 60%)",pointerEvents:"none"}}></div>
 
-           {/* Steps — clean horizontal layout */}
-           <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16}} className="feat-grid">
-             {[
-               {icon:"🎉",title:"Pick Your Event",sub:"Wedding, birthday, house party, corporate",num:"1"},
-               {icon:"🤖",title:"AI Matches",sub:"We scan 7+ caterers for your area & budget",num:"2"},
-               {icon:"📱",title:"Get Quotes",sub:"Real prices on WhatsApp in under 48 hours",num:"3"},
-               {icon:"🍽️",title:"Taste & Book",sub:"Free tasting from ₹199. Love it? Lock in.",num:"4"},
-             ].map((s,i)=>(
-               <div key={i} style={{background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:20,padding:"24px 16px",textAlign:"center",position:"relative",boxShadow:"0 4px 20px rgba(0,0,0,0.05)"}}>
-                 <div style={{width:48,height:48,borderRadius:"50%",background:"linear-gradient(135deg,#E8760A,#F3C869)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,margin:"0 auto 12px",boxShadow:"0 4px 12px rgba(232,118,10,0.2)",color:"#fff",fontWeight:900}}>{s.num}</div>
-                 <div style={{fontSize:28,marginBottom:8}}>{s.icon}</div>
-                 <div style={{fontSize:13,fontWeight:700,color:"var(--text-primary)",marginBottom:4}}>{s.title}</div>
-                 <div style={{fontSize:11,color:"var(--text-muted)",lineHeight:1.5}}>{s.sub}</div>
+           <div style={{maxWidth:1180,margin:"0 auto",position:"relative",zIndex:1}}>
+             {/* Header */}
+             <div style={{textAlign:"center",marginBottom:36}}>
+               <div style={{display:"inline-flex",alignItems:"center",gap:8,background:"linear-gradient(135deg,#E8760A,#C95F08)",color:"white",padding:"6px 16px",borderRadius:99,marginBottom:14,boxShadow:"0 8px 20px rgba(232,118,10,0.32)"}}>
+                 <span style={{display:"inline-block",width:7,height:7,borderRadius:"50%",background:"#86efac",boxShadow:"0 0 0 0 rgba(134,239,172,0.7)",animation:"aayojan-pulse-dot 2s infinite"}}></span>
+                 <span style={{fontSize:11,fontWeight:800,letterSpacing:"0.16em"}}>LAUNCHING SOON</span>
                </div>
-             ))}
-           </div>
+               <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,6vw,52px)",fontWeight:900,color:"#1C130A",margin:"0 0 12px",letterSpacing:"-0.02em",lineHeight:1.05}}>We can't wait to <em style={{color:"#E8760A"}}>serve you</em>.</h2>
+               <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(15px,2.2vw,20px)",color:"#513117",maxWidth:620,margin:"0 auto",lineHeight:1.5}}>The chefs, the kitchens, the city. Coming together for Newtown, Rajarhat & Salt Lake. The Aayojan customer experience drops in weeks.</p>
+             </div>
 
-           {/* Sticky CTA below steps */}
-           <div style={{marginTop:28,textAlign:"center",background:"linear-gradient(135deg,#FDF6ED,#FFF0D5)",border:"1px solid #EDD8BC",borderRadius:20,padding:"24px 20px"}}>
-             <div style={{fontSize:14,fontWeight:700,color:"#1C130A",marginBottom:6}}>🕐 Most caterers respond within 4 hours</div>
-             <p style={{fontSize:12,color:"#7B634E",marginBottom:14,maxWidth:400,margin:"0 auto 14px"}}>Tell us your event details once — we'll handle the back-and-forth with caterers so you don't have to.</p>
-             <button onClick={()=>navigate("app")} style={{background:"linear-gradient(135deg,#E8760A,#C95F08)",color:"#fff",border:"none",padding:"12px 28px",borderRadius:12,fontSize:14,fontWeight:700,cursor:"pointer",boxShadow:"0 4px 16px rgba(232,118,10,0.3)"}}>Start Now — It's Free →</button>
+             {/* Food gallery — uneven masonry grid for visual interest */}
+             <div style={{display:"grid",gridTemplateColumns:"repeat(12,1fr)",gap:12,marginBottom:36}} className="food-grid">
+               {[
+                 {q:"biryani",label:"Mutton Biryani",cuisine:"Mughlai",span:"span 4",h:240},
+                 {q:"indian-thali",label:"Festive Thali",cuisine:"Bengali",span:"span 5",h:240},
+                 {q:"kebab-tandoor",label:"Galouti Kebab",cuisine:"Awadhi",span:"span 3",h:240},
+                 {q:"crab-prawn",label:"Crab Wonton",cuisine:"Indo-Chinese",span:"span 3",h:200},
+                 {q:"hilsa-fish-curry",label:"Doi Ilish",cuisine:"Bengali",span:"span 5",h:200},
+                 {q:"continental-platter",label:"Continental",cuisine:"Plated",span:"span 4",h:200},
+               ].map((d,i)=>(
+                 <div key={i} style={{gridColumn:d.span,height:d.h,borderRadius:18,overflow:"hidden",position:"relative",boxShadow:"0 14px 32px rgba(76,43,10,0.18)",cursor:"default",transition:"transform 0.4s ease, box-shadow 0.4s ease"}}
+                   onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 22px 44px rgba(232,118,10,0.28)";}}
+                   onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 14px 32px rgba(76,43,10,0.18)";}}>
+                   <img src={`https://source.unsplash.com/600x400/?${d.q}`} alt={d.label} style={{width:"100%",height:"100%",objectFit:"cover",display:"block",transition:"transform 0.6s ease"}} loading="lazy" />
+                   <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,transparent 50%,rgba(15,10,5,0.85) 100%)",pointerEvents:"none"}}></div>
+                   <div style={{position:"absolute",bottom:14,left:16,right:16,color:"white"}}>
+                     <div style={{fontSize:10,fontWeight:700,letterSpacing:"0.16em",textTransform:"uppercase",color:"#F3C869",marginBottom:2}}>{d.cuisine}</div>
+                     <div style={{fontFamily:"'Playfair Display',serif",fontSize:18,fontWeight:700,letterSpacing:"-0.01em"}}>{d.label}</div>
+                   </div>
+                 </div>
+               ))}
+             </div>
+
+             {/* Bottom CTA card */}
+             <div style={{background:"linear-gradient(135deg,#0F0A05,#2B1B0C)",borderRadius:24,padding:"32px 28px",textAlign:"center",position:"relative",overflow:"hidden",boxShadow:"0 30px 60px rgba(15,10,5,0.32)"}}>
+               <div style={{position:"absolute",top:"-50%",right:"-30%",width:"80%",height:"200%",background:"radial-gradient(ellipse,rgba(243,200,105,0.18) 0%,transparent 60%)",pointerEvents:"none"}}></div>
+               <div style={{position:"relative",zIndex:1}}>
+                 <div style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:15,color:"#F3C869",marginBottom:8}}>A note from the team</div>
+                 <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(22px,4vw,32px)",fontWeight:800,color:"#FFF8EF",margin:"0 0 10px",lineHeight:1.2}}>Be the first to know when we go live.</h3>
+                 <p style={{fontSize:14,color:"rgba(255,248,239,0.7)",margin:"0 auto 22px",maxWidth:480,lineHeight:1.6}}>Drop your WhatsApp and we'll send one message — the day Aayojan opens for customer bookings. No spam. Pinky promise.</p>
+
+                 <div style={{display:"flex",gap:8,maxWidth:440,margin:"0 auto",flexWrap:"wrap",justifyContent:"center"}}>
+                   <input id="waitlistPhone" type="tel" placeholder="+91 XXXXXXXXXX" style={{flex:"1 1 240px",minWidth:200,padding:"13px 16px",background:"rgba(255,248,239,0.08)",border:"1px solid rgba(243,200,105,0.3)",borderRadius:11,color:"#FFF8EF",fontSize:14,outline:"none",colorScheme:"light"}} onFocus={e=>e.target.style.borderColor="#F3C869"} onBlur={e=>e.target.style.borderColor="rgba(243,200,105,0.3)"} />
+                   <button onClick={async()=>{
+                     const ph=document.getElementById('waitlistPhone').value.trim();
+                     if(!ph||ph.replace(/\D/g,'').length<10){alert('Please enter a valid 10-digit number.');return;}
+                     const btn=event.target;btn.disabled=true;btn.textContent='Saving...';
+                     try{
+                       const {db}=await import('./firebase');
+                       const {collection,addDoc}=await import('firebase/firestore');
+                       await addDoc(collection(db,'launchWaitlist'),{whatsapp:ph,source:'landing_launch_teaser',submittedAt:new Date().toISOString()});
+                       track('launch_waitlist_joined',{});
+                       btn.textContent='✅ You\'re on the list';
+                       btn.style.background='#236B43';btn.style.color='#FFF8EF';
+                       document.getElementById('waitlistPhone').value='';
+                     }catch(e){btn.disabled=false;btn.textContent='🔔 Notify me at launch';alert('Could not save. Please try again.');}
+                   }} style={{padding:"13px 22px",background:"linear-gradient(135deg,#F3C869,#E8760A)",color:"#0F0A05",border:"none",borderRadius:11,fontFamily:"'Playfair Display',serif",fontWeight:800,fontSize:14,cursor:"pointer",boxShadow:"0 12px 28px rgba(232,118,10,0.42)",whiteSpace:"nowrap"}}>🔔 Notify me at launch</button>
+                 </div>
+
+                 <p style={{fontSize:11,color:"rgba(255,248,239,0.4)",margin:"18px 0 0",fontStyle:"italic"}}>5 cuisines covered · 7 founding kitchens · 1 launch away.</p>
+               </div>
+             </div>
            </div>
          </div>
 
@@ -3135,6 +3175,18 @@ export default function AayojanApp(){
         ::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-track{background:#fef9f7;} ::-webkit-scrollbar-thumb{background:#fca5a5;border-radius:2px;}
         .caterer-scroll::-webkit-scrollbar{display:none;}
         .landing-hero button:hover{transform:scale(1.03);}
+        @keyframes aayojan-pulse-dot {
+          0% { box-shadow: 0 0 0 0 rgba(134,239,172,0.7); }
+          70% { box-shadow: 0 0 0 8px rgba(134,239,172,0); }
+          100% { box-shadow: 0 0 0 0 rgba(134,239,172,0); }
+        }
+        .food-grid > div:hover img { transform: scale(1.08); }
+        @media(max-width:760px){
+          .food-grid > div { grid-column: span 12 !important; height: 200px !important; }
+        }
+        @media(min-width:761px) and (max-width:1024px){
+          .food-grid > div { grid-column: span 6 !important; }
+        }
         @media(max-width:700px){
           .feat-grid{grid-template-columns:1fr !important;}
           .landing-hero{min-height:90vh !important;}
