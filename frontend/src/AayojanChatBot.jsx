@@ -200,8 +200,8 @@ export default function AayojanChatBot() {
   };
 
   const panelStyle = isMobile
-    ? { position: 'fixed', inset: 0, background: COLOR.cream, zIndex: 300, display: 'flex', flexDirection: 'column', animation: 'aayojan-slide-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both', colorScheme: 'light' }
-    : { position: 'fixed', bottom: 24, left: 24, width: 380, height: 580, background: COLOR.cream, zIndex: 300, borderRadius: 22, boxShadow: '0 30px 60px rgba(0,0,0,0.32), 0 0 0 1px rgba(81,49,23,0.12)', display: 'flex', flexDirection: 'column', overflow: 'hidden', animation: 'aayojan-slide-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both', transformOrigin: 'bottom left', colorScheme: 'light' };
+    ? { position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, width: '100%', maxWidth: '100vw', background: COLOR.cream, zIndex: 300, display: 'flex', flexDirection: 'column', animation: 'aayojan-slide-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both', colorScheme: 'light', overflow: 'hidden', boxSizing: 'border-box' }
+    : { position: 'fixed', bottom: 24, left: 24, width: 380, height: 580, background: COLOR.cream, zIndex: 300, borderRadius: 22, boxShadow: '0 30px 60px rgba(0,0,0,0.32), 0 0 0 1px rgba(81,49,23,0.12)', display: 'flex', flexDirection: 'column', overflow: 'hidden', animation: 'aayojan-slide-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both', transformOrigin: 'bottom left', colorScheme: 'light', boxSizing: 'border-box' };
 
   return (
     <>
@@ -234,7 +234,7 @@ export default function AayojanChatBot() {
           </div>
 
           {/* Body */}
-          <div ref={scrollRef} style={{ flex: 1, overflowY: 'auto', padding: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div ref={scrollRef} style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: 16, display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0, width: '100%', boxSizing: 'border-box', WebkitOverflowScrolling: 'touch' }}>
 
             {/* Phase: greet */}
             {phase === 'greet' && (
@@ -262,9 +262,9 @@ export default function AayojanChatBot() {
 
             {/* Phase: chat — render messages */}
             {(phase === 'chat' || phase === 'capture') && messages.map((m, i) => (
-              <div key={i} style={{ display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start' }}>
+              <div key={i} style={{ display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start', width: '100%', boxSizing: 'border-box' }}>
                 <div style={{
-                  maxWidth: '82%',
+                  maxWidth: '78%',
                   padding: '10px 14px',
                   borderRadius: m.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
                   background: m.role === 'user' ? COLOR.saffron : 'white',
@@ -273,6 +273,9 @@ export default function AayojanChatBot() {
                   border: m.role === 'user' ? 'none' : `1px solid ${COLOR.gold}33`,
                   boxShadow: m.role === 'user' ? '0 4px 12px rgba(232,118,10,0.24)' : '0 1px 3px rgba(76,43,10,0.06)',
                   whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-word',
+                  overflowWrap: 'break-word',
+                  boxSizing: 'border-box',
                 }}>{m.text}</div>
               </div>
             ))}
@@ -339,7 +342,8 @@ export default function AayojanChatBot() {
           100% { opacity: 1; transform: translateY(0); }
         }
         /* Force light theme on chat — wins over browser dark mode */
-        .aayojan-chat-panel { color-scheme: light !important; }
+        .aayojan-chat-panel { color-scheme: light !important; box-sizing: border-box !important; }
+        .aayojan-chat-panel * { box-sizing: border-box !important; }
         .aayojan-chat-panel input,
         .aayojan-chat-panel textarea {
           background-color: #FFFCF5 !important;
@@ -348,6 +352,8 @@ export default function AayojanChatBot() {
           color-scheme: light !important;
           -webkit-appearance: none !important;
           appearance: none !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
         }
         .aayojan-chat-panel input::placeholder,
         .aayojan-chat-panel textarea::placeholder {
