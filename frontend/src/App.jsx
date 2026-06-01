@@ -1109,17 +1109,13 @@ export default function AayojanApp(){
                <button onClick={()=>navigate("app")} style={{background:"var(--bg-card)",color:"var(--text-secondary)",border:"2px solid var(--border-light)",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:600,cursor:"pointer"}}>🍽️ I'm a Customer</button>
              </div>
 
-             {/* Trust stats — partner focused */}
-             <div style={{display:"flex",justifyContent:"center",gap:32,marginTop:24}}>
-               {[["3%","Our Commission"],["vs 30%","Zomato/Swiggy"],["₹0","Joining Fee"]].map(([val,lbl])=>(
-                 <div key={lbl} style={{textAlign:"center"}}>
-                   <div style={{fontSize:22,fontWeight:900,color:val==="vs 30%"?"#e74c3c":"#E8760A"}}>{val}</div>
-                   <div style={{fontSize:11,color:"var(--text-muted)",textTransform:"uppercase",letterSpacing:1}}>{lbl}</div>
-                 </div>
-               ))}
+             {/* Catchphrase — editorial pull */}
+             <div style={{maxWidth:640,margin:"28px auto 0",textAlign:"center"}}>
+               <p style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",fontSize:"clamp(18px,2.6vw,26px)",fontWeight:600,color:"var(--text-primary)",lineHeight:1.35,margin:"0 0 10px",letterSpacing:"-0.01em"}}>
+                 The next kitchen featured on Aayojan <span style={{color:"#E8760A"}}>could be yours.</span>
+               </p>
+               <p style={{fontSize:13,color:"var(--text-muted)",margin:0,lineHeight:1.6}}>Stop chasing referrals. Start being one. <span style={{color:"var(--text-secondary)",fontWeight:600}}>₹0 to join · 3% only when you earn.</span></p>
              </div>
-
-             <p style={{fontSize:12,color:"var(--text-muted)",marginTop:20,maxWidth:400,margin:"20px auto 0"}}>Founding partners get priority leads, verified badge & free-forever onboarding before public launch.</p>
            </div>
          </div>
 
