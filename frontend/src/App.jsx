@@ -346,7 +346,7 @@ FOOD TASTING PROGRAMME:
 OBJECTION HANDLING:
 - "Why should I join?" → "You get qualified leads on WhatsApp for free. No investment, pay only when you earn."
 - "I already have customers" → "Aayojan brings ADDITIONAL leads from people actively searching online. It's extra revenue, not replacement."
-- "3% is too much" → "3% only on orders we bring you. You'd pay 15-40% on Swiggy/Zomato. Plus first 10 partners pay 0% forever."
+- "3% is too much" → "3% only on orders we bring you. Other apps charge 15-40%. Plus first 10 partners pay 0% forever."
 - "How do I know leads are genuine?" → "We pre-qualify customers — they tell us event type, guest count, budget. You only get relevant leads matching your capacity."
 - "What if I want to leave?" → "No contract, no lock-in. Leave anytime. Your data stays private."
 

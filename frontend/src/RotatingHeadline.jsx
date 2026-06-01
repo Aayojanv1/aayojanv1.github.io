@@ -6,11 +6,11 @@ const HEADLINES = [
   { text: "Cook. Quote. Get paid. Repeat.", lang: "en" },
   { text: "রান্না করো। অর্ডার নাও। টাকা গোনো।", lang: "bn" },
 
-  // 🔥 30% memes — punch up at Zomato / Swiggy
-  { text: "Zomato: 30%. Aayojan: 3%. The math is mathing. 🧮", lang: "en" },
+  // 🔥 30% memes — punchlines without naming names
+  { text: "Other apps: 30%. Us: 3%. The math is mathing. 🧮", lang: "en" },
   { text: "৩০% কমিশন? ভাই, এটা তো ডাকাতি 😂", lang: "bn" },
-  { text: "Why give 30% to a logo? Keep your 27. 💰", lang: "en" },
-  { text: "১ লাখের অর্ডার। ৩০ হাজার গায়েব। Zomato-তে। 🙃", lang: "bn" },
+  { text: "Why give 30% to an app? Keep your 27. 💰", lang: "en" },
+  { text: "১ লাখের অর্ডার। ৩০ হাজার গায়েব। কাকে? 🙃", lang: "bn" },
 
   // ❤️ Emotional pulls — speak to the pain
   { text: "Your kitchen's been ready. Your phone hasn't.", lang: "en" },
