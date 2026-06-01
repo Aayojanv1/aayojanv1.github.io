@@ -1,13 +1,22 @@
 import { useEffect, useState } from "react";
 
-// English + Bengali rotation — built for Kolkata caterer eyes
+// English + Bengali rotation — anchors, emotions, and 30% memes
 const HEADLINES = [
+  // 🔧 Anchors — the value prop
   { text: "Cook. Quote. Get paid. Repeat.", lang: "en" },
   { text: "রান্না করো। অর্ডার নাও। টাকা গোনো।", lang: "bn" },
+
+  // 🔥 30% memes — punch up at Zomato / Swiggy
+  { text: "Zomato: 30%. Aayojan: 3%. The math is mathing. 🧮", lang: "en" },
+  { text: "৩০% কমিশন? ভাই, এটা তো ডাকাতি 😂", lang: "bn" },
+  { text: "Why give 30% to a logo? Keep your 27. 💰", lang: "en" },
+  { text: "১ লাখের অর্ডার। ৩০ হাজার গায়েব। Zomato-তে। 🙃", lang: "bn" },
+
+  // ❤️ Emotional pulls — speak to the pain
   { text: "Your kitchen's been ready. Your phone hasn't.", lang: "en" },
   { text: "এবার বাজবে আপনার ফোন।", lang: "bn" },
   { text: "Cook more. Chase less.", lang: "en" },
-  { text: "চা দিয়ে অর্ডার আসে না। Aayojan এ আসে।", lang: "bn" },
+  { text: "চা দিয়ে অর্ডার আসে না। Aayojan এ আসে। ☕→🍛", lang: "bn" },
 ];
 
 const HOLD_MS = 3500;
