@@ -216,17 +216,18 @@ export default function AayojanChatBot() {
       {/* Panel */}
       {open && (
         <div style={panelStyle}>
-          {/* Header */}
-          <div style={{ padding: '14px 16px', background: COLOR.dark, color: COLOR.cream, display: 'flex', alignItems: 'center', gap: 10, borderBottom: '1px solid rgba(243,200,105,0.18)' }}>
-            <div style={{ width: 36, height: 36, borderRadius: '50%', background: `linear-gradient(135deg, ${COLOR.gold}, ${COLOR.saffron})`, display: 'grid', placeItems: 'center', fontSize: 18 }}>👨‍🍳</div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, fontWeight: 800 }}>Aayojan AI Assistant</div>
-              <div style={{ fontSize: 11, color: 'rgba(255,248,239,0.6)' }}>
-                <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%', background: '#22c55e', marginRight: 5 }}></span>
-                Usually replies instantly
+          {/* Header — vivid saffron */}
+          <div style={{ padding: '16px 18px', background: `linear-gradient(135deg, ${COLOR.saffron} 0%, ${COLOR.saffronDeep} 100%)`, color: 'white', display: 'flex', alignItems: 'center', gap: 12, position: 'relative', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', top: '-50%', right: '-20%', width: '70%', height: '200%', background: `radial-gradient(ellipse, rgba(243,200,105,0.4) 0%, transparent 60%)`, pointerEvents: 'none' }}></div>
+            <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(255,255,255,0.22)', backdropFilter: 'blur(8px)', display: 'grid', placeItems: 'center', fontSize: 22, position: 'relative', zIndex: 1, border: '2px solid rgba(255,255,255,0.5)' }}>👨‍🍳</div>
+            <div style={{ flex: 1, position: 'relative', zIndex: 1 }}>
+              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 16, fontWeight: 800, letterSpacing: '-0.01em' }}>Aayojan Concierge</div>
+              <div style={{ fontSize: 11, opacity: 0.95, marginTop: 2 }}>
+                <span style={{ display: 'inline-block', width: 7, height: 7, borderRadius: '50%', background: '#86efac', marginRight: 5, boxShadow: '0 0 0 2px rgba(134,239,172,0.4)' }}></span>
+                Live · Replies in seconds
               </div>
             </div>
-            <button aria-label="Close" onClick={() => setOpen(false)} style={{ background: 'transparent', border: 'none', color: COLOR.cream, fontSize: 22, cursor: 'pointer', padding: 4, opacity: 0.7 }}>✕</button>
+            <button aria-label="Close" onClick={() => setOpen(false)} style={{ background: 'rgba(255,255,255,0.16)', border: 'none', color: 'white', fontSize: 16, cursor: 'pointer', padding: '6px 10px', borderRadius: 8, position: 'relative', zIndex: 1, fontWeight: 700 }}>✕</button>
           </div>
 
           {/* Body */}
@@ -239,16 +240,19 @@ export default function AayojanChatBot() {
                 <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22, fontWeight: 800, color: COLOR.dark, marginBottom: 6, lineHeight: 1.2 }}>Hi! How can I help?</div>
                 <div style={{ fontSize: 13, color: COLOR.muted, marginBottom: 22 }}>Choose one to start:</div>
 
-                <button onClick={() => pickMode('customer')} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '14px 16px', background: 'white', border: `1px solid ${COLOR.gold}`, borderRadius: 14, marginBottom: 10, cursor: 'pointer', boxShadow: '0 4px 14px rgba(76,43,10,0.08)' }}>
+                <button onClick={() => pickMode('customer')} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '14px 16px', background: 'linear-gradient(135deg, #FFFCF5, #FFF0D5)', border: `2px solid ${COLOR.gold}`, borderRadius: 14, marginBottom: 10, cursor: 'pointer', boxShadow: '0 8px 20px rgba(232,118,10,0.12)' }}>
                   <div style={{ fontSize: 22, marginBottom: 4 }}>🎉</div>
                   <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, fontWeight: 700, color: COLOR.dark, marginBottom: 2 }}>I'm planning an event</div>
                   <div style={{ fontSize: 12, color: COLOR.muted }}>Get catering quotes for your party, wedding or office event</div>
                 </button>
 
-                <button onClick={() => pickMode('partner')} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '14px 16px', background: COLOR.dark, color: COLOR.cream, border: `1px solid ${COLOR.gold}`, borderRadius: 14, cursor: 'pointer', boxShadow: '0 4px 14px rgba(0,0,0,0.18)' }}>
-                  <div style={{ fontSize: 22, marginBottom: 4 }}>👨‍🍳</div>
-                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, fontWeight: 700, color: COLOR.cream, marginBottom: 2 }}>I run a kitchen</div>
-                  <div style={{ fontSize: 12, color: 'rgba(255,248,239,0.65)' }}>Become a partner caterer · ₹0 to join, 3% commission</div>
+                <button onClick={() => pickMode('partner')} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '14px 16px', background: `linear-gradient(135deg, ${COLOR.saffron}, ${COLOR.saffronDeep})`, color: 'white', border: 'none', borderRadius: 14, cursor: 'pointer', boxShadow: '0 8px 20px rgba(232,118,10,0.32)', position: 'relative', overflow: 'hidden' }}>
+                  <div style={{ position: 'absolute', top: '-30%', right: '-20%', width: '60%', height: '160%', background: 'radial-gradient(ellipse, rgba(243,200,105,0.35) 0%, transparent 60%)', pointerEvents: 'none' }}></div>
+                  <div style={{ position: 'relative', zIndex: 1 }}>
+                    <div style={{ fontSize: 22, marginBottom: 4 }}>👨‍🍳</div>
+                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, fontWeight: 700, color: 'white', marginBottom: 2 }}>I run a kitchen</div>
+                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.92)' }}>Become a partner caterer · ₹0 to join, 3% commission</div>
+                  </div>
                 </button>
               </div>
             )}
