@@ -23,18 +23,28 @@ Style:
 - After 2-3 exchanges, ask: "I'd love our team to call you. What's your WhatsApp number?" — then wait.
 - Do NOT invent numbers or promise specific lead volumes.`;
 
-const SYSTEM_CUSTOMER = `You are Aayojan's friendly catering concierge, talking to someone planning an event.
+const SYSTEM_CUSTOMER = `You are Aayojan's catering concierge. Sharp, warm, slightly hyped. NOT corporate, NOT bland.
 
-Facts about Aayojan:
-- A catering marketplace for Newtown, Rajarhat, and Salt Lake (Kolkata)
-- Verified caterers send quotes on WhatsApp within hours
+About Aayojan:
+- A catering marketplace for Newtown, Rajarhat, Salt Lake (Kolkata)
+- Hand-picked caterers, quotes on WhatsApp within hours
 - Cuisines: Bengali, Mughlai, North Indian, South Indian, Chinese, Italian, Continental, and more
 
-Style:
-- Keep each reply to 2-3 short sentences. Warm, conversational.
-- Gather basic event info: date, guest count, cuisine preference, area, budget range.
-- After basics are in, ask: "Let me have caterers send you quotes. What's your WhatsApp number?" — then wait.
-- Do NOT quote specific prices or promise specific caterers. Don't make up data.`;
+Voice — critical. Adopt this energy:
+- BOLD, conversational, alive. Like a friend who knows their food.
+- Short and punchy. ONE sentence per reply when possible, never more than two.
+- Make the user EXCITED about their event. Hype the food. Tease the experience.
+- Use food/event language: "we'll plate this", "your guests will remember this", "boring caterers need not apply"
+- Sprinkle relevant emojis — 1 or 2 max per reply (🍛 🎉 🔥 ✨ 🥂). Never look corporate.
+- One question per reply. Never stack two.
+- Reference dishes by name when it lands ("Hilsa season too — Doi Ilish for the elders?")
+
+What to gather (in this order, no questionnaire feel):
+event type → date → guest count → cuisine vibe → area → budget per plate
+
+Then close hard: "Done. Drop your WhatsApp — I'll have 3 quotes in your hand within the hour. 🔥" Then stop and wait.
+
+NEVER: quote real prices, promise specific caterers, invent statistics.`;
 
 export default function AayojanChatBot() {
   const [open, setOpen] = useState(false);
@@ -88,7 +98,7 @@ export default function AayojanChatBot() {
       // Partner flow: skip AI conversation, go straight to capture
       setMessages([{
         role: 'assistant',
-        text: "Wonderful! Aayojan is built for kitchens like yours. Leave your number below and our team will WhatsApp you shortly — usually within a few hours."
+        text: "🔥 Let's get you on the founding list. Drop your name and number — our team will WhatsApp you in a few hours. Real conversation, no sales pitch."
       }]);
       setPhase('capture');
     } else {
@@ -96,7 +106,7 @@ export default function AayojanChatBot() {
       setPhase('chat');
       setMessages([{
         role: 'assistant',
-        text: "Hi! I'm here to help you find the right caterer. What's the occasion you're planning?"
+        text: "Hey! 🎉 Tell me — what are we celebrating?"
       }]);
       setTimeout(() => inputRef.current?.focus(), 100);
     }
@@ -241,22 +251,22 @@ export default function AayojanChatBot() {
             {/* Phase: greet */}
             {phase === 'greet' && (
               <div style={{ textAlign: 'center', padding: '20px 0' }}>
-                <div style={{ fontSize: 48, marginBottom: 12 }}>👋</div>
-                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22, fontWeight: 800, color: COLOR.dark, marginBottom: 6, lineHeight: 1.2 }}>Hi! How can I help?</div>
-                <div style={{ fontSize: 13, color: COLOR.muted, marginBottom: 22 }}>Choose one to start:</div>
+                <div style={{ fontSize: 48, marginBottom: 12 }}>🎉</div>
+                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22, fontWeight: 800, color: COLOR.dark, marginBottom: 6, lineHeight: 1.2 }}>Let's get you fed.</div>
+                <div style={{ fontSize: 13, color: COLOR.muted, marginBottom: 22 }}>Two seconds. Pick the lane:</div>
 
                 <button onClick={() => pickMode('customer')} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '14px 16px', background: 'linear-gradient(135deg, #FFFCF5, #FFF0D5)', border: `2px solid ${COLOR.gold}`, borderRadius: 14, marginBottom: 10, cursor: 'pointer', boxShadow: '0 8px 20px rgba(232,118,10,0.12)' }}>
-                  <div style={{ fontSize: 22, marginBottom: 4 }}>🎉</div>
-                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, fontWeight: 700, color: COLOR.dark, marginBottom: 2 }}>I'm an Aayojak</div>
-                  <div style={{ fontSize: 12, color: COLOR.muted }}>Planning an event — wedding, birthday, corporate. Get quotes from caterers.</div>
+                  <div style={{ fontSize: 22, marginBottom: 4 }}>🥂</div>
+                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, fontWeight: 700, color: COLOR.dark, marginBottom: 2 }}>I'm hosting something epic</div>
+                  <div style={{ fontSize: 12, color: COLOR.muted }}>Wedding · party · office bash · quotes on WhatsApp in hours</div>
                 </button>
 
                 <button onClick={() => pickMode('partner')} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '14px 16px', background: `linear-gradient(135deg, ${COLOR.saffron}, ${COLOR.saffronDeep})`, color: 'white', border: 'none', borderRadius: 14, cursor: 'pointer', boxShadow: '0 8px 20px rgba(232,118,10,0.32)', position: 'relative', overflow: 'hidden' }}>
                   <div style={{ position: 'absolute', top: '-30%', right: '-20%', width: '60%', height: '160%', background: 'radial-gradient(ellipse, rgba(243,200,105,0.35) 0%, transparent 60%)', pointerEvents: 'none' }}></div>
                   <div style={{ position: 'relative', zIndex: 1 }}>
-                    <div style={{ fontSize: 22, marginBottom: 4 }}>👨‍🍳</div>
+                    <div style={{ fontSize: 22, marginBottom: 4 }}>🔥</div>
                     <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, fontWeight: 700, color: 'white', marginBottom: 2 }}>I run a kitchen</div>
-                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.92)' }}>Become a partner caterer · ₹0 to join, 3% commission</div>
+                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.92)' }}>Founding partner spot · ₹0 to join · 8 left</div>
                   </div>
                 </button>
               </div>
@@ -295,7 +305,7 @@ export default function AayojanChatBot() {
             {/* Phase: capture */}
             {phase === 'capture' && (
               <div style={{ marginTop: 12, padding: 16, background: 'white', borderRadius: 14, border: `2px solid ${COLOR.gold}`, boxShadow: '0 8px 20px rgba(232,118,10,0.16)' }}>
-                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, fontWeight: 800, color: COLOR.dark, marginBottom: 10 }}>Drop your details — we'll WhatsApp within 24 hours</div>
+                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, fontWeight: 800, color: COLOR.dark, marginBottom: 10 }}>🔥 One step away. Drop your WhatsApp.</div>
                 <input type="text" placeholder="Your name (optional)" value={name} onChange={e => setName(e.target.value)} style={{ width: '100%', padding: '11px 13px', border: `1.5px solid ${COLOR.gold}`, borderRadius: 10, fontSize: 14, marginBottom: 10, outline: 'none', boxSizing: 'border-box', background: '#FFFCF5', color: COLOR.dark, colorScheme: 'light' }} />
                 <input type="tel" placeholder="WhatsApp number *" value={whatsapp} onChange={e => setWhatsapp(e.target.value)} style={{ width: '100%', padding: '11px 13px', border: `1.5px solid ${COLOR.gold}`, borderRadius: 10, fontSize: 14, marginBottom: 12, outline: 'none', boxSizing: 'border-box', background: '#FFFCF5', color: COLOR.dark, colorScheme: 'light' }} />
                 <button onClick={saveLead} disabled={saving} style={{ width: '100%', padding: 13, background: saving ? COLOR.muted : `linear-gradient(135deg, ${COLOR.saffron}, ${COLOR.saffronDeep})`, color: 'white', border: 'none', borderRadius: 11, fontFamily: "'Playfair Display',serif", fontWeight: 800, fontSize: 15, cursor: saving ? 'wait' : 'pointer', boxShadow: '0 10px 22px rgba(232,118,10,0.36)' }}>
