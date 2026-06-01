@@ -375,15 +375,22 @@ async def send_email(to: str, subject: str, html: str, text: str = "") -> bool:
     msg.attach(MIMEText(html, "html"))
 
     try:
-        await aiosmtplib.send(
-            msg,
-            hostname="smtp.gmail.com",
-            port=465,
-            use_tls=True,
-            username=gmail_user,
-            password=gmail_pass,
+        await asyncio.wait_for(
+            aiosmtplib.send(
+                msg,
+                hostname="smtp.gmail.com",
+                port=465,
+                use_tls=True,
+                username=gmail_user,
+                password=gmail_pass,
+                timeout=10,
+            ),
+            timeout=12,
         )
         return True
+    except asyncio.TimeoutError:
+        print(f"[EMAIL TIMEOUT] to={to} subject={subject!r}", flush=True)
+        return False
     except Exception as e:
         print(f"[EMAIL ERROR] {e}", flush=True)
         return False
@@ -705,15 +712,13 @@ def otp_email_html(otp: str) -> str:
 
 @app.post("/api/otp/email/send")
 async def otp_email_send(req: EmailOTPRequest):
-    """Generate OTP and send to email address."""
+    """Generate OTP and fire-and-forget email send. Returns immediately."""
     otp = otp_store.generate(req.email)
-    sent = await send_email(
+    asyncio.create_task(send_email(
         to=req.email,
         subject=f"{otp} is your Aayojan verification code",
         html=otp_email_html(otp),
-    )
-    if not sent:
-        print(f"[EMAIL OTP] Failed to send to {req.email}, OTP={otp}", flush=True)
+    ))
     return {"sent": True}
 
 
