@@ -1787,19 +1787,22 @@ Customer wants quote today.
             </div>
 
             <div class="form-step" data-step="1">
-              <div class="field-grid two">
-                <div class="field">
-                  <label for="cuisine">Primary cuisine *</label>
-                  <select id="cuisine" name="cuisine" required>
-                    <option value="">Select cuisine</option>
-                    <option>Bengali</option>
-                    <option>North Indian</option>
-                    <option>Chinese</option>
-                    <option>Continental</option>
-                    <option>South Indian</option>
-                    <option>Multi-cuisine</option>
-                  </select>
+              <fieldset class="area-group">
+                <legend>Cuisines you specialise in * (select all that apply)</legend>
+                <div class="area-options">
+                  <label class="checkbox-card"><input type="checkbox" name="cuisine" value="Bengali"><span>Bengali</span></label>
+                  <label class="checkbox-card"><input type="checkbox" name="cuisine" value="North Indian"><span>North Indian</span></label>
+                  <label class="checkbox-card"><input type="checkbox" name="cuisine" value="South Indian"><span>South Indian</span></label>
+                  <label class="checkbox-card"><input type="checkbox" name="cuisine" value="Chinese"><span>Chinese</span></label>
+                  <label class="checkbox-card"><input type="checkbox" name="cuisine" value="Continental"><span>Continental</span></label>
+                  <label class="checkbox-card"><input type="checkbox" name="cuisine" value="Mughlai"><span>Mughlai</span></label>
+                  <label class="checkbox-card"><input type="checkbox" name="cuisine" value="Biryani"><span>Biryani specialist</span></label>
+                  <label class="checkbox-card"><input type="checkbox" name="cuisine" value="Desserts"><span>Desserts / Sweets</span></label>
                 </div>
+                <div class="helper" id="cuisineHint">Caterers often serve multiple cuisines. Check every one you're confident with.</div>
+              </fieldset>
+
+              <div class="field-grid two">
                 <div class="field">
                   <label for="capacity">Max guests per event *</label>
                   <select id="capacity" name="capacity" required>
@@ -2014,6 +2017,10 @@ Customer wants quote today.
       return Array.from(document.querySelectorAll('input[name="serviceArea"]:checked')).map((input) => input.value);
     }
 
+    function getCuisines() {
+      return Array.from(document.querySelectorAll('input[name="cuisine"]:checked')).map((input) => input.value);
+    }
+
     function validateCurrentStep() {
       const currentPanel = steps[currentStep];
       const fields = Array.from(currentPanel.querySelectorAll('input, select, textarea'));
@@ -2030,6 +2037,13 @@ Customer wants quote today.
         const hint = document.getElementById('serviceAreaHint');
         if (hint) { hint.style.color = '#dc2626'; hint.textContent = '⚠️ Please select at least one service area to continue.'; }
         else { alert('Please select at least one service area.'); }
+        return false;
+      }
+
+      if (currentStep === 1 && getCuisines().length === 0) {
+        const hint = document.getElementById('cuisineHint');
+        if (hint) { hint.style.color = '#dc2626'; hint.textContent = '⚠️ Please select at least one cuisine you specialise in.'; }
+        else { alert('Please select at least one cuisine.'); }
         return false;
       }
 
@@ -2104,7 +2118,8 @@ Customer wants quote today.
         whatsapp: document.getElementById('whatsapp').value.trim(),
         email: document.getElementById('email').value.trim(),
         serviceAreas: getServiceAreas(),
-        cuisine: document.getElementById('cuisine').value,
+        cuisines: getCuisines(),
+        cuisine: getCuisines().join(', '),
         capacity: document.getElementById('capacity').value,
         currentMonthlyOrders: document.getElementById('currentMonthlyOrders').value,
         avgOrderValue: document.getElementById('avgOrderValue').value,
