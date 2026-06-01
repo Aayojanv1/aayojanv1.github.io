@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 // English + Bengali rotation — built for the intelligent Bengali reader
 // Style: wit over volume. Wordplay over confrontation. Let the math do the punching.
 const HEADLINES = [
-  // 🔧 Anchors — the value prop, clean
+  // 🔧 Anchors — three places, three outcomes
+  { text: "Fire in the kitchen. Orders in WhatsApp. Cash in the bank. 🔥📱🏦", lang: "en" },
+  { text: "আগুন রান্নায়। অর্ডার মোবাইলে। লাভ ব্যাঙ্কে। 🔥📱🏦", lang: "bn" },
   { text: "Cook. Quote. Get paid. Repeat.", lang: "en" },
-  { text: "রান্না করো। অর্ডার নাও। টাকা গোনো।", lang: "bn" },
 
   // 🧠 The 30% comparison — intelligent, not loud
   { text: "₹1L on the menu — keep ₹97K with us, ₹70K elsewhere. Same kitchen, different math. 🧮", lang: "en" },
