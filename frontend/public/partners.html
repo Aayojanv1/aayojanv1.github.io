@@ -2240,6 +2240,15 @@ Customer wants quote today.
         body: JSON.stringify(data),
       }).catch(e => console.warn('notify failed:', e));
 
+      // GA — track conversion
+      if (typeof gtag === 'function') {
+        gtag('event', 'partner_quick_lead_submitted', {
+          event_category: 'partner_signup',
+          event_label: 'hero_quick_form',
+          has_business_name: !!biz,
+        });
+      }
+
       btn.textContent = '✅ Saved — we will call you within 24h';
       btn.style.background = '#236B43';
       btn.style.color = '#FFF8EF';
@@ -2340,6 +2349,16 @@ Customer wants quote today.
       applicationSubmitted = true;
       floatingCta.classList.remove('show');
       floatingCta.setAttribute('aria-hidden', 'true');
+
+      // GA — full application conversion
+      if (typeof gtag === 'function') {
+        gtag('event', 'partner_full_application_submitted', {
+          event_category: 'partner_signup',
+          event_label: 'full_multistep_form',
+          service_areas: (data.serviceAreas || []).join(','),
+          cuisines: (data.cuisines || []).join(','),
+        });
+      }
     }
 
     form.addEventListener('submit', handleSubmit);
