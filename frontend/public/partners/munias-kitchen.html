@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Munia's Kitchen — Bengali, Mughlai & Continental Caterer in Newtown, Salt Lake | Aayojan</title>
+  <meta name="description" content="Munia's Kitchen by Karabi Dey — premium Bengali, Mughlai, Continental catering across Newtown, Rajarhat & Salt Lake. Signature: Doi Ilish, Mutton Galouti, Crab Wonton. Book through Aayojan.">
+  <meta name="theme-color" content="#FDF6ED">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Munia's Kitchen — by Chef Karabi Dey">
+  <meta property="og:description" content="Bengali soul food. Mughlai depth. Continental finesse. Premium catering across Newtown & Salt Lake.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aayojan.online/partners/munias-kitchen.html">
+  <meta property="og:site_name" content="Aayojan">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream: #FDF6ED;
+      --cream-2: #FFF9F1;
+      --saffron: #E8760A;
+      --saffron-deep: #C95F08;
+      --gold: #F3C869;
+      --dark: #1C130A;
+      --brown: #513117;
+      --muted: #7B634E;
+      --line: #E8D8C4;
+      --green: #236B43;
+      --shadow: 0 18px 50px rgba(76, 43, 10, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; }
+
+    .container { width: min(1140px, calc(100% - 2.5rem)); margin: 0 auto; }
+
+    /* TOP BAR */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(253, 246, 237, 0.92);
+      border-bottom: 1px solid rgba(81, 49, 23, 0.08);
+    }
+    .topbar-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; min-height: 64px;
+    }
+    .back-link {
+      color: var(--muted); font-size: 0.92rem; font-weight: 500;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .back-link:hover { color: var(--saffron-deep); }
+    .topbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 800; color: var(--brown);
+    }
+    .topbar-brand span { color: var(--saffron); }
+
+    /* HERO */
+    .hero {
+      padding: 3.5rem 0 2rem;
+      position: relative;
+      background:
+        radial-gradient(ellipse 90% 60% at 15% 10%, rgba(243, 200, 105, 0.22) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 85% 90%, rgba(232, 118, 10, 0.12) 0%, transparent 60%),
+        linear-gradient(180deg, #FFF8EF 0%, #FFFAF0 100%);
+      overflow: hidden;
+    }
+    .hero::after {
+      content: ""; position: absolute; inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(81,49,23,0.05) 1px, transparent 0);
+      background-size: 32px 32px;
+      pointer-events: none;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    }
+    .hero-grid {
+      display: grid; gap: 3rem;
+      grid-template-columns: 1.2fr 1fr;
+      align-items: center;
+      position: relative; z-index: 1;
+    }
+    @media (max-width: 880px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .hero { padding: 2.2rem 0 1.5rem; }
+    }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: linear-gradient(135deg, #FFF4E1, #FFE9C7);
+      color: var(--saffron-deep);
+      border: 1px solid rgba(232, 118, 10, 0.28);
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      box-shadow: 0 4px 14px rgba(232, 118, 10, 0.12);
+    }
+
+    h1.brand-name {
+      margin: 1.1rem 0 0.5rem;
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      line-height: 1;
+      color: var(--dark);
+      letter-spacing: -0.02em;
+    }
+    h1.brand-name .accent { color: var(--saffron); font-style: italic; }
+
+    .tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+      color: var(--brown);
+      margin: 0.3rem 0 1.4rem;
+    }
+    .tagline em { color: var(--saffron-deep); font-weight: 500; }
+
+    .chef-line {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      color: var(--brown); font-size: 0.95rem;
+      margin-top: 0.4rem;
+    }
+    .chef-avatar {
+      width: 36px; height: 36px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--saffron), var(--gold));
+      display: grid; place-items: center;
+      color: white; font-weight: 800; font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      box-shadow: 0 4px 12px rgba(232,118,10,0.24);
+    }
+
+    .hero-points {
+      display: grid; gap: 0.7rem; margin: 1.6rem 0 1.4rem;
+    }
+    .hero-point {
+      display: flex; gap: 0.6rem; align-items: flex-start;
+      color: var(--brown); font-size: 0.96rem;
+    }
+    .hero-point strong { color: var(--dark); }
+    .hero-point .dot {
+      flex-shrink: 0;
+      width: 22px; height: 22px; border-radius: 999px;
+      display: grid; place-items: center;
+      background: rgba(35, 107, 67, 0.12);
+      color: var(--green); font-size: 0.78rem; font-weight: 700;
+    }
+
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.2rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.95rem 1.4rem; border-radius: 14px;
+      font-weight: 700; font-size: 0.95rem;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn.primary {
+      background: var(--saffron); color: white;
+      box-shadow: 0 12px 26px rgba(232, 118, 10, 0.28);
+    }
+    .btn.primary:hover { transform: translateY(-1px); background: var(--saffron-deep); }
+    .btn.ghost {
+      background: white; color: var(--brown);
+      border-color: rgba(81, 49, 23, 0.16);
+    }
+    .btn.ghost:hover { background: var(--cream-2); }
+
+    /* HERO VISUAL */
+    .hero-art {
+      position: relative;
+      display: grid; place-items: center;
+      min-height: 320px;
+    }
+    .dish-orbit {
+      position: relative;
+      width: min(360px, 80vw);
+      height: min(360px, 80vw);
+    }
+    .logo-card {
+      position: absolute; inset: 6%;
+      background: #F29E1F;
+      border-radius: 22px;
+      display: grid; place-items: center;
+      box-shadow:
+        0 30px 60px rgba(76, 43, 10, 0.32),
+        inset 0 1px 0 rgba(255,255,255,0.18);
+      overflow: hidden;
+      transform: rotate(-2deg);
+    }
+    .logo-frame {
+      position: relative;
+      width: 82%; height: 64%;
+      border: 1.5px solid #FFF8EF;
+      border-radius: 4px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 0.8rem 1rem;
+    }
+    .logo-mark {
+      color: #FFF8EF;
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.2rem, 3.8vw, 2rem);
+      letter-spacing: 0.08em;
+      line-height: 1.05;
+      text-align: center;
+      -webkit-text-stroke: 0.5px #FFF8EF;
+      text-stroke: 0.5px #FFF8EF;
+      color: transparent;
+      text-shadow: none;
+    }
+    .logo-script {
+      position: absolute;
+      right: 14%;
+      bottom: -12%;
+      color: #FFF8EF;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(0.95rem, 2.4vw, 1.35rem);
+      transform: rotate(-3deg);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+    .float {
+      position: absolute;
+      background: white;
+      padding: 0.65rem 0.95rem;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      font-size: 0.82rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      color: var(--brown);
+      border: 1px solid var(--line);
+      animation: floatY 4s ease-in-out infinite;
+    }
+    .float .emoji { font-size: 1.05rem; }
+    .float.f1 { top: 6%; left: -2%; animation-delay: 0s; }
+    .float.f2 { top: 14%; right: -6%; animation-delay: 0.8s; }
+    .float.f3 { bottom: 22%; left: -10%; animation-delay: 1.4s; }
+    .float.f4 { bottom: 6%; right: 2%; animation-delay: 2s; }
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @media (max-width: 540px) {
+      .float.f1 { left: 0; }
+      .float.f3 { left: -2%; }
+    }
+
+    /* SECTION DEFAULTS */
+    section.block { padding: 4.5rem 0; position: relative; }
+    .section-head { text-align: center; margin-bottom: 2.5rem; }
+    .section-eyebrow {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--saffron-deep);
+      margin-bottom: 0.6rem;
+    }
+    h2.section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.6vw, 2.8rem);
+      font-weight: 800; color: var(--dark);
+      margin: 0 0 0.6rem;
+      letter-spacing: -0.01em;
+    }
+    h2.section-title em { color: var(--saffron); font-style: italic; }
+    .section-sub {
+      color: var(--muted); font-size: 1.02rem;
+      max-width: 56ch; margin: 0 auto;
+    }
+
+    /* STORY */
+    .story {
+      background: white;
+    }
+    .story-grid {
+      display: grid; gap: 2rem;
+      grid-template-columns: 1fr 1.4fr;
+      align-items: center;
+      max-width: 980px; margin: 0 auto;
+    }
+    @media (max-width: 760px) { .story-grid { grid-template-columns: 1fr; } }
+    .story-mark {
+      font-family: 'Playfair Display', serif;
+      font-size: 9rem; line-height: 0.6;
+      color: var(--saffron);
+      opacity: 0.18;
+    }
+    .story-text {
+      font-size: 1.06rem;
+      color: var(--brown);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.7;
+    }
+    .story-text p { margin: 0 0 1rem; }
+    .story-signature {
+      margin-top: 1.2rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-weight: 700;
+      color: var(--saffron-deep);
+      font-size: 1.1rem;
+    }
+
+    /* SIGNATURE DISHES */
+    .dishes {
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(243, 200, 105, 0.20) 0%, transparent 60%),
+        var(--cream);
+    }
+    .dish-grid {
+      display: grid; gap: 1.4rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .dish-card {
+      background: white;
+      border-radius: 22px;
+      padding: 1.5rem 1.4rem;
+      border: 1px solid var(--line);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .dish-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: rgba(232, 118, 10, 0.32);
+    }
+    .dish-card::before {
+      content: ""; position: absolute; inset: 0 0 auto 0; height: 4px;
+      background: linear-gradient(90deg, var(--saffron), var(--gold));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .dish-card:hover::before { transform: scaleX(1); }
+    .dish-emoji {
+      font-size: 2.4rem; line-height: 1; margin-bottom: 0.8rem;
+      display: block;
+    }
+    .dish-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 700; color: var(--dark);
+      margin: 0 0 0.4rem;
+    }
+    .dish-tag {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--saffron-deep);
+      margin-bottom: 0.6rem;
+    }
+    .dish-desc {
+      font-size: 0.9rem; color: var(--muted); line-height: 1.55;
+      margin: 0;
+    }
+
+    /* CUISINE STRIP */
+    .cuisines {
+      background: linear-gradient(135deg, #1C130A 0%, #2B1B0C 100%);
+      color: #FFF8EF;
+    }
+    .cuisines h2.section-title { color: #FFF8EF; }
+    .cuisines .section-eyebrow { color: var(--gold); }
+    .cuisines .section-sub { color: rgba(255, 248, 239, 0.7); }
+    .cuisine-pills {
+      display: flex; flex-wrap: wrap; gap: 0.7rem;
+      justify-content: center;
+      max-width: 820px; margin: 2.4rem auto 0;
+    }
+    .cuisine-pill {
+      background: rgba(255, 248, 239, 0.08);
+      border: 1px solid rgba(243, 200, 105, 0.25);
+      color: #FFF8EF;
+      padding: 0.7rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.92rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .cuisine-pill:hover { background: rgba(243, 200, 105, 0.18); transform: translateY(-2px); }
+    .cuisine-pill .emoji { font-size: 1.05rem; }
+
+    /* SERVE / DETAILS GRID */
+    .details {
+      background: var(--cream-2);
+    }
+    .details-grid {
+      display: grid; gap: 1.2rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .detail-card {
+      background: white;
+      padding: 1.6rem 1.5rem;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+    }
+    .detail-icon {
+      font-size: 1.6rem; display: inline-block; margin-bottom: 0.7rem;
+    }
+    .detail-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; font-weight: 700; color: var(--dark);
+      margin: 0 0 0.3rem;
+    }
+    .detail-body {
+      color: var(--muted); font-size: 0.92rem; margin: 0; line-height: 1.55;
+    }
+    .detail-body strong { color: var(--brown); }
+
+    /* CTA */
+    .cta-block {
+      background:
+        radial-gradient(circle at 30% 50%, rgba(243, 200, 105, 0.32), transparent 55%),
+        linear-gradient(135deg, var(--saffron) 0%, var(--saffron-deep) 100%);
+      color: white;
+      text-align: center;
+      padding: 4.5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-block h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; margin: 0 0 0.7rem; color: white;
+    }
+    .cta-block p {
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 1.05rem; max-width: 56ch; margin: 0 auto 1.6rem;
+    }
+    .cta-block .btn.primary {
+      background: white; color: var(--saffron-deep);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+    }
+    .cta-block .btn.primary:hover { background: var(--cream); }
+    .cta-block .small {
+      display: block; margin-top: 1.2rem; color: rgba(255,255,255,0.72);
+      font-size: 0.82rem;
+    }
+
+    /* FOOTER */
+    footer.foot {
+      background: var(--dark); color: rgba(255,248,239,0.7);
+      padding: 2rem 0; text-align: center; font-size: 0.85rem;
+    }
+    footer.foot a { color: var(--gold); font-weight: 600; }
+    footer.foot .row1 { margin-bottom: 0.4rem; color: #FFF8EF; font-weight: 600; }
+
+    /* STICKY MOBILE CTA */
+    .mobile-cta {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: white;
+      border-top: 1px solid var(--line);
+      padding: 0.7rem 1rem;
+      box-shadow: 0 -8px 24px rgba(76, 43, 10, 0.12);
+      z-index: 40;
+    }
+    .mobile-cta .btn { width: 100%; justify-content: center; }
+    @media (max-width: 640px) {
+      .mobile-cta { display: block; }
+      body { padding-bottom: 80px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="/" class="back-link">← Back to <span style="color:var(--brown);font-weight:700">Aayojan</span></a>
+      <a href="/" class="topbar-brand">Aayo<span>jan</span></a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ─── HERO ─────────────────────────────────────────────── -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="badge">🏅 Founding Partner · Aayojan Verified</span>
+          <h1 class="brand-name">Munia's <span class="accent">Kitchen</span></h1>
+          <p class="tagline">Bengali soul food. <em>Mughlai depth</em>. Continental finesse.</p>
+
+          <div class="chef-line">
+            <span class="chef-avatar">K</span>
+            <span>Cooked by <strong style="color:var(--dark)">Karabi Dey</strong></span>
+          </div>
+
+          <div class="hero-points">
+            <div class="hero-point"><span class="dot">✓</span><div><strong>Six cuisines, one kitchen</strong> — Bengali · Mughlai · North Indian · Chinese · Italian · Continental</div></div>
+            <div class="hero-point"><span class="dot">✓</span><div><strong>Newtown · Rajarhat · Salt Lake</strong> — full coverage across the corridor</div></div>
+            <div class="hero-point"><span class="dot">✓</span><div><strong>From 25 guests to unlimited</strong> — intimate gatherings to weddings</div></div>
+          </div>
+
+          <div class="cta-row">
+            <a class="btn primary" target="_blank" rel="noopener" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20want%20to%20book%20Munia%27s%20Kitchen%20for%20my%20event.%20Please%20share%20a%20quote.">📱 Get a quote on WhatsApp</a>
+            <a class="btn ghost" href="#dishes">See signature dishes</a>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="dish-orbit">
+            <div class="logo-card">
+              <div class="logo-frame">
+                <div class="logo-mark">MUNIA'S<br>KITCHEN</div>
+                <div class="logo-script">catering</div>
+              </div>
+            </div>
+            <div class="float f1"><span class="emoji">🐟</span> Doi Ilish</div>
+            <div class="float f2"><span class="emoji">🍢</span> Galouti Kebab</div>
+            <div class="float f3"><span class="emoji">🍛</span> Mutton Biryani</div>
+            <div class="float f4"><span class="emoji">🥟</span> Crab Wonton</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── STORY ─────────────────────────────────────────────── -->
+    <section class="block story">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow">The story</span>
+          <h2 class="section-title">A kitchen built on <em>flavour memory</em></h2>
+        </div>
+        <div class="story-grid">
+          <div style="text-align:center"><div class="story-mark">"</div></div>
+          <div>
+            <div class="story-text">
+              <p>Munia's Kitchen begins with one belief — every plate should carry a memory. The mustard cling of a Doi Ilish from a monsoon afternoon. The slow-cooked patience of a Galouti kebab. The crunch of a Crab Wonton stolen off a Diwali platter.</p>
+              <p>Karabi Dey has spent years perfecting that bridge — from grandmother's Bengali rice plates to crisp, modern continental finishes. What lands at your event is not a menu. It is a moment.</p>
+            </div>
+            <div class="story-signature">— Karabi, Chef &amp; Founder</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SIGNATURE DISHES ─────────────────────────────────── -->
+    <section class="block dishes" id="dishes">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow">Signature dishes</span>
+          <h2 class="section-title">The plates that <em>define</em> Munia's Kitchen</h2>
+          <p class="section-sub">Five recipes the kitchen is known for. Each one is a request guests come back for.</p>
+        </div>
+
+        <div class="dish-grid">
+          <div class="dish-card">
+            <span class="dish-emoji">🐟</span>
+            <span class="dish-tag">Bengali · Signature</span>
+            <h3 class="dish-name">Doi Ilish</h3>
+            <p class="dish-desc">Hilsa cooked in a delicate yoghurt-mustard gravy. The cornerstone of a Bengali feast — luminous, fragrant, unforgettable.</p>
+          </div>
+
+          <div class="dish-card">
+            <span class="dish-emoji">🍢</span>
+            <span class="dish-tag">Mughlai · Slow craft</span>
+            <h3 class="dish-name">Mutton Galouti Kebab</h3>
+            <p class="dish-desc">Minced mutton bound only with smoke and spice. Melts on the tongue — the dish that earned its name from "Galaawat" itself.</p>
+          </div>
+
+          <div class="dish-card">
+            <span class="dish-emoji">🍛</span>
+            <span class="dish-tag">Mughlai · Crowd favourite</span>
+            <h3 class="dish-name">Mutton Biryani</h3>
+            <p class="dish-desc">Long-grain rice layered with hand-trimmed mutton, slow-dum cooked. Aromatic, never greasy. The plate guests photograph first.</p>
+          </div>
+
+          <div class="dish-card">
+            <span class="dish-emoji">🥟</span>
+            <span class="dish-tag">Chinese · Live counter</span>
+            <h3 class="dish-name">Crab Wonton</h3>
+            <p class="dish-desc">Hand-folded wontons, crab and water-chestnut filling, fried crisp. A live-counter winner — gone within minutes of being served.</p>
+          </div>
+
+          <div class="dish-card">
+            <span class="dish-emoji">🌿</span>
+            <span class="dish-tag">Bengali · Heirloom</span>
+            <h3 class="dish-name">Kochu Pata Bhapa Chingri</h3>
+            <p class="dish-desc">Prawns steamed inside colocasia leaves with coconut and mustard. A heritage Bengali preparation few caterers still attempt.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── CUISINES STRIP ───────────────────────────────────── -->
+    <section class="block cuisines">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow">The full range</span>
+          <h2 class="section-title">Six cuisines. One <em>passionate</em> kitchen.</h2>
+          <p class="section-sub">Whatever your event needs — a Bengali wedding feast, a corporate continental spread, a multi-cuisine cocktail menu — Munia's Kitchen can build it.</p>
+        </div>
+
+        <div class="cuisine-pills">
+          <span class="cuisine-pill"><span class="emoji">🐟</span> Bengali</span>
+          <span class="cuisine-pill"><span class="emoji">🍢</span> Mughlai</span>
+          <span class="cuisine-pill"><span class="emoji">🍛</span> North Indian</span>
+          <span class="cuisine-pill"><span class="emoji">🥢</span> Chinese / Indo-Chinese</span>
+          <span class="cuisine-pill"><span class="emoji">🍝</span> Italian</span>
+          <span class="cuisine-pill"><span class="emoji">🥗</span> Continental</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── DETAILS ──────────────────────────────────────────── -->
+    <section class="block details">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow">Logistics</span>
+          <h2 class="section-title">What you need to know before you book</h2>
+        </div>
+
+        <div class="details-grid">
+          <div class="detail-card">
+            <span class="detail-icon">📍</span>
+            <h3 class="detail-title">Service area</h3>
+            <p class="detail-body"><strong>Newtown</strong> · <strong>Rajarhat</strong> · <strong>Salt Lake</strong>. Full coverage across the corridor — including Action Area I, II, III and Sector V.</p>
+          </div>
+          <div class="detail-card">
+            <span class="detail-icon">👥</span>
+            <h3 class="detail-title">Guest count</h3>
+            <p class="detail-body"><strong>From 25 to no upper bar.</strong> Intimate house parties to weddings — the kitchen scales without losing detail.</p>
+          </div>
+          <div class="detail-card">
+            <span class="detail-icon">💰</span>
+            <h3 class="detail-title">Pricing</h3>
+            <p class="detail-body"><strong>Customised per menu.</strong> Per-plate cost varies with cuisine mix, guest count and service style. Quote shared after a quick brief.</p>
+          </div>
+          <div class="detail-card">
+            <span class="detail-icon">🏅</span>
+            <h3 class="detail-title">Verified by Aayojan</h3>
+            <p class="detail-body"><strong>Founding partner.</strong> Onboarded after a kitchen quality check. All bookings backed by the Aayojan service guarantee.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── CTA ──────────────────────────────────────────────── -->
+    <section class="cta-block">
+      <div class="container">
+        <h2>Ready to plan your event?</h2>
+        <p>Share the date, guest count and cuisine direction. Aayojan will send you a Munia's Kitchen quote on WhatsApp within hours.</p>
+        <a class="btn primary" target="_blank" rel="noopener" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20want%20to%20book%20Munia%27s%20Kitchen.%20My%20event%20details%3A%20%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20%0ACuisine%20preference%3A">📱 WhatsApp Aayojan now</a>
+        <span class="small">+91 80884 34425 · aayojan11@gmail.com</span>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <div class="container">
+      <div class="row1">Munia's Kitchen × Aayojan</div>
+      <div>Founding partner · Newtown corridor · Bookings handled through <a href="/">Aayojan</a></div>
+    </div>
+  </footer>
+
+  <div class="mobile-cta">
+    <a class="btn primary" target="_blank" rel="noopener" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20want%20to%20book%20Munia%27s%20Kitchen.">📱 WhatsApp Aayojan</a>
+  </div>
+
+</body>
+</html>
