@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth, getPartners, getAllPartners, addPartner, updatePartner, deletePartner, createOrder, getAllOrders, getUserOrders, savePayment, updateUserPhone, updateUserPreferences, updateUserProfile } from "./useFirebase";
 import { matchCaterers, anonymize } from "./matchingPipeline";
+import AayojanChatBot from "./AayojanChatBot";
 
 const track = (event, params = {}) => {
   if (typeof window.gtag === 'function' && !window['ga-disable-G-VSGREVV7RS']) {
@@ -3106,6 +3107,9 @@ export default function AayojanApp(){
           <a href="/faq.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>FAQ</a>
         </div>
       </footer>
+
+      {/* Floating AI Chat Bot (bottom-left) */}
+      <AayojanChatBot />
 
       {/* Floating WhatsApp Button */}
       <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20catering%20help" target="_blank" rel="noopener noreferrer" style={{position:"fixed",bottom:24,right:24,width:56,height:56,borderRadius:"50%",background:"#25D366",display:"flex",alignItems:"center",justifyContent:"center",boxShadow:"0 4px 16px rgba(37,211,102,0.4)",zIndex:200,transition:"transform 0.2s",textDecoration:"none"}}>
