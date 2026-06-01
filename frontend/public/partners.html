@@ -19,7 +19,7 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --cream: #FDF6ED;
@@ -194,13 +194,26 @@
     .hero h1 {
       margin-top: 1rem;
       font-size: clamp(2.5rem, 8vw, 5rem);
-      max-width: 12ch;
+      max-width: 14ch;
     }
 
     .hero h1 span {
       display: block;
       margin-top: 0.5rem;
       color: var(--saffron);
+      min-height: 1.05em;
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .hero h1 span.fade-out {
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+
+    .hero h1 span.bengali {
+      font-family: 'Noto Serif Bengali', 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: -0.005em;
     }
 
     .lead {
@@ -1389,7 +1402,7 @@
       <div class="container hero-grid">
         <div class="hero-copy reveal">
           <div class="eyebrow">🔥 Founding Caterer Program · Kolkata</div>
-          <h1>Tired of waiting for referrals?<span>Cook. Quote. Get paid. Repeat.</span></h1>
+          <h1>Tired of waiting for referrals?<span id="rotatingHeadline" class="rotating-headline">Cook. Quote. Get paid. Repeat.</span></h1>
           <p class="lead">Aayojan helps caterers in Newtown, Rajarhat and Salt Lake get serious event enquiries on WhatsApp — with guest count, cuisine preference, date and budget already in the message. Less chasing. More quoting. More bookings.</p>
 
           <div class="hero-points">
@@ -2124,6 +2137,35 @@ Customer wants quote today.
       } catch(e) {}
     }
     captureAttribution();
+
+    // ── Rotating bilingual headline ──
+    (function rotateHeadline() {
+      const HEADLINES = [
+        { text: "Cook. Quote. Get paid. Repeat.", lang: "en" },
+        { text: "রান্না করো। অর্ডার নাও। টাকা গোনো।", lang: "bn" },
+        { text: "Your kitchen's been ready. Your phone hasn't.", lang: "en" },
+        { text: "এবার বাজবে আপনার ফোন।", lang: "bn" },
+        { text: "Cook more. Chase less.", lang: "en" },
+        { text: "চা দিয়ে অর্ডার আসে না। Aayojan এ আসে।", lang: "bn" },
+      ];
+      const el = document.getElementById('rotatingHeadline');
+      if (!el) return;
+      let idx = 0;
+      function applyHeadline(h) {
+        el.textContent = h.text;
+        if (h.lang === 'bn') el.classList.add('bengali');
+        else el.classList.remove('bengali');
+      }
+      applyHeadline(HEADLINES[0]);
+      setInterval(() => {
+        el.classList.add('fade-out');
+        setTimeout(() => {
+          idx = (idx + 1) % HEADLINES.length;
+          applyHeadline(HEADLINES[idx]);
+          el.classList.remove('fade-out');
+        }, 450);
+      }, 3500);
+    })();
     function getAttribution() {
       try { return JSON.parse(sessionStorage.getItem('aayojan_attribution') || '{}'); } catch(e) { return {}; }
     }
