@@ -85,13 +85,23 @@ export default function AayojanChatBot() {
 
   const pickMode = (m) => {
     setMode(m);
-    setPhase('chat');
-    const opener = m === 'customer'
-      ? "Hi! I'm here to help you find the right caterer. What's the occasion you're planning?"
-      : "Hi! Tell me a bit about your kitchen — what cuisines do you specialise in?";
-    setMessages([{ role: 'assistant', text: opener }]);
     track('chatbot_mode_selected', { mode: m });
-    setTimeout(() => inputRef.current?.focus(), 100);
+    if (m === 'partner') {
+      // Partner flow: skip AI conversation, go straight to capture
+      setMessages([{
+        role: 'assistant',
+        text: "Wonderful! Aayojan is built for kitchens like yours. Leave your number below and our team will WhatsApp you shortly — usually within a few hours."
+      }]);
+      setPhase('capture');
+    } else {
+      // Customer flow: AI conversation to gather event details
+      setPhase('chat');
+      setMessages([{
+        role: 'assistant',
+        text: "Hi! I'm here to help you find the right caterer. What's the occasion you're planning?"
+      }]);
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
   };
 
   const send = async () => {
