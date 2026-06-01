@@ -51,6 +51,18 @@ export default function AayojanChatBot() {
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
 
+  // Auto-open once per session, ~3s after landing
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (sessionStorage.getItem('aayojan_chat_seen') === '1') return;
+    const t = setTimeout(() => {
+      setOpen(true);
+      sessionStorage.setItem('aayojan_chat_seen', '1');
+      track('chatbot_opened', { trigger: 'auto' });
+    }, 3000);
+    return () => clearTimeout(t);
+  }, []);
+
   // Auto-scroll on new message
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
