@@ -245,8 +245,8 @@ export default function AayojanChatBot() {
 
                 <button onClick={() => pickMode('customer')} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '14px 16px', background: 'linear-gradient(135deg, #FFFCF5, #FFF0D5)', border: `2px solid ${COLOR.gold}`, borderRadius: 14, marginBottom: 10, cursor: 'pointer', boxShadow: '0 8px 20px rgba(232,118,10,0.12)' }}>
                   <div style={{ fontSize: 22, marginBottom: 4 }}>🎉</div>
-                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, fontWeight: 700, color: COLOR.dark, marginBottom: 2 }}>I'm planning an event</div>
-                  <div style={{ fontSize: 12, color: COLOR.muted }}>Get catering quotes for your party, wedding or office event</div>
+                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, fontWeight: 700, color: COLOR.dark, marginBottom: 2 }}>I'm an Aayojak</div>
+                  <div style={{ fontSize: 12, color: COLOR.muted }}>Planning an event — wedding, birthday, corporate. Get quotes from caterers.</div>
                 </button>
 
                 <button onClick={() => pickMode('partner')} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '14px 16px', background: `linear-gradient(135deg, ${COLOR.saffron}, ${COLOR.saffronDeep})`, color: 'white', border: 'none', borderRadius: 14, cursor: 'pointer', boxShadow: '0 8px 20px rgba(232,118,10,0.32)', position: 'relative', overflow: 'hidden' }}>

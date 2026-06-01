@@ -1107,7 +1107,7 @@ export default function AayojanApp(){
              {/* CTA buttons — Partner primary */}
              <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",marginBottom:24}}>
                <a href="/partners.html" style={{display:"inline-flex",alignItems:"center",gap:8,background:"linear-gradient(135deg,#E8760A,#C95F08)",color:"#fff",border:"none",padding:"14px 32px",borderRadius:12,fontSize:15,fontWeight:700,cursor:"pointer",boxShadow:"0 6px 20px rgba(232,118,10,0.35)",textDecoration:"none"}}>🏅 Join as Founding Partner</a>
-               <button onClick={()=>navigate("app")} style={{background:"var(--bg-card)",color:"var(--text-secondary)",border:"2px solid var(--border-light)",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:600,cursor:"pointer"}}>🍽️ I'm a Customer</button>
+               <button onClick={()=>navigate("app")} style={{background:"var(--bg-card)",color:"var(--text-secondary)",border:"2px solid var(--border-light)",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:600,cursor:"pointer"}}>🍽️ I'm an Aayojak</button>
              </div>
 
              {/* Catchphrase — editorial pull */}
@@ -1123,7 +1123,7 @@ export default function AayojanApp(){
          {/* ── SECTION DIVIDER — Customer area ─────────────────────────── */}
          <div style={{textAlign:"center",padding:"32px 14px 0",position:"relative"}}>
            <div style={{width:"100%",height:1,background:"var(--border-light)",position:"absolute",top:"50%",left:0}}/>
-           <span style={{position:"relative",background:"var(--bg-primary)",padding:"8px 20px",borderRadius:24,border:"1px solid var(--border-light)",fontSize:13,fontWeight:700,color:"var(--text-muted)",letterSpacing:0.5}}>👇 FOR CUSTOMERS</span>
+           <span style={{position:"relative",background:"var(--bg-primary)",padding:"8px 20px",borderRadius:24,border:"1px solid var(--border-light)",fontSize:13,fontWeight:700,color:"var(--text-muted)",letterSpacing:0.5}}>👇 FOR AAYOJAKS</span>
          </div>
 
          {/* ── LAUNCHING SOON — Excitement teaser with food gallery ──────── */}
