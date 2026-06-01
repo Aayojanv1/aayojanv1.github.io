@@ -200,8 +200,8 @@ export default function AayojanChatBot() {
   };
 
   const panelStyle = isMobile
-    ? { position: 'fixed', inset: 0, background: COLOR.cream, zIndex: 300, display: 'flex', flexDirection: 'column', animation: 'aayojan-slide-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both' }
-    : { position: 'fixed', bottom: 24, left: 24, width: 380, height: 580, background: COLOR.cream, zIndex: 300, borderRadius: 22, boxShadow: '0 30px 60px rgba(0,0,0,0.32), 0 0 0 1px rgba(81,49,23,0.12)', display: 'flex', flexDirection: 'column', overflow: 'hidden', animation: 'aayojan-slide-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both', transformOrigin: 'bottom left' };
+    ? { position: 'fixed', inset: 0, background: COLOR.cream, zIndex: 300, display: 'flex', flexDirection: 'column', animation: 'aayojan-slide-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both', colorScheme: 'light' }
+    : { position: 'fixed', bottom: 24, left: 24, width: 380, height: 580, background: COLOR.cream, zIndex: 300, borderRadius: 22, boxShadow: '0 30px 60px rgba(0,0,0,0.32), 0 0 0 1px rgba(81,49,23,0.12)', display: 'flex', flexDirection: 'column', overflow: 'hidden', animation: 'aayojan-slide-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both', transformOrigin: 'bottom left', colorScheme: 'light' };
 
   return (
     <>
@@ -286,11 +286,11 @@ export default function AayojanChatBot() {
 
             {/* Phase: capture */}
             {phase === 'capture' && (
-              <div style={{ marginTop: 12, padding: 14, background: 'white', borderRadius: 14, border: `1px solid ${COLOR.gold}66` }}>
-                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 14, fontWeight: 700, color: COLOR.dark, marginBottom: 8 }}>Drop your details — we'll WhatsApp within 24 hours</div>
-                <input type="text" placeholder="Your name (optional)" value={name} onChange={e => setName(e.target.value)} style={{ width: '100%', padding: '10px 12px', border: `1px solid ${COLOR.gold}55`, borderRadius: 8, fontSize: 13, marginBottom: 8, outline: 'none', boxSizing: 'border-box' }} />
-                <input type="tel" placeholder="WhatsApp number *" value={whatsapp} onChange={e => setWhatsapp(e.target.value)} style={{ width: '100%', padding: '10px 12px', border: `1px solid ${COLOR.gold}55`, borderRadius: 8, fontSize: 13, marginBottom: 10, outline: 'none', boxSizing: 'border-box' }} />
-                <button onClick={saveLead} disabled={saving} style={{ width: '100%', padding: 12, background: saving ? COLOR.muted : `linear-gradient(135deg, ${COLOR.gold}, ${COLOR.saffron})`, color: COLOR.dark, border: 'none', borderRadius: 10, fontFamily: "'Playfair Display',serif", fontWeight: 800, fontSize: 14, cursor: saving ? 'wait' : 'pointer' }}>
+              <div style={{ marginTop: 12, padding: 16, background: 'white', borderRadius: 14, border: `2px solid ${COLOR.gold}`, boxShadow: '0 8px 20px rgba(232,118,10,0.16)' }}>
+                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, fontWeight: 800, color: COLOR.dark, marginBottom: 10 }}>Drop your details — we'll WhatsApp within 24 hours</div>
+                <input type="text" placeholder="Your name (optional)" value={name} onChange={e => setName(e.target.value)} style={{ width: '100%', padding: '11px 13px', border: `1.5px solid ${COLOR.gold}`, borderRadius: 10, fontSize: 14, marginBottom: 10, outline: 'none', boxSizing: 'border-box', background: '#FFFCF5', color: COLOR.dark, colorScheme: 'light' }} />
+                <input type="tel" placeholder="WhatsApp number *" value={whatsapp} onChange={e => setWhatsapp(e.target.value)} style={{ width: '100%', padding: '11px 13px', border: `1.5px solid ${COLOR.gold}`, borderRadius: 10, fontSize: 14, marginBottom: 12, outline: 'none', boxSizing: 'border-box', background: '#FFFCF5', color: COLOR.dark, colorScheme: 'light' }} />
+                <button onClick={saveLead} disabled={saving} style={{ width: '100%', padding: 13, background: saving ? COLOR.muted : `linear-gradient(135deg, ${COLOR.saffron}, ${COLOR.saffronDeep})`, color: 'white', border: 'none', borderRadius: 11, fontFamily: "'Playfair Display',serif", fontWeight: 800, fontSize: 15, cursor: saving ? 'wait' : 'pointer', boxShadow: '0 10px 22px rgba(232,118,10,0.36)' }}>
                   {saving ? 'Saving...' : '✅ Confirm — call me in 24h'}
                 </button>
               </div>
@@ -312,7 +312,7 @@ export default function AayojanChatBot() {
           {phase === 'chat' && (
             <div style={{ padding: 12, background: 'white', borderTop: `1px solid ${COLOR.gold}33`, display: 'flex', gap: 8 }}>
               <input ref={inputRef} type="text" placeholder="Type your message..." value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') send(); }} disabled={loading}
-                style={{ flex: 1, padding: '10px 14px', border: `1px solid ${COLOR.gold}66`, borderRadius: 10, fontSize: 14, outline: 'none', background: COLOR.cream }} />
+                style={{ flex: 1, padding: '10px 14px', border: `1px solid ${COLOR.gold}66`, borderRadius: 10, fontSize: 14, outline: 'none', background: COLOR.cream, color: COLOR.dark, colorScheme: 'light' }} />
               <button onClick={send} disabled={loading || !input.trim()} style={{ padding: '0 16px', background: COLOR.saffron, color: 'white', border: 'none', borderRadius: 10, fontWeight: 700, fontSize: 14, cursor: loading || !input.trim() ? 'not-allowed' : 'pointer', opacity: loading || !input.trim() ? 0.5 : 1 }}>Send</button>
             </div>
           )}
