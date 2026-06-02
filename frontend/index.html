@@ -2,6 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- Canonical-domain redirect: never let github.io URL stay visible to users or Google -->
+    <script>
+      (function(){
+        var h = location.hostname;
+        if (h === 'aayojanv1.github.io' || h.endsWith('.github.io')) {
+          location.replace('https://aayojan.online' + location.pathname + location.search + location.hash);
+        }
+      })();
+    </script>
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
