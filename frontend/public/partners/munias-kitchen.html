@@ -330,7 +330,7 @@
     .dish-card {
       background: white;
       border-radius: 22px;
-      padding: 1.5rem 1.4rem;
+      padding: 0;
       border: 1px solid var(--line);
       transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       position: relative;
@@ -346,12 +346,33 @@
       background: linear-gradient(90deg, var(--saffron), var(--gold));
       transform: scaleX(0); transform-origin: left;
       transition: transform 0.4s ease;
+      z-index: 2;
     }
     .dish-card:hover::before { transform: scaleX(1); }
-    .dish-emoji {
-      font-size: 2.4rem; line-height: 1; margin-bottom: 0.8rem;
+    .dish-photo {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
       display: block;
+      background: linear-gradient(135deg, #5C2A0C 0%, #B25917 100%);
     }
+    .dish-photo-fallback {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: linear-gradient(135deg, #5C2A0C 0%, #8B3A0E 60%, #B25917 100%);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+    .dish-photo-fallback::after {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(243,200,105,0.22) 0%, transparent 50%);
+    }
+    .dish-emoji {
+      font-size: 4rem; line-height: 1; position: relative; z-index: 1;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.35));
+    }
+    .dish-body { padding: 1.3rem 1.4rem 1.5rem; }
     .dish-name {
       font-family: 'Playfair Display', serif;
       font-size: 1.2rem; font-weight: 700; color: var(--dark);
@@ -560,39 +581,59 @@
         </div>
 
         <div class="dish-grid">
+          <!-- DOI ILISH -->
           <div class="dish-card">
-            <span class="dish-emoji">🐟</span>
-            <span class="dish-tag">Bengali · Signature</span>
-            <h3 class="dish-name">Doi Ilish</h3>
-            <p class="dish-desc">Hilsa cooked in a delicate yoghurt-mustard gravy. The cornerstone of a Bengali feast — luminous, fragrant, unforgettable.</p>
+            <img class="dish-photo" src="/partners/munias-kitchen/doi-ilish.jpg" alt="Doi Ilish" loading="lazy"
+                 onerror="this.outerHTML='<div class=&quot;dish-photo-fallback&quot;><span class=&quot;dish-emoji&quot;>🐟</span></div>'">
+            <div class="dish-body">
+              <span class="dish-tag">Bengali · Signature</span>
+              <h3 class="dish-name">Doi Ilish</h3>
+              <p class="dish-desc">Hilsa cooked in a delicate yoghurt-mustard gravy. The cornerstone of a Bengali feast — luminous, fragrant, unforgettable.</p>
+            </div>
           </div>
 
+          <!-- MUTTON GALOUTI KEBAB -->
           <div class="dish-card">
-            <span class="dish-emoji">🍢</span>
-            <span class="dish-tag">Mughlai · Slow craft</span>
-            <h3 class="dish-name">Mutton Galouti Kebab</h3>
-            <p class="dish-desc">Minced mutton bound only with smoke and spice. Melts on the tongue — the dish that earned its name from "Galaawat" itself.</p>
+            <img class="dish-photo" src="/partners/munias-kitchen/mutton-galouti.jpg" alt="Mutton Galouti Kebab" loading="lazy"
+                 onerror="this.outerHTML='<div class=&quot;dish-photo-fallback&quot;><span class=&quot;dish-emoji&quot;>🍢</span></div>'">
+            <div class="dish-body">
+              <span class="dish-tag">Mughlai · Slow craft</span>
+              <h3 class="dish-name">Mutton Galouti Kebab</h3>
+              <p class="dish-desc">Minced mutton bound only with smoke and spice. Melts on the tongue — the dish that earned its name from "Galaawat" itself.</p>
+            </div>
           </div>
 
+          <!-- MUTTON BIRYANI -->
           <div class="dish-card">
-            <span class="dish-emoji">🍛</span>
-            <span class="dish-tag">Mughlai · Crowd favourite</span>
-            <h3 class="dish-name">Mutton Biryani</h3>
-            <p class="dish-desc">Long-grain rice layered with hand-trimmed mutton, slow-dum cooked. Aromatic, never greasy. The plate guests photograph first.</p>
+            <img class="dish-photo" src="/partners/munias-kitchen/mutton-biryani.jpg" alt="Mutton Biryani" loading="lazy"
+                 onerror="this.outerHTML='<div class=&quot;dish-photo-fallback&quot;><span class=&quot;dish-emoji&quot;>🍛</span></div>'">
+            <div class="dish-body">
+              <span class="dish-tag">Mughlai · Crowd favourite</span>
+              <h3 class="dish-name">Mutton Biryani</h3>
+              <p class="dish-desc">Long-grain rice layered with hand-trimmed mutton, slow-dum cooked. Aromatic, never greasy. The plate guests photograph first.</p>
+            </div>
           </div>
 
+          <!-- CRAB WONTON -->
           <div class="dish-card">
-            <span class="dish-emoji">🥟</span>
-            <span class="dish-tag">Chinese · Live counter</span>
-            <h3 class="dish-name">Crab Wonton</h3>
-            <p class="dish-desc">Hand-folded wontons, crab and water-chestnut filling, fried crisp. A live-counter winner — gone within minutes of being served.</p>
+            <img class="dish-photo" src="/partners/munias-kitchen/crab-wonton.jpg" alt="Crab Wonton" loading="lazy"
+                 onerror="this.outerHTML='<div class=&quot;dish-photo-fallback&quot;><span class=&quot;dish-emoji&quot;>🥟</span></div>'">
+            <div class="dish-body">
+              <span class="dish-tag">Chinese · Live counter</span>
+              <h3 class="dish-name">Crab Wonton</h3>
+              <p class="dish-desc">Hand-folded wontons, crab and water-chestnut filling, fried crisp. A live-counter winner — gone within minutes of being served.</p>
+            </div>
           </div>
 
+          <!-- KOCHU PATA BHAPA CHINGRI -->
           <div class="dish-card">
-            <span class="dish-emoji">🌿</span>
-            <span class="dish-tag">Bengali · Heirloom</span>
-            <h3 class="dish-name">Kochu Pata Bhapa Chingri</h3>
-            <p class="dish-desc">Prawns steamed inside colocasia leaves with coconut and mustard. A heritage Bengali preparation few caterers still attempt.</p>
+            <img class="dish-photo" src="/partners/munias-kitchen/kochu-pata-chingri.jpg" alt="Kochu Pata Bhapa Chingri" loading="lazy"
+                 onerror="this.outerHTML='<div class=&quot;dish-photo-fallback&quot;><span class=&quot;dish-emoji&quot;>🌿</span></div>'">
+            <div class="dish-body">
+              <span class="dish-tag">Bengali · Heirloom</span>
+              <h3 class="dish-name">Kochu Pata Bhapa Chingri</h3>
+              <p class="dish-desc">Prawns steamed inside colocasia leaves with coconut and mustard. A heritage Bengali preparation few caterers still attempt.</p>
+            </div>
           </div>
         </div>
       </div>
