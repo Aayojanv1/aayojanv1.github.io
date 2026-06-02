@@ -108,17 +108,31 @@ p {
 </div>
 
 <script>
-(function(){
-  // ── Secret-key gate ─────────────────────────────────────────────
+(async function(){
+  // ── Secret-key gate (hash-compare) ──────────────────────────────
   // The page does nothing unless the URL carries the correct key.
-  // Random visitors / bots / shared links without the key get bounced.
-  const SECRET_KEY = 'zSl9TUwfApyqXGe6hZnsLd-32E3qb6Zi';
+  // We only store the SHA-256 hash of the key here — the raw key is
+  // never in this source. View-source on this page reveals nothing
+  // about the actual key.
+  const KEY_HASH = 'ab122e9d184cfa93986705d71df7806afabd386c10fa9f6d90633bb6f16db431';
+
+  async function sha256Hex(text) {
+    const buf = new TextEncoder().encode(text);
+    const hashBuf = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hashBuf))
+      .map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
   const params = new URLSearchParams(window.location.search);
-  if (params.get('key') !== SECRET_KEY) {
-    // No key or wrong key → silently send them to the homepage.
+  const providedKey = params.get('key') || '';
+  const providedHash = providedKey ? await sha256Hex(providedKey) : '';
+  if (providedHash !== KEY_HASH) {
+    // No key, wrong key, or no crypto available → silently bounce.
     window.location.replace('/');
     return;
   }
+  // Key is correct. Keep a single in-memory reference for re-building action URLs.
+  const SECRET_KEY = providedKey;
   const wantsRevert = params.has('revert') || params.has('opt-in');
 
   const titleEl = document.getElementById('title');
