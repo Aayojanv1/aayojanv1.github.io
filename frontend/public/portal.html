@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>(function(){var h=location.hostname;if(h==='aayojanv1.github.io'||h.endsWith('.github.io')){location.replace('https://aayojan.online'+location.pathname+location.search+location.hash);}})();</script>
+<link rel="canonical" href="https://aayojan.online/portal.html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aayojan — Two paths. One Kolkata.</title>
+<meta name="description" content="Two paths through Aayojan: book a caterer for your event, or join as a founding partner kitchen. Pick your side.">
+<meta name="theme-color" content="#0F0A05">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aayojan.online/portal.html">
+<meta property="og:title" content="Aayojan — Two paths. One Kolkata.">
+<meta property="og:description" content="Hosting an event? Running a kitchen? Pick your path.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,500;1,700&family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&display=swap" rel="stylesheet">
+
+<!-- Analytics -->
+<script>if (localStorage.getItem('ga_opt_out') === '1') { window['ga-disable-G-VSGREVV7RS'] = true; }</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VSGREVV7RS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VSGREVV7RS');</script>
+
+<style>
+:root {
+  --saffron: #E8760A; --saffron-deep: #C95F08; --gold: #F3C869;
+  --cream: #FDF6ED; --cream-2: #FFF8EF;
+  --dark: #0F0A05; --dark-2: #1C130A; --dark-3: #2A1B0C;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--dark);
+  color: var(--cream-2);
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+
+/* ─── HEADER ─── */
+.top {
+  padding: 18px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid rgba(243,200,105,0.15);
+  background: rgba(15, 10, 5, 0.9);
+  backdrop-filter: blur(20px);
+  position: sticky; top: 0; z-index: 50;
+}
+.brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 900;
+  color: var(--gold);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.brand span { color: var(--cream-2); font-weight: 700; }
+.tagline-top {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 14px;
+  color: rgba(255, 248, 239, 0.6);
+}
+@media (max-width: 640px) { .tagline-top { display: none; } }
+
+/* ─── HERO STRIP ─── */
+.hero {
+  padding: 50px 28px 28px;
+  text-align: center;
+  position: relative;
+  background: radial-gradient(ellipse at 50% 0%, rgba(232,118,10,0.22) 0%, transparent 60%);
+}
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 0.22em; text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.eyebrow::before, .eyebrow::after {
+  content: ""; height: 1px; width: 30px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 900; line-height: 1.02;
+  color: var(--cream-2);
+  margin-bottom: 12px; letter-spacing: -0.025em;
+}
+h1 em { color: var(--gold); font-style: italic; font-weight: 700; }
+.sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: clamp(16px, 2.2vw, 20px);
+  color: rgba(255, 248, 239, 0.78);
+  max-width: 600px; margin: 0 auto;
+}
+
+/* ─── THE TWO DOORS ─── */
+.doors {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  padding: 32px 28px;
+  max-width: 1400px; margin: 0 auto;
+  width: 100%;
+}
+@media (max-width: 720px) { .doors { grid-template-columns: 1fr; gap: 18px; padding: 24px 18px; } }
+
+.door {
+  position: relative;
+  padding: 60px 40px 50px;
+  border-radius: 22px;
+  display: flex; flex-direction: column; gap: 16px;
+  align-items: flex-start;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease;
+  min-height: 380px;
+}
+.door:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 40px 80px rgba(0,0,0,0.45); }
+
+/* Door 1 — Aayojak (host) */
+.door.host {
+  background:
+    radial-gradient(ellipse at 80% 100%, rgba(243,200,105,0.32) 0%, transparent 60%),
+    linear-gradient(135deg, #FFF4DC 0%, #F5C870 60%, #E8760A 100%);
+  color: var(--dark);
+}
+.door.host .number { color: rgba(28,19,10,0.18); }
+.door.host .door-cta { background: var(--dark); color: var(--gold); }
+.door.host .door-cta:hover { background: var(--dark-2); }
+.door.host .door-strip { background: rgba(28,19,10,0.08); border-top: 1px solid rgba(28,19,10,0.12); }
+
+/* Door 2 — Partner (kitchen) */
+.door.partner {
+  background:
+    radial-gradient(ellipse at 80% 100%, rgba(232,118,10,0.28) 0%, transparent 60%),
+    linear-gradient(135deg, #2A1B0C 0%, #1C130A 60%, #0F0A05 100%);
+  color: var(--cream-2);
+  border: 1px solid rgba(243,200,105,0.2);
+}
+.door.partner .number { color: rgba(243,200,105,0.2); }
+.door.partner .door-cta { background: var(--saffron); color: white; }
+.door.partner .door-cta:hover { background: var(--saffron-deep); }
+.door.partner .door-strip { background: rgba(255,248,239,0.04); border-top: 1px solid rgba(243,200,105,0.18); }
+
+.number {
+  position: absolute; top: 26px; right: 32px;
+  font-family: 'Playfair Display', serif;
+  font-size: 96px; font-weight: 900;
+  line-height: 1; letter-spacing: -0.05em;
+  user-select: none;
+}
+.kicker {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  opacity: 0.75;
+}
+.door-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 3.6vw, 40px); font-weight: 900;
+  line-height: 1.05; letter-spacing: -0.015em;
+}
+.door-title em { font-style: italic; color: var(--saffron-deep); }
+.door.partner .door-title em { color: var(--gold); }
+.door-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 18px; line-height: 1.5;
+  opacity: 0.88; max-width: 380px;
+}
+.door-list {
+  list-style: none; padding: 0; margin: 4px 0;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.door-list li {
+  font-size: 13px; display: flex; gap: 8px; align-items: flex-start;
+  opacity: 0.88;
+}
+.door-list li::before { content: "✓"; font-weight: 700; flex-shrink: 0; }
+.door.host .door-list li::before { color: var(--saffron-deep); }
+.door.partner .door-list li::before { color: var(--gold); }
+
+.door-cta {
+  margin-top: auto;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700; font-size: 14px;
+  text-decoration: none;
+  align-self: flex-start;
+  transition: background 0.2s, transform 0.2s;
+}
+.door-cta::after { content: "→"; font-size: 18px; transition: transform 0.2s; }
+.door:hover .door-cta::after { transform: translateX(4px); }
+
+.door-strip {
+  margin: 24px -40px -50px;
+  padding: 16px 40px;
+  font-size: 11px; opacity: 0.7;
+  letter-spacing: 0.08em;
+}
+
+/* ─── FOUNDING PARTNER STRIP ─── */
+.founders {
+  padding: 36px 28px;
+  background: var(--dark-2);
+  border-top: 1px solid rgba(243,200,105,0.15);
+  text-align: center;
+}
+.founders .label {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: 13px;
+  color: var(--gold); letter-spacing: 0.18em; text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.f-grid {
+  display: flex; gap: 18px; justify-content: center; flex-wrap: wrap;
+  max-width: 900px; margin: 0 auto;
+}
+.f-card {
+  width: 120px; aspect-ratio: 1/1;
+  background: #F29E1F; border-radius: 8px;
+  position: relative; overflow: hidden; flex-shrink: 0;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+  text-decoration: none; color: inherit;
+  transition: transform 0.3s ease;
+}
+.f-card:hover { transform: translateY(-4px) rotate(-2deg); }
+.f-card .fr { position: absolute; inset: 8px; border: 1.2px solid #FFF8EF; border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; }
+.f-card .mark { font-family: 'Playfair Display', serif; font-weight: 400; font-size: 11px; letter-spacing: 0.06em; line-height: 1.1; text-align: center; -webkit-text-stroke: 0.4px #FFF8EF; color: transparent; }
+.f-card .script { position: absolute; right: 8%; bottom: -8%; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: 10px; color: #FFF8EF; transform: rotate(-3deg); }
+.f-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 24px 28px;
+  border-top: 1px solid rgba(243,200,105,0.12);
+  background: var(--dark);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  flex-wrap: wrap;
+}
+footer .urls a {
+  color: var(--gold); font-weight: 600; font-size: 13px;
+  text-decoration: none; margin-right: 18px;
+}
+footer .urls a:hover { color: var(--cream-2); }
+footer .small {
+  font-size: 11px; color: rgba(255,248,239,0.4);
+  font-style: italic;
+}
+
+/* Reveal animation on load */
+.door, .hero { opacity: 0; transform: translateY(20px); animation: rise 0.7s 0.1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.door.partner { animation-delay: 0.25s; }
+.f-card { opacity: 0; animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.f-card:nth-child(1) { animation-delay: 0.5s; }
+.f-card:nth-child(2) { animation-delay: 0.6s; }
+.f-card:nth-child(3) { animation-delay: 0.7s; }
+@keyframes rise { to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+
+<body>
+
+<div class="top">
+  <a href="/" class="brand">Aayo<span>jan</span></a>
+  <div class="tagline-top">Kolkata's catering marketplace</div>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">The Aayojan Edit · Newtown · Salt Lake · Rajarhat</div>
+  <h1>Two paths. <em>One Kolkata.</em></h1>
+  <p class="sub">Pick where you stand. We'll route you to the right WhatsApp conversation in one tap.</p>
+</div>
+
+<div class="doors">
+
+  <!-- DOOR 1 — HOST -->
+  <a class="door host" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27m%20hosting%20an%20event%20and%20need%20a%20caterer.%0AEvent%20type%3A%20%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20Newtown%20%2F%20Salt%20Lake%20%2F%20Rajarhat%0ACuisine%20preference%3A%20"
+     target="_blank" rel="noopener"
+     onclick="trackTap('host')">
+    <div class="number">01</div>
+    <div class="kicker">For Aayojaks</div>
+    <h2 class="door-title">I'm <em>hosting</em><br>an event.</h2>
+    <p class="door-desc">Wedding, anniversary, corporate, Annaprasan. We route your brief to verified Kolkata caterers — quotes land on your WhatsApp in hours.</p>
+    <ul class="door-list">
+      <li>3 verified caterers respond within 4 hours</li>
+      <li>Tasting: ₹199 veg / ₹399 non-veg</li>
+      <li>₹0 to use Aayojan. Forever.</li>
+    </ul>
+    <span class="door-cta">📱 Start on WhatsApp</span>
+    <div class="door-strip">Newtown · Salt Lake · Rajarhat — hyperlocal only.</div>
+  </a>
+
+  <!-- DOOR 2 — PARTNER -->
+  <a class="door partner" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20run%20a%20catering%20kitchen%20and%20want%20to%20become%20a%20founding%20partner.%0ABusiness%20name%3A%20%0AService%20area%3A%20%0AMain%20cuisines%3A%20"
+     target="_blank" rel="noopener"
+     onclick="trackTap('partner')">
+    <div class="number">02</div>
+    <div class="kicker">For Caterers</div>
+    <h2 class="door-title">I run <em>a kitchen.</em></h2>
+    <p class="door-desc">Founding partner program for Kolkata caterers. WhatsApp leads, your own brand page, no app to learn.</p>
+    <ul class="door-list">
+      <li>3% commission · only on closed bookings</li>
+      <li>₹0 to join. ₹0 monthly. No lock-in.</li>
+      <li>7 founding partner spots remain</li>
+    </ul>
+    <span class="door-cta">📱 Start on WhatsApp</span>
+    <div class="door-strip">Munia's Kitchen · Curry-কথা · Magnolia Catering — already on board.</div>
+  </a>
+
+</div>
+
+<!-- FOUNDING PARTNER STRIP -->
+<div class="founders">
+  <div class="label">Featured Founding Partners</div>
+  <div class="f-grid">
+    <a class="f-card" href="/partners/munias-kitchen.html">
+      <div class="fr">
+        <div class="mark">MUNIA'S<br>KITCHEN</div>
+        <div class="script">catering</div>
+      </div>
+    </a>
+    <a class="f-card" href="/partners/curry-katha.html">
+      <img src="/partners/curry-katha/logo.png" alt="Curry-কথা">
+    </a>
+    <a class="f-card" href="/partners/magnolia-catering.html">
+      <img src="/partners/magnolia-catering/logo.svg" alt="Magnolia Catering Service">
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="urls">
+    <a href="/">Home</a>
+    <a href="/caterers/">Areas</a>
+    <a href="/partners.html">For Partners</a>
+    <a href="/about.html">About</a>
+  </div>
+  <div class="small">© 2026 Aayojan · Catering marketplace · Kolkata</div>
+</footer>
+
+<script>
+function trackTap(audience){
+  if (typeof gtag === 'function') {
+    gtag('event', 'portal_door_clicked', { audience: audience, page: 'portal' });
+  }
+}
+// Track which audience landed here
+if (typeof gtag === 'function') {
+  gtag('event', 'portal_landed', { referrer: document.referrer || 'direct' });
+}
+</script>
+
+</body>
+</html>
