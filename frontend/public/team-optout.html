@@ -109,7 +109,16 @@ p {
 
 <script>
 (function(){
+  // ── Secret-key gate ─────────────────────────────────────────────
+  // The page does nothing unless the URL carries the correct key.
+  // Random visitors / bots / shared links without the key get bounced.
+  const SECRET_KEY = 'zSl9TUwfApyqXGe6hZnsLd-32E3qb6Zi';
   const params = new URLSearchParams(window.location.search);
+  if (params.get('key') !== SECRET_KEY) {
+    // No key or wrong key → silently send them to the homepage.
+    window.location.replace('/');
+    return;
+  }
   const wantsRevert = params.has('revert') || params.has('opt-in');
 
   const titleEl = document.getElementById('title');
@@ -150,7 +159,7 @@ p {
         <div><strong>Browser:</strong> ${ua}</div>
       `;
       actEl.innerHTML = `
-        <a class="btn outline" href="?revert=1">↩️ Opt me back in</a>
+        <a class="btn outline" href="?key=${SECRET_KEY}&revert=1">↩️ Opt me back in</a>
         <a class="btn primary" href="/">Go to site →</a>
       `;
     } else {
@@ -162,7 +171,7 @@ p {
         <div><strong>Browser:</strong> ${ua}</div>
       `;
       actEl.innerHTML = `
-        <a class="btn primary" href="?optout=1">🚫 Exclude this browser</a>
+        <a class="btn primary" href="?key=${SECRET_KEY}&optout=1">🚫 Exclude this browser</a>
         <a class="btn outline" href="/">Cancel</a>
       `;
     }
@@ -172,11 +181,11 @@ p {
   if (wantsRevert) {
     clearOptOut();
     // Strip query and re-render
-    history.replaceState({}, '', window.location.pathname);
+    history.replaceState({}, '', window.location.pathname + '?key=' + SECRET_KEY);
     setTimeout(render, 100);
   } else if (params.has('optout') || params.has('opt-out')) {
     applyOptOut();
-    history.replaceState({}, '', window.location.pathname);
+    history.replaceState({}, '', window.location.pathname + '?key=' + SECRET_KEY);
     setTimeout(render, 100);
   } else {
     render();
