@@ -37,3 +37,5 @@ JSXs/
 *.demo.html
 firebase-debug.log
 firestore-debug.log
+frontend/public/banner-partner-recruit.html
+
