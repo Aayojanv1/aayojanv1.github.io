@@ -31,26 +31,18 @@
 <meta property="og:description" content="Hand-picked catering partners across Newtown (700156, 700157, 700161). Weddings, anniversaries, corporate. Quotes on WhatsApp in hours.">
 <meta property="og:site_name" content="Aayojan">
 
-<!-- LocalBusiness + Service schema -->
+<!-- Organization (the marketplace) + Service (what we offer in Newtown) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "Aayojan — Caterers in Newtown",
-  "description": "Catering marketplace serving Newtown, Kolkata. Verified caterers for weddings, anniversaries, corporate events. Bengali, Mughlai, Continental cuisines.",
+  "@type": "Organization",
+  "name": "Aayojan — Catering Marketplace · Newtown",
+  "alternateName": "Aayojan",
+  "description": "Aayojan is a catering marketplace — we do not prepare or serve food. We connect customers in Newtown, Kolkata with verified independent caterers for weddings, anniversaries, corporate events.",
   "url": "https://aayojan.online/caterers/newtown.html",
+  "logo": "https://aayojan.online/logo-aayojan.svg",
   "telephone": "+91 8088434425",
   "email": "aayojan11@gmail.com",
-  "image": "https://aayojan.online/logo-aayojan.svg",
-  "priceRange": "₹150-₹1200 per plate",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Newtown",
-    "addressRegion": "West Bengal",
-    "postalCode": "700156",
-    "addressCountry": "IN"
-  },
-  "geo": {"@type": "GeoCoordinates", "latitude": 22.5958, "longitude": 88.4795},
   "areaServed": [
     {"@type": "Place", "name": "Newtown, Kolkata", "additionalProperty": [{"@type":"PropertyValue","name":"pincode","value":"700156"}, {"@type":"PropertyValue","name":"pincode","value":"700157"}, {"@type":"PropertyValue","name":"pincode","value":"700161"}]},
     {"@type": "Place", "name": "Action Area I"},
@@ -60,6 +52,18 @@
     {"@type": "Place", "name": "Biswa Bangla Gate"}
   ],
   "knowsLanguage": ["English", "Bengali", "Hindi"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Catering Aggregator Service · Newtown",
+  "serviceType": "Catering marketplace — quote comparison & booking",
+  "provider": {"@type": "Organization", "name": "Aayojan", "url": "https://aayojan.online"},
+  "areaServed": {"@type": "Place", "name": "Newtown, Kolkata", "geo": {"@type": "GeoCoordinates", "latitude": 22.5958, "longitude": 88.4795}},
+  "offers": {"@type": "Offer", "description": "Free quote comparison from independent catering partners. Per-plate prices set by partners, not Aayojan.", "price": "0", "priceCurrency": "INR"},
+  "audience": {"@type": "Audience", "geographicArea": {"@type": "Place", "name": "Newtown"}}
 }
 </script>
 <script type="application/ld+json">
@@ -299,7 +303,7 @@ footer a { color: var(--saffron); }
   <div class="container section-head">
     <span class="section-eyebrow">Per-plate price guide · Newtown</span>
     <h2 class="section-title">What does a Newtown caterer <em>actually</em> cost?</h2>
-    <p class="section-sub">Real ranges from Aayojan partners as of 2026. Final quote depends on guest count, cuisine mix and service style.</p>
+    <p class="section-sub">Real per-plate ranges set by our <strong>partner caterers</strong> as of 2026 — Aayojan is a marketplace, not a kitchen. Final quote depends on the partner you choose, guest count, cuisine mix and service style.</p>
   </div>
   <div class="pricing-grid">
     <div class="tier"><div class="tier-label">Essential</div><div class="tier-price">₹250 – ₹400<small>/plate</small></div><div class="tier-desc">Simple Bengali or North Indian menu. Standard buffet service.</div><ul class="tier-list"><li>Rice/luchi + 2 sides + dessert</li><li>Self-service buffet</li><li>House parties, small gatherings</li><li>Min. 25 plates</li></ul></div>
