@@ -5,6 +5,16 @@
     <lastmod>2026-06-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aayojan.online/" xmlns:xhtml="http://www.w3.org/1999/xhtml"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://aayojan.online/bn/" xmlns:xhtml="http://www.w3.org/1999/xhtml"/>
+  </url>
+  <url>
+    <loc>https://aayojan.online/bn/</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aayojan.online/" xmlns:xhtml="http://www.w3.org/1999/xhtml"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://aayojan.online/bn/" xmlns:xhtml="http://www.w3.org/1999/xhtml"/>
   </url>
   <url>
     <loc>https://aayojan.online/caterers/</loc>
