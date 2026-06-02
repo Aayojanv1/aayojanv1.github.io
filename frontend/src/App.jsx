@@ -3,6 +3,7 @@ import { useAuth, getPartners, getAllPartners, addPartner, updatePartner, delete
 import { matchCaterers, anonymize } from "./matchingPipeline";
 import AayojanChatBot from "./AayojanChatBot";
 import RotatingHeadline from "./RotatingHeadline";
+import FeaturedSpotlight from "./FeaturedSpotlight";
 import { getAttribution, getAttributionForEvent } from "./attribution";
 
 const track = (event, params = {}) => {
@@ -1207,54 +1208,9 @@ export default function AayojanApp(){
            </div>
          </div>
 
-         {/* ── EDITORIAL FEATURE — Munia's Kitchen (compact) ─────────────── */}
-         <div style={{padding:"44px 14px",background:"#0F0A05",position:"relative",overflow:"hidden"}}>
-           <div style={{position:"absolute",inset:0,backgroundImage:"radial-gradient(circle at 80% 50%, rgba(243,200,105,0.10) 0%, transparent 55%)",pointerEvents:"none"}}></div>
+         {/* ── EDITORIAL FEATURE — rotating spotlight (all founding partners) ─ */}
+         <FeaturedSpotlight />
 
-           <div style={{maxWidth:1100,margin:"0 auto",position:"relative",zIndex:1}}>
-
-             {/* Tight masthead */}
-             <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:22}}>
-               <div style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",fontSize:11,color:"#F3C869",letterSpacing:"0.18em",textTransform:"uppercase"}}>The Aayojan Edit · 01</div>
-               <div style={{flex:1,height:1,background:"linear-gradient(90deg,rgba(243,200,105,0.3),transparent)"}}></div>
-             </div>
-
-             {/* Compact grid */}
-             <div style={{display:"grid",gridTemplateColumns:"1.3fr 1fr",gap:36,alignItems:"center"}} className="edit-grid">
-
-               {/* LEFT — copy */}
-               <div>
-                 <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4.4vw,46px)",fontWeight:900,color:"#FFF8EF",margin:"0 0 14px",lineHeight:1.02,letterSpacing:"-0.02em"}}>
-                   Karabi Dey is cooking <span style={{fontStyle:"italic",fontWeight:600,color:"#F3C869"}}>the food</span> other caterers <span style={{fontStyle:"italic",fontWeight:600,color:"#F3C869"}}>wish</span> they had made.
-                 </h2>
-
-                 <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(14px,1.7vw,17px)",lineHeight:1.55,color:"rgba(255,248,239,0.82)",margin:"0 0 16px",fontWeight:500,borderLeft:"2px solid rgba(243,200,105,0.5)",paddingLeft:14}}>
-                   The Doi Ilish carries a grandmother's monsoon mustard. The Galouti, an impossible softness. The Crab Wonton — gone before the second tray arrives.
-                 </p>
-
-                 <div style={{fontSize:12,color:"rgba(255,248,239,0.6)",lineHeight:1.7,marginBottom:18}}>
-                   <span style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",color:"#F3C869"}}>Doi Ilish</span> · <span style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",color:"#F3C869"}}>Mutton Galouti</span> · <span style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",color:"#F3C869"}}>Mutton Biryani</span> · <span style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",color:"#F3C869"}}>Crab Wonton</span> · <span style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",color:"#F3C869"}}>Kochu Pata Chingri</span>
-                 </div>
-
-                 <a href="/partners/munias-kitchen.html" style={{display:"inline-flex",alignItems:"center",gap:8,color:"#F3C869",fontFamily:"'Playfair Display',serif",fontSize:14,fontWeight:600,fontStyle:"italic",textDecoration:"none",borderBottom:"1px solid rgba(243,200,105,0.4)",paddingBottom:3,transition:"color 0.2s, border-color 0.2s"}} onMouseEnter={e=>{e.currentTarget.style.color="#FFF8EF";e.currentTarget.style.borderColor="#FFF8EF";}} onMouseLeave={e=>{e.currentTarget.style.color="#F3C869";e.currentTarget.style.borderColor="rgba(243,200,105,0.4)";}}>
-                   Read the profile <span>→</span>
-                 </a>
-               </div>
-
-               {/* RIGHT — logo */}
-               <div style={{position:"relative",display:"flex",justifyContent:"center",alignItems:"center"}}>
-                 <a href="/partners/munias-kitchen.html" style={{display:"block",width:"min(240px,80%)",aspectRatio:"1/1",background:"#F29E1F",borderRadius:6,padding:18,boxShadow:"0 20px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(243,200,105,0.2)",transform:"rotate(-2deg)",transition:"transform 0.4s ease",textDecoration:"none",position:"relative",overflow:"hidden"}} onMouseEnter={e=>e.currentTarget.style.transform="rotate(0deg) scale(1.03)"} onMouseLeave={e=>e.currentTarget.style.transform="rotate(-2deg)"}>
-                   <div style={{width:"100%",height:"100%",border:"1.5px solid #FFF8EF",borderRadius:3,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:14,position:"relative"}}>
-                     <div style={{fontFamily:"'Playfair Display',serif",fontWeight:400,fontSize:"clamp(18px,2.6vw,26px)",letterSpacing:"0.08em",lineHeight:1.05,textAlign:"center",WebkitTextStroke:"0.6px #FFF8EF",color:"transparent"}}>MUNIA'S<br/>KITCHEN</div>
-                     <div style={{position:"absolute",right:"10%",bottom:"-6%",fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontWeight:500,fontSize:"clamp(13px,1.8vw,18px)",color:"#FFF8EF",transform:"rotate(-3deg)"}}>catering</div>
-                   </div>
-                   <div style={{position:"absolute",top:8,right:8,background:"#0F0A05",color:"#F3C869",padding:"3px 8px",borderRadius:3,fontSize:8,fontWeight:700,letterSpacing:"0.14em"}}>FEATURED</div>
-                 </a>
-               </div>
-             </div>
-
-           </div>
-         </div>
 
          {/* ── PARTNER CATERERS — Scrolling ribbon ────────────────────────── */}
          <div style={{padding:"40px 14px",background:"var(--bg-secondary)",overflow:"hidden"}}>
