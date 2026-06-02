@@ -48,9 +48,9 @@ const FEATURED = [
     quote: "Bengali for the elders. Chinese for the kids. Kebabs on a live counter. Magnolia delivers all four cuisines without breaking quality — at any scale.",
     dishes: ["Diamond Fish Fry", "Slow Mutton", "Live Kebab Counter"],
     href: "/partners/magnolia-catering.html",
-    logoType: "text",
-    logoLines: ["MAGNOLIA"],
-    logoScript: "catering",
+    logoType: "image",
+    logoImg: "/partners/magnolia-catering/logo.svg",
+    logoAlt: "Magnolia Catering Service · Kolkata",
     logoBg: "#F29E1F",
   },
 ];

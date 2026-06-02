@@ -63,11 +63,10 @@
     .btn.ghost:hover { background: var(--cream-2); }
 
     .hero-art { position: relative; display: grid; place-items: center; min-height: 320px; }
-    .logo-card { position: relative; width: min(360px, 80vw); aspect-ratio: 1/1; background: #F29E1F; border-radius: 22px; display: grid; place-items: center; box-shadow: 0 30px 60px rgba(76, 43, 10, 0.32), inset 0 1px 0 rgba(255,255,255,0.18); overflow: hidden; transform: rotate(-2deg); }
-    .logo-frame { position: relative; width: 86%; height: 68%; border: 1.5px solid #FFF8EF; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem 0.6rem; }
-    .logo-mark { font-family: 'Playfair Display', serif; font-weight: 400; font-size: clamp(20px, 4.2vw, 38px); letter-spacing: 0.08em; line-height: 1.05; text-align: center; -webkit-text-stroke: 0.6px #FFF8EF; color: transparent; }
-    .logo-script { position: absolute; right: 14%; bottom: -8%; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: clamp(20px, 2.8vw, 30px); color: #FFF8EF; transform: rotate(-3deg); }
-    .logo-stamp { position: absolute; top: 14px; right: 14px; background: #0F0A05; color: #F3C869; padding: 5px 11px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; }
+    .logo-real { position: relative; width: min(400px, 88vw); aspect-ratio: 1/1; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 60px rgba(76, 43, 10, 0.32); transform: rotate(-2deg); transition: transform 0.4s ease; }
+    .logo-real:hover { transform: rotate(0deg) scale(1.02); }
+    .logo-real img { width: 100%; height: 100%; object-fit: contain; display: block; background: #F29E1F; }
+    .logo-stamp { position: absolute; top: 14px; right: 14px; background: #0F0A05; color: #F3C869; padding: 5px 11px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; z-index: 2; }
 
     section.block { padding: 4.5rem 0; position: relative; }
     .section-head { text-align: center; margin-bottom: 2.5rem; }
@@ -168,11 +167,8 @@
         </div>
 
         <div class="hero-art" aria-hidden="true">
-          <div class="logo-card">
-            <div class="logo-frame">
-              <div class="logo-mark">MAGNOLIA</div>
-            </div>
-            <div class="logo-script">catering</div>
+          <div class="logo-real">
+            <img src="/partners/magnolia-catering/logo.svg" alt="Magnolia Catering Service · Kolkata" loading="eager">
             <div class="logo-stamp">VERIFIED</div>
           </div>
         </div>

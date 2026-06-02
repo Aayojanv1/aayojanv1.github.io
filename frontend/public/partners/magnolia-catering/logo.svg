@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" aria-label="Magnolia Catering Service">
+  <defs>
+    <!-- Saffron background gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="38%" r="72%">
+      <stop offset="0%" stop-color="#F5B044"/>
+      <stop offset="55%" stop-color="#F19E26"/>
+      <stop offset="100%" stop-color="#D78213"/>
+    </radialGradient>
+
+    <!-- Cream petal gradient -->
+    <radialGradient id="petalGrad" cx="50%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#FFFBF1"/>
+      <stop offset="60%" stop-color="#FFF6E5"/>
+      <stop offset="100%" stop-color="#F1DCB4"/>
+    </radialGradient>
+
+    <!-- Subtle inner shadow on the card -->
+    <filter id="petalShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feOffset dx="0" dy="2" result="off"/>
+      <feMerge>
+        <feMergeNode in="off"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- One magnolia petal shape — wider at tip, narrowing to base -->
+    <path id="petal" d="M 0 -20
+                       C -34 -20, -48 -70, -28 -130
+                       C -10 -180, 10 -180, 28 -130
+                       C 48 -70, 34 -20, 0 -20 Z"/>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="600" fill="url(#bgGrad)"/>
+
+  <!-- Thin frame border -->
+  <rect x="28" y="28" width="544" height="544" rx="8" ry="8"
+        fill="none" stroke="#FFF8EF" stroke-width="2" opacity="0.85"/>
+
+  <!-- Decorative corner dots -->
+  <g fill="#FFF8EF" opacity="0.5">
+    <circle cx="60" cy="60" r="2.5"/>
+    <circle cx="540" cy="60" r="2.5"/>
+    <circle cx="60" cy="540" r="2.5"/>
+    <circle cx="540" cy="540" r="2.5"/>
+  </g>
+
+  <!-- Magnolia flower — 6 petals, layered -->
+  <g transform="translate(300 230)" filter="url(#petalShadow)">
+
+    <!-- Back petals (slightly darker, scaled down, behind front) -->
+    <g fill="url(#petalGrad)" stroke="#D78213" stroke-width="1.2" opacity="0.78">
+      <use href="#petal" transform="rotate(30) scale(0.78)"/>
+      <use href="#petal" transform="rotate(90) scale(0.78)"/>
+      <use href="#petal" transform="rotate(150) scale(0.78)"/>
+      <use href="#petal" transform="rotate(210) scale(0.78)"/>
+      <use href="#petal" transform="rotate(270) scale(0.78)"/>
+      <use href="#petal" transform="rotate(330) scale(0.78)"/>
+    </g>
+
+    <!-- Front petals -->
+    <g fill="url(#petalGrad)" stroke="#C76E10" stroke-width="1.5">
+      <use href="#petal" transform="rotate(0)"/>
+      <use href="#petal" transform="rotate(60)"/>
+      <use href="#petal" transform="rotate(120)"/>
+      <use href="#petal" transform="rotate(180)"/>
+      <use href="#petal" transform="rotate(240)"/>
+      <use href="#petal" transform="rotate(300)"/>
+    </g>
+
+    <!-- Center — golden disc -->
+    <circle r="26" fill="#F3C869" stroke="#C76E10" stroke-width="1"/>
+    <circle r="17" fill="#D78213"/>
+
+    <!-- Tiny stamens around the disc -->
+    <g fill="#FFF8EF">
+      <circle cx="0" cy="-12" r="2.4"/>
+      <circle cx="10" cy="-7" r="2.4"/>
+      <circle cx="11" cy="6" r="2.4"/>
+      <circle cx="0" cy="12" r="2.4"/>
+      <circle cx="-11" cy="6" r="2.4"/>
+      <circle cx="-10" cy="-7" r="2.4"/>
+    </g>
+  </g>
+
+  <!-- Decorative line above wordmark -->
+  <line x1="180" y1="420" x2="420" y2="420"
+        stroke="#FFF8EF" stroke-width="0.8" opacity="0.55"/>
+  <circle cx="300" cy="420" r="3" fill="#FFF8EF" opacity="0.7"/>
+
+  <!-- MAGNOLIA — main wordmark -->
+  <text x="300" y="475"
+        text-anchor="middle"
+        font-family="'Playfair Display', 'Times New Roman', Georgia, serif"
+        font-weight="800"
+        font-size="52"
+        letter-spacing="6"
+        fill="#FFF8EF">MAGNOLIA</text>
+
+  <!-- catering service — italic tagline -->
+  <text x="300" y="520"
+        text-anchor="middle"
+        font-family="'Cormorant Garamond', 'Times New Roman', Georgia, serif"
+        font-style="italic"
+        font-weight="500"
+        font-size="26"
+        letter-spacing="1"
+        fill="#FFF8EF"
+        opacity="0.92">catering service</text>
+
+  <!-- Tiny year / brand-anchor pill at the bottom -->
+  <g transform="translate(300 558)">
+    <rect x="-46" y="-12" width="92" height="22" rx="11" ry="11"
+          fill="#0F0A05" opacity="0.85"/>
+    <text x="0" y="3"
+          text-anchor="middle"
+          font-family="'Playfair Display', Georgia, serif"
+          font-style="italic"
+          font-weight="700"
+          font-size="11"
+          letter-spacing="2"
+          fill="#F3C869">KOLKATA</text>
+  </g>
+</svg>
