@@ -13,7 +13,7 @@ const SYSTEM_PARTNER = `You are Aayojan's partner advisor, talking to a caterer 
 
 Facts about Aayojan:
 - A catering marketplace for Newtown, Rajarhat, and Salt Lake (Kolkata)
-- ₹0 to join. 3% commission only on successful bookings (vs 30% on Zomato/Swiggy)
+- ₹0 to join. 3% commission only on successful bookings (vs up to 30% on food partners)
 - Verified event leads delivered on WhatsApp — no app to learn
 - Founding partners get a featured brand page (Munia's Kitchen is the first)
 
