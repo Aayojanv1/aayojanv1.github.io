@@ -1,67 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://aayojan.online/</loc>
-    <lastmod>2026-06-02</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://aayojan.online/" xmlns:xhtml="http://www.w3.org/1999/xhtml"/>
-    <xhtml:link rel="alternate" hreflang="bn" href="https://aayojan.online/bn/" xmlns:xhtml="http://www.w3.org/1999/xhtml"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aayojan.online/"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://aayojan.online/bn/"/>
   </url>
   <url>
     <loc>https://aayojan.online/bn/</loc>
-    <lastmod>2026-06-02</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://aayojan.online/" xmlns:xhtml="http://www.w3.org/1999/xhtml"/>
-    <xhtml:link rel="alternate" hreflang="bn" href="https://aayojan.online/bn/" xmlns:xhtml="http://www.w3.org/1999/xhtml"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://aayojan.online/"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://aayojan.online/bn/"/>
   </url>
-  <url>
-    <loc>https://aayojan.online/caterers/</loc>
-    <lastmod>2026-06-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
-  </url>
-  <url>
-    <loc>https://aayojan.online/caterers/newtown.html</loc>
-    <lastmod>2026-06-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://aayojan.online/caterers/salt-lake.html</loc>
-    <lastmod>2026-06-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://aayojan.online/caterers/rajarhat.html</loc>
-    <lastmod>2026-06-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://aayojan.online/partners.html</loc>
-    <lastmod>2026-06-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://aayojan.online/partners/munias-kitchen.html</loc>
-    <lastmod>2026-06-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://aayojan.online/faq.html</loc>
-    <lastmod>2026-06-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://aayojan.online/about.html</loc>
-    <lastmod>2026-06-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
+
+  <!-- Area hubs & pages -->
+  <url><loc>https://aayojan.online/caterers/</loc><lastmod>2026-06-03</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://aayojan.online/caterers/newtown.html</loc><lastmod>2026-06-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://aayojan.online/caterers/salt-lake.html</loc><lastmod>2026-06-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://aayojan.online/caterers/rajarhat.html</loc><lastmod>2026-06-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+
+  <!-- Event landing pages -->
+  <url><loc>https://aayojan.online/events/</loc><lastmod>2026-06-03</lastmod><changefreq>weekly</changefreq><priority>0.92</priority></url>
+  <url><loc>https://aayojan.online/events/annaprasan-caterer-kolkata.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://aayojan.online/events/aiburo-bhat-caterer-newtown.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.86</priority></url>
+  <url><loc>https://aayojan.online/events/bhai-phota-catering-kolkata.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.86</priority></url>
+  <url><loc>https://aayojan.online/events/wedding-caterer-newtown.html</loc><lastmod>2026-06-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://aayojan.online/events/birthday-caterer-newtown.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.84</priority></url>
+  <url><loc>https://aayojan.online/events/griha-pravesh-caterer-kolkata.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.84</priority></url>
+  <url><loc>https://aayojan.online/events/corporate-lunch-salt-lake-sector-v.html</loc><lastmod>2026-06-03</lastmod><changefreq>weekly</changefreq><priority>0.88</priority></url>
+
+  <!-- Cuisine landing pages -->
+  <url><loc>https://aayojan.online/cuisines/</loc><lastmod>2026-06-03</lastmod><changefreq>weekly</changefreq><priority>0.92</priority></url>
+  <url><loc>https://aayojan.online/cuisines/bengali-caterer-newtown.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://aayojan.online/cuisines/biryani-caterer-newtown.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.86</priority></url>
+  <url><loc>https://aayojan.online/cuisines/mughlai-caterer-salt-lake.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.86</priority></url>
+  <url><loc>https://aayojan.online/cuisines/continental-caterer-newtown.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.84</priority></url>
+  <url><loc>https://aayojan.online/cuisines/chinese-caterer-salt-lake.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.84</priority></url>
+  <url><loc>https://aayojan.online/cuisines/multi-cuisine-caterer-kolkata.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.86</priority></url>
+  <url><loc>https://aayojan.online/cuisines/jain-sattvik-caterer-newtown.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.84</priority></url>
+
+  <!-- Partner pages -->
+  <url><loc>https://aayojan.online/partners.html</loc><lastmod>2026-06-03</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://aayojan.online/partners/munias-kitchen.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aayojan.online/partners/curry-katha.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aayojan.online/partners/magnolia-catering.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Static pages -->
+  <url><loc>https://aayojan.online/faq.html</loc><lastmod>2026-06-03</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://aayojan.online/about.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://aayojan.online/portal.html</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
 </urlset>
