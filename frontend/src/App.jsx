@@ -1256,6 +1256,66 @@ export default function AayojanApp(){
            </div>
          </div>
 
+         {/* ── BROWSE STRIP — Internal links for SEO + UX ────────────────
+             Critical: every link below is rendered as static <a href>
+             so Googlebot can crawl the link graph and stop seeing
+             our area/event/cuisine pages as orphans.
+             ───────────────────────────────────────────────────────────── */}
+         <div style={{background:"linear-gradient(180deg,#FFF8EF 0%,#FFFAEF 100%)",borderTop:"1px solid #EDD8BC",padding:"38px 5% 32px"}}>
+           <div style={{maxWidth:1120,margin:"0 auto"}}>
+             <div style={{textAlign:"center",marginBottom:24}}>
+               <div style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:14,color:"#C95F08",letterSpacing:"0.04em",marginBottom:4}}>Already know what you're looking for?</div>
+               <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(20px,3vw,28px)",fontWeight:800,color:"#1C130A",margin:0,letterSpacing:"-0.01em"}}>Browse Aayojan <em style={{color:"#E8760A",fontStyle:"italic"}}>directly</em>.</h2>
+             </div>
+
+             <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14}} className="browse-strip">
+
+               {/* By Area */}
+               <div style={{background:"white",border:"1px solid #EDD8BC",borderRadius:14,padding:"18px 18px"}}>
+                 <div style={{fontSize:11,fontWeight:800,letterSpacing:"0.16em",color:"#C95F08",textTransform:"uppercase",marginBottom:10,display:"flex",alignItems:"center",gap:6}}><span>📍</span>By area</div>
+                 <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:10}}>
+                   <a href="/caterers/newtown.html" style={{background:"#FDF6ED",border:"1px solid #EDD8BC",padding:"5px 11px",borderRadius:99,fontSize:12,color:"#4A2C0A",fontWeight:600,textDecoration:"none"}}>Newtown</a>
+                   <a href="/caterers/salt-lake.html" style={{background:"#FDF6ED",border:"1px solid #EDD8BC",padding:"5px 11px",borderRadius:99,fontSize:12,color:"#4A2C0A",fontWeight:600,textDecoration:"none"}}>Salt Lake</a>
+                   <a href="/caterers/rajarhat.html" style={{background:"#FDF6ED",border:"1px solid #EDD8BC",padding:"5px 11px",borderRadius:99,fontSize:12,color:"#4A2C0A",fontWeight:600,textDecoration:"none"}}>Rajarhat</a>
+                 </div>
+                 <a href="/caterers/" style={{fontSize:12,color:"#E8760A",fontWeight:700,textDecoration:"none",borderBottom:"1px solid rgba(232,118,10,0.35)",paddingBottom:1}}>See all areas →</a>
+               </div>
+
+               {/* By Event */}
+               <div style={{background:"white",border:"1px solid #EDD8BC",borderRadius:14,padding:"18px 18px"}}>
+                 <div style={{fontSize:11,fontWeight:800,letterSpacing:"0.16em",color:"#C95F08",textTransform:"uppercase",marginBottom:10,display:"flex",alignItems:"center",gap:6}}><span>🎉</span>By event</div>
+                 <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:10}}>
+                   <a href="/events/wedding-caterer-newtown.html" style={{background:"#FDF6ED",border:"1px solid #EDD8BC",padding:"5px 11px",borderRadius:99,fontSize:12,color:"#4A2C0A",fontWeight:600,textDecoration:"none"}}>💍 Wedding</a>
+                   <a href="/events/annaprasan-caterer-kolkata.html" style={{background:"#FDF6ED",border:"1px solid #EDD8BC",padding:"5px 11px",borderRadius:99,fontSize:12,color:"#4A2C0A",fontWeight:600,textDecoration:"none"}}>🍚 Annaprasan</a>
+                   <a href="/events/bhai-phota-catering-kolkata.html" style={{background:"#FDF6ED",border:"1px solid #EDD8BC",padding:"5px 11px",borderRadius:99,fontSize:12,color:"#4A2C0A",fontWeight:600,textDecoration:"none"}}>🎁 Bhai Phota</a>
+                   <a href="/events/corporate-lunch-salt-lake-sector-v.html" style={{background:"#FDF6ED",border:"1px solid #EDD8BC",padding:"5px 11px",borderRadius:99,fontSize:12,color:"#4A2C0A",fontWeight:600,textDecoration:"none"}}>🏢 Corporate</a>
+                 </div>
+                 <a href="/events/" style={{fontSize:12,color:"#E8760A",fontWeight:700,textDecoration:"none",borderBottom:"1px solid rgba(232,118,10,0.35)",paddingBottom:1}}>See all events →</a>
+               </div>
+
+               {/* By Cuisine */}
+               <div style={{background:"white",border:"1px solid #EDD8BC",borderRadius:14,padding:"18px 18px"}}>
+                 <div style={{fontSize:11,fontWeight:800,letterSpacing:"0.16em",color:"#C95F08",textTransform:"uppercase",marginBottom:10,display:"flex",alignItems:"center",gap:6}}><span>🍽️</span>By cuisine</div>
+                 <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:10}}>
+                   <a href="/cuisines/bengali-caterer-newtown.html" style={{background:"#FDF6ED",border:"1px solid #EDD8BC",padding:"5px 11px",borderRadius:99,fontSize:12,color:"#4A2C0A",fontWeight:600,textDecoration:"none"}}>🐟 Bengali</a>
+                   <a href="/cuisines/biryani-caterer-newtown.html" style={{background:"#FDF6ED",border:"1px solid #EDD8BC",padding:"5px 11px",borderRadius:99,fontSize:12,color:"#4A2C0A",fontWeight:600,textDecoration:"none"}}>🍛 Biryani</a>
+                   <a href="/cuisines/mughlai-caterer-salt-lake.html" style={{background:"#FDF6ED",border:"1px solid #EDD8BC",padding:"5px 11px",borderRadius:99,fontSize:12,color:"#4A2C0A",fontWeight:600,textDecoration:"none"}}>🍢 Mughlai</a>
+                   <a href="/cuisines/multi-cuisine-caterer-kolkata.html" style={{background:"#FDF6ED",border:"1px solid #EDD8BC",padding:"5px 11px",borderRadius:99,fontSize:12,color:"#4A2C0A",fontWeight:600,textDecoration:"none"}}>🍽️ Multi-cuisine</a>
+                 </div>
+                 <a href="/cuisines/" style={{fontSize:12,color:"#E8760A",fontWeight:700,textDecoration:"none",borderBottom:"1px solid rgba(232,118,10,0.35)",paddingBottom:1}}>See all cuisines →</a>
+               </div>
+
+             </div>
+
+             {/* Bengali alternate signal */}
+             <div style={{textAlign:"center",marginTop:18,fontSize:12,color:"#8B6E52"}}>
+               <a href="/bn/" style={{color:"#C95F08",fontWeight:700,textDecoration:"none",borderBottom:"1px solid rgba(232,118,10,0.3)",paddingBottom:1,fontFamily:"'Noto Serif Bengali',serif"}}>বাংলায় দেখুন</a>
+               <span style={{margin:"0 8px",color:"#EDD8BC"}}>·</span>
+               <a href="/bn/" style={{color:"#C95F08",fontWeight:600,textDecoration:"none",borderBottom:"1px solid rgba(232,118,10,0.3)",paddingBottom:1}}>View in Bengali</a>
+             </div>
+           </div>
+         </div>
+
          {/* ── SECTION DIVIDER — Customer area ─────────────────────────── */}
          <div style={{textAlign:"center",padding:"32px 14px 0",position:"relative"}}>
            <div style={{width:"100%",height:1,background:"var(--border-light)",position:"absolute",top:"50%",left:0}}/>
@@ -3286,6 +3346,7 @@ export default function AayojanApp(){
         }
         @media(max-width:700px){
           .feat-grid{grid-template-columns:1fr !important;}
+          .browse-strip{grid-template-columns:1fr !important;}
           .landing-hero{min-height:auto !important;}
           .hero-split{grid-template-columns:1fr !important;min-height:auto !important;}
           .hero-split > div:first-child{border-right:none !important;border-bottom:1px solid rgba(243,200,105,0.18) !important;padding:80px 7% 50px !important;}
