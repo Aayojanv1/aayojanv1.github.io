@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useAuth, getPartners, getAllPartners, addPartner, updatePartner, deletePartner, createOrder, getAllOrders, getUserOrders, savePayment, updateUserPhone, updateUserPreferences, updateUserProfile } from "./useFirebase";
 import { matchCaterers, anonymize } from "./matchingPipeline";
 import AayojanChatBot from "./AayojanChatBot";
-import RotatingHeadline from "./RotatingHeadline";
 import FeaturedSpotlight from "./FeaturedSpotlight";
 import { getAttribution, getAttributionForEvent } from "./attribution";
 
@@ -577,6 +576,41 @@ export default function AayojanApp(){
     localStorage.setItem("aayojan-dark-mode",darkMode);
   },[darkMode]);
 
+  // ── Hero rotating word — cinematic kinetic typography ───────────────────
+  const HERO_WORDS = [
+    {word:"wedding",        accent:"#F3C869"},
+    {word:"Annaprasan",     accent:"#FBBF77"},
+    {word:"Bhai Phota",     accent:"#F3C869"},
+    {word:"office lunch",   accent:"#FBBF77"},
+    {word:"Griha Pravesh",  accent:"#F3C869"},
+    {word:"birthday bash",  accent:"#FBBF77"},
+    {word:"Aiburo Bhaat",   accent:"#F3C869"},
+  ];
+  const [heroIdx,setHeroIdx] = useState(0);
+  const [heroFade,setHeroFade] = useState(false);
+  useEffect(()=>{
+    const t = setInterval(()=>{
+      setHeroFade(true);
+      setTimeout(()=>{
+        setHeroIdx(i => (i+1) % HERO_WORDS.length);
+        setHeroFade(false);
+      }, 320);
+    }, 2600);
+    return ()=> clearInterval(t);
+  },[]);
+
+  // ── Hero activity ticker (simulated recent bookings — adds liveness) ──
+  const TICKER = [
+    "🍛 Mutton biryani for 350 · Newtown · 23 min ago",
+    "🐟 Doi Ilish for Annaprasan · Salt Lake · 1 hr ago",
+    "🍢 Galouti kebab counter · Hyatt Newtown · 2 hrs ago",
+    "🥟 Hakka noodles for office town-hall · Sector V · 3 hrs ago",
+    "🍮 Mishti doi · Bhai Phota · Salt Lake · 4 hrs ago",
+    "🍕 Continental cocktail dinner · DLF lawns · 5 hrs ago",
+    "🌿 Niramish Griha Pravesh · Rajarhat · today",
+    "🎂 Kids birthday spread · Eco Park · today",
+  ];
+
   // Auth — Firebase
   const {user,loading:authLoading,loginWithGoogle,loginWithEmail,signupWithEmail,logout,refreshUser}=useAuth();
   const [showLogin,setShowLogin]=useState(false);
@@ -1095,36 +1129,85 @@ export default function AayojanApp(){
       {view==="landing"&&(
         <div style={{...anim,overflowX:"hidden"}}>
 
-         {/* ── HERO SECTION — Clean, bright, focused ─────────────────── */}
-         <div style={{position:"relative",minHeight:"70vh",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",background:"linear-gradient(180deg,var(--bg-primary) 0%,var(--bg-secondary) 100%)"}}>
-           {/* Subtle accent glow */}
-           <div style={{position:"absolute",top:"-100px",left:"50%",transform:"translateX(-50%)",width:600,height:400,background:"radial-gradient(ellipse, rgba(232,118,10,0.08) 0%, transparent 60%)",pointerEvents:"none"}}/>
+         {/* ── HERO SECTION — Cinematic marquee with rotating typography ─── */}
+         <div className="landing-hero" style={{position:"relative",minHeight:"82vh",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",background:"linear-gradient(180deg,#0F0A05 0%,#1A1208 50%,#2A1C0F 100%)"}}>
 
-           {/* Hero Content — Partner-first messaging */}
-           <div style={{position:"relative",zIndex:2,textAlign:"center",padding:"60px 20px",maxWidth:720}}>
-             <div style={{display:"inline-block",background:"rgba(232,118,10,0.1)",border:"1px solid rgba(232,118,10,0.25)",borderRadius:24,padding:"6px 16px",marginBottom:20}}>
-               <span style={{fontSize:12,fontWeight:700,color:"#C95F08",letterSpacing:0.5}}>🔥 NOW ONBOARDING CATERERS · Newtown · Salt Lake · Rajarhat</span>
+           {/* Floating saffron glows — cinematic depth */}
+           <div style={{position:"absolute",top:"-220px",left:"22%",width:620,height:620,background:"radial-gradient(circle,rgba(232,118,10,0.22) 0%,transparent 60%)",pointerEvents:"none",animation:"heroGlowA 14s ease-in-out infinite"}}/>
+           <div style={{position:"absolute",bottom:"-200px",right:"15%",width:540,height:540,background:"radial-gradient(circle,rgba(243,200,105,0.16) 0%,transparent 60%)",pointerEvents:"none",animation:"heroGlowB 18s ease-in-out infinite"}}/>
+           <div style={{position:"absolute",top:"40%",left:"-100px",width:380,height:380,background:"radial-gradient(circle,rgba(232,118,10,0.10) 0%,transparent 65%)",pointerEvents:"none",animation:"heroGlowA 22s ease-in-out infinite reverse"}}/>
+
+           {/* Hairline grid overlay — newspaper / playbill texture */}
+           <div style={{position:"absolute",inset:0,backgroundImage:"linear-gradient(rgba(243,200,105,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(243,200,105,0.03) 1px,transparent 1px)",backgroundSize:"60px 60px",pointerEvents:"none"}}/>
+
+           {/* Hero Content */}
+           <div style={{position:"relative",zIndex:2,textAlign:"center",padding:"70px 20px 110px",maxWidth:920}}>
+
+             {/* Top playbill eyebrow */}
+             <div style={{display:"inline-flex",alignItems:"center",gap:10,background:"rgba(232,118,10,0.14)",border:"1px solid rgba(243,200,105,0.35)",borderRadius:99,padding:"7px 18px",marginBottom:28}}>
+               <span style={{width:8,height:8,borderRadius:"50%",background:"#86efac",boxShadow:"0 0 10px #86efac",animation:"heroPulseDot 1.8s infinite"}}/>
+               <span style={{fontSize:11,fontWeight:800,color:"#F3C869",letterSpacing:"0.18em",textTransform:"uppercase"}}>Live · 3 kitchens responding right now</span>
              </div>
-             <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,6.5vw,48px)",fontWeight:900,lineHeight:1.1,marginBottom:16,color:"var(--text-primary)",minHeight:"2.4em"}}>
-               <span style={{display:"block",color:"var(--text-primary)",marginBottom:6}}>Tired of waiting for referrals?</span>
-               <RotatingHeadline />
+
+             {/* Cinematic rotating H1 */}
+             <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(38px,7.5vw,76px)",fontWeight:900,lineHeight:1.02,marginBottom:22,color:"#FFF8EF",letterSpacing:"-0.025em"}}>
+               The food your<br/>
+               <span style={{
+                 display:"inline-block",
+                 minWidth:"min(7ch,80vw)",
+                 fontStyle:"italic",
+                 fontWeight:600,
+                 color:HERO_WORDS[heroIdx].accent,
+                 textShadow:"0 0 32px rgba(243,200,105,0.4)",
+                 opacity:heroFade?0:1,
+                 transform:heroFade?"translateY(8px)":"translateY(0)",
+                 transition:"opacity 0.32s ease, transform 0.32s ease",
+                 position:"relative",
+                 padding:"0 0.15em",
+               }}>
+                 {HERO_WORDS[heroIdx].word}
+                 <span style={{position:"absolute",left:"50%",bottom:"-6px",transform:"translateX(-50%)",width:"60%",height:2,background:"linear-gradient(90deg,transparent,#F3C869,transparent)",opacity:0.5}}/>
+               </span>
+               <br/>will remember.
              </h1>
-             <p style={{fontSize:16,color:"var(--text-secondary)",marginBottom:32,maxWidth:520,margin:"0 auto 32px",lineHeight:1.7}}>
-               Aayojan connects caterers in Kolkata with verified event leads on WhatsApp — weddings, birthdays, corporate, house parties. Stop waiting for referrals.
+
+             {/* Editorial subtitle */}
+             <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(18px,2.3vw,24px)",color:"rgba(255,248,239,0.78)",margin:"0 auto 36px",maxWidth:620,lineHeight:1.5,fontWeight:500}}>
+               Bengali-led kitchens. Curated, not crowd-sourced. WhatsApp quotes by tomorrow morning — for Newtown, Salt Lake & Rajarhat.
              </p>
 
-             {/* CTA buttons — Partner primary */}
-             <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",marginBottom:24}}>
-               <a href="/partners.html" style={{display:"inline-flex",alignItems:"center",gap:8,background:"linear-gradient(135deg,#E8760A,#C95F08)",color:"#fff",border:"none",padding:"14px 32px",borderRadius:12,fontSize:15,fontWeight:700,cursor:"pointer",boxShadow:"0 6px 20px rgba(232,118,10,0.35)",textDecoration:"none"}}>🏅 Join as Founding Partner</a>
-               <button onClick={()=>navigate("app")} style={{background:"var(--bg-card)",color:"var(--text-secondary)",border:"2px solid var(--border-light)",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:600,cursor:"pointer"}}>🍽️ I'm an Aayojak</button>
+             {/* Two emotive CTAs */}
+             <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",marginBottom:36}}>
+               <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20a%20caterer" target="_blank" rel="noopener" style={{display:"inline-flex",alignItems:"center",gap:8,background:"linear-gradient(135deg,#F3C869,#E8760A)",color:"#0F0A05",border:"none",padding:"15px 30px",borderRadius:99,fontSize:15,fontWeight:800,cursor:"pointer",boxShadow:"0 14px 36px rgba(232,118,10,0.45), 0 0 0 1px rgba(243,200,105,0.4)",textDecoration:"none",fontFamily:"'Playfair Display',serif",letterSpacing:"0.01em"}}>📱 Get quotes on WhatsApp</a>
+               <a href="/partners.html" style={{display:"inline-flex",alignItems:"center",gap:8,background:"rgba(255,248,239,0.06)",color:"#FFF8EF",border:"1px solid rgba(243,200,105,0.35)",padding:"15px 28px",borderRadius:99,fontSize:15,fontWeight:600,cursor:"pointer",textDecoration:"none"}}>🍳 I run a kitchen</a>
              </div>
 
-             {/* Catchphrase — editorial pull */}
-             <div style={{maxWidth:640,margin:"28px auto 0",textAlign:"center"}}>
-               <p style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",fontSize:"clamp(18px,2.6vw,26px)",fontWeight:600,color:"var(--text-primary)",lineHeight:1.35,margin:"0 0 10px",letterSpacing:"-0.01em"}}>
-                 The next kitchen featured on Aayojan <span style={{color:"#E8760A"}}>could be yours.</span>
-               </p>
-               <p style={{fontSize:13,color:"var(--text-muted)",margin:0,lineHeight:1.6}}>Stop chasing referrals. Start being one.</p>
+             {/* Three animated stats */}
+             <div style={{display:"flex",gap:40,justifyContent:"center",flexWrap:"wrap",borderTop:"1px solid rgba(243,200,105,0.12)",maxWidth:560,margin:"0 auto",paddingTop:20}}>
+               {[
+                 {n:"4h",  l:"first quote"},
+                 {n:"100%",l:"Bengali-led"},
+                 {n:"₹0",  l:"to Aayojaks"},
+               ].map((s,i)=>(
+                 <div key={i} style={{textAlign:"center",animation:`heroStatRise 0.6s ease ${0.4+i*0.12}s both`}}>
+                   <div style={{fontFamily:"'Playfair Display',serif",fontSize:30,fontWeight:900,color:"#F3C869",lineHeight:1}}>{s.n}</div>
+                   <div style={{fontSize:10,letterSpacing:"0.16em",color:"rgba(255,248,239,0.5)",textTransform:"uppercase",marginTop:6,fontWeight:600}}>{s.l}</div>
+                 </div>
+               ))}
+             </div>
+           </div>
+
+           {/* Bottom activity ticker — the live magic */}
+           <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"14px 0",background:"rgba(0,0,0,0.5)",borderTop:"1px solid rgba(243,200,105,0.18)",overflow:"hidden"}}>
+             <div style={{display:"flex",alignItems:"center",gap:14,padding:"0 16px"}}>
+               <div style={{flexShrink:0,fontSize:9,fontWeight:800,color:"#F3C869",letterSpacing:"0.18em",padding:"4px 10px",border:"1px solid rgba(243,200,105,0.4)",borderRadius:4}}>RECENT</div>
+               <div style={{flex:1,overflow:"hidden",position:"relative",maskImage:"linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)",WebkitMaskImage:"linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)"}}>
+                 <div style={{display:"flex",gap:48,whiteSpace:"nowrap",animation:"heroTicker 45s linear infinite",width:"max-content"}}>
+                   {[...TICKER,...TICKER,...TICKER].map((line,i)=>(
+                     <span key={i} style={{fontSize:13,color:"rgba(255,248,239,0.72)",fontWeight:500,fontFamily:"'DM Sans',sans-serif"}}>{line}</span>
+                   ))}
+                 </div>
+               </div>
              </div>
            </div>
          </div>
@@ -3136,6 +3219,11 @@ export default function AayojanApp(){
         @keyframes bounceDown{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
         @keyframes scrollDot{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(10px)}}
         @keyframes scrollRibbon{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        @keyframes heroGlowA{0%,100%{transform:translate(0,0) scale(1);opacity:1}50%{transform:translate(40px,-20px) scale(1.1);opacity:0.8}}
+        @keyframes heroGlowB{0%,100%{transform:translate(0,0) scale(1);opacity:0.9}50%{transform:translate(-30px,30px) scale(1.08);opacity:1}}
+        @keyframes heroPulseDot{0%,100%{box-shadow:0 0 10px #86efac,0 0 0 0 rgba(134,239,172,0.6)}50%{box-shadow:0 0 18px #86efac,0 0 0 10px rgba(134,239,172,0)}}
+        @keyframes heroTicker{0%{transform:translateX(0)}100%{transform:translateX(-33.333%)}}
+        @keyframes heroStatRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
         button:hover{opacity:0.9;} input:focus{outline:none;border-color:#c0392b !important;} a{text-decoration:none;}
         ::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-track{background:#fef9f7;} ::-webkit-scrollbar-thumb{background:#fca5a5;border-radius:2px;}
         .caterer-scroll::-webkit-scrollbar{display:none;}
