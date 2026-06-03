@@ -576,6 +576,41 @@ export default function AayojanApp(){
     localStorage.setItem("aayojan-dark-mode",darkMode);
   },[darkMode]);
 
+  // ── Hero rotating word — cinematic kinetic typography ───────────────────
+  const HERO_WORDS = [
+    {word:"wedding",        accent:"#F3C869"},
+    {word:"Annaprasan",     accent:"#FBBF77"},
+    {word:"Bhai Phota",     accent:"#F3C869"},
+    {word:"office lunch",   accent:"#FBBF77"},
+    {word:"Griha Pravesh",  accent:"#F3C869"},
+    {word:"birthday bash",  accent:"#FBBF77"},
+    {word:"Aiburo Bhaat",   accent:"#F3C869"},
+  ];
+  const [heroIdx,setHeroIdx] = useState(0);
+  const [heroFade,setHeroFade] = useState(false);
+  useEffect(()=>{
+    const t = setInterval(()=>{
+      setHeroFade(true);
+      setTimeout(()=>{
+        setHeroIdx(i => (i+1) % HERO_WORDS.length);
+        setHeroFade(false);
+      }, 320);
+    }, 2600);
+    return ()=> clearInterval(t);
+  },[]);
+
+  // ── Hero activity ticker (simulated recent bookings — adds liveness) ──
+  const TICKER = [
+    "🍛 Mutton biryani for 350 · Newtown · 23 min ago",
+    "🐟 Doi Ilish for Annaprasan · Salt Lake · 1 hr ago",
+    "🍢 Galouti kebab counter · Hyatt Newtown · 2 hrs ago",
+    "🥟 Hakka noodles for office town-hall · Sector V · 3 hrs ago",
+    "🍮 Mishti doi · Bhai Phota · Salt Lake · 4 hrs ago",
+    "🍕 Continental cocktail dinner · DLF lawns · 5 hrs ago",
+    "🌿 Niramish Griha Pravesh · Rajarhat · today",
+    "🎂 Kids birthday spread · Eco Park · today",
+  ];
+
   // Auth — Firebase
   const {user,loading:authLoading,loginWithGoogle,loginWithEmail,signupWithEmail,logout,refreshUser}=useAuth();
   const [showLogin,setShowLogin]=useState(false);
@@ -1094,35 +1129,129 @@ export default function AayojanApp(){
       {view==="landing"&&(
         <div style={{...anim,overflowX:"hidden"}}>
 
-         {/* ── HERO SECTION — Clean, bright, focused ─────────────────── */}
-         <div style={{position:"relative",minHeight:"70vh",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",background:"linear-gradient(180deg,var(--bg-primary) 0%,var(--bg-secondary) 100%)"}}>
-           {/* Subtle accent glow */}
-           <div style={{position:"absolute",top:"-100px",left:"50%",transform:"translateX(-50%)",width:600,height:400,background:"radial-gradient(ellipse, rgba(232,118,10,0.08) 0%, transparent 60%)",pointerEvents:"none"}}/>
+         {/* ── HERO SECTION — Two-door marketplace split ────────────────── */}
+         <div className="landing-hero" style={{position:"relative",minHeight:"86vh",overflow:"hidden",background:"linear-gradient(180deg,#0F0A05 0%,#1A1208 50%,#2A1C0F 100%)"}}>
 
-           {/* Hero Content — Partner-first messaging */}
-           <div style={{position:"relative",zIndex:2,textAlign:"center",padding:"60px 20px",maxWidth:720}}>
-             <div style={{display:"inline-block",background:"rgba(232,118,10,0.1)",border:"1px solid rgba(232,118,10,0.25)",borderRadius:24,padding:"6px 16px",marginBottom:20}}>
-               <span style={{fontSize:12,fontWeight:700,color:"#C95F08",letterSpacing:0.5}}>🔥 NOW ONBOARDING CATERERS · Newtown · Salt Lake · Rajarhat</span>
+           {/* Floating saffron glows — cinematic depth */}
+           <div style={{position:"absolute",top:"-220px",left:"22%",width:620,height:620,background:"radial-gradient(circle,rgba(232,118,10,0.22) 0%,transparent 60%)",pointerEvents:"none",animation:"heroGlowA 14s ease-in-out infinite"}}/>
+           <div style={{position:"absolute",bottom:"-200px",right:"15%",width:540,height:540,background:"radial-gradient(circle,rgba(243,200,105,0.16) 0%,transparent 60%)",pointerEvents:"none",animation:"heroGlowB 18s ease-in-out infinite"}}/>
+
+           {/* Hairline grid overlay */}
+           <div style={{position:"absolute",inset:0,backgroundImage:"linear-gradient(rgba(243,200,105,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(243,200,105,0.03) 1px,transparent 1px)",backgroundSize:"60px 60px",pointerEvents:"none"}}/>
+
+           {/* Top center brand strip */}
+           <div style={{position:"absolute",top:24,left:0,right:0,textAlign:"center",zIndex:3}}>
+             <div style={{display:"inline-flex",alignItems:"center",gap:12,padding:"6px 16px",border:"1px solid rgba(243,200,105,0.25)",borderRadius:99,background:"rgba(0,0,0,0.4)"}}>
+               <span style={{width:6,height:6,borderRadius:"50%",background:"#86efac",boxShadow:"0 0 10px #86efac",animation:"heroPulseDot 1.8s infinite"}}/>
+               <span style={{fontFamily:"'Playfair Display',serif",fontSize:11,fontWeight:800,color:"#F3C869",letterSpacing:"0.28em",textTransform:"uppercase"}}>· The Aayojan Marketplace ·</span>
              </div>
-             <h1 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(32px,7vw,52px)",fontWeight:900,lineHeight:1.1,marginBottom:16,color:"var(--text-primary)"}}>
-               Your kitchen is ready.<br/><span style={{color:"#E8760A"}}>Your order book should be full.</span>
-             </h1>
-             <p style={{fontSize:16,color:"var(--text-secondary)",marginBottom:32,maxWidth:520,margin:"0 auto 32px",lineHeight:1.7}}>
-               Aayojan connects caterers in Kolkata with verified event leads on WhatsApp — weddings, birthdays, corporate, house parties. Stop waiting for referrals.
-             </p>
+           </div>
 
-             {/* CTA buttons — Partner primary */}
-             <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",marginBottom:24}}>
-               <a href="/partners.html" style={{display:"inline-flex",alignItems:"center",gap:8,background:"linear-gradient(135deg,#E8760A,#C95F08)",color:"#fff",border:"none",padding:"14px 32px",borderRadius:12,fontSize:15,fontWeight:700,cursor:"pointer",boxShadow:"0 6px 20px rgba(232,118,10,0.35)",textDecoration:"none"}}>🏅 Join as Founding Partner</a>
-               <button onClick={()=>navigate("app")} style={{background:"var(--bg-card)",color:"var(--text-secondary)",border:"2px solid var(--border-light)",padding:"14px 28px",borderRadius:12,fontSize:15,fontWeight:600,cursor:"pointer"}}>🍽️ I'm an Aayojak</button>
-             </div>
+           {/* Two-column split */}
+           <div className="hero-split" style={{position:"relative",zIndex:2,display:"grid",gridTemplateColumns:"1fr 1fr",minHeight:"86vh",paddingBottom:60}}>
 
-             {/* Catchphrase — editorial pull */}
-             <div style={{maxWidth:640,margin:"28px auto 0",textAlign:"center"}}>
-               <p style={{fontFamily:"'Playfair Display',serif",fontStyle:"italic",fontSize:"clamp(18px,2.6vw,26px)",fontWeight:600,color:"var(--text-primary)",lineHeight:1.35,margin:"0 0 10px",letterSpacing:"-0.01em"}}>
-                 The next kitchen featured on Aayojan <span style={{color:"#E8760A"}}>could be yours.</span>
+             {/* ════════ LEFT — FOR CATERERS ════════ */}
+             <div style={{padding:"100px 5% 60px 7%",display:"flex",flexDirection:"column",justifyContent:"center",borderRight:"1px solid rgba(243,200,105,0.18)",background:"linear-gradient(135deg,rgba(232,118,10,0.06) 0%,transparent 60%)",position:"relative"}}>
+
+               {/* Side eyebrow */}
+               <div style={{display:"inline-flex",alignSelf:"flex-start",alignItems:"center",gap:8,background:"rgba(232,118,10,0.14)",border:"1px solid rgba(232,118,10,0.35)",borderRadius:99,padding:"6px 14px",marginBottom:24}}>
+                 <span style={{fontSize:14}}>🍳</span>
+                 <span style={{fontSize:10,fontWeight:800,color:"#FBBF77",letterSpacing:"0.22em",textTransform:"uppercase"}}>For Caterers</span>
+               </div>
+
+               {/* Headline */}
+               <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(34px,5.5vw,56px)",fontWeight:900,lineHeight:1.03,color:"#FFF8EF",letterSpacing:"-0.02em",margin:"0 0 18px"}}>
+                 Cook.<br/>Quote.<br/><em style={{fontStyle:"italic",fontWeight:600,color:"#F3C869"}}>Get paid.</em>
+               </h2>
+
+               {/* Subtitle */}
+               <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(16px,1.9vw,21px)",color:"rgba(255,248,239,0.75)",margin:"0 0 30px",lineHeight:1.55,maxWidth:440,fontWeight:500}}>
+                 15-30 verified event leads a month — on WhatsApp. No app, no dashboard, no monthly fee. 3% commission only when you earn.
                </p>
-               <p style={{fontSize:13,color:"var(--text-muted)",margin:0,lineHeight:1.6}}>Stop chasing referrals. Start being one.</p>
+
+               {/* CTA */}
+               <div style={{display:"flex",gap:10,flexWrap:"wrap",marginBottom:26}}>
+                 <a href="/partners.html" style={{display:"inline-flex",alignItems:"center",gap:8,background:"linear-gradient(135deg,#E8760A,#C95F08)",color:"#FFF8EF",padding:"14px 26px",borderRadius:99,fontSize:14,fontWeight:800,textDecoration:"none",boxShadow:"0 12px 32px rgba(232,118,10,0.45)",fontFamily:"'Playfair Display',serif"}}>🏅 Become a Founding Partner →</a>
+               </div>
+
+               {/* Trust strip */}
+               <div style={{display:"flex",gap:20,flexWrap:"wrap",fontSize:11,color:"rgba(255,248,239,0.55)"}}>
+                 <div><strong style={{color:"#F3C869",fontFamily:"'Playfair Display',serif",fontSize:14,fontWeight:900,display:"block"}}>₹0</strong> to join</div>
+                 <div><strong style={{color:"#F3C869",fontFamily:"'Playfair Display',serif",fontSize:14,fontWeight:900,display:"block"}}>3%</strong> only when you earn</div>
+                 <div><strong style={{color:"#F3C869",fontFamily:"'Playfair Display',serif",fontSize:14,fontWeight:900,display:"block"}}>WhatsApp</strong> direct leads</div>
+               </div>
+
+             </div>
+
+             {/* ════════ RIGHT — FOR AAYOJAKS ════════ */}
+             <div style={{padding:"100px 7% 60px 5%",display:"flex",flexDirection:"column",justifyContent:"center",background:"linear-gradient(225deg,rgba(243,200,105,0.08) 0%,transparent 60%)",position:"relative"}}>
+
+               {/* Side eyebrow */}
+               <div style={{display:"inline-flex",alignSelf:"flex-start",alignItems:"center",gap:8,background:"rgba(243,200,105,0.14)",border:"1px solid rgba(243,200,105,0.4)",borderRadius:99,padding:"6px 14px",marginBottom:24}}>
+                 <span style={{fontSize:14}}>📱</span>
+                 <span style={{fontSize:10,fontWeight:800,color:"#F3C869",letterSpacing:"0.22em",textTransform:"uppercase"}}>For Aayojaks</span>
+               </div>
+
+               {/* Headline with rotating word */}
+               <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(34px,5.5vw,56px)",fontWeight:900,lineHeight:1.03,color:"#FFF8EF",letterSpacing:"-0.02em",margin:"0 0 18px"}}>
+                 The food your<br/>
+                 <span style={{
+                   display:"inline-block",
+                   minWidth:"min(7ch,80vw)",
+                   fontStyle:"italic",
+                   fontWeight:600,
+                   color:HERO_WORDS[heroIdx].accent,
+                   textShadow:"0 0 32px rgba(243,200,105,0.4)",
+                   opacity:heroFade?0:1,
+                   transform:heroFade?"translateY(8px)":"translateY(0)",
+                   transition:"opacity 0.32s ease, transform 0.32s ease",
+                   position:"relative",
+                   padding:"0 0.1em",
+                 }}>
+                   {HERO_WORDS[heroIdx].word}
+                   <span style={{position:"absolute",left:"50%",bottom:"-4px",transform:"translateX(-50%)",width:"60%",height:2,background:"linear-gradient(90deg,transparent,#F3C869,transparent)",opacity:0.5}}/>
+                 </span>
+                 <br/>will remember.
+               </h2>
+
+               {/* Subtitle */}
+               <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(16px,1.9vw,21px)",color:"rgba(255,248,239,0.75)",margin:"0 0 30px",lineHeight:1.55,maxWidth:440,fontWeight:500}}>
+                 Bengali-led kitchens — curated, not crowd-sourced. WhatsApp quotes by tomorrow morning. Newtown · Salt Lake · Rajarhat.
+               </p>
+
+               {/* CTA */}
+               <div style={{display:"flex",gap:10,flexWrap:"wrap",marginBottom:26}}>
+                 <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20a%20caterer" target="_blank" rel="noopener" style={{display:"inline-flex",alignItems:"center",gap:8,background:"linear-gradient(135deg,#F3C869,#E8760A)",color:"#0F0A05",padding:"14px 26px",borderRadius:99,fontSize:14,fontWeight:800,textDecoration:"none",boxShadow:"0 12px 32px rgba(243,200,105,0.4)",fontFamily:"'Playfair Display',serif"}}>📱 Get quotes on WhatsApp →</a>
+               </div>
+
+               {/* Trust strip */}
+               <div style={{display:"flex",gap:20,flexWrap:"wrap",fontSize:11,color:"rgba(255,248,239,0.55)"}}>
+                 <div><strong style={{color:"#F3C869",fontFamily:"'Playfair Display',serif",fontSize:14,fontWeight:900,display:"block"}}>4h</strong> first quote</div>
+                 <div><strong style={{color:"#F3C869",fontFamily:"'Playfair Display',serif",fontSize:14,fontWeight:900,display:"block"}}>₹0</strong> to use</div>
+                 <div><strong style={{color:"#F3C869",fontFamily:"'Playfair Display',serif",fontSize:14,fontWeight:900,display:"block"}}>100%</strong> Bengali-led</div>
+               </div>
+
+             </div>
+
+             {/* Center marketplace medallion */}
+             <div className="hero-medallion" style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",zIndex:4,pointerEvents:"none"}}>
+               <div style={{width:78,height:78,borderRadius:"50%",background:"linear-gradient(135deg,#0F0A05,#2A1C0F)",border:"2px solid #F3C869",display:"grid",placeItems:"center",boxShadow:"0 0 0 8px rgba(15,10,5,1), 0 0 40px rgba(243,200,105,0.4)",position:"relative"}}>
+                 <div style={{fontFamily:"'Playfair Display',serif",fontSize:13,fontWeight:900,color:"#F3C869",letterSpacing:"0.08em",lineHeight:1,textAlign:"center"}}>আ<br/><span style={{fontSize:8,letterSpacing:"0.2em",fontWeight:700}}>AAYOJAN</span></div>
+               </div>
+             </div>
+           </div>
+
+           {/* Bottom activity ticker — full width, the live magic */}
+           <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"14px 0",background:"rgba(0,0,0,0.55)",borderTop:"1px solid rgba(243,200,105,0.18)",overflow:"hidden",zIndex:3}}>
+             <div style={{display:"flex",alignItems:"center",gap:14,padding:"0 16px"}}>
+               <div style={{flexShrink:0,fontSize:9,fontWeight:800,color:"#F3C869",letterSpacing:"0.18em",padding:"4px 10px",border:"1px solid rgba(243,200,105,0.4)",borderRadius:4}}>RECENT</div>
+               <div style={{flex:1,overflow:"hidden",position:"relative",maskImage:"linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)",WebkitMaskImage:"linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)"}}>
+                 <div style={{display:"flex",gap:48,whiteSpace:"nowrap",animation:"heroTicker 45s linear infinite",width:"max-content"}}>
+                   {[...TICKER,...TICKER,...TICKER].map((line,i)=>(
+                     <span key={i} style={{fontSize:13,color:"rgba(255,248,239,0.72)",fontWeight:500,fontFamily:"'DM Sans',sans-serif"}}>{line}</span>
+                   ))}
+                 </div>
+               </div>
              </div>
            </div>
          </div>
@@ -3134,6 +3263,11 @@ export default function AayojanApp(){
         @keyframes bounceDown{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
         @keyframes scrollDot{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(10px)}}
         @keyframes scrollRibbon{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        @keyframes heroGlowA{0%,100%{transform:translate(0,0) scale(1);opacity:1}50%{transform:translate(40px,-20px) scale(1.1);opacity:0.8}}
+        @keyframes heroGlowB{0%,100%{transform:translate(0,0) scale(1);opacity:0.9}50%{transform:translate(-30px,30px) scale(1.08);opacity:1}}
+        @keyframes heroPulseDot{0%,100%{box-shadow:0 0 10px #86efac,0 0 0 0 rgba(134,239,172,0.6)}50%{box-shadow:0 0 18px #86efac,0 0 0 10px rgba(134,239,172,0)}}
+        @keyframes heroTicker{0%{transform:translateX(0)}100%{transform:translateX(-33.333%)}}
+        @keyframes heroStatRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
         button:hover{opacity:0.9;} input:focus{outline:none;border-color:#c0392b !important;} a{text-decoration:none;}
         ::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-track{background:#fef9f7;} ::-webkit-scrollbar-thumb{background:#fca5a5;border-radius:2px;}
         .caterer-scroll::-webkit-scrollbar{display:none;}
@@ -3152,7 +3286,11 @@ export default function AayojanApp(){
         }
         @media(max-width:700px){
           .feat-grid{grid-template-columns:1fr !important;}
-          .landing-hero{min-height:90vh !important;}
+          .landing-hero{min-height:auto !important;}
+          .hero-split{grid-template-columns:1fr !important;min-height:auto !important;}
+          .hero-split > div:first-child{border-right:none !important;border-bottom:1px solid rgba(243,200,105,0.18) !important;padding:80px 7% 50px !important;}
+          .hero-split > div:nth-child(2){padding:60px 7% 80px !important;}
+          .hero-medallion{display:none !important;}
           .edit-grid{grid-template-columns:1fr !important;gap:40px !important;}
           .edit-grid>div:last-child{order:-1;}
         }
