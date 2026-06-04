@@ -14,6 +14,7 @@ const FEATURED = [
     quote: "The Doi Ilish carries a grandmother's monsoon mustard. The Galouti, an impossible softness. The Crab Wonton — gone before the second tray arrives.",
     dishes: ["Doi Ilish", "Mutton Galouti", "Mutton Biryani", "Crab Wonton", "Kochu Pata Chingri"],
     href: "/partners/munias-kitchen.html",
+    fssai: { status: "applied" },
     // Logo is text-rendered with outline serif
     logoType: "text",
     logoLines: ["MUNIA'S", "KITCHEN"],
@@ -31,6 +32,7 @@ const FEATURED = [
     quote: "Chicken Paratha, layered patient. Vetki Fish Kachori, Bengal staples reinvented. The kitchen that proves authentic doesn't have to mean expensive.",
     dishes: ["Chicken Paratha", "Vetki Fish Kachori"],
     href: "/partners/curry-katha.html",
+    fssai: { status: "verified", number: "22825211000224" },
     // Real image logo
     logoType: "image",
     logoImg: "/partners/curry-katha/logo.png",
@@ -48,6 +50,7 @@ const FEATURED = [
     quote: "Bengali for the elders. Chinese for the kids. Kebabs on a live counter. Magnolia delivers all four cuisines without breaking quality — at any scale.",
     dishes: ["Diamond Fish Fry", "Slow Mutton", "Live Kebab Counter"],
     href: "/partners/magnolia-catering.html",
+    fssai: { status: "applied" },
     logoType: "text",
     logoLines: ["MAGNOLIA"],
     logoScript: "catering",
@@ -64,6 +67,7 @@ const FEATURED = [
     quote: "Fifty-six dishes offered to Krishna at Govardhan — that's the lineage. Krishanu's team brings that abundance to a 50-guest birthday or a 5,000-guest wedding. Same standard, scaled to fit.",
     dishes: ["Multi-cuisine Spreads", "Bhog-style Feast", "Corporate Tiffin"],
     href: "/partners/56-bhog-caterer.html",
+    fssai: { status: "verified", number: "12826019000113" },
     logoType: "text",
     logoLines: ["56 BHOG"],
     logoScript: "৫৬ ভোগ",
@@ -80,6 +84,7 @@ const FEATURED = [
     quote: "Bengali at the heart — doi maach, kosha mangsho, mochar ghonto. Mughlai for the bold eaters. Chinese for the younger crowd. Tulika's plans the spread that connects every generation.",
     dishes: ["Doi Maach", "Kosha Mangsho", "Galouti", "Hakka Noodles"],
     href: "/partners/tulikas-catering.html",
+    fssai: { status: "applied" },
     logoType: "text",
     logoLines: ["TULIKA'S"],
     logoScript: "তুলিকা'স",
@@ -146,7 +151,7 @@ export default function FeaturedSpotlight() {
               {f.quote}
             </p>
 
-            <div style={{ fontSize: 12, color: "rgba(255,248,239,0.6)", lineHeight: 1.7, marginBottom: 18 }}>
+            <div style={{ fontSize: 12, color: "rgba(255,248,239,0.6)", lineHeight: 1.7, marginBottom: 14 }}>
               {f.dishes.map((d, i) => (
                 <span key={i}>
                   <span style={{ fontFamily: "'Playfair Display',serif", fontStyle: "italic", color: "#F3C869" }}>{d}</span>
@@ -154,6 +159,37 @@ export default function FeaturedSpotlight() {
                 </span>
               ))}
             </div>
+
+            {/* FSSAI trust badge */}
+            {f.fssai && (
+              <div style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                background: f.fssai.status === "verified" ? "rgba(35, 107, 67, 0.15)" : "rgba(243, 200, 105, 0.12)",
+                border: `1px solid ${f.fssai.status === "verified" ? "rgba(35, 107, 67, 0.4)" : "rgba(243, 200, 105, 0.35)"}`,
+                color: f.fssai.status === "verified" ? "#86efac" : "#F3C869",
+                padding: "4px 10px",
+                borderRadius: 6,
+                fontSize: 10,
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                marginBottom: 16,
+                fontFamily: "'DM Sans',sans-serif",
+              }}>
+                <span style={{
+                  width: 6, height: 6, borderRadius: "50%",
+                  background: f.fssai.status === "verified" ? "#86efac" : "#F3C869",
+                  boxShadow: `0 0 8px ${f.fssai.status === "verified" ? "#86efac" : "#F3C869"}`,
+                }}/>
+                {f.fssai.status === "verified" ? (
+                  <>FSSAI Verified · <span style={{ fontFamily: "monospace", letterSpacing: 0, opacity: 0.85 }}>{f.fssai.number}</span></>
+                ) : (
+                  <>FSSAI · Applied</>
+                )}
+              </div>
+            )}
 
             <a href={f.href} style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "#F3C869", fontFamily: "'Playfair Display',serif", fontSize: 14, fontWeight: 600, fontStyle: "italic", textDecoration: "none", borderBottom: "1px solid rgba(243,200,105,0.4)", paddingBottom: 3, transition: "color 0.2s, border-color 0.2s" }}
               onMouseEnter={e => { e.currentTarget.style.color = "#FFF8EF"; e.currentTarget.style.borderColor = "#FFF8EF"; }}
