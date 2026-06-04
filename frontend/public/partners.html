@@ -1990,9 +1990,9 @@ Customer wants quote today.
               </div>
               <div class="field-grid">
                 <div class="field">
-                  <label for="fssai">FSSAI License Number <span style="font-weight:400;color:#9ca3af;">(optional — boosts your ranking)</span></label>
-                  <input id="fssai" name="fssaiLicense" type="text" maxlength="14" placeholder="14-digit FSSAI number e.g. 21424013000672">
-                  <div style="font-size:11px;color:#9ca3af;margin-top:4px;">Licensed caterers are ranked higher and shown to premium customers first.</div>
+                  <label for="fssai">FSSAI License Number <span style="color:#c0392b;">*</span> <span style="font-weight:400;color:#7B634E;font-size:11px;">(mandatory — type "Applied" if pending)</span></label>
+                  <input id="fssai" name="fssaiLicense" type="text" maxlength="14" placeholder='14-digit FSSAI number, or type "Applied"' required>
+                  <div style="font-size:11px;color:#9ca3af;margin-top:4px;">As an FSSAI-licensed marketplace, Aayojan requires all partners to declare FSSAI status. If pending, type <code>Applied</code> — update the number once issued.</div>
                 </div>
               </div>
               <div class="form-actions">
@@ -2248,6 +2248,23 @@ Customer wants quote today.
         return false;
       }
 
+      // FSSAI mandatory validation
+      const fssaiField = currentPanel.querySelector('#fssai');
+      if (fssaiField) {
+        const v = (fssaiField.value || '').trim();
+        if (!v) {
+          fssaiField.setCustomValidity('FSSAI required — enter 14-digit number, or type "Applied" if pending');
+          fssaiField.reportValidity();
+          return false;
+        }
+        if (!/^\d{14}$/.test(v) && !/^applied$/i.test(v)) {
+          fssaiField.setCustomValidity('Enter the 14-digit FSSAI number, or type "Applied" if pending');
+          fssaiField.reportValidity();
+          return false;
+        }
+        fssaiField.setCustomValidity('');
+      }
+
       return true;
     }
 
@@ -2449,7 +2466,7 @@ Customer wants quote today.
         body: JSON.stringify(data),
       }).catch(e => console.warn('Notify-partner failed:', e));
 
-      const message = `Hi Aayojan! I just submitted the partner form.\n\nBusiness: ${data.businessName}\nContact: ${data.contactPerson}\nWhatsApp: ${data.whatsapp}\nFSSAI: ${data.fssaiLicense || 'not provided'}\nCuisine: ${data.cuisine}\nCapacity: ${data.capacity}\nAreas: ${data.serviceAreas.join(', ')}\nSpecialty: ${data.specialties}`;
+      const message = `Hi Aayojan! I just submitted the partner form.\n\nBusiness: ${data.businessName}\nContact: ${data.contactPerson}\nWhatsApp: ${data.whatsapp}\nFSSAI: ${data.fssaiLicense || 'Applied'}\nCuisine: ${data.cuisine}\nCapacity: ${data.capacity}\nAreas: ${data.serviceAreas.join(', ')}\nSpecialty: ${data.specialties}`;
       const whatsappLink = `https://wa.me/918088434425?text=${encodeURIComponent(message)}`;
 
       form.innerHTML = `
