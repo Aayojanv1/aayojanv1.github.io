@@ -891,7 +891,7 @@ export default function AayojanApp(){
   const placeOrder=async()=>{if(!validateAddress())return;const order={quotationRequestId:quotationRequest?.id,customerId:user?.uid,customerEmail:user?.email,customerPhone:user?.phone||"",catererId:selectedQuote.id,catererName:selectedQuote._realName||selectedQuote.name,eventType,serviceType,guestCount,perPlateBudget,perPlateActual:selectedQuote.perPlateActual,menuItems:selectedItems,deliveryAddress:`${deliveryAddress.flat}, ${deliveryAddress.building}, ${deliveryAddress.street}${deliveryAddress.landmark?", "+deliveryAddress.landmark:""}, ${deliveryAddress.city} - ${deliveryAddress.pincode}`,deliveryPincode:deliveryAddress.pincode,distanceKm:selectedQuote.distanceKm,basePrice:selectedQuote.basePrice,travelSurcharge:selectedQuote.travelSurcharge,totalPrice:selectedQuote.totalPrice,quoteCode:selectedQuote.quoteCode,matchScore:selectedQuote._matchPercent,status:"Confirmed",placedAt:new Date().toISOString()};const orderId=await createOrder(order);track('order_placed',{event_type:eventType,service_type:serviceType,guest_count:guestCount,total_price:order.totalPrice,currency:'INR'});setOrderPlaced({id:orderId,...order});setStep(6);};
 
   // ── Registration ──────────────────────────────────────────────────────────
-  const validateReg=()=>{const e={};if(!regForm.name.trim())e.name="Required";if(!regForm.ownerName.trim())e.ownerName="Required";if(!/^\d{10}$/.test(regForm.phone))e.phone="Valid 10-digit number";if(!regForm.email.includes("@"))e.email="Valid email required";if(!regForm.address.trim())e.address="Required";if(!PINCODE_COORDS[regForm.pincode.trim()])e.pincode="Valid Kolkata pincode";if(regForm.specialty.length===0)e.specialty="Select at least one";if(regForm.cuisineSpecialties.length===0)e.cuisineSpecialties="Select at least one";if(regForm.serviceTypes.length===0)e.serviceTypes="Select at least one";if(regForm.pricePerPlateMin>=regForm.pricePerPlateMax)e.pricing="Min must be less than max";setRegErrors(e);return Object.keys(e).length===0;};
+  const validateReg=()=>{const e={};if(!regForm.name.trim())e.name="Required";if(!regForm.ownerName.trim())e.ownerName="Required";if(!/^\d{10}$/.test(regForm.phone))e.phone="Valid 10-digit number";if(!regForm.email.includes("@"))e.email="Valid email required";if(!regForm.address.trim())e.address="Required";if(!PINCODE_COORDS[regForm.pincode.trim()])e.pincode="Valid Kolkata pincode";if(regForm.specialty.length===0)e.specialty="Select at least one";if(regForm.cuisineSpecialties.length===0)e.cuisineSpecialties="Select at least one";if(regForm.serviceTypes.length===0)e.serviceTypes="Select at least one";if(regForm.pricePerPlateMin>=regForm.pricePerPlateMax)e.pricing="Min must be less than max";const fssai=(regForm.fssaiLicense||"").trim();if(!fssai)e.fssaiLicense="FSSAI required — enter 14-digit number, or type 'Applied' if your application is in process";else if(!/^\d{14}$/.test(fssai)&&!/^applied$/i.test(fssai))e.fssaiLicense="Enter the 14-digit FSSAI number, or type 'Applied' if pending";setRegErrors(e);return Object.keys(e).length===0;};
   const submitReg=async()=>{if(!validateReg())return;const logos=["🍽️","🥘","🫕","🥗","🍛","🥞","🎂"];await addPartner({...regForm,pincode:regForm.pincode.trim(),logo:logos[Math.floor(Math.random()*logos.length)],tags:regForm.cuisineSpecialties.slice(0,3),turnaround:regForm.turnaround,deliveryPincodes:regForm.deliveryPincodes.length>0?regForm.deliveryPincodes:Object.keys(PINCODE_COORDS)});track('partner_registered',{cuisine:regForm.cuisineSpecialties[0],pincode:regForm.pincode});setRegSuccess(true);setRegStep(0);getPartners().then(p=>{if(p.length>0)setFirestoreCaterers(p);});};
 
   const copyCode=(code)=>{navigator.clipboard?.writeText(code);setCopiedCode(code);setTimeout(()=>setCopiedCode(null),2000);};
@@ -1609,8 +1609,9 @@ export default function AayojanApp(){
                       </div>
                     </div>
                     <div style={{marginTop:16}}>
-                      <label style={S.fieldLabel}>FSSAI License No. (optional but boosts ranking)</label>
-                      <input style={S.inp2} value={regForm.fssaiLicense} onChange={e=>setRegForm({...regForm,fssaiLicense:e.target.value})} placeholder="14-digit FSSAI number"/>
+                      <label style={S.fieldLabel}>FSSAI License No. <span style={{color:"#c0392b"}}>*</span> <span style={{color:"#7B634E",fontWeight:400,fontSize:11}}>(mandatory · type "Applied" if pending)</span></label>
+                      <input style={{...S.inp2,...(regErrors.fssaiLicense?{borderColor:"#c0392b"}:{})}} value={regForm.fssaiLicense} onChange={e=>setRegForm({...regForm,fssaiLicense:e.target.value})} placeholder='14-digit FSSAI number, or type "Applied"'/>
+                      {regErrors.fssaiLicense&&<div style={{color:"#c0392b",fontSize:12,marginTop:4}}>⚠️ {regErrors.fssaiLicense}</div>}
                     </div>
                     <div style={{display:"flex",gap:12,marginTop:12}}>
                       <div style={{flex:1}}><label style={S.fieldLabel}>Years in Business</label>
@@ -2594,8 +2595,9 @@ export default function AayojanApp(){
                       ))}
                     </div>
                     <div style={{marginTop:16}}>
-                      <label style={S.fieldLabel}>FSSAI License No. (optional but boosts ranking)</label>
-                      <input style={S.inp2} value={regForm.fssaiLicense} onChange={e=>setRegForm({...regForm,fssaiLicense:e.target.value})} placeholder="14-digit FSSAI number"/>
+                      <label style={S.fieldLabel}>FSSAI License No. <span style={{color:"#c0392b"}}>*</span> <span style={{color:"#7B634E",fontWeight:400,fontSize:11}}>(mandatory · type "Applied" if pending)</span></label>
+                      <input style={{...S.inp2,...(regErrors.fssaiLicense?{borderColor:"#c0392b"}:{})}} value={regForm.fssaiLicense} onChange={e=>setRegForm({...regForm,fssaiLicense:e.target.value})} placeholder='14-digit FSSAI number, or type "Applied"'/>
+                      {regErrors.fssaiLicense&&<div style={{color:"#c0392b",fontSize:12,marginTop:4}}>⚠️ {regErrors.fssaiLicense}</div>}
                     </div>
                     <div style={{display:"flex",gap:12,marginTop:12}}>
                       <div style={{flex:1}}><label style={S.fieldLabel}>Years in Business</label>
