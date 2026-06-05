@@ -64,6 +64,22 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem
 .btn.secondary{background:white;color:var(--saffron);border:1px solid var(--saffron);}
 footer{background:#100C04;text-align:center;padding:2rem;color:#555;font-size:0.85rem;}
 
+/* === INTENT-DRIVEN WhatsApp CARDS === */
+.intent-strip{padding:3rem 5% 3.5rem;background:linear-gradient(180deg,#FFF8EF 0%,#FFFAEF 100%);border-top:1px solid #EDD8BC;}
+.is-inner{max-width:1180px;margin:0 auto;text-align:center;}
+.is-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.2vw,2.2rem);font-weight:800;color:#1C130A;margin:0 0 0.5rem;letter-spacing:-0.01em;}
+.is-title em{color:#E8760A;font-style:italic;}
+.is-sub{color:#7B634E;max-width:540px;margin:0 auto 2rem;font-size:0.95rem;line-height:1.6;}
+.is-grid{display:grid;gap:0.9rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+.is-card{background:white;border:1.5px solid #EDD8BC;border-radius:18px;padding:1.4rem 1.2rem;text-align:center;text-decoration:none;color:#1C130A;display:flex;flex-direction:column;align-items:center;gap:0.35rem;position:relative;transition:transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;}
+.is-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(37,211,102,0.22);border-color:#25D366;background:linear-gradient(180deg,white 60%,#F0FFF4 100%);}
+.is-card.urgent{border-color:rgba(232,118,10,0.4);background:linear-gradient(180deg,#FFF8EF 0%,#FFE9C7 100%);}
+.is-card.urgent:hover{border-color:#25D366;}
+.is-emoji{font-size:2.2rem;margin-bottom:0.3rem;}
+.is-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:800;color:#1C130A;}
+.is-tag{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.88rem;color:#7B634E;margin-bottom:0.5rem;}
+.is-wa{display:inline-flex;align-items:center;gap:5px;background:#25D366;color:white;padding:5px 12px;border-radius:99px;font-size:0.78rem;font-weight:700;letter-spacing:0.02em;box-shadow:0 6px 14px rgba(37,211,102,0.32);}
+
 /* === ENHANCED HERO: WhatsApp CTA + trust pills === */
 .hero-cta-wrap{display:flex;gap:0.7rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;position:relative;z-index:2;}
 .hero-cta-primary{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#25D366,#1DA851);color:#fff;padding:0.95rem 1.6rem;border-radius:99px;font-weight:800;font-size:0.95rem;text-decoration:none;box-shadow:0 14px 36px rgba(37,211,102,0.45),0 0 0 1px rgba(255,255,255,0.18);font-family:'Playfair Display',serif;transition:transform 0.2s ease, box-shadow 0.2s ease;}
@@ -179,6 +195,52 @@ footer a{color:var(--saffron);}
     <span class="trust-pill">🐟 Bengali-led</span>
     <span class="trust-pill">₹0 to use</span>
     <span class="trust-pill">✓ FSSAI declared</span>
+  </div>
+</section>
+
+<!-- INTENT-DRIVEN WhatsApp CTAs — 6 cards, each pre-fills the chat -->
+<section class="intent-strip">
+  <div class="is-inner">
+    <h2 class="is-title">Tell us your <em>event</em>. We WhatsApp the right kitchen.</h2>
+    <p class="is-sub">Each card opens WhatsApp pre-filled. You add date + guest count. Aayojan routes it.</p>
+    <div class="is-grid">
+      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Sunday%20family%20lunch%20catering%20needed.%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20%0ACuisine%20preference%3A%20" target="_blank" rel="noopener" class="is-card">
+        <div class="is-emoji">🍱</div>
+        <div class="is-name">Sunday Lunch</div>
+        <div class="is-tag">Family adda, Bengali home-style</div>
+        <span class="is-wa">📱 WhatsApp now</span>
+      </a>
+      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Saturday%20party%20catering%20needed.%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20%0ACuisine%20preference%3A%20" target="_blank" rel="noopener" class="is-card">
+        <div class="is-emoji">🎉</div>
+        <div class="is-name">Saturday Party</div>
+        <div class="is-tag">Birthday, anniversary, gathering</div>
+        <span class="is-wa">📱 WhatsApp now</span>
+      </a>
+      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Annaprasan%20catering%20needed.%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20" target="_blank" rel="noopener" class="is-card">
+        <div class="is-emoji">🍚</div>
+        <div class="is-name">Annaprasan</div>
+        <div class="is-tag">Mukhe Bhaat ceremony</div>
+        <span class="is-wa">📱 WhatsApp now</span>
+      </a>
+      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Wedding%20catering%20enquiry.%0ADate%3A%20%0AGuests%3A%20%0AVenue%2FArea%3A%20%0ACuisine%20preference%3A%20" target="_blank" rel="noopener" class="is-card">
+        <div class="is-emoji">💍</div>
+        <div class="is-name">Wedding / Reception</div>
+        <div class="is-tag">Banquet or home setup</div>
+        <span class="is-wa">📱 WhatsApp now</span>
+      </a>
+      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Office%20lunch%20catering%20needed.%0ADate%3A%20%0ABuilding%2FArea%3A%20%0ATeam%20size%3A%20%0AMenu%20preference%3A%20" target="_blank" rel="noopener" class="is-card">
+        <div class="is-emoji">🏢</div>
+        <div class="is-name">Office Lunch</div>
+        <div class="is-tag">Sector V / Newtown offices</div>
+        <span class="is-wa">📱 WhatsApp now</span>
+      </a>
+      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Last-minute%20catering%20enquiry%20-%20urgent.%0AEvent%3A%20%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20" target="_blank" rel="noopener" class="is-card urgent">
+        <div class="is-emoji">⚡</div>
+        <div class="is-name">Last-Minute / Urgent</div>
+        <div class="is-tag">Same-day routing</div>
+        <span class="is-wa">📱 WhatsApp now</span>
+      </a>
+    </div>
   </div>
 </section>
 
