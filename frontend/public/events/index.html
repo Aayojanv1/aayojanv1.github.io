@@ -63,6 +63,45 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem
 .btn.primary{background:var(--saffron);color:white;}
 .btn.secondary{background:white;color:var(--saffron);border:1px solid var(--saffron);}
 footer{background:#100C04;text-align:center;padding:2rem;color:#555;font-size:0.85rem;}
+
+/* === ENHANCED HERO: WhatsApp CTA + trust pills === */
+.hero-cta-wrap{display:flex;gap:0.7rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;position:relative;z-index:2;}
+.hero-cta-primary{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#25D366,#1DA851);color:#fff;padding:0.95rem 1.6rem;border-radius:99px;font-weight:800;font-size:0.95rem;text-decoration:none;box-shadow:0 14px 36px rgba(37,211,102,0.45),0 0 0 1px rgba(255,255,255,0.18);font-family:'Playfair Display',serif;transition:transform 0.2s ease, box-shadow 0.2s ease;}
+.hero-cta-primary:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(37,211,102,0.55);}
+.hero-cta-ghost{display:inline-flex;align-items:center;gap:6px;background:rgba(255,248,239,0.08);color:#FFF8EF;padding:0.95rem 1.4rem;border-radius:99px;font-weight:600;font-size:0.92rem;text-decoration:none;border:1px solid rgba(243,200,105,0.35);}
+.hero-trust{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.4rem;position:relative;z-index:2;}
+.trust-pill{background:rgba(255,255,255,0.08);color:#FBBF77;border:1px solid rgba(243,200,105,0.28);padding:0.4rem 0.9rem;border-radius:99px;font-size:0.78rem;font-weight:600;letter-spacing:0.02em;}
+
+/* === FEATURED KITCHENS === */
+.featured-kitchens{padding:4.5rem 5%;background:linear-gradient(180deg,#FFF8EF 0%,#FFFAEF 100%);border-top:1px solid #EDD8BC;border-bottom:1px solid #EDD8BC;}
+.fk-inner{max-width:1180px;margin:0 auto;}
+.fk-head{text-align:center;margin-bottom:2.4rem;}
+.fk-eyebrow{display:inline-block;font-size:0.74rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#C95F08;background:rgba(232,118,10,0.10);border:1px solid rgba(232,118,10,0.25);padding:5px 12px;border-radius:99px;margin-bottom:0.6rem;}
+.fk-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.6vw,2.6rem);font-weight:800;color:#1C130A;margin:0 0 0.6rem;letter-spacing:-0.01em;}
+.fk-title em{color:#E8760A;font-style:italic;}
+.fk-sub{color:#7B634E;max-width:58ch;margin:0 auto;font-size:1rem;line-height:1.65;}
+.fk-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:2.2rem;}
+.fk-card{background:white;border:1px solid #EDD8BC;border-radius:18px;padding:1.4rem 1.2rem;text-align:center;text-decoration:none;color:#1C130A;transition:transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;display:flex;flex-direction:column;align-items:center;gap:0.5rem;}
+.fk-card:hover{transform:translateY(-4px);box-shadow:0 22px 44px rgba(232,118,10,0.20);border-color:#E8760A;}
+.fk-logo{width:64px;height:64px;border-radius:14px;display:grid;place-items:center;font-weight:900;font-size:1.6rem;letter-spacing:-0.02em;font-family:'Playfair Display',serif;flex-shrink:0;box-shadow:0 8px 18px rgba(0,0,0,0.18);}
+.fk-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:800;color:#1C130A;}
+.fk-chef{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.95rem;color:#7B634E;}
+.fk-cuisines{font-size:0.78rem;color:#7B634E;line-height:1.4;margin-top:0.3rem;}
+.fk-fssai{margin-top:0.5rem;font-size:0.7rem;font-weight:800;letter-spacing:0.08em;padding:4px 9px;border-radius:5px;}
+.fk-fssai.verified{background:rgba(35,107,67,0.10);color:#236B43;border:1px solid rgba(35,107,67,0.30);font-family:'DM Sans',monospace;}
+.fk-fssai.applied{background:rgba(243,200,105,0.15);color:#A07C20;border:1px solid rgba(243,200,105,0.40);}
+
+/* === WHY AAYOJAN === */
+.why-aayojan{padding:4.5rem 5%;background:linear-gradient(135deg,#1C130A 0%,#3A2916 100%);color:#FFF8EF;}
+.why-inner{max-width:1100px;margin:0 auto;}
+.why-title{text-align:center;font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.6vw,2.6rem);font-weight:800;color:#FFF8EF;margin:0 0 2.2rem;letter-spacing:-0.01em;}
+.why-title em{color:#F3C869;font-style:italic;}
+.why-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+.why-card{background:rgba(255,248,239,0.04);border:1px solid rgba(243,200,105,0.18);border-radius:18px;padding:1.6rem 1.4rem;text-align:center;transition:transform 0.2s ease, background 0.2s ease;}
+.why-card:hover{transform:translateY(-3px);background:rgba(255,248,239,0.07);}
+.why-icon{font-size:2rem;margin-bottom:0.6rem;font-family:'Playfair Display',serif;font-weight:900;}
+.why-h{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:800;color:#F3C869;margin-bottom:0.4rem;}
+.why-p{font-size:0.88rem;color:rgba(255,248,239,0.72);line-height:1.55;}
 footer a{color:var(--saffron);}
 </style>
 </head>
@@ -82,12 +121,22 @@ footer a{color:var(--saffron);}
 <div class="crumbs"><a href="/">Home</a><span>›</span>Events</div>
 
 <section class="hero">
-  <div class="hero-badge">🎉 Event-specialised catering</div>
-  <h1>Pick your <em>event</em>.<br>We'll route to the right kitchen.</h1>
-  <p class="hero-sub">Every event has its own menu logic, ceremony nuance and pricing pattern. Aayojan partners know all of them — and we route only those who fit your specific event.</p>
+  <div class="hero-badge">🎉 Bengali Catering Marketplace · Kolkata</div>
+  <h1>Bengali catering for your <em>event</em>.<br>WhatsApp quote in 4 hours.</h1>
+  <p class="hero-sub">Curated Bengali kitchens for Annaprasan, wedding, Bhai Phota, corporate lunch and every Kolkata occasion. Hyperlocal · FSSAI-declared · ₹0 to use.</p>
+  <div class="hero-cta-wrap">
+    <a class="hero-cta-primary" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20a%20caterer.%0AEvent%3A%20%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20" target="_blank" rel="noopener">📱 Get Quote on WhatsApp</a>
+    <a class="hero-cta-ghost" href="#events-list">↓ Browse events</a>
+  </div>
+  <div class="hero-trust">
+    <span class="trust-pill">⏱ 4-hour quote</span>
+    <span class="trust-pill">🐟 Bengali-led</span>
+    <span class="trust-pill">₹0 to use</span>
+    <span class="trust-pill">✓ FSSAI declared</span>
+  </div>
 </section>
 
-<section class="events">
+<section class="events" id="events-list">
   <div class="event-grid">
 
     <a href="/events/annaprasan-caterer-kolkata.html" class="event-card">
@@ -153,6 +202,83 @@ footer a{color:var(--saffron);}
       <span class="event-cta">View Sector V catering →</span>
     </a>
 
+  </div>
+</section>
+
+<!-- FEATURED KITCHENS — proves the marketplace is real -->
+<section class="featured-kitchens">
+  <div class="fk-inner">
+    <div class="fk-head">
+      <span class="fk-eyebrow">★ Hand-Picked Founding Partners</span>
+      <h2 class="fk-title">5 verified Bengali kitchens. <em>One marketplace.</em></h2>
+      <p class="fk-sub">Each kitchen is Bengali-led, FSSAI-declared, and personally onboarded. We route your event to the right one based on cuisine, date and area.</p>
+    </div>
+    <div class="fk-grid">
+      <a class="fk-card" href="/partners/munias-kitchen.html">
+        <div class="fk-logo" style="background:#F29E1F;color:#FFF8EF;">M</div>
+        <div class="fk-name">Munia's Kitchen</div>
+        <div class="fk-chef">Chef Karabi Dey</div>
+        <div class="fk-cuisines">Bengali · Mughlai · Continental · Chinese · Italian</div>
+        <div class="fk-fssai applied">FSSAI · Applied</div>
+      </a>
+      <a class="fk-card" href="/partners/curry-katha.html">
+        <div class="fk-logo" style="background:#3a3a3a;color:#FFF8EF;font-family:'Noto Serif Bengali',serif;">কথা</div>
+        <div class="fk-name">Curry-কথা</div>
+        <div class="fk-chef">Sayan Banerjee</div>
+        <div class="fk-cuisines">Bengali · home-style · value-friendly</div>
+        <div class="fk-fssai verified">✓ FSSAI · 22825211000224</div>
+      </a>
+      <a class="fk-card" href="/partners/magnolia-catering.html">
+        <div class="fk-logo" style="background:#F29E1F;color:#FFF8EF;">★</div>
+        <div class="fk-name">Magnolia Catering</div>
+        <div class="fk-chef">Sandip Sarkar</div>
+        <div class="fk-cuisines">Bengali · Mughlai · Continental · Chinese</div>
+        <div class="fk-fssai applied">FSSAI · Applied</div>
+      </a>
+      <a class="fk-card" href="/partners/56-bhog-caterer.html">
+        <div class="fk-logo" style="background:#0F2839;color:#FFD42A;font-family:'Noto Serif Bengali',serif;">৫৬</div>
+        <div class="fk-name">56 Bhog Caterer</div>
+        <div class="fk-chef">Krishanu Ghosh</div>
+        <div class="fk-cuisines">Multi-cuisine · 50 to 5000 guests</div>
+        <div class="fk-fssai verified">✓ FSSAI · 12826019000113</div>
+      </a>
+      <a class="fk-card" href="/partners/tulikas-catering.html">
+        <div class="fk-logo" style="background:#B8456A;color:#FFF8EF;font-style:italic;font-family:'Playfair Display',serif;">T</div>
+        <div class="fk-name">Tulika's Catering</div>
+        <div class="fk-chef">Tamasree Das</div>
+        <div class="fk-cuisines">Bengali specialist · Mughlai · Chinese</div>
+        <div class="fk-fssai applied">FSSAI · Applied</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY AAYOJAN trust strip -->
+<section class="why-aayojan">
+  <div class="why-inner">
+    <h2 class="why-title">Why <em>Aayojan</em>?</h2>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🌿</div>
+        <div class="why-h">Bengali-Led</div>
+        <div class="why-p">Karabi-di, Sayan-da, Sandip-da, Krishanu-da, Tamasree-di. Real kitchens, real Bengalis, real onboarding.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">✅</div>
+        <div class="why-h">FSSAI Declared</div>
+        <div class="why-p">Every partner shows their FSSAI status on their profile. No anonymous "verified caterer" labels.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📱</div>
+        <div class="why-h">WhatsApp Quotes</div>
+        <div class="why-p">4-hour first quote. No app to download, no dashboard to log into. We route on WhatsApp.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">₹0</div>
+        <div class="why-h">Free For You</div>
+        <div class="why-p">Aayojaks pay zero. Caterers pay 3% only when a booking confirms. No subscription, no listing fee.</div>
+      </div>
+    </div>
   </div>
 </section>
 
