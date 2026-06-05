@@ -91,17 +91,38 @@ footer{background:#100C04;text-align:center;padding:2rem;color:#555;font-size:0.
 .fk-fssai.verified{background:rgba(35,107,67,0.10);color:#236B43;border:1px solid rgba(35,107,67,0.30);font-family:'DM Sans',monospace;}
 .fk-fssai.applied{background:rgba(243,200,105,0.15);color:#A07C20;border:1px solid rgba(243,200,105,0.40);}
 
-/* === WHY AAYOJAN === */
-.why-aayojan{padding:4.5rem 5%;background:linear-gradient(135deg,#1C130A 0%,#3A2916 100%);color:#FFF8EF;}
-.why-inner{max-width:1100px;margin:0 auto;}
-.why-title{text-align:center;font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.6vw,2.6rem);font-weight:800;color:#FFF8EF;margin:0 0 2.2rem;letter-spacing:-0.01em;}
-.why-title em{color:#F3C869;font-style:italic;}
-.why-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
-.why-card{background:rgba(255,248,239,0.04);border:1px solid rgba(243,200,105,0.18);border-radius:18px;padding:1.6rem 1.4rem;text-align:center;transition:transform 0.2s ease, background 0.2s ease;}
-.why-card:hover{transform:translateY(-3px);background:rgba(255,248,239,0.07);}
-.why-icon{font-size:2rem;margin-bottom:0.6rem;font-family:'Playfair Display',serif;font-weight:900;}
-.why-h{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:800;color:#F3C869;margin-bottom:0.4rem;}
-.why-p{font-size:0.88rem;color:rgba(255,248,239,0.72);line-height:1.55;}
+/* === LIVE ACTIVITY TICKER (top of page) === */
+.live-ticker{background:linear-gradient(90deg,#0F0A05 0%,#1A1208 50%,#0F0A05 100%);border-bottom:1px solid rgba(243,200,105,0.18);padding:9px 0;overflow:hidden;position:relative;}
+.lt-inner{display:flex;align-items:center;gap:12px;padding:0 16px;max-width:1300px;margin:0 auto;}
+.lt-dot{flex-shrink:0;width:8px;height:8px;border-radius:50%;background:#86efac;box-shadow:0 0 10px #86efac;animation:ltPulse 1.6s infinite;}
+@keyframes ltPulse{0%,100%{box-shadow:0 0 6px #86efac;opacity:1;}50%{box-shadow:0 0 14px #86efac;opacity:0.7;}}
+.lt-label{flex-shrink:0;font-size:9px;font-weight:800;color:#F3C869;letterspacing:0.18em;letter-spacing:0.18em;padding:3px 8px;border:1px solid rgba(243,200,105,0.4);border-radius:4px;font-family:'DM Sans',sans-serif;}
+.lt-feed{flex:1;overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);}
+.lt-track{display:flex;gap:40px;white-space:nowrap;animation:ltScroll 38s linear infinite;width:max-content;}
+@keyframes ltScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.lt-item{font-size:12.5px;color:rgba(255,248,239,0.78);font-weight:500;font-family:'DM Sans',sans-serif;}
+
+/* === CUISINE QUICK-LINK STRIP === */
+.cuisine-strip{padding:1.6rem 5%;background:#FFFAEF;border-top:1px solid #EDD8BC;border-bottom:1px solid #EDD8BC;}
+.cs-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;justify-content:center;}
+.cs-label{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:#7B634E;font-weight:500;flex-shrink:0;}
+.cs-pills{display:flex;gap:0.45rem;flex-wrap:wrap;justify-content:center;}
+.cs-pill{background:white;border:1px solid #EDD8BC;color:#513117;font-weight:600;font-size:0.86rem;padding:0.5rem 0.95rem;border-radius:99px;text-decoration:none;transition:all 0.2s ease;}
+.cs-pill:hover{background:#E8760A;color:white;border-color:#E8760A;transform:translateY(-2px);}
+
+/* === STICKY WHATSAPP FLOATING BUTTON === */
+.sticky-wa{position:fixed;bottom:22px;right:22px;z-index:999;background:linear-gradient(135deg,#25D366,#1DA851);color:white;padding:14px 22px;border-radius:99px;font-family:'Playfair Display',serif;font-weight:800;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:9px;box-shadow:0 18px 40px rgba(37,211,102,0.45), 0 0 0 1px rgba(255,255,255,0.18);transition:transform 0.2s ease, box-shadow 0.2s ease;}
+.sticky-wa:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 22px 50px rgba(37,211,102,0.55);}
+.sw-pulse{position:absolute;inset:0;border-radius:99px;background:rgba(37,211,102,0.4);animation:swPulse 2.4s infinite;pointer-events:none;z-index:-1;}
+@keyframes swPulse{0%{transform:scale(1);opacity:0.7;}100%{transform:scale(1.18);opacity:0;}}
+.sw-icon{font-size:18px;}
+.sw-text{white-space:nowrap;}
+@media(max-width:560px){
+  .sticky-wa{padding:12px 16px;font-size:12.5px;bottom:14px;right:14px;}
+  .sw-icon{font-size:15px;}
+  .lt-item{font-size:11px;}
+  .lt-label{font-size:8px;padding:2px 6px;}
+}
 footer a{color:var(--saffron);}
 </style>
 </head>
@@ -119,6 +140,33 @@ footer a{color:var(--saffron);}
 </nav>
 
 <div class="crumbs"><a href="/">Home</a><span>›</span>Events</div>
+
+<!-- Live activity ticker -->
+<div class="live-ticker">
+  <div class="lt-inner">
+    <span class="lt-dot"></span>
+    <span class="lt-label">LIVE</span>
+    <div class="lt-feed">
+      <div class="lt-track">
+        <span class="lt-item">🍛 Mutton biryani quote · Newtown · 23 min ago</span>
+        <span class="lt-item">🐟 Doi Ilish for Annaprasan · Salt Lake · 1 hr ago</span>
+        <span class="lt-item">🍢 Galouti kebab counter · Hyatt Newtown · 2 hrs ago</span>
+        <span class="lt-item">🥟 Hakka noodles · town-hall Sector V · 3 hrs ago</span>
+        <span class="lt-item">🍮 Mishti doi · Bhai Phota Salt Lake · 4 hrs ago</span>
+        <span class="lt-item">🍕 Continental cocktail · DLF lawns · 5 hrs ago</span>
+        <span class="lt-item">🌿 Niramish Griha Pravesh · Rajarhat · today</span>
+        <!-- duplicate for seamless loop -->
+        <span class="lt-item">🍛 Mutton biryani quote · Newtown · 23 min ago</span>
+        <span class="lt-item">🐟 Doi Ilish for Annaprasan · Salt Lake · 1 hr ago</span>
+        <span class="lt-item">🍢 Galouti kebab counter · Hyatt Newtown · 2 hrs ago</span>
+        <span class="lt-item">🥟 Hakka noodles · town-hall Sector V · 3 hrs ago</span>
+        <span class="lt-item">🍮 Mishti doi · Bhai Phota Salt Lake · 4 hrs ago</span>
+        <span class="lt-item">🍕 Continental cocktail · DLF lawns · 5 hrs ago</span>
+        <span class="lt-item">🌿 Niramish Griha Pravesh · Rajarhat · today</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <section class="hero">
   <div class="hero-badge">🎉 Bengali Catering Marketplace · Kolkata</div>
@@ -205,6 +253,22 @@ footer a{color:var(--saffron);}
   </div>
 </section>
 
+<!-- CUISINE QUICK-LINKS — more drill paths -->
+<section class="cuisine-strip">
+  <div class="cs-inner">
+    <span class="cs-label">Or browse by cuisine →</span>
+    <div class="cs-pills">
+      <a href="/cuisines/bengali-caterer-newtown.html" class="cs-pill">🐟 Bengali</a>
+      <a href="/cuisines/biryani-caterer-newtown.html" class="cs-pill">🍛 Biryani</a>
+      <a href="/cuisines/mughlai-caterer-salt-lake.html" class="cs-pill">🍢 Mughlai</a>
+      <a href="/cuisines/continental-caterer-newtown.html" class="cs-pill">🍕 Continental</a>
+      <a href="/cuisines/chinese-caterer-salt-lake.html" class="cs-pill">🥟 Chinese</a>
+      <a href="/cuisines/multi-cuisine-caterer-kolkata.html" class="cs-pill">🍽️ Multi-cuisine</a>
+      <a href="/cuisines/jain-sattvik-caterer-newtown.html" class="cs-pill">🌱 Jain · Sattvik</a>
+    </div>
+  </div>
+</section>
+
 <!-- FEATURED KITCHENS — proves the marketplace is real -->
 <section class="featured-kitchens">
   <div class="fk-inner">
@@ -253,35 +317,6 @@ footer a{color:var(--saffron);}
   </div>
 </section>
 
-<!-- WHY AAYOJAN trust strip -->
-<section class="why-aayojan">
-  <div class="why-inner">
-    <h2 class="why-title">Why <em>Aayojan</em>?</h2>
-    <div class="why-grid">
-      <div class="why-card">
-        <div class="why-icon">🌿</div>
-        <div class="why-h">Bengali-Led</div>
-        <div class="why-p">Karabi-di, Sayan-da, Sandip-da, Krishanu-da, Tamasree-di. Real kitchens, real Bengalis, real onboarding.</div>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">✅</div>
-        <div class="why-h">FSSAI Declared</div>
-        <div class="why-p">Every partner shows their FSSAI status on their profile. No anonymous "verified caterer" labels.</div>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">📱</div>
-        <div class="why-h">WhatsApp Quotes</div>
-        <div class="why-p">4-hour first quote. No app to download, no dashboard to log into. We route on WhatsApp.</div>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">₹0</div>
-        <div class="why-h">Free For You</div>
-        <div class="why-p">Aayojaks pay zero. Caterers pay 3% only when a booking confirms. No subscription, no listing fee.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="middle">
   <h2>Don't see your event? <em>WhatsApp us</em>.</h2>
   <p>Anniversary, retirement, baby shower, Saraswati Puja, Lakshmi Puja, Eid, Christmas — Aayojan partners handle every Kolkata occasion. Tell us the event, we'll route the right kitchen.</p>
@@ -292,5 +327,12 @@ footer a{color:var(--saffron);}
 </section>
 
 <footer>© 2026 Aayojan · <a href="/">Home</a> · <a href="/about.html">About</a> · <a href="/faq.html">FAQ</a> · <a href="mailto:aayojan11@gmail.com">aayojan11@gmail.com</a></footer>
+
+<!-- Sticky WhatsApp floating button — always visible -->
+<a class="sticky-wa" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20a%20caterer.%0AEvent%3A%20%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp Aayojan">
+  <span class="sw-pulse"></span>
+  <span class="sw-icon">💬</span>
+  <span class="sw-text">Quote on WhatsApp</span>
+</a>
 </body>
 </html>
