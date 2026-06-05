@@ -64,6 +64,24 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem
 .btn.secondary{background:white;color:var(--saffron);border:1px solid var(--saffron);}
 footer{background:#100C04;text-align:center;padding:2rem;color:#555;font-size:0.85rem;}
 
+/* === WEEKEND PARTY BAR (3 hot slots) === */
+.weekend-pulse{animation:wpPulse 2.2s infinite ease-in-out;}
+@keyframes wpPulse{0%,100%{box-shadow:0 0 0 0 rgba(232,118,10,0.45),0 4px 14px rgba(232,118,10,0.12);}50%{box-shadow:0 0 0 8px rgba(232,118,10,0),0 4px 14px rgba(232,118,10,0.12);}}
+.weekend-bar{background:linear-gradient(135deg,#E8760A 0%,#C95F08 100%);padding:1.6rem 5% 1.8rem;color:#FFF8EF;position:relative;}
+.weekend-bar::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:6px;background:linear-gradient(90deg,#FFD700,#E8760A,#FFD700);}
+.wb-inner{max-width:1180px;margin:0 auto;}
+.wb-label{font-family:'Playfair Display',serif;font-size:12px;font-weight:800;letter-spacing:0.18em;color:#FFD700;text-transform:uppercase;text-align:center;margin-bottom:1rem;}
+.wb-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:0.7rem;}
+@media(max-width:680px){.wb-cards{grid-template-columns:1fr;}}
+.wb-card{background:rgba(255,248,239,0.10);border:1.5px solid rgba(255,248,239,0.25);border-radius:14px;padding:0.95rem 1rem;text-decoration:none;color:#FFF8EF;display:flex;flex-direction:column;align-items:center;gap:5px;transition:all 0.25s ease;text-align:center;}
+.wb-card:hover{background:rgba(255,255,255,0.95);color:#1C130A;border-color:#FFF8EF;transform:translateY(-3px);}
+.wb-card:hover .wb-cta{background:#25D366;color:white;}
+.wb-card.wb-hot{background:linear-gradient(135deg,#FFD700,#FFA500);color:#1C130A;border-color:#FFD700;box-shadow:0 8px 24px rgba(255,215,0,0.35);}
+.wb-card.wb-hot:hover{background:linear-gradient(135deg,#FFF8EF,#FFD700);}
+.wb-tag{font-family:'Playfair Display',serif;font-size:14px;font-weight:900;letter-spacing:0.06em;}
+.wb-when{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13.5px;opacity:0.92;}
+.wb-cta{margin-top:4px;background:rgba(0,0,0,0.18);padding:5px 12px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:0.04em;transition:background 0.2s;}
+
 /* === INTENT-DRIVEN WhatsApp CARDS === */
 .intent-strip{padding:3rem 5% 3.5rem;background:linear-gradient(180deg,#FFF8EF 0%,#FFFAEF 100%);border-top:1px solid #EDD8BC;}
 .is-inner{max-width:1180px;margin:0 auto;text-align:center;}
@@ -73,8 +91,12 @@ footer{background:#100C04;text-align:center;padding:2rem;color:#555;font-size:0.
 .is-grid{display:grid;gap:0.9rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
 .is-card{background:white;border:1.5px solid #EDD8BC;border-radius:18px;padding:1.4rem 1.2rem;text-align:center;text-decoration:none;color:#1C130A;display:flex;flex-direction:column;align-items:center;gap:0.35rem;position:relative;transition:transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;}
 .is-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(37,211,102,0.22);border-color:#25D366;background:linear-gradient(180deg,white 60%,#F0FFF4 100%);}
-.is-card.urgent{border-color:rgba(232,118,10,0.4);background:linear-gradient(180deg,#FFF8EF 0%,#FFE9C7 100%);}
+.is-card.urgent{border-color:rgba(232,118,10,0.5);background:linear-gradient(180deg,#FFF8EF 0%,#FFE9C7 100%);}
 .is-card.urgent:hover{border-color:#25D366;}
+.is-card.is-featured{background:linear-gradient(180deg,#FFF4DC,#FFE8B0);border:2px solid #E8760A;box-shadow:0 14px 32px rgba(232,118,10,0.22);}
+.is-card.is-featured:hover{transform:translateY(-5px);box-shadow:0 20px 42px rgba(37,211,102,0.32);}
+.is-flag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#E8760A;color:white;font-size:0.62rem;font-weight:800;letter-spacing:0.12em;padding:3px 10px;border-radius:99px;box-shadow:0 4px 10px rgba(232,118,10,0.4);white-space:nowrap;}
+.is-flag.urgent-flag{background:#1C130A;color:#FFD700;}
 .is-emoji{font-size:2.2rem;margin-bottom:0.3rem;}
 .is-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:800;color:#1C130A;}
 .is-tag{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.88rem;color:#7B634E;margin-bottom:0.5rem;}
@@ -183,9 +205,9 @@ footer a{color:var(--saffron);}
 </div>
 
 <section class="hero">
-  <div class="hero-badge">🚀 Pre-Launch · Founding Customers Welcome</div>
-  <h1>Bengali catering for your <em>event</em>.<br>WhatsApp us — personal routing today.</h1>
-  <p class="hero-sub">Curated Bengali kitchens for Annaprasan, wedding, Bhai Phota, corporate lunch and every Kolkata occasion. Hyperlocal · FSSAI-declared · ₹0 to use. Founding customers get personal handoff from our team.</p>
+  <div class="hero-badge weekend-pulse">🎉 THIS WEEKEND · Bengali Party Catering · Same-Day WhatsApp</div>
+  <h1>You bring the <em>people</em>.<br>We bring the <em>Bengali spread</em>.</h1>
+  <p class="hero-sub">Tonight's adda. Saturday birthday. Sunday family lunch. Curated Bengali kitchens for every weekend party — WhatsApp us now and our team routes you the same day. Pre-launch perk: founding customers get personal handoff from Suparna / Gourav.</p>
   <div class="hero-cta-wrap">
     <a class="hero-cta-primary" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20a%20caterer.%0AEvent%3A%20%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20" target="_blank" rel="noopener">📱 Get Quote on WhatsApp</a>
     <a class="hero-cta-ghost" href="#events-list">↓ Browse events</a>
@@ -198,28 +220,60 @@ footer a{color:var(--saffron);}
   </div>
 </section>
 
+<!-- WEEKEND TIMELINE — 3 hot windows -->
+<section class="weekend-bar">
+  <div class="wb-inner">
+    <div class="wb-label">🔥 PARTY-MONGER MENU · Pick your slot</div>
+    <div class="wb-cards">
+      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20catering%20TONIGHT%20-%20urgent.%0AEvent%3A%20%0AGuests%3A%20%0AArea%3A%20%0ACuisine%3A%20" target="_blank" rel="noopener" class="wb-card">
+        <span class="wb-tag">🌙 TONIGHT</span>
+        <span class="wb-when">Friday night adda</span>
+        <span class="wb-cta">📱 Tap to WhatsApp</span>
+      </a>
+      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Saturday%20party%20catering%20needed.%0AGuests%3A%20%0AArea%3A%20%0ACuisine%3A%20%0AVibe%3A%20" target="_blank" rel="noopener" class="wb-card wb-hot">
+        <span class="wb-tag">🎉 SATURDAY</span>
+        <span class="wb-when">Birthday · anniversary · house party</span>
+        <span class="wb-cta">📱 Tap to WhatsApp</span>
+      </a>
+      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Sunday%20family%20lunch%20catering%20needed.%0AGuests%3A%20%0AArea%3A%20%0ACuisine%3A%20" target="_blank" rel="noopener" class="wb-card">
+        <span class="wb-tag">🍱 SUNDAY</span>
+        <span class="wb-when">Family adda · Bengali home-style</span>
+        <span class="wb-cta">📱 Tap to WhatsApp</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- INTENT-DRIVEN WhatsApp CTAs — 6 cards, each pre-fills the chat -->
 <section class="intent-strip">
   <div class="is-inner">
-    <h2 class="is-title">Tell us your <em>event</em>. We WhatsApp the right kitchen.</h2>
-    <p class="is-sub">Each card opens WhatsApp pre-filled. You add date + guest count. Aayojan routes it.</p>
+    <h2 class="is-title">Or pick your <em>party</em>. We route the kitchen.</h2>
+    <p class="is-sub">Each card opens WhatsApp pre-filled. You add date + guest count. Aayojan does the rest — same day.</p>
     <div class="is-grid">
-      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Sunday%20family%20lunch%20catering%20needed.%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20%0ACuisine%20preference%3A%20" target="_blank" rel="noopener" class="is-card">
-        <div class="is-emoji">🍱</div>
-        <div class="is-name">Sunday Lunch</div>
-        <div class="is-tag">Family adda, Bengali home-style</div>
+      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Saturday%20night%20house%20party%20catering%20needed.%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20%0ACuisine%20vibe%3A%20%0ABudget%2Fplate%3A%20" target="_blank" rel="noopener" class="is-card is-featured">
+        <span class="is-flag">🔥 MOST BOOKED</span>
+        <div class="is-emoji">🎉</div>
+        <div class="is-name">Saturday Night Party</div>
+        <div class="is-tag">House party · birthday · anniversary</div>
         <span class="is-wa">📱 WhatsApp now</span>
       </a>
-      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Saturday%20party%20catering%20needed.%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20%0ACuisine%20preference%3A%20" target="_blank" rel="noopener" class="is-card">
-        <div class="is-emoji">🎉</div>
-        <div class="is-name">Saturday Party</div>
-        <div class="is-tag">Birthday, anniversary, gathering</div>
+      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Sunday%20family%20lunch%20catering%20needed.%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20%0ACuisine%20preference%3A%20" target="_blank" rel="noopener" class="is-card">
+        <div class="is-emoji">🍱</div>
+        <div class="is-name">Sunday Family Lunch</div>
+        <div class="is-tag">Adda · niramish · home-style</div>
+        <span class="is-wa">📱 WhatsApp now</span>
+      </a>
+      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Need%20catering%20TONIGHT%20-%20last%20minute.%0AGuests%3A%20%0AArea%3A%20%0ACuisine%3A%20" target="_blank" rel="noopener" class="is-card urgent">
+        <span class="is-flag urgent-flag">⚡ TONIGHT</span>
+        <div class="is-emoji">🌙</div>
+        <div class="is-name">Last-Minute · Tonight</div>
+        <div class="is-tag">Same-day routing · just-add-people</div>
         <span class="is-wa">📱 WhatsApp now</span>
       </a>
       <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Annaprasan%20catering%20needed.%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20" target="_blank" rel="noopener" class="is-card">
         <div class="is-emoji">🍚</div>
         <div class="is-name">Annaprasan</div>
-        <div class="is-tag">Mukhe Bhaat ceremony</div>
+        <div class="is-tag">Mukhe Bhaat · Bengali ceremony</div>
         <span class="is-wa">📱 WhatsApp now</span>
       </a>
       <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Wedding%20catering%20enquiry.%0ADate%3A%20%0AGuests%3A%20%0AVenue%2FArea%3A%20%0ACuisine%20preference%3A%20" target="_blank" rel="noopener" class="is-card">
@@ -228,16 +282,10 @@ footer a{color:var(--saffron);}
         <div class="is-tag">Banquet or home setup</div>
         <span class="is-wa">📱 WhatsApp now</span>
       </a>
-      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Office%20lunch%20catering%20needed.%0ADate%3A%20%0ABuilding%2FArea%3A%20%0ATeam%20size%3A%20%0AMenu%20preference%3A%20" target="_blank" rel="noopener" class="is-card">
+      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Office%20lunch%20catering%20needed.%0ABuilding%2FArea%3A%20%0ATeam%20size%3A%20%0AMenu%20preference%3A%20" target="_blank" rel="noopener" class="is-card">
         <div class="is-emoji">🏢</div>
         <div class="is-name">Office Lunch</div>
-        <div class="is-tag">Sector V / Newtown offices</div>
-        <span class="is-wa">📱 WhatsApp now</span>
-      </a>
-      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Last-minute%20catering%20enquiry%20-%20urgent.%0AEvent%3A%20%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20" target="_blank" rel="noopener" class="is-card urgent">
-        <div class="is-emoji">⚡</div>
-        <div class="is-name">Last-Minute / Urgent</div>
-        <div class="is-tag">Same-day routing</div>
+        <div class="is-tag">Sector V / Newtown · Friday team</div>
         <span class="is-wa">📱 WhatsApp now</span>
       </a>
     </div>
