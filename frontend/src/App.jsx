@@ -313,20 +313,20 @@ STRICT RULES:
 2) If profanity/abuse: "Let's keep things professional! I'm here to help your catering business grow 📈"
 3) Keep replies warm, concise (2-4 sentences), and persuasive. Use numbers and specifics.
 
-KEY FACTS ABOUT AAYOJAN (use these in responses):
-- Aayojan is Kolkata's first AI-powered catering aggregator
+KEY FACTS ABOUT AAYOJAN (use these in responses — pre-launch phase, be honest):
+- Aayojan is Kolkata's hyperlocal Bengali catering marketplace (pre-launch)
 - We bring customers to caterers via WhatsApp — no app needed
 - Areas: Newtown (Action Area I, II, III), Rajarhat, Salt Lake, Eco Park zone
-- 12 caterers already onboarded, building towards 500+ events/month capacity
-- Average partner gets 15-30 qualified leads/month
-- Average revenue per partner: ₹80,000+/month from Aayojan leads
+- 5 founding Bengali kitchens onboarded (Munia's, Curry-কথা, Magnolia, 56 Bhog, Tulika's)
+- 2 FSSAI verified, 3 with FSSAI Applied
+- Customer launch is upcoming — currently routing manually via WhatsApp during pre-launch
+- Lead volume builds as customer base grows — founding partners get priority placement
 
 PRICING:
 - Registration: ₹0 (free forever)
 - Monthly fee: ₹0
 - Commission: 3% per successful booking (only when caterer gets paid)
-- LAUNCH OFFER: First 10 partners — 0% commission forever (only 3 spots left!)
-- After 10 orders: Choose Gold Membership (₹3,999/year, 0% commission) OR continue 3%
+- FOUNDING PARTNER OFFER: First 10 partners get 0% commission for first year (5 spots filled, 5 remain)
 - No lock-in, no exclusivity, cancel anytime
 
 HOW IT WORKS:
@@ -346,7 +346,7 @@ FOOD TASTING PROGRAMME:
 OBJECTION HANDLING:
 - "Why should I join?" → "You get qualified leads on WhatsApp for free. No investment, pay only when you earn."
 - "I already have customers" → "Aayojan brings ADDITIONAL leads from people actively searching online. It's extra revenue, not replacement."
-- "3% is too much" → "3% only on orders we bring you. Food partners can take up to 30%. Plus first 10 partners pay 0% forever."
+- "3% is too much" → "3% only on orders we bring you. Other apps can take up to 30%. Plus first 10 founding partners pay 0% for the first year."
 - "How do I know leads are genuine?" → "We pre-qualify customers — they tell us event type, guest count, budget. You only get relevant leads matching your capacity."
 - "What if I want to leave?" → "No contract, no lock-in. Leave anytime. Your data stays private."
 
@@ -1166,7 +1166,7 @@ export default function AayojanApp(){
 
                {/* Subtitle */}
                <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(16px,1.9vw,21px)",color:"rgba(255,248,239,0.75)",margin:"0 0 30px",lineHeight:1.55,maxWidth:440,fontWeight:500}}>
-                 15-30 verified event leads a month — on WhatsApp. No app, no dashboard, no monthly fee. 3% commission only when you earn.
+                 Verified event leads on WhatsApp as we onboard customers. No app, no dashboard, no monthly fee. 3% commission only when you earn. Pre-launch: founding partners pay 0% for the first year.
                </p>
 
                {/* CTA */}
@@ -3167,9 +3167,9 @@ export default function AayojanApp(){
 
           {/* Launch Offer Card */}
           <div style={{background:"linear-gradient(135deg,#FFF7ED,#FEF3C7)",border:"2px solid #F59E0B",borderRadius:16,padding:24,marginBottom:20,textAlign:"center",position:"relative"}}>
-            <div style={{position:"absolute",top:-12,left:"50%",transform:"translateX(-50%)",background:"#F59E0B",color:"#fff",fontSize:11,fontWeight:700,padding:"4px 16px",borderRadius:20}}>🔥 LAUNCH OFFER — LIMITED SPOTS</div>
-            <h2 style={{fontSize:20,fontWeight:700,color:"#92400E",marginTop:8,marginBottom:6}}>First 10 Partners — FREE Forever</h2>
-            <p style={{fontSize:13,color:"#92400E",marginBottom:16}}>Only <strong>3 spots left</strong>. No commission, no fees — ever.</p>
+            <div style={{position:"absolute",top:-12,left:"50%",transform:"translateX(-50%)",background:"#F59E0B",color:"#fff",fontSize:11,fontWeight:700,padding:"4px 16px",borderRadius:20}}>🚀 FOUNDING PARTNER PROGRAM</div>
+            <h2 style={{fontSize:20,fontWeight:700,color:"#92400E",marginTop:8,marginBottom:6}}>First 10 Partners — 0% Commission · Year One</h2>
+            <p style={{fontSize:13,color:"#92400E",marginBottom:16}}>5 founding kitchens onboarded · <strong>5 founding spots remain</strong>. No monthly fees during pre-launch.</p>
             <div style={{display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap"}}>
               <div style={{background:"#fff",borderRadius:12,padding:"12px 20px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
                 <div style={{fontSize:24,fontWeight:800,color:"#16A34A"}}>₹0</div>
@@ -3275,7 +3275,7 @@ export default function AayojanApp(){
           {/* Final CTA */}
           <div style={{background:"linear-gradient(135deg,#0f172a,#1e293b)",borderRadius:16,padding:"36px 24px",textAlign:"center",marginBottom:32}}>
             <h2 style={{fontSize:22,fontWeight:800,color:"#fff",marginBottom:8}}>Ready to Grow Your Business?</h2>
-            <p style={{fontSize:14,color:"rgba(255,255,255,0.7)",marginBottom:20}}>Join 12 caterers already getting leads through Aayojan</p>
+            <p style={{fontSize:14,color:"rgba(255,255,255,0.7)",marginBottom:20}}>Join 5 founding Bengali kitchens already onboarded · 5 founding-partner spots remain</p>
             <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20am%20a%20caterer%20in%20Newtown%2FSalt%20Lake%2FRajarhat%20and%20want%20to%20join%20as%20partner.%20My%20business%20name%20is%3A%20" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:"linear-gradient(135deg,#25D366,#128C7E)",color:"#fff",padding:"16px 36px",borderRadius:30,fontSize:16,fontWeight:700,textDecoration:"none",boxShadow:"0 4px 16px rgba(37,211,102,0.3)",marginBottom:12}}>
               📱 Register Free — WhatsApp Us
             </a>

@@ -2,16 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Canonical-domain redirect -->
-  <script>
-    (function(){
-      var h = location.hostname;
-      if (h === 'aayojanv1.github.io' || h.endsWith('.github.io')) {
-        location.replace('https://aayojan.online' + location.pathname + location.search + location.hash);
-      }
-    })();
-  </script>
-  <link rel="canonical" href="https://aayojan.online/partners.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Partner with Aayojan | Founding Caterer Network in Kolkata</title>
   <meta name="description" content="Aayojan helps caterers in Newtown, Rajarhat and Salt Lake fill their order book with verified event leads on WhatsApp.">
@@ -29,7 +19,7 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --cream: #FDF6ED;
@@ -204,13 +194,26 @@
     .hero h1 {
       margin-top: 1rem;
       font-size: clamp(2.5rem, 8vw, 5rem);
-      max-width: 12ch;
+      max-width: 14ch;
     }
 
     .hero h1 span {
       display: block;
       margin-top: 0.5rem;
       color: var(--saffron);
+      min-height: 1.05em;
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .hero h1 span.fade-out {
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+
+    .hero h1 span.bengali {
+      font-family: 'Noto Serif Bengali', 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: -0.005em;
     }
 
     .lead {
@@ -1399,7 +1402,7 @@
       <div class="container hero-grid">
         <div class="hero-copy reveal">
           <div class="eyebrow">🔥 Founding Caterer Program · Kolkata</div>
-          <h1>Tired of waiting for referrals?<span>Your kitchen is ready. Your order book should be full.</span></h1>
+          <h1>Tired of waiting for referrals?<span>Cook. Quote. Get paid. Repeat.</span></h1>
           <p class="lead">Aayojan helps caterers in Newtown, Rajarhat and Salt Lake get serious event enquiries on WhatsApp — with guest count, cuisine preference, date and budget already in the message. Less chasing. More quoting. More bookings.</p>
 
           <div class="hero-points">
@@ -1475,8 +1478,8 @@
 
             <div style="position:relative;z-index:1;padding:24px 24px 20px">
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-                <span style="display:inline-block;background:rgba(255,255,255,0.22);color:white;padding:3px 10px;border-radius:99px;font-size:10px;font-weight:800;letter-spacing:0.14em">⚡ INSTANT</span>
-                <span style="font-size:11px;color:rgba(255,255,255,0.85);font-weight:600">Avg response 4 hrs</span>
+                <span style="display:inline-block;background:rgba(255,255,255,0.22);color:white;padding:3px 10px;border-radius:99px;font-size:10px;font-weight:800;letter-spacing:0.14em">🚀 FOUNDING</span>
+                <span style="font-size:11px;color:rgba(255,255,255,0.85);font-weight:600">5 spots remain</span>
               </div>
               <h3 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:white;margin:0 0 4px;line-height:1.1;letter-spacing:-0.01em">Want yours?</h3>
               <p style="font-size:13px;color:rgba(255,255,255,0.92);margin:0 0 16px;line-height:1.5">Drop your number. We'll WhatsApp you within <strong>24 hours</strong>.</p>
