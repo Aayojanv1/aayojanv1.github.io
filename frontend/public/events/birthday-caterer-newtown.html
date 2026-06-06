@@ -28,6 +28,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/events/_shared.css">
+<script defer src="/events/_analytics.js"></script>
 </head>
 <body>
 
@@ -66,6 +67,22 @@
   </div>
 </div>
 
+<!-- Inline quote estimator (config-driven, rendered by /events/_estimator.js) -->
+<section id="quote-estimator"></section>
+<script>
+  window.AAYOJAN_ESTIMATOR = {
+    event: "Birthday",
+    whatsapp: "918088434425",
+    tiers: [
+      { label: "Kids' Party", min: 350, max: 450 },
+      { label: "Adult Casual", min: 450, max: 600 },
+      { label: "Milestone", min: 600, max: 700 }
+    ],
+    guests: { min: 25, max: 200, default: 50, step: 5 }
+  };
+</script>
+<script defer src="/events/_estimator.js"></script>
+
 <section class="block menu">
   <div class="container section-head">
     <span class="section-eyebrow">Party formats</span>
@@ -79,6 +96,24 @@
     <div class="menu-card"><div class="menu-icon">🎁</div><div class="menu-name">Surprise Dinner</div><div class="menu-desc">Discreet delivery, unmarked vehicles, timing-to-the-minute setup. Honoree never knows until reveal.</div></div>
     <div class="menu-card"><div class="menu-icon">🏰</div><div class="menu-name">Themed Plating</div><div class="menu-desc">Frozen, Marvel, princess, dinosaur, retro. Partners coordinate plating + themed cake + dessert station.</div></div>
     <div class="menu-card"><div class="menu-icon">🌱</div><div class="menu-name">Pure Veg / Jain</div><div class="menu-desc">Family preference respected — no onion/garlic, vegan-only, Jain-compliant options available.</div></div>
+  </div>
+</section>
+
+<!-- Food gallery. Drop real photos in /events/img/birthday/ (filenames below) and
+     they replace the placeholders automatically — no markup change needed. -->
+<section class="block gallery">
+  <div class="container section-head">
+    <span class="section-eyebrow">A taste of the spread</span>
+    <h2 class="section-title">What lands on the <em>table</em>.</h2>
+    <p class="section-sub">Real plating from partner kitchens. Tap WhatsApp and we'll match the spread to your party.</p>
+  </div>
+  <div class="container gallery-grid">
+    <figure class="gphoto"><span class="ph">🍛</span><img loading="lazy" src="/events/img/birthday/mutton-biryani.jpg" alt="Mutton biryani for a birthday party in Newtown" onerror="this.remove()"><figcaption>Mutton Biryani</figcaption></figure>
+    <figure class="gphoto"><span class="ph">🍢</span><img loading="lazy" src="/events/img/birthday/galouti-kebab.jpg" alt="Galouti kebab starter" onerror="this.remove()"><figcaption>Galouti Kebab</figcaption></figure>
+    <figure class="gphoto"><span class="ph">🍔</span><img loading="lazy" src="/events/img/birthday/kids-spread.jpg" alt="Kids' party finger food spread" onerror="this.remove()"><figcaption>Kids' Party Spread</figcaption></figure>
+    <figure class="gphoto"><span class="ph">🍝</span><img loading="lazy" src="/events/img/birthday/pasta-station.jpg" alt="Live pasta station" onerror="this.remove()"><figcaption>Live Pasta Station</figcaption></figure>
+    <figure class="gphoto"><span class="ph">🍮</span><img loading="lazy" src="/events/img/birthday/dessert-station.jpg" alt="Dessert and ice-cream station" onerror="this.remove()"><figcaption>Dessert &amp; Ice-Cream</figcaption></figure>
+    <figure class="gphoto"><span class="ph">🎂</span><img loading="lazy" src="/events/img/birthday/custom-cake.jpg" alt="Custom themed birthday cake" onerror="this.remove()"><figcaption>Custom Cake</figcaption></figure>
   </div>
 </section>
 
