@@ -333,22 +333,65 @@ section.block{padding:4rem 5%;}
      so the page still works if JS is blocked or the script fails to load. -->
 <section id="quote-estimator" class="block estimator"><div class="container section-head"><p class="section-sub" style="margin:0 auto"><a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20a%20catering%20quote.%0AEvent%3A%20%0AGuests%3A%20%0AArea%3A%20" target="_blank" rel="noopener" style="color:var(--saffron);font-weight:800;">📱 Get an instant quote on WhatsApp →</a></p></div></section>
 <script>
-  window.AAYOJAN_ESTIMATOR = {
-    event: "party",
-    groupLabel: "What are you planning?",
-    whatsapp: "918088434425",
-    defaultTier: 0,
-    tiers: [
-      { label: "Birthday",      min: 350, max: 700  },
-      { label: "Wedding",       min: 450, max: 1200 },
-      { label: "Annaprasan",    min: 300, max: 500  },
-      { label: "Bhai Phota",    min: 300, max: 500  },
-      { label: "Griha Pravesh", min: 300, max: 600  },
-      { label: "Aiburo Bhaat",  min: 350, max: 550  },
-      { label: "Corporate",     min: 120, max: 350  }
-    ],
-    guests: { min: 25, max: 600, default: 50, step: 5 }
-  };
+  /* Paid-traffic personalization: ?event=wedding (etc.) pre-selects the event
+     in the estimator and swaps the hero headline to match the ad — so one page
+     greets every search correctly. Falls back to the default hub for organic. */
+  (function () {
+    var TIERS = [
+      { label: "Birthday",      min: 350, max: 700,  guests: 50  },
+      { label: "Wedding",       min: 450, max: 1200, guests: 200 },
+      { label: "Annaprasan",    min: 300, max: 500,  guests: 60  },
+      { label: "Bhai Phota",    min: 300, max: 500,  guests: 40  },
+      { label: "Griha Pravesh", min: 300, max: 600,  guests: 60  },
+      { label: "Aiburo Bhaat",  min: 350, max: 550,  guests: 60  },
+      { label: "Corporate",     min: 120, max: 350,  guests: 50  }
+    ];
+    var ALIASES = {
+      wedding:"Wedding", reception:"Wedding", marriage:"Wedding", shaadi:"Wedding", shadi:"Wedding",
+      birthday:"Birthday", bday:"Birthday", birthdayparty:"Birthday",
+      annaprasan:"Annaprasan", annaprashan:"Annaprasan", mukhebhaat:"Annaprasan", mukhebhat:"Annaprasan", riceceremony:"Annaprasan",
+      bhaiphota:"Bhai Phota", bhaiphonta:"Bhai Phota", bhaifota:"Bhai Phota", bhaidooj:"Bhai Phota",
+      grihapravesh:"Griha Pravesh", grihaprabesh:"Griha Pravesh", housewarming:"Griha Pravesh",
+      aiburobhaat:"Aiburo Bhaat", aiburobhat:"Aiburo Bhaat", aiburo:"Aiburo Bhaat",
+      corporate:"Corporate", office:"Corporate", officelunch:"Corporate", corporatelunch:"Corporate", conference:"Corporate"
+    };
+    var HEADLINES = {
+      "Birthday":"Birthday Catering<br>in <em>Newtown</em>",
+      "Wedding":"Wedding Catering<br>in <em>Newtown</em>",
+      "Annaprasan":"Annaprasan Catering<br>in <em>Kolkata</em>",
+      "Bhai Phota":"Bhai Phota Catering<br>in <em>Kolkata</em>",
+      "Griha Pravesh":"Griha Pravesh Catering<br>in <em>Kolkata</em>",
+      "Aiburo Bhaat":"Aiburo Bhaat Catering<br>in <em>Newtown</em>",
+      "Corporate":"Corporate Lunch Catering<br><em>Salt Lake · Sector V</em>"
+    };
+    function norm(s){ return (s||"").toLowerCase().replace(/[^a-z0-9]/g,""); }
+    var p = new URLSearchParams(location.search);
+    var key = norm(p.get("event") || p.get("evt") || p.get("utm_term") || "");
+    var label = ALIASES[key] || "";
+    if (!label && key) {
+      for (var i=0;i<TIERS.length;i++){ var n=norm(TIERS[i].label); if(n===key||n.indexOf(key)===0||key.indexOf(n)===0){ label=TIERS[i].label; break; } }
+    }
+    var idx = 0;
+    for (var j=0;j<TIERS.length;j++){ if(TIERS[j].label===label){ idx=j; break; } }
+
+    window.AAYOJAN_ESTIMATOR = {
+      event: (label || "party"),
+      groupLabel: "What are you planning?",
+      whatsapp: "918088434425",
+      defaultTier: idx,
+      tiers: TIERS.map(function(t){ return { label:t.label, min:t.min, max:t.max }; }),
+      guests: { min: 25, max: 600, default: (label ? TIERS[idx].guests : 50), step: 5 }
+    };
+
+    if (label) {
+      // swap the rotating hero for a static, ad-matched headline (hero is above this script)
+      var h1 = document.querySelector(".rotating-h1");
+      if (h1 && HEADLINES[label]) { h1.style.minHeight = "auto"; h1.innerHTML = '<span style="position:static;opacity:1;display:block;">' + HEADLINES[label] + '</span>'; }
+      // log which event-targeted ad landed (once aTrack from _analytics.js is ready)
+      var fire = function(){ var t = window.aTrack || (typeof window.gtag==="function" ? function(n,pp){window.gtag("event",n,pp);} : null); if(t) t("paid_event_landing", { page:"events-index", event: label }); };
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fire); else fire();
+    }
+  })();
 </script>
 <script defer src="/events/_estimator.js"></script>
 
