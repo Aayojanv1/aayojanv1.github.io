@@ -90,6 +90,22 @@ const FEATURED = [
     logoScript: "তুলিকা'স",
     logoBg: "#B8456A",
   },
+  {
+    issue: "06",
+    slug: "royal-chef",
+    business: "Royal Chef Caterer & Events",
+    headlinePrefix: "Newtown's",
+    headlineAccent: "4.9★ multi-cuisine caterer",
+    headlineRest: "— now an Aayojan Verified Partner.",
+    quote: "147 Google reviews and a 4.9 rating. Royal Chef has catered Newtown's weddings, parties and corporate events for years — multi-cuisine, dependable, and now matched to you through Aayojan.",
+    dishes: ["Multi-cuisine spreads", "Weddings · Parties", "Corporate events"],
+    href: "/partners/royal-chef.html",
+    fssai: { status: "applied" },
+    logoType: "text",
+    logoLines: ["ROYAL", "CHEF"],
+    logoScript: "Caterer & Events",
+    logoBg: "#C0392B",
+  },
 ];
 
 const HOLD_MS = 6500;
