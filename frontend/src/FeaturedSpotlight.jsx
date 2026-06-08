@@ -186,7 +186,7 @@ export default function FeaturedSpotlight() {
                 {f.fssai.status === "verified" ? (
                   <>FSSAI Verified · <span style={{ fontFamily: "monospace", letterSpacing: 0, opacity: 0.85 }}>{f.fssai.number}</span></>
                 ) : (
-                  <>FSSAI · Applied</>
+                  <>✓ Aayojan Verified Partner</>
                 )}
               </div>
             )}
