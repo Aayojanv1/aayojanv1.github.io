@@ -267,6 +267,31 @@ section.block{padding:4rem 5%;}
 .howto-play{width:64px;height:64px;border-radius:50%;background:var(--saffron);display:grid;place-items:center;font-size:24px;color:#fff;box-shadow:0 10px 30px rgba(232,118,10,0.5);}
 .howto-poster .pt{font-family:'Playfair Display',serif;font-weight:800;font-size:1.1rem;}
 .howto-poster .ps{font-size:0.8rem;color:#cbbfa9;}
+/* how-it-works: 3-step + event chips + old-vs-new */
+.hw-steps{display:grid;grid-template-columns:1fr;gap:10px;max-width:560px;margin:24px auto 0;}
+@media (min-width:640px){.hw-steps{grid-template-columns:repeat(3,1fr);}}
+.hw-step{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;text-align:center;}
+.hw-num{width:30px;height:30px;border-radius:50%;background:var(--saffron);color:#fff;font-weight:800;display:grid;place-items:center;margin:0 auto 6px;}
+.hw-ic{font-size:1.7rem;}
+.hw-st{font-family:'Playfair Display',serif;font-weight:800;font-size:1rem;color:var(--dark);margin:5px 0 3px;}
+.hw-sd{font-size:0.82rem;color:var(--muted);line-height:1.45;}
+.hw-events{max-width:760px;margin:26px auto 0;text-align:center;}
+.hw-events .lbl{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--muted);font-size:1.05rem;margin-bottom:10px;}
+.hw-chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+.hw-chip{background:#fff;border:1px solid var(--border);border-radius:99px;padding:9px 16px;font-weight:700;font-size:0.9rem;color:var(--brown);cursor:pointer;transition:background .18s,color .18s,transform .18s,border-color .18s;}
+.hw-chip:hover{background:var(--saffron);color:#fff;border-color:var(--saffron);transform:translateY(-2px);}
+.hw-vs{display:grid;grid-template-columns:1fr;gap:10px;max-width:620px;margin:26px auto 0;}
+@media (min-width:560px){.hw-vs{grid-template-columns:1fr 1fr;}}
+.hw-col{border-radius:16px;padding:16px 18px;border:1px solid var(--border);}
+.hw-col.old{background:#fff;}
+.hw-col.new{background:linear-gradient(135deg,#FFF4DC,#FFE8B0);border-color:var(--saffron);}
+.hw-col h4{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:8px;}
+.hw-col.old h4{color:#b5451b;}
+.hw-col.new h4{color:var(--green);}
+.hw-col ul{list-style:none;}
+.hw-col li{font-size:0.85rem;color:var(--brown);padding:3px 0 3px 22px;position:relative;line-height:1.45;}
+.hw-col.old li::before{content:'✕';position:absolute;left:0;color:#c0392b;font-weight:800;}
+.hw-col.new li::before{content:'✓';position:absolute;left:0;color:var(--green);font-weight:800;}
 </style>
 <script defer src="/events/_analytics.js"></script>
 <script defer src="/events/_whatsapp-desktop.js"></script>
@@ -351,7 +376,51 @@ section.block{padding:4rem 5%;}
       <div class="ps">20-second story · tap to play</div>
     </div>
   </div>
+
+  <!-- 3-step graphic (for skimmers who won't press play) -->
+  <div class="container hw-steps">
+    <div class="hw-step"><div class="hw-num">1</div><div class="hw-ic">💬</div><div class="hw-st">Tell us your event</div><div class="hw-sd">Chat your event, guests &amp; menu — no forms, no calls.</div></div>
+    <div class="hw-step"><div class="hw-num">2</div><div class="hw-ic">🤖</div><div class="hw-st">AI matches kitchens</div><div class="hw-sd">Our AI finds verified kitchens that fit your menu &amp; budget.</div></div>
+    <div class="hw-step"><div class="hw-num">3</div><div class="hw-ic">✅</div><div class="hw-st">Compare &amp; book</div><div class="hw-sd">Get quotes on WhatsApp. Pick the best. No advance payment.</div></div>
+  </div>
+
+  <!-- works for every event → taps pre-select the estimator -->
+  <div class="container hw-events">
+    <div class="lbl">Works for every event →</div>
+    <div class="hw-chips" id="hwChips">
+      <button type="button" class="hw-chip" data-ev="Wedding">💍 Wedding</button>
+      <button type="button" class="hw-chip" data-ev="Birthday">🎂 Birthday</button>
+      <button type="button" class="hw-chip" data-ev="Corporate">🏢 Corporate</button>
+      <button type="button" class="hw-chip" data-ev="Annaprasan">🍚 Annaprasan</button>
+      <button type="button" class="hw-chip" data-ev="Griha Pravesh">🏡 Griha Pravesh</button>
+      <button type="button" class="hw-chip" data-ev="Bhai Phota">🎁 Bhai Phota</button>
+    </div>
+  </div>
+
+  <!-- old way vs Aayojan -->
+  <div class="container hw-vs">
+    <div class="hw-col old"><h4>😩 The old way</h4><ul><li>Call 10 caterers</li><li>Wait days for replies</li><li>Random, unclear prices</li><li>No idea who to trust</li></ul></div>
+    <div class="hw-col new"><h4>✨ With Aayojan</h4><ul><li>Tell us once</li><li>AI matches in seconds</li><li>Clear, compared prices</li><li>Only verified kitchens</li></ul></div>
+  </div>
 </section>
+<script>
+  (function () {
+    var wrap = document.getElementById("hwChips");
+    if (!wrap) return;
+    function track(e, p) { if (typeof window.aTrack === "function") window.aTrack(e, p || {}); else if (typeof window.gtag === "function") window.gtag("event", e, p || {}); }
+    wrap.addEventListener("click", function (e) {
+      var b = e.target.closest(".hw-chip"); if (!b) return;
+      var ev = b.getAttribute("data-ev");
+      track("howto_event_click", { event: ev });
+      // pre-select the matching chip in the estimator, then scroll to it
+      var target = Array.prototype.slice.call(document.querySelectorAll(".est-chip"))
+        .filter(function (c) { return c.textContent.trim().toLowerCase() === ev.toLowerCase(); })[0];
+      if (target) target.click();
+      var est = document.getElementById("quote-estimator");
+      if (est) est.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  })();
+</script>
 <script>
   (function () {
     var frame = document.getElementById("howtoFrame"), poster = document.getElementById("howtoPoster");
