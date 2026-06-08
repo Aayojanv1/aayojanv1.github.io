@@ -259,6 +259,14 @@ section.block{padding:4rem 5%;}
 .founder-sign{font-size:0.9rem;color:var(--dark);margin-bottom:1.1rem;}
 .founder-sign strong{color:var(--saffron);}
 .founder-wa{display:inline-flex;align-items:center;gap:7px;min-height:46px;background:#25D366;color:#fff;padding:0.6rem 1.2rem;border-radius:12px;font-weight:800;font-size:0.9rem;text-decoration:none;box-shadow:0 10px 24px rgba(37,211,102,0.3);}
+/* "how it works" reel (lazy click-to-play, watch-tracked) */
+.howto{background:var(--cream-2);}
+.howto-frame{max-width:300px;margin:0 auto;aspect-ratio:9/16;border-radius:26px;overflow:hidden;border:8px solid #1A1208;box-shadow:0 24px 60px rgba(76,43,10,0.22);position:relative;background:#1A1208;}
+.howto-frame iframe{width:100%;height:100%;border:0;display:block;}
+.howto-poster{position:absolute;inset:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:linear-gradient(180deg,#1A1208,#2A1B0C);color:#fff;text-align:center;padding:20px;}
+.howto-play{width:64px;height:64px;border-radius:50%;background:var(--saffron);display:grid;place-items:center;font-size:24px;color:#fff;box-shadow:0 10px 30px rgba(232,118,10,0.5);}
+.howto-poster .pt{font-family:'Playfair Display',serif;font-weight:800;font-size:1.1rem;}
+.howto-poster .ps{font-size:0.8rem;color:#cbbfa9;}
 </style>
 <script defer src="/events/_analytics.js"></script>
 <script defer src="/events/_whatsapp-desktop.js"></script>
@@ -328,6 +336,55 @@ section.block{padding:4rem 5%;}
     <span class="trust-pill">✓ FSSAI declared</span>
   </div>
 </section>
+
+<!-- HOW IT WORKS REEL — lazy click-to-play, watch-tracked via postMessage -->
+<section class="block howto" id="howto">
+  <div class="container section-head">
+    <span class="section-eyebrow">See it in action</span>
+    <h2 class="section-title">How Aayojan works — <em>in 20 seconds</em></h2>
+    <p class="section-sub">No calling 10 caterers. Tell us once — our AI matches you to verified kitchens.</p>
+  </div>
+  <div class="howto-frame" id="howtoFrame">
+    <div class="howto-poster" id="howtoPoster" role="button" tabindex="0" aria-label="Play: how Aayojan works">
+      <div class="howto-play">▶</div>
+      <div class="pt">See how it works</div>
+      <div class="ps">20-second story · tap to play</div>
+    </div>
+  </div>
+</section>
+<script>
+  (function () {
+    var frame = document.getElementById("howtoFrame"), poster = document.getElementById("howtoPoster");
+    if (!frame || !poster) return;
+    function track(e, p) {
+      if (typeof window.aTrack === "function") window.aTrack(e, p || {});
+      else if (typeof window.gtag === "function") window.gtag("event", e, p || {});
+    }
+    var viewed = false, played = false, fired = {};
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (en) { if (en.isIntersecting && !viewed) { viewed = true; track("reel_view", { page: "events-index" }); } });
+      }, { threshold: 0.5 });
+      io.observe(frame);
+    }
+    function play() {
+      if (played) return; played = true;
+      var ifr = document.createElement("iframe");
+      ifr.src = "/reel.html"; ifr.title = "How Aayojan works"; ifr.allow = "autoplay";
+      frame.appendChild(ifr); poster.style.display = "none";
+      track("reel_play", { page: "events-index" });
+    }
+    poster.addEventListener("click", play);
+    poster.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); play(); } });
+    window.addEventListener("message", function (ev) {
+      if (ev.origin !== location.origin) return;
+      var d = ev.data; if (!d || d.src !== "aayojan-reel") return;
+      var pct = Math.round((d.scene / d.total) * 100);
+      [25, 50, 75].forEach(function (m) { if (pct >= m && !fired[m]) { fired[m] = 1; track("reel_progress", { page: "events-index", percent: m }); } });
+      if (d.scene >= d.total && !fired[100]) { fired[100] = 1; track("reel_complete", { page: "events-index" }); }
+    });
+  })();
+</script>
 
 <!-- INSTANT QUOTE ESTIMATOR — interactive, keeps paid visitors on-page.
      The inner content is a fallback CTA; _estimator.js replaces it on render,
