@@ -62,14 +62,7 @@ export default function AayojanChatBot() {
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
 
-  // Auto-open shortly after landing — slight delay lets the page settle first
-  useEffect(() => {
-    const t = setTimeout(() => {
-      setOpen(true);
-      track('chatbot_opened', { trigger: 'auto', ...getAttributionForEvent() });
-    }, 1200);
-    return () => clearTimeout(t);
-  }, []);
+  // Starts minimized (floating bubble) — opens only when the user taps it.
 
   // Auto-scroll on new message
   useEffect(() => {

@@ -30,7 +30,10 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem
 .nav-links a{color:#ccc;margin-left:1.4rem;font-size:0.88rem;}
 .nav-links a:hover{color:var(--saffron-light);}
 .nav-cta{background:var(--saffron);color:white!important;padding:0.5rem 1.1rem;border-radius:6px;font-weight:600!important;}
-@media (max-width:720px){.nav-links a:not(.nav-cta){display:none;}}
+.nav-cater{color:var(--saffron-light)!important;border:1.5px solid var(--saffron);border-radius:99px;padding:0.35rem 0.9rem;font-weight:800!important;animation:caterPulse 2.2s ease-in-out infinite;}
+.nav-cater:hover{background:var(--saffron);color:#fff!important;}
+@keyframes caterPulse{0%,100%{box-shadow:0 0 0 0 rgba(232,118,10,0.55);}50%{box-shadow:0 0 0 7px rgba(232,118,10,0);}}
+@media (max-width:720px){.nav-links a:not(.nav-cta):not(.nav-cater){display:none;}}
 .crumbs{padding:0.8rem 5%;background:var(--cream-2);font-size:0.78rem;color:var(--muted);border-bottom:1px solid var(--border);}
 .crumbs a{color:var(--saffron);font-weight:600;}
 .crumbs span{margin:0 0.4rem;color:var(--border);}
@@ -317,7 +320,7 @@ section.block{padding:4rem 5%;}
   <div class="nav-links">
     <a href="/caterers/">Areas</a>
     <a href="/events/">Events</a>
-    <a href="/partners.html">For Caterers</a>
+    <a href="/partners.html" class="nav-cater">🍳 Caterers — Join Free</a>
     <a href="/faq.html">FAQ</a>
     <a href="https://wa.me/918088434425?text=Hi%20Aayojan!" class="nav-cta">Get Quote</a>
   </div>
@@ -736,9 +739,9 @@ section.block{padding:4rem 5%;}
 <section class="featured-kitchens">
   <div class="fk-inner">
     <div class="fk-head">
-      <span class="fk-eyebrow">★ Hand-Picked Founding Partners</span>
-      <h2 class="fk-title">5 verified Bengali kitchens. <em>One marketplace.</em></h2>
-      <p class="fk-sub">Each kitchen is Bengali-led, FSSAI-declared, and personally onboarded. We route your event to the right one based on cuisine, date and area.</p>
+      <span class="fk-eyebrow">★ Hand-Picked Verified Partners</span>
+      <h2 class="fk-title">6 verified kitchens. <em>One marketplace.</em></h2>
+      <p class="fk-sub">Each kitchen is verified, FSSAI-checked and personally onboarded. We route your event to the right one based on cuisine, date and area.</p>
     </div>
     <div class="fk-grid">
       <a class="fk-card" href="/partners/munias-kitchen.html">
