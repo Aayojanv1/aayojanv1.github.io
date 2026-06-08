@@ -292,6 +292,20 @@ section.block{padding:4rem 5%;}
 .hw-col li{font-size:0.85rem;color:var(--brown);padding:3px 0 3px 22px;position:relative;line-height:1.45;}
 .hw-col.old li::before{content:'✕';position:absolute;left:0;color:#c0392b;font-weight:800;}
 .hw-col.new li::before{content:'✓';position:absolute;left:0;color:var(--green);font-weight:800;}
+/* rolling food gallery (auto-scroll marquee) */
+.groll-sec{background:var(--cream-2);padding:2.4rem 0 2.6rem;border-bottom:1px solid var(--border);}
+.groll-head{text-align:center;padding:0 5%;margin-bottom:1.3rem;}
+.groll-head .eyebrow{display:inline-block;font-size:0.74rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--saffron);margin-bottom:0.4rem;}
+.groll-head h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.6vw,2.3rem);font-weight:800;color:var(--dark);margin:0;}
+.groll-head h2 em{color:var(--saffron);font-style:italic;}
+.groll{overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);}
+.groll-track{display:flex;gap:12px;width:max-content;animation:grollscroll 48s linear infinite;}
+.groll:hover .groll-track{animation-play-state:paused;}
+@keyframes grollscroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.gcard{position:relative;flex:0 0 auto;width:clamp(220px,62vw,280px);aspect-ratio:4/3;border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:0 10px 28px rgba(76,43,10,0.12);}
+.gcard img{width:100%;height:100%;object-fit:cover;display:block;}
+.gcard figcaption{position:absolute;left:0;right:0;bottom:0;padding:0.8rem 0.8rem 0.55rem;background:linear-gradient(transparent,rgba(20,12,4,0.85));color:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:0.88rem;}
+@media (prefers-reduced-motion:reduce){.groll-track{animation:none;overflow-x:auto;}}
 </style>
 <script defer src="/events/_analytics.js"></script>
 <script defer src="/events/_whatsapp-desktop.js"></script>
@@ -359,6 +373,34 @@ section.block{padding:4rem 5%;}
     <span class="trust-pill">🐟 Bengali-led</span>
     <span class="trust-pill">₹0 to use</span>
     <span class="trust-pill">✓ FSSAI declared</span>
+  </div>
+</section>
+
+<!-- ROLLING FOOD GALLERY — real partner photos, auto-scroll marquee -->
+<section class="groll-sec" id="gallery">
+  <div class="groll-head">
+    <span class="eyebrow">A taste of the spread</span>
+    <h2>Real food from <em>real events</em></h2>
+  </div>
+  <div class="groll">
+    <div class="groll-track">
+      <figure class="gcard"><img loading="lazy" src="/events/img/hub/live-counter.jpg" alt="Live buffet counter with chefs"><figcaption>Live Counter Service</figcaption></figure>
+      <figure class="gcard"><img loading="lazy" src="/events/img/hub/tandoori-kebab.jpg" alt="Tandoori kebab skewers"><figcaption>Tandoori Kebabs</figcaption></figure>
+      <figure class="gcard"><img loading="lazy" src="/events/img/hub/live-cooking.jpg" alt="Chef cooking fresh at a live station"><figcaption>Live Cooking Station</figcaption></figure>
+      <figure class="gcard"><img loading="lazy" src="/events/img/hub/welcome-drinks.jpg" alt="Welcome drinks service"><figcaption>Welcome Drinks</figcaption></figure>
+      <figure class="gcard"><img loading="lazy" src="/events/img/hub/palak-paneer.jpg" alt="Palak paneer with rice"><figcaption>Palak Paneer</figcaption></figure>
+      <figure class="gcard"><img loading="lazy" src="/events/img/hub/papad.jpg" alt="Crispy papad"><figcaption>Crispy Papad</figcaption></figure>
+      <figure class="gcard"><img loading="lazy" src="/events/img/hub/fresh-veggies.jpg" alt="Fresh ingredient bowls at a live counter"><figcaption>Fresh Ingredients</figcaption></figure>
+      <figure class="gcard"><img loading="lazy" src="/events/img/hub/continental.jpg" alt="Continental pasta and salad counter"><figcaption>Continental Counter</figcaption></figure>
+      <figure class="gcard" aria-hidden="true"><img loading="lazy" src="/events/img/hub/live-counter.jpg" alt=""><figcaption>Live Counter Service</figcaption></figure>
+      <figure class="gcard" aria-hidden="true"><img loading="lazy" src="/events/img/hub/tandoori-kebab.jpg" alt=""><figcaption>Tandoori Kebabs</figcaption></figure>
+      <figure class="gcard" aria-hidden="true"><img loading="lazy" src="/events/img/hub/live-cooking.jpg" alt=""><figcaption>Live Cooking Station</figcaption></figure>
+      <figure class="gcard" aria-hidden="true"><img loading="lazy" src="/events/img/hub/welcome-drinks.jpg" alt=""><figcaption>Welcome Drinks</figcaption></figure>
+      <figure class="gcard" aria-hidden="true"><img loading="lazy" src="/events/img/hub/palak-paneer.jpg" alt=""><figcaption>Palak Paneer</figcaption></figure>
+      <figure class="gcard" aria-hidden="true"><img loading="lazy" src="/events/img/hub/papad.jpg" alt=""><figcaption>Crispy Papad</figcaption></figure>
+      <figure class="gcard" aria-hidden="true"><img loading="lazy" src="/events/img/hub/fresh-veggies.jpg" alt=""><figcaption>Fresh Ingredients</figcaption></figure>
+      <figure class="gcard" aria-hidden="true"><img loading="lazy" src="/events/img/hub/continental.jpg" alt=""><figcaption>Continental Counter</figcaption></figure>
+    </div>
   </div>
 </section>
 
@@ -673,22 +715,6 @@ section.block{padding:4rem 5%;}
   </div>
 </section>
 
-<!-- FOOD GALLERY — drop photos in /events/img/hub/ to replace placeholders -->
-<section class="block gallery">
-  <div class="container section-head">
-    <span class="section-eyebrow">A taste of the spread</span>
-    <h2 class="section-title">What lands on the <em>table</em>.</h2>
-    <p class="section-sub">Real plating from our founding Bengali kitchens. Tap WhatsApp and we match the spread to your event.</p>
-  </div>
-  <div class="container gallery-grid">
-    <figure class="gphoto"><span class="ph">🍛</span><img loading="lazy" src="/events/img/hub/kolkata-biryani.jpg" alt="Kolkata mutton biryani" onerror="this.remove()"><figcaption>Kolkata Biryani</figcaption></figure>
-    <figure class="gphoto"><span class="ph">🍢</span><img loading="lazy" src="/events/img/hub/kosha-mangsho.jpg" alt="Bengali kosha mangsho" onerror="this.remove()"><figcaption>Kosha Mangsho</figcaption></figure>
-    <figure class="gphoto"><span class="ph">🐟</span><img loading="lazy" src="/events/img/hub/doi-maach.jpg" alt="Doi maach fish curry" onerror="this.remove()"><figcaption>Doi Maach</figcaption></figure>
-    <figure class="gphoto"><span class="ph">🍤</span><img loading="lazy" src="/events/img/hub/galouti-kebab.jpg" alt="Galouti kebab starter" onerror="this.remove()"><figcaption>Galouti Kebab</figcaption></figure>
-    <figure class="gphoto"><span class="ph">🧆</span><img loading="lazy" src="/events/img/hub/paneer.jpg" alt="Paneer butter masala" onerror="this.remove()"><figcaption>Paneer Butter Masala</figcaption></figure>
-    <figure class="gphoto"><span class="ph">🍮</span><img loading="lazy" src="/events/img/hub/mishti-payesh.jpg" alt="Bengali mishti and payesh" onerror="this.remove()"><figcaption>Mishti &amp; Payesh</figcaption></figure>
-  </div>
-</section>
 
 <!-- CUISINE QUICK-LINKS — more drill paths -->
 <section class="cuisine-strip">
