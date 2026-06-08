@@ -61,6 +61,27 @@
   .pill{background:rgba(35,107,67,.1);color:var(--green);border:1px solid rgba(35,107,67,.3);border-radius:99px;padding:6px 11px;font-size:12px;font-weight:800;}
   .cta{margin-top:13px;background:#25D366;color:#fff;border-radius:14px;padding:13px 22px;font-weight:900;font-size:clamp(15px,2.6vh,19px);}
   .url{margin-top:9px;font-weight:800;color:var(--dark);font-size:clamp(14px,2.4vh,19px);}
+  /* reveal: aliased -> real name */
+  .rev{flex:1;min-width:0;position:relative;text-align:left;min-height:40px;}
+  .rev .rv-alias,.rev .rv-real{display:block;font-family:'Playfair Display',serif;font-weight:800;font-size:14px;}
+  .rev .rv-alias{color:var(--dark);}
+  .rev .rv-real{position:absolute;inset:0;color:var(--green);opacity:0;}
+  .rev small{font-weight:600;font-size:10px;color:var(--muted);}
+  .rev .rv-real small{color:var(--green);}
+  .scene.on .rev .rv-alias{animation:fadeOutUp .5s ease 1.8s forwards;}
+  .scene.on .rev .rv-real{animation:fadeInUp .5s ease 2.2s forwards;}
+  @keyframes fadeOutUp{to{opacity:0;transform:translateY(-6px);}}
+  @keyframes fadeInUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  .confirmst{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-weight:900;font-size:16px;opacity:0;transform:scale(.5);}
+  .scene.on .confirmst{animation:pop .4s ease 2.7s forwards;}
+  /* work order card */
+  .order{width:100%;max-width:330px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:0 16px 40px rgba(76,43,10,.16);padding:14px 16px;text-align:left;opacity:0;transform:translateY(14px);}
+  .scene.on .order{animation:fadeInUp .5s ease .2s both;}
+  .ord-top{font-weight:900;color:var(--green);font-size:15px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:8px;}
+  .ord-id{font-size:11px;color:var(--muted);font-weight:700;}
+  .ord-row{display:flex;justify-content:space-between;font-size:13px;padding:3px 0;color:var(--muted);}
+  .ord-row b{color:var(--dark);}
+  .ord-foot{margin-top:8px;font-size:11px;color:var(--green);font-weight:700;text-align:center;}
 </style>
 </head>
 <body>
@@ -122,8 +143,36 @@
     <div class="m"><div class="sc">88%</div><div><div class="mn">Premium Bengali & Mughlai</div><div class="mt">Bengali · Mughlai · Chinese</div><div class="vf">✓ Aayojan Verified</div></div><div class="wa">WhatsApp</div></div>
   </section>
 
-  <!-- 7 · EVERYONE SORTED + CTA -->
+  <!-- 7 · SELECT -> CONFIRM -> REAL NAME REVEALED -->
   <section class="scene" data-s="7">
+    <div class="say onlight" style="font-size:clamp(18px,3.4vh,26px);margin-bottom:10px">She picks one — the kitchen <span class="em">confirms</span> ✅</div>
+    <div class="m" style="opacity:1;transform:none;">
+      <div class="sc">94%</div>
+      <div class="rev">
+        <span class="rv-alias">Multi-Cuisine Kitchen · Newtown<br><small>name hidden until confirmed</small></span>
+        <span class="rv-real">Curry-কথা<br><small>✓ FSSAI 22825211000224</small></span>
+      </div>
+      <div class="confirmst">✓</div>
+    </div>
+    <div class="say onlight" style="font-size:clamp(13px,2.2vh,16px);color:var(--muted);margin-top:10px">Real name shown once the kitchen accepts 🔓</div>
+  </section>
+
+  <!-- 8 · WORK ORDER CREATED -->
+  <section class="scene" data-s="8">
+    <div class="say onlight" style="margin-bottom:12px">Work order <span class="em">created</span> 🎉</div>
+    <div class="order">
+      <div class="ord-top">✅ Booking Confirmed <span class="ord-id">#AAY-1042</span></div>
+      <div class="ord-row"><span>Kitchen</span><b>Curry-কথা ✓</b></div>
+      <div class="ord-row"><span>Event</span><b>Wedding · 200 guests</b></div>
+      <div class="ord-row"><span>Date</span><b>Sat, 14 Jun</b></div>
+      <div class="ord-row"><span>Per plate</span><b>₹650</b></div>
+      <div class="ord-row"><span>Invoice</span><b>📄 Digital ✓</b></div>
+      <div class="ord-foot">No advance paid · pay the kitchen after the event 🎉</div>
+    </div>
+  </section>
+
+  <!-- 9 · EVERYONE SORTED + CTA -->
+  <section class="scene" data-s="9">
     <div class="say onlight">All booked. <span class="em">All sorted.</span> 🎉</div>
     <div class="diverse">🥳 Wedding · Office lunch · Annaprasan — all matched</div>
     <div class="pills"><span class="pill">Every event</span><span class="pill">No advance payment</span><span class="pill">Verified ✓</span></div>
@@ -135,14 +184,16 @@
 <script>
   var TL = [
     { s: 1, at: 0 },
-    { s: 2, at: 2600 },
-    { s: 3, at: 6200 },
-    { s: 4, at: 8000 },
-    { s: 5, at: 14500 },
-    { s: 6, at: 16600 },
-    { s: 7, at: 19600 }
+    { s: 2, at: 2500 },
+    { s: 3, at: 5800 },
+    { s: 4, at: 7500 },
+    { s: 5, at: 13500 },
+    { s: 6, at: 15400 },
+    { s: 7, at: 18200 },
+    { s: 8, at: 22400 },
+    { s: 9, at: 25400 }
   ];
-  var LOOP = 22800;
+  var LOOP = 28400;
   var scenes = {};
   document.querySelectorAll(".scene").forEach(function (el) { scenes[el.getAttribute("data-s")] = el; });
   var TOTAL = Object.keys(scenes).length;
