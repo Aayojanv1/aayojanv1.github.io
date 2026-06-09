@@ -558,6 +558,7 @@ TONE: Professional yet friendly. Use Bengali phrases occasionally (e.g., "আপ
 // ═══════════════════════════════════════════════════════════════════════════════
 export default function AayojanApp(){
   const [view,setView]=useState("landing");
+  const [menuOpen,setMenuOpen]=useState(false);
   const [animIn,setAnimIn]=useState(true);
 
   // Dark mode
@@ -1121,7 +1122,23 @@ export default function AayojanApp(){
             <button onClick={logout} style={{background:"none",border:"1px solid #fca5a5",borderRadius:8,padding:"6px 10px",fontSize:11,color:"#c0392b",cursor:"pointer"}}>Logout</button>
           </div>:<button onClick={()=>setShowLogin(true)} style={{...S.primaryBtn,padding:"8px 16px",width:"auto",marginTop:0}}>Login</button>}
         </div>
+        <button className="hamburger-btn" onClick={()=>setMenuOpen(o=>!o)} aria-label="Menu" aria-expanded={menuOpen} style={{display:"flex",alignItems:"center",justifyContent:"center",background:"none",border:"1px solid var(--border-default)",borderRadius:10,padding:"10px 11px",cursor:"pointer",color:"var(--text-primary)"}}><span className={"hb"+(menuOpen?" open":"")}><i/><i/><i/></span></button>
       </header>
+      {menuOpen&&(<>
+        <div onClick={()=>setMenuOpen(false)} style={{position:"fixed",inset:0,zIndex:150}}/>
+        <div className="mobile-menu" style={{position:"fixed",top:62,right:12,zIndex:200,width:"min(264px,92vw)",background:"var(--bg-card,#fff)",border:"1px solid var(--border-default)",borderRadius:14,padding:8,display:"flex",flexDirection:"column",gap:2,boxShadow:"0 22px 54px rgba(0,0,0,0.28)"}}>
+          <button onClick={()=>{navigate("landing");resetApp();setMenuOpen(false);}} style={{textAlign:"left",padding:"10px 12px",borderRadius:9,fontSize:14.5,fontWeight:600,color:"var(--text-primary)",background:"none",border:"none",cursor:"pointer"}}>🏠 Home</button>
+          <a href="/events/" style={{padding:"10px 12px",borderRadius:9,fontSize:14.5,fontWeight:600,color:"var(--text-primary)"}}>🎉 Events</a>
+          <a href="/caterers/" style={{padding:"10px 12px",borderRadius:9,fontSize:14.5,fontWeight:600,color:"var(--text-primary)"}}>📍 Areas we serve</a>
+          <a href="/partners.html" style={{padding:"10px 12px",borderRadius:9,fontSize:14.5,fontWeight:800,color:"#E8760A",background:"rgba(232,118,10,0.10)"}}>🍳 For Caterers — Join Free</a>
+          <a href="/faq.html" style={{padding:"10px 12px",borderRadius:9,fontSize:14.5,fontWeight:600,color:"var(--text-primary)"}}>❓ FAQ</a>
+          <div style={{height:1,background:"var(--border-light)",margin:"4px 6px"}}/>
+          <button onClick={()=>{navigate("about");setMenuOpen(false);}} style={{textAlign:"left",padding:"10px 12px",borderRadius:9,fontSize:14.5,fontWeight:600,color:"var(--text-secondary)",background:"none",border:"none",cursor:"pointer"}}>ℹ️ About Us</button>
+          <button onClick={()=>{navigate("chat");setMenuOpen(false);}} style={{textAlign:"left",padding:"10px 12px",borderRadius:9,fontSize:14.5,fontWeight:600,color:"var(--text-secondary)",background:"none",border:"none",cursor:"pointer"}}>💬 Chat with us</button>
+          <button onClick={()=>setDarkMode(!darkMode)} style={{textAlign:"left",padding:"10px 12px",borderRadius:9,fontSize:14.5,fontWeight:600,color:"var(--text-secondary)",background:"none",border:"none",cursor:"pointer"}}>{darkMode?"☀️ Light mode":"🌙 Dark mode"}</button>
+          {user?<button onClick={()=>{logout();setMenuOpen(false);}} style={{textAlign:"left",padding:"10px 12px",borderRadius:9,fontSize:14.5,fontWeight:600,color:"#c0392b",background:"none",border:"none",cursor:"pointer"}}>↩ Logout</button>:<button onClick={()=>{setShowLogin(true);setMenuOpen(false);}} style={{textAlign:"center",padding:"11px 12px",marginTop:2,borderRadius:9,fontSize:14.5,fontWeight:800,color:"#fff",background:"#E8760A",border:"none",cursor:"pointer"}}>Login</button>}
+        </div>
+      </>)}
 
       {/* ══════════════════════════════════════════════════════════════════════
           LANDING
@@ -3340,6 +3357,18 @@ export default function AayojanApp(){
           100% { box-shadow: 0 0 0 0 rgba(134,239,172,0); }
         }
         .food-grid > div:hover img { transform: scale(1.08); }
+        .hamburger-btn{display:flex !important;align-items:center;justify-content:center;transition:border-color .2s,box-shadow .2s;}
+        .hamburger-btn:hover{border-color:#E8760A;box-shadow:0 4px 14px rgba(232,118,10,0.18);}
+        .header-right{display:none !important;}
+        .hb{display:flex;flex-direction:column;justify-content:center;gap:5px;width:22px;height:17px;}
+        .hb i{display:block;height:2.5px;width:100%;background:currentColor;border-radius:2px;transition:transform .3s ease,opacity .2s ease;}
+        .hb.open i:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+        .hb.open i:nth-child(2){opacity:0;}
+        .hb.open i:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+        .mobile-menu{transform-origin:top right;animation:menuIn .22s cubic-bezier(.2,.8,.2,1);}
+        @keyframes menuIn{from{opacity:0;transform:translateY(-8px) scale(.96);}to{opacity:1;transform:none;}}
+        .mobile-menu a, .mobile-menu button{transition:background .15s;}
+        .mobile-menu a:hover, .mobile-menu button:hover{background:var(--bg-secondary,#f6efe6);opacity:1;}
         @media(max-width:760px){
           .food-grid > div { grid-column: span 12 !important; height: 200px !important; }
         }
