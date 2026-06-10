@@ -186,4 +186,12 @@ Rules: Rank top 3 only. No markdown."""
             if lines and lines[-1].strip() == "```":
                 lines = lines[:-1]
             text = "\n".join(lines)
+        text = text.strip()
+        # Models sometimes wrap the JSON in prose ("Sure! {...}"). Extract the
+        # outermost {...} object so json.loads still succeeds.
+        if not text.startswith("{"):
+            start = text.find("{")
+            end = text.rfind("}")
+            if start != -1 and end != -1 and end > start:
+                text = text[start:end + 1]
         return text.strip()

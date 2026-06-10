@@ -108,7 +108,7 @@
     "@keyframes aipPop{to{opacity:1;transform:none;}}" +
     ".aip-body{position:relative;flex:1;display:flex;flex-direction:column;max-width:560px;width:100%;margin:0 auto;overflow:hidden;}" +
     ".aip-chat{flex:1;overflow-y:auto;padding:14px 14px 8px;display:flex;flex-direction:column;gap:9px;}" +
-    ".aip-msg{max-width:84%;padding:10px 13px;border-radius:15px;font-size:14.5px;line-height:1.4;font-weight:500;white-space:pre-wrap;}" +
+    ".aip-msg{max-width:84%;padding:10px 13px;border-radius:15px;font-size:14.5px;line-height:1.4;font-weight:500;white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;}" +
     ".aip-msg.bot{background:rgba(255,248,239,0.08);border:1px solid rgba(255,248,239,0.12);color:#FFF8EF;border-bottom-left-radius:5px;margin-right:auto;}" +
     ".aip-msg.usr{background:var(--saffron,#E8760A);color:#fff;border-bottom-right-radius:5px;margin-left:auto;}" +
     ".aip-typing{display:flex;gap:4px;padding:12px 14px;}" +
@@ -224,6 +224,19 @@
     var i = form.querySelector(".aip-in"); if (i) i.focus();
   }
 
+  // Belt-and-braces: if the model ever leaks raw JSON into the reply, recover clean text.
+  function cleanReply(r) {
+    if (!r) return "";
+    r = String(r);
+    // 1) if a JSON object is embedded, pull its "reply" field
+    var m = r.match(/"reply"\s*:\s*"((?:[^"\\]|\\.)*)"/);
+    if (m) { try { return JSON.parse('"' + m[1] + '"'); } catch (e) { return m[1]; } }
+    // 2) otherwise cut anything from the first stray brace onward
+    var i = r.indexOf("{");
+    if (i > 0 && /"(reply|brief|complete)"/.test(r)) r = r.slice(0, i);
+    return r.replace(/```json|```/g, "").trim();
+  }
+
   function sendUser(text) {
     if (isProfane(text)) {
       addMsg("Let's keep it friendly and about your event 🙂", "bot");
@@ -250,7 +263,8 @@
         hideTyping();
         if (!data || data.error || (!data.reply && !data.complete)) { goGuided(); return; }
         mergeBrief(data.brief);
-        if (data.reply) { addMsg(data.reply, "bot"); history.push({ role: "assistant", content: data.reply }); }
+        var reply = cleanReply(data.reply);
+        if (reply) { addMsg(reply, "bot"); history.push({ role: "assistant", content: reply }); }
         track("ai_planner_turn", {});
         if (data.complete) { track("ai_planner_brief_complete", { source: "gemini" }); runEngine(); }
         else renderFree(false);
