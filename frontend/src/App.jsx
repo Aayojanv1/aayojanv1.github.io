@@ -313,14 +313,14 @@ STRICT RULES:
 2) If profanity/abuse: "Let's keep things professional! I'm here to help your catering business grow 📈"
 3) Keep replies warm, concise (2-4 sentences), and persuasive. Use numbers and specifics.
 
-KEY FACTS ABOUT AAYOJAN (use these in responses — pre-launch phase, be honest):
-- Aayojan is Kolkata's hyperlocal Bengali catering marketplace (pre-launch)
-- We bring customers to caterers via WhatsApp — no app needed
-- Areas: Newtown (Action Area I, II, III), Rajarhat, Salt Lake, Eco Park zone
-- 5 founding Bengali kitchens onboarded (Munia's, Curry-কথা, Magnolia, 56 Bhog, Tulika's)
-- 2 FSSAI verified, 3 with FSSAI Applied
-- Customer launch is upcoming — currently routing manually via WhatsApp during pre-launch
-- Lead volume builds as customer base grows — founding partners get priority placement
+KEY FACTS ABOUT AAYOJAN (use these in responses — be honest; we are LIVE and taking orders):
+- Aayojan is Kolkata's hyperlocal Bengali catering marketplace — live and taking orders now
+- We bring customers to caterers via WhatsApp + our AI planner — no app needed
+- Areas: Newtown, Salt Lake, Rajarhat & adjoining (Baguiati, VIP Road, Lake Town, Kestopur, Chinar Park, Dum Dum)
+- 15+ kitchens in our network — the kitchen's name is shared once we match the customer
+- Every kitchen is Aayojan-verified and FSSAI-checked before they cook for you
+- Customers get matched to the right kitchen via the AI planner / WhatsApp, then connect
+- Lead volume builds as customer base grows — early partners get priority placement
 
 PRICING:
 - Registration: ₹0 (free forever)
@@ -1089,7 +1089,7 @@ export default function AayojanApp(){
           {[...Array(2)].map((_,i)=>(
             <div key={i} style={{display:"flex",gap:40,paddingRight:40}}>
               <span style={{fontSize:12,color:"#fff",fontWeight:600}}>📍 Serving Newtown, Salt Lake & Rajarhat</span>
-              <span style={{fontSize:12,color:"#FDE68A",fontWeight:700}}>🔥 7 Verified Founding Caterers</span>
+              <span style={{fontSize:12,color:"#FDE68A",fontWeight:700}}>🟢 Live · 15+ Verified Kitchens</span>
               <span style={{fontSize:12,color:"#fff",fontWeight:600}}>⚡ Free quotes in 48 hours</span>
               <span style={{fontSize:12,color:"#FDE68A",fontWeight:700}}>🚀 Now Onboarding Partner Caterers!</span>
               <span style={{fontSize:12,color:"#fff",fontWeight:600}}>🎉 Food Tasting from ₹199</span>
@@ -1183,7 +1183,7 @@ export default function AayojanApp(){
 
                {/* Subtitle */}
                <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(16px,1.9vw,21px)",color:"rgba(255,248,239,0.75)",margin:"0 0 30px",lineHeight:1.55,maxWidth:440,fontWeight:500}}>
-                 Verified event leads on WhatsApp as we onboard customers. No app, no dashboard, no monthly fee. 3% commission only when you earn. Pre-launch: founding partners pay 0% for the first year.
+                 Verified event leads on WhatsApp as we onboard customers. No app, no dashboard, no monthly fee. 3% commission only when you earn. Launch offer: early partners pay 0% for the first year.
                </p>
 
                {/* CTA */}
@@ -1233,12 +1233,12 @@ export default function AayojanApp(){
 
                {/* Subtitle */}
                <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(16px,1.9vw,21px)",color:"rgba(255,248,239,0.75)",margin:"0 0 30px",lineHeight:1.55,maxWidth:440,fontWeight:500}}>
-                 Bengali-led kitchens — curated, not crowd-sourced. WhatsApp quotes by tomorrow morning. Newtown · Salt Lake · Rajarhat.
+                 Bengali-led kitchens — curated, not crowd-sourced. Tell us once, our AI matches you. Newtown · Salt Lake · Rajarhat &amp; nearby.
                </p>
 
-               {/* CTA */}
+               {/* CTA — route every order into the /events AI planner funnel */}
                <div style={{display:"flex",gap:10,flexWrap:"wrap",marginBottom:26}}>
-                 <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20a%20caterer" target="_blank" rel="noopener" style={{display:"inline-flex",alignItems:"center",gap:8,background:"linear-gradient(135deg,#F3C869,#E8760A)",color:"#0F0A05",padding:"14px 26px",borderRadius:99,fontSize:14,fontWeight:800,textDecoration:"none",boxShadow:"0 12px 32px rgba(243,200,105,0.4)",fontFamily:"'Playfair Display',serif"}}>📱 Get quotes on WhatsApp →</a>
+                 <a href="/events/" style={{display:"inline-flex",alignItems:"center",gap:8,background:"linear-gradient(135deg,#F3C869,#E8760A)",color:"#0F0A05",padding:"14px 26px",borderRadius:99,fontSize:14,fontWeight:800,textDecoration:"none",boxShadow:"0 12px 32px rgba(243,200,105,0.4)",fontFamily:"'Playfair Display',serif"}}>✨ Plan with Aayojan AI →</a>
                </div>
 
                {/* Trust strip */}
@@ -1339,7 +1339,7 @@ export default function AayojanApp(){
            <span style={{position:"relative",background:"var(--bg-primary)",padding:"8px 20px",borderRadius:24,border:"1px solid var(--border-light)",fontSize:13,fontWeight:700,color:"var(--text-muted)",letterSpacing:0.5}}>👇 FOR AAYOJAKS</span>
          </div>
 
-         {/* ── LAUNCHING SOON — Excitement teaser with food gallery ──────── */}
+         {/* ── LIVE — "we're ready to serve you" teaser with food gallery ──────── */}
          <div style={{padding:"64px 14px",background:"linear-gradient(180deg,#FFF8EF 0%,#FFF0D5 60%,#FFE9C7 100%)",position:"relative",overflow:"hidden"}}>
            {/* Decorative blobs */}
            <div style={{position:"absolute",top:"-20%",left:"-10%",width:"50%",height:"60%",background:"radial-gradient(ellipse,rgba(232,118,10,0.10) 0%,transparent 60%)",pointerEvents:"none"}}></div>
@@ -1350,10 +1350,10 @@ export default function AayojanApp(){
              <div style={{textAlign:"center",marginBottom:36}}>
                <div style={{display:"inline-flex",alignItems:"center",gap:8,background:"linear-gradient(135deg,#E8760A,#C95F08)",color:"white",padding:"6px 16px",borderRadius:99,marginBottom:14,boxShadow:"0 8px 20px rgba(232,118,10,0.32)"}}>
                  <span style={{display:"inline-block",width:7,height:7,borderRadius:"50%",background:"#86efac",boxShadow:"0 0 0 0 rgba(134,239,172,0.7)",animation:"aayojan-pulse-dot 2s infinite"}}></span>
-                 <span style={{fontSize:11,fontWeight:800,letterSpacing:"0.16em"}}>LAUNCHING SOON</span>
+                 <span style={{fontSize:11,fontWeight:800,letterSpacing:"0.16em"}}>LIVE · TAKING ORDERS</span>
                </div>
-               <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,6vw,52px)",fontWeight:900,color:"#1C130A",margin:"0 0 12px",letterSpacing:"-0.02em",lineHeight:1.05}}>We can't wait to <em style={{color:"#E8760A"}}>serve you</em>.</h2>
-               <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(15px,2.2vw,20px)",color:"#513117",maxWidth:620,margin:"0 auto",lineHeight:1.5}}>The chefs, the kitchens, the city. Coming together for Newtown, Rajarhat & Salt Lake. The Aayojan customer experience drops in weeks.</p>
+               <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,6vw,52px)",fontWeight:900,color:"#1C130A",margin:"0 0 12px",letterSpacing:"-0.02em",lineHeight:1.05}}>We're ready to <em style={{color:"#E8760A"}}>serve you</em>.</h2>
+               <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(15px,2.2vw,20px)",color:"#513117",maxWidth:620,margin:"0 auto",lineHeight:1.5}}>The chefs, the kitchens, the city — together for Newtown, Salt Lake, Rajarhat &amp; nearby. Order now, get matched in minutes.</p>
              </div>
 
              {/* Food gallery — uneven masonry grid for visual interest */}
@@ -1385,8 +1385,8 @@ export default function AayojanApp(){
                <div style={{position:"absolute",top:"-50%",right:"-30%",width:"80%",height:"200%",background:"radial-gradient(ellipse,rgba(243,200,105,0.18) 0%,transparent 60%)",pointerEvents:"none"}}></div>
                <div style={{position:"relative",zIndex:1}}>
                  <div style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:15,color:"#F3C869",marginBottom:8}}>A note from the team</div>
-                 <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(22px,4vw,32px)",fontWeight:800,color:"#FFF8EF",margin:"0 0 10px",lineHeight:1.2}}>Be the first to know when we go live.</h3>
-                 <p style={{fontSize:14,color:"rgba(255,248,239,0.7)",margin:"0 auto 22px",maxWidth:480,lineHeight:1.6}}>Drop your WhatsApp and we'll send one message — the day Aayojan opens for customer bookings. No spam. Pinky promise.</p>
+                 <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(22px,4vw,32px)",fontWeight:800,color:"#FFF8EF",margin:"0 0 10px",lineHeight:1.2}}>We're live — get matched with a verified kitchen.</h3>
+                 <p style={{fontSize:14,color:"rgba(255,248,239,0.7)",margin:"0 auto 22px",maxWidth:480,lineHeight:1.6}}>Drop your WhatsApp and we'll match you with a verified Bengali kitchen for your event. Free · no advance payment · no spam.</p>
 
                  <div style={{display:"flex",gap:8,maxWidth:440,margin:"0 auto",flexWrap:"wrap",justifyContent:"center"}}>
                    <input id="waitlistPhone" type="tel" placeholder="+91 XXXXXXXXXX" style={{flex:"1 1 240px",minWidth:200,padding:"13px 16px",background:"rgba(255,248,239,0.08)",border:"1px solid rgba(243,200,105,0.3)",borderRadius:11,color:"#FFF8EF",fontSize:14,outline:"none",colorScheme:"light"}} onFocus={e=>e.target.style.borderColor="#F3C869"} onBlur={e=>e.target.style.borderColor="rgba(243,200,105,0.3)"} />
@@ -1397,16 +1397,16 @@ export default function AayojanApp(){
                      try{
                        const {db}=await import('./firebase');
                        const {collection,addDoc}=await import('firebase/firestore');
-                       await addDoc(collection(db,'launchWaitlist'),{whatsapp:ph,source:'landing_launch_teaser',submittedAt:new Date().toISOString(),...getAttribution()});
-                       track('launch_waitlist_joined',getAttributionForEvent());
-                       btn.textContent='✅ You\'re on the list';
+                       await addDoc(collection(db,'customerLeads'),{phone:ph,source:'landing_cta',status:'new',submittedAt:new Date().toISOString(),...getAttribution()});
+                       track('lead_submitted',getAttributionForEvent());
+                       btn.textContent='✅ We\'ll WhatsApp you shortly';
                        btn.style.background='#236B43';btn.style.color='#FFF8EF';
                        document.getElementById('waitlistPhone').value='';
-                     }catch(e){btn.disabled=false;btn.textContent='🔔 Notify me at launch';alert('Could not save. Please try again.');}
-                   }} style={{padding:"13px 22px",background:"linear-gradient(135deg,#F3C869,#E8760A)",color:"#0F0A05",border:"none",borderRadius:11,fontFamily:"'Playfair Display',serif",fontWeight:800,fontSize:14,cursor:"pointer",boxShadow:"0 12px 28px rgba(232,118,10,0.42)",whiteSpace:"nowrap"}}>🔔 Notify me at launch</button>
+                     }catch(e){btn.disabled=false;btn.textContent='Get matched →';alert('Could not save. Please try again.');}
+                   }} style={{padding:"13px 22px",background:"linear-gradient(135deg,#F3C869,#E8760A)",color:"#0F0A05",border:"none",borderRadius:11,fontFamily:"'Playfair Display',serif",fontWeight:800,fontSize:14,cursor:"pointer",boxShadow:"0 12px 28px rgba(232,118,10,0.42)",whiteSpace:"nowrap"}}>Get matched →</button>
                  </div>
 
-                 <p style={{fontSize:11,color:"rgba(255,248,239,0.4)",margin:"18px 0 0",fontStyle:"italic"}}>5 cuisines covered · 7 founding kitchens · 1 launch away.</p>
+                 <p style={{fontSize:11,color:"rgba(255,248,239,0.4)",margin:"18px 0 0",fontStyle:"italic"}}>5 cuisines · 15+ kitchens · live &amp; taking orders.</p>
                </div>
              </div>
            </div>
@@ -1420,7 +1420,7 @@ export default function AayojanApp(){
          <div style={{padding:"40px 14px",background:"var(--bg-secondary)",overflow:"hidden"}}>
            <div style={{textAlign:"center",marginBottom:20}}>
              <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:700,color:"var(--text-primary)"}}>Our Partner Caterers</h2>
-             <p style={{fontSize:12,color:"var(--text-muted)",marginTop:4}}>7 verified founding partners across Newtown, Salt Lake & Rajarhat</p>
+             <p style={{fontSize:12,color:"var(--text-muted)",marginTop:4}}>15+ kitchens across Newtown, Salt Lake, Rajarhat &amp; nearby</p>
            </div>
            <div className="caterer-scroll" style={{display:"flex",gap:16,paddingBottom:12,animation:"scrollRibbon 30s linear infinite",width:"max-content"}}>
              {[...allCaterers.slice(0,7),...allCaterers.slice(0,7)].map((c,idx)=>(
@@ -1449,7 +1449,7 @@ export default function AayojanApp(){
                {[
                  {icon:"💰",title:"₹0 to join",sub:"Free forever for founding partners"},
                  {icon:"📲",title:"Leads on WhatsApp",sub:"No app, no dashboard — just real enquiries"},
-                 {icon:"🏅",title:"Only 8 spots left",sub:"Founding badge + early lead priority"},
+                 {icon:"🏅",title:"0% first year",sub:"Early-partner pricing + lead priority"},
                ].map((b,i)=>(
                  <div key={i} style={{background:"rgba(255,255,255,0.9)",border:"1px solid #EDD8BC",borderRadius:16,padding:"18px 14px",textAlign:"center"}}>
                    <div style={{fontSize:28,marginBottom:6}}>{b.icon}</div>
@@ -1514,7 +1514,7 @@ export default function AayojanApp(){
               <a href="/partners.html" style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none"}}>Partner with Us</a>
               <a href="/faq.html" style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none"}}>FAQ</a>
               <div onClick={()=>navigate("about")} style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none",cursor:"pointer"}}>About Us</div>
-              <div style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,cursor:"pointer"}} onClick={()=>window.open("https://wa.me/918088434425?text=Hi!%20Notify%20me%20when%20Aayojan%20launches","_blank")}>Notify Me at Launch</div>
+              <div style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,cursor:"pointer"}} onClick={()=>{window.location.href="/events/";}}>✨ Plan your event →</div>
               <a href="/partners.html#register" style={{fontSize:12,color:"var(--text-muted)",marginBottom:6,display:"block",textDecoration:"none"}}>Register as Caterer</a>
             </div>
             <div>
@@ -3186,7 +3186,7 @@ export default function AayojanApp(){
           <div style={{background:"linear-gradient(135deg,#FFF7ED,#FEF3C7)",border:"2px solid #F59E0B",borderRadius:16,padding:24,marginBottom:20,textAlign:"center",position:"relative"}}>
             <div style={{position:"absolute",top:-12,left:"50%",transform:"translateX(-50%)",background:"#F59E0B",color:"#fff",fontSize:11,fontWeight:700,padding:"4px 16px",borderRadius:20}}>🚀 FOUNDING PARTNER PROGRAM</div>
             <h2 style={{fontSize:20,fontWeight:700,color:"#92400E",marginTop:8,marginBottom:6}}>First 10 Partners — 0% Commission · Year One</h2>
-            <p style={{fontSize:13,color:"#92400E",marginBottom:16}}>5 founding kitchens onboarded · <strong>5 founding spots remain</strong>. No monthly fees during pre-launch.</p>
+            <p style={{fontSize:13,color:"#92400E",marginBottom:16}}>15+ kitchens already in our network · <strong>0% commission for early partners</strong>. No monthly fees, ever.</p>
             <div style={{display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap"}}>
               <div style={{background:"#fff",borderRadius:12,padding:"12px 20px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
                 <div style={{fontSize:24,fontWeight:800,color:"#16A34A"}}>₹0</div>
@@ -3292,7 +3292,7 @@ export default function AayojanApp(){
           {/* Final CTA */}
           <div style={{background:"linear-gradient(135deg,#0f172a,#1e293b)",borderRadius:16,padding:"36px 24px",textAlign:"center",marginBottom:32}}>
             <h2 style={{fontSize:22,fontWeight:800,color:"#fff",marginBottom:8}}>Ready to Grow Your Business?</h2>
-            <p style={{fontSize:14,color:"rgba(255,255,255,0.7)",marginBottom:20}}>Join 5 founding Bengali kitchens already onboarded · 5 founding-partner spots remain</p>
+            <p style={{fontSize:14,color:"rgba(255,255,255,0.7)",marginBottom:20}}>Join our growing network of 15+ Bengali kitchens · 0% for early partners</p>
             <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20am%20a%20caterer%20in%20Newtown%2FSalt%20Lake%2FRajarhat%20and%20want%20to%20join%20as%20partner.%20My%20business%20name%20is%3A%20" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:"linear-gradient(135deg,#25D366,#128C7E)",color:"#fff",padding:"16px 36px",borderRadius:30,fontSize:16,fontWeight:700,textDecoration:"none",boxShadow:"0 4px 16px rgba(37,211,102,0.3)",marginBottom:12}}>
               📱 Register Free — WhatsApp Us
             </a>

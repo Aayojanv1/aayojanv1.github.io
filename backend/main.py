@@ -86,7 +86,7 @@ async def security_middleware(request: Request, call_next):
     client_ip = request.headers.get("X-Forwarded-For", request.client.host).split(",")[0].strip()
     
     # Stricter limit for AI endpoints
-    if request.url.path.startswith("/api/chat") or request.url.path.startswith("/api/menu") or request.url.path.startswith("/api/price"):
+    if request.url.path.startswith("/api/chat") or request.url.path.startswith("/api/menu") or request.url.path.startswith("/api/price") or request.url.path.startswith("/api/plan"):
         if not chat_limiter.is_allowed(client_ip):
             return JSONResponse(status_code=429, content={"detail": "Too many requests. Please wait a minute."})
     else:
@@ -210,6 +210,22 @@ async def chat(req: ChatRequest):
         else:
             fallback = f"Something went wrong connecting to the AI. Please try again. (Error: {error_msg[:100]})"
         return ChatResponse(reply=fallback, session_id=req.session_id)
+
+
+class PlanRequest(BaseModel):
+    messages: list[ChatMessage]
+
+
+@app.post("/api/plan")
+async def plan(req: PlanRequest):
+    """Aayojan AI event planner — conversational Gemini chat that also returns a structured brief."""
+    gemini: GeminiClient = app.state.gemini
+    msgs = [{"role": m.role, "content": m.content} for m in req.messages]
+    try:
+        return await gemini.plan(msgs)
+    except Exception as e:
+        print(f"[PLAN ERROR] {str(e)[:160]}", flush=True)
+        return {"reply": "", "brief": {}, "complete": False, "error": True}
 
 
 @app.post("/api/menu/generate", response_model=MenuResponse)
