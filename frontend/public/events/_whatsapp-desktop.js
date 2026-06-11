@@ -89,7 +89,7 @@
     '<div class="wad-err" style="display:none"></div>' +
     "</form>" +
     '<div class="wad-success" style="display:none">' +
-    '<div class="wad-done">✓ Saved! Our team will WhatsApp you shortly.</div>' +
+    '<div class="wad-done">✓ Saved! Our team will WhatsApp you <strong>within 4 hours</strong> — usually much sooner.</div>' +
     '<a class="wad-go" target="_blank" rel="noopener">💬 Open WhatsApp now →</a>' +
     "</div>" +
     '<div class="wad-secondary">' +
@@ -114,8 +114,11 @@
 
   function parseText(href) {
     try {
+      // URLSearchParams.get() already decodes — do NOT decodeURIComponent again
+      // (the planner link contains a literal "%" from the match score, which
+      // made a second decode throw and silently drop the whole brief).
       var q = href.split("?")[1] || "";
-      return decodeURIComponent((new URLSearchParams(q)).get("text") || "");
+      return (new URLSearchParams(q)).get("text") || "";
     } catch (e) { return ""; }
   }
   function renderBrief(text) {

@@ -1411,7 +1411,7 @@ export default function AayojanApp(){
                        const {collection,addDoc}=await import('firebase/firestore');
                        await addDoc(collection(db,'customerLeads'),{phone:ph,source:'landing_cta',status:'new',submittedAt:new Date().toISOString(),...getAttribution()});
                        track('lead_submitted',getAttributionForEvent());
-                       btn.textContent='✅ We\'ll WhatsApp you shortly';
+                       btn.textContent='✅ We\'ll WhatsApp you within 4 hrs — usually sooner';
                        btn.style.background='#236B43';btn.style.color='#FFF8EF';
                        document.getElementById('waitlistPhone').value='';
                      }catch(e){btn.disabled=false;btn.textContent='Get matched →';alert('Could not save. Please try again.');}
