@@ -1364,7 +1364,7 @@ export default function AayojanApp(){
 
              {/* Jamai Sasthi featured poster — consistent with /events */}
              <a href="/events/" style={{display:"block",maxWidth:340,margin:"0 auto 34px",textDecoration:"none"}}>
-               <img src="/events/img/promo/jamai-sasthi.jpg" alt="শুভ জামাই ষষ্ঠী · Happy Jamai Sasthi — lavish Bengali feast from ₹500, featured by Aayojan" loading="lazy" width="340" height="609" style={{width:"100%",borderRadius:16,boxShadow:"0 18px 50px rgba(76,43,10,0.3)",border:"2px solid rgba(243,200,105,0.5)",display:"block"}} />
+               <img src="/events/img/promo/jamai-sasthi.jpg?v=2" alt="শুভ জামাই ষষ্ঠী · Happy Jamai Sasthi — lavish Bengali feast from ₹500, featured by Aayojan" loading="lazy" width="340" height="609" style={{width:"100%",borderRadius:16,boxShadow:"0 18px 50px rgba(76,43,10,0.3)",border:"2px solid rgba(243,200,105,0.5)",display:"block"}} />
                <div style={{textAlign:"center",marginTop:14}}><span style={{display:"inline-block",background:"#E8760A",color:"#fff",fontWeight:800,padding:"11px 24px",borderRadius:99,fontSize:14}}>✨ Plan your Jamai Sasthi feast →</span></div>
              </a>
 
