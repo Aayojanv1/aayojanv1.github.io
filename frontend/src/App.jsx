@@ -1519,7 +1519,7 @@ export default function AayojanApp(){
             </div>
             <div>
               <div style={{fontSize:12,fontWeight:700,color:"var(--text-primary)",marginBottom:10,textTransform:"uppercase",letterSpacing:1}}>Areas Served</div>
-              {["Newtown","Rajarhat","Salt Lake","Action Area I-III","Eco Park Zone"].map(a=>(
+              {["All over Kolkata","Newtown","Salt Lake","Rajarhat","Baguiati · VIP Road","Lake Town · Dum Dum"].map(a=>(
                 <div key={a} style={{fontSize:12,color:"var(--text-muted)",marginBottom:6}}>📍 {a}</div>
               ))}
             </div>
@@ -2998,7 +2998,7 @@ export default function AayojanApp(){
               <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(1.8rem,3vw,2.6rem)",fontWeight:700,color:"var(--text-primary)"}}>Aayojan at a glance</h2>
             </div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"2rem",maxWidth:900,margin:"0 auto",textAlign:"center"}}>
-              {[{val:"3",label:"Zones served\nNewtown · Rajarhat · Salt Lake"},{val:"48h",label:"Guaranteed quote\ndelivery time"},{val:"₹0",label:"Cost to join\nfor catering partners"},{val:"5+",label:"Cuisine types\nacross our network"}].map(n=>(
+              {[{val:"Kolkata",label:"Serving all over\nNewtown, Salt Lake, Rajarhat & more"},{val:"48h",label:"Guaranteed quote\ndelivery time"},{val:"₹0",label:"Cost to join\nfor catering partners"},{val:"5+",label:"Cuisine types\nacross our network"}].map(n=>(
                 <div key={n.val}>
                   <span style={{fontFamily:"'Playfair Display',serif",fontSize:"2.8rem",fontWeight:900,color:"var(--text-accent)",display:"block",lineHeight:1,marginBottom:"0.4rem"}}>{n.val}</span>
                   <div style={{color:"var(--text-secondary)",fontSize:"0.88rem",lineHeight:1.5,whiteSpace:"pre-line"}}>{n.label}</div>
