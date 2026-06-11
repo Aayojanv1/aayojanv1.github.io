@@ -306,7 +306,7 @@ function AayojanChatbot({onOrderCreated,user,onLoginRequired,allCaterers,onStart
   const MAX_MSGS_PER_SESSION=30;
   const OFF_TOPIC_WARNINGS=useRef(0);
 
-  const SYSTEM=`You are Aayojan Partner Advisor, an AI assistant that helps caterers in Newtown, Rajarhat & Salt Lake (Kolkata) understand and join the Aayojan catering platform. Your SOLE job is partner acquisition — convincing caterers to register.
+  const SYSTEM=`You are Aayojan Partner Advisor, an AI assistant that helps caterers across Kolkata (Kolkata) understand and join the Aayojan catering platform. Your SOLE job is partner acquisition — convincing caterers to register.
 
 STRICT RULES:
 1) You ONLY discuss: Aayojan partnership benefits, how the platform works for caterers, commission structure, lead generation, food tasting programme, registration process. If asked unrelated questions, redirect: "I'm here to help you grow your catering business with Aayojan! 🍽️ What would you like to know about joining?"
@@ -316,7 +316,7 @@ STRICT RULES:
 KEY FACTS ABOUT AAYOJAN (use these in responses — be honest; we are LIVE and taking orders):
 - Aayojan is Kolkata's Bengali catering marketplace — live and taking orders now
 - We bring customers to caterers via WhatsApp + our AI planner — no app needed
-- Areas: Newtown, Salt Lake, Rajarhat & adjoining (Baguiati, VIP Road, Lake Town, Kestopur, Chinar Park, Dum Dum)
+- Areas: all over Kolkata & adjoining (Baguiati, VIP Road, Lake Town, Kestopur, Chinar Park, Dum Dum)
 - 15+ kitchens in our network — the kitchen's name is shared once we match the customer
 - Every kitchen is Aayojan-verified and FSSAI-checked before they cook for you
 - Customers get matched to the right kitchen via the AI planner / WhatsApp, then connect
@@ -1105,7 +1105,7 @@ export default function AayojanApp(){
           <img src="/logo-aayojan-compact.svg" alt="Aayojan" style={{width:42,height:42,borderRadius:12}}/>
           <div>
             <div style={{fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:700,color:"#E8760A"}}>Aayojan</div>
-            <div style={{fontSize:10,color:"#7B634E",marginTop:1}}>📍 Newtown, Salt Lake & Rajarhat</div>
+            <div style={{fontSize:10,color:"#7B634E",marginTop:1}}>📍 all over Kolkata</div>
           </div>
         </button>
         <div className="header-right" style={{display:"flex",alignItems:"center",gap:8}}>
@@ -1233,7 +1233,7 @@ export default function AayojanApp(){
 
                {/* Subtitle */}
                <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(16px,1.9vw,21px)",color:"rgba(255,248,239,0.75)",margin:"0 0 30px",lineHeight:1.55,maxWidth:440,fontWeight:500}}>
-                 Bengali-led kitchens — curated, not crowd-sourced. Tell us once, our AI matches you. Newtown · Salt Lake · Rajarhat &amp; nearby.
+                 Bengali-led kitchens — curated, not crowd-sourced. Tell us once, our AI matches you. all over Kolkata &amp; nearby.
                </p>
 
                {/* CTA — route every order into the /events AI planner funnel */}
@@ -1353,7 +1353,7 @@ export default function AayojanApp(){
                  <span style={{fontSize:11,fontWeight:800,letterSpacing:"0.16em"}}>LIVE · TAKING ORDERS</span>
                </div>
                <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,6vw,52px)",fontWeight:900,color:"#1C130A",margin:"0 0 12px",letterSpacing:"-0.02em",lineHeight:1.05}}>We're ready to <em style={{color:"#E8760A"}}>serve you</em>.</h2>
-               <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(15px,2.2vw,20px)",color:"#513117",maxWidth:620,margin:"0 auto",lineHeight:1.5}}>The chefs, the kitchens, the city — together for Newtown, Salt Lake, Rajarhat &amp; nearby. Order now, get matched in minutes.</p>
+               <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(15px,2.2vw,20px)",color:"#513117",maxWidth:620,margin:"0 auto",lineHeight:1.5}}>The chefs, the kitchens, the city — together for all of Kolkata. Order now, get matched in minutes.</p>
              </div>
 
              {/* Food gallery — uneven masonry grid for visual interest */}
@@ -1420,7 +1420,7 @@ export default function AayojanApp(){
          <div style={{padding:"40px 14px",background:"var(--bg-secondary)",overflow:"hidden"}}>
            <div style={{textAlign:"center",marginBottom:20}}>
              <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:700,color:"var(--text-primary)"}}>Our Partner Caterers</h2>
-             <p style={{fontSize:12,color:"var(--text-muted)",marginTop:4}}>15+ kitchens across Newtown, Salt Lake, Rajarhat &amp; nearby</p>
+             <p style={{fontSize:12,color:"var(--text-muted)",marginTop:4}}>15+ kitchens across Kolkata</p>
            </div>
            <div className="caterer-scroll" style={{display:"flex",gap:16,paddingBottom:12,animation:"scrollRibbon 30s linear infinite",width:"max-content"}}>
              {[...allCaterers.slice(0,7),...allCaterers.slice(0,7)].map((c,idx)=>(
@@ -2832,7 +2832,7 @@ export default function AayojanApp(){
             <p style={{fontSize:12,color:"#9ca3af",marginBottom:16}}>Last updated: 30 May 2025</p>
             <div style={{fontSize:13,color:"var(--text-secondary)",lineHeight:1.8}}>
               <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>1. About Aayojan</h3>
-              <p>Aayojan is a technology platform that connects customers with independent caterers in the Newtown/Rajarhat/Salt Lake area of Kolkata. We are a marketplace — we do NOT prepare or serve food ourselves.</p>
+              <p>Aayojan is a technology platform that connects customers with independent caterers across Kolkata. We are a marketplace — we do NOT prepare or serve food ourselves.</p>
 
               <h3 style={{color:"var(--text-primary)",margin:"14px 0 8px"}}>2. User Accounts</h3>
               <ul style={{paddingLeft:20,margin:"8px 0"}}>
@@ -2998,7 +2998,7 @@ export default function AayojanApp(){
               <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(1.8rem,3vw,2.6rem)",fontWeight:700,color:"var(--text-primary)"}}>Aayojan at a glance</h2>
             </div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"2rem",maxWidth:900,margin:"0 auto",textAlign:"center"}}>
-              {[{val:"Kolkata",label:"Serving all over\nNewtown, Salt Lake, Rajarhat & more"},{val:"48h",label:"Guaranteed quote\ndelivery time"},{val:"₹0",label:"Cost to join\nfor catering partners"},{val:"5+",label:"Cuisine types\nacross our network"}].map(n=>(
+              {[{val:"Kolkata",label:"Serving all over\nall over Kolkata"},{val:"48h",label:"Guaranteed quote\ndelivery time"},{val:"₹0",label:"Cost to join\nfor catering partners"},{val:"5+",label:"Cuisine types\nacross our network"}].map(n=>(
                 <div key={n.val}>
                   <span style={{fontFamily:"'Playfair Display',serif",fontSize:"2.8rem",fontWeight:900,color:"var(--text-accent)",display:"block",lineHeight:1,marginBottom:"0.4rem"}}>{n.val}</span>
                   <div style={{color:"var(--text-secondary)",fontSize:"0.88rem",lineHeight:1.5,whiteSpace:"pre-line"}}>{n.label}</div>
@@ -3042,8 +3042,8 @@ export default function AayojanApp(){
               </div>
               <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"2rem"}}>
                 {[
-                  {initials:"SB",name:"Suparna Basak",role:"Operations & Customer Experience",bio:"IT Consultant at a top leading MNC with 16 years of experience across international markets. Her deep expertise in customer-facing challenges gives Aayojan its edge in understanding what both customers and partners truly need.",gradient:"linear-gradient(135deg, #2D1A06, #6B3A10)"},
-                  {initials:"GC",name:"Gourav Chatterjee",role:"Technology Advisor",bio:"Principal Engineer at a leading MNC with 17 years of experience across international projects. Holder of multiple patents and published journals, Gourav advises Aayojan on AI architecture and technology strategy in an advisory capacity.",gradient:"linear-gradient(135deg, #1A0A2D, #4A1A6B)"},
+                  {initials:"S",name:"Suparna",role:"Operations & Customer Experience",bio:"IT Consultant at a top leading MNC with 16 years of experience across international markets. Her deep expertise in customer-facing challenges gives Aayojan its edge in understanding what both customers and partners truly need.",gradient:"linear-gradient(135deg, #2D1A06, #6B3A10)"},
+                  {initials:"G",name:"Gourav",role:"Technology Advisor",bio:"Principal Engineer at a leading MNC with 17 years of experience across international projects. Holder of multiple patents and published journals, Gourav advises Aayojan on AI architecture and technology strategy in an advisory capacity.",gradient:"linear-gradient(135deg, #1A0A2D, #4A1A6B)"},
                 ].map(m=>(
                   <div key={m.initials} style={{background:"var(--bg-card)",border:"1px solid var(--border-default)",borderRadius:20,overflow:"hidden",transition:"transform 0.2s, box-shadow 0.2s"}} onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-5px)";e.currentTarget.style.boxShadow="0 16px 50px rgba(192,57,43,0.12)";}} onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="none";}}>
                     <div style={{height:180,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"4rem",background:m.gradient}}>
@@ -3251,7 +3251,7 @@ export default function AayojanApp(){
                 {q:"Do I need to download an app?",a:"No. Everything works on WhatsApp. No app, no login, no tech hassle."},
                 {q:"What if I don't get any orders?",a:"You pay nothing. Zero fixed cost. Commission is only 3% of orders you actually complete."},
                 {q:"Can I set my own prices?",a:"Yes, 100%. You quote your own rates. We never force discounts or price matching."},
-                {q:"What areas do you cover?",a:"All over Kolkata — Newtown, Salt Lake, Rajarhat, Action Area I-III & beyond."},
+                {q:"What areas do you cover?",a:"All over Kolkata, Action Area I-III & beyond."},
                 {q:"Is there an exclusivity requirement?",a:"No. You can be on other platforms too. We just ask that you respond to leads within 2 hours."},
                 {q:"How do I get paid?",a:"Customer pays you directly — cash, UPI, bank transfer. Aayojan invoices the 3% monthly."},
                 {q:"What's the food tasting programme?",a:"Customers pay ₹199-399 to taste your food before booking. You keep the tasting fee. If they book, it's adjusted against the order."}
@@ -3268,7 +3268,7 @@ export default function AayojanApp(){
           <div style={{...S.card,marginBottom:20,background:"linear-gradient(135deg,var(--bg-card),var(--bg-secondary))"}}>
             <h2 style={{fontSize:18,fontWeight:800,color:"var(--text-primary)",marginBottom:12}}>About Aayojan</h2>
             <div style={{fontSize:13,color:"var(--text-secondary)",lineHeight:1.8,marginBottom:16}}>
-              <p style={{marginBottom:12}}>Aayojan (আয়োজন — "The Celebration") is Kolkata's first AI-powered catering aggregator, built by <strong>Suparna Basak</strong> — a Newtown resident who saw how difficult it is to find good caterers for events.</p>
+              <p style={{marginBottom:12}}>Aayojan (আয়োজন — "The Celebration") is Kolkata's first AI-powered catering aggregator, built by <strong>Suparna</strong> — a Newtown resident who saw how difficult it is to find good caterers for events.</p>
               <p style={{marginBottom:12}}>We started in May 2025 with a simple mission: <strong>make finding the right caterer as easy as ordering food online.</strong> No more calling 10 numbers, no more uncertainty about quality.</p>
               <p>Based in Newtown, Kolkata · Registered business · Built with love for Bengali food & celebrations 🎉</p>
             </div>
