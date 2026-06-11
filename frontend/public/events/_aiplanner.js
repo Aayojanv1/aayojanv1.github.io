@@ -29,7 +29,8 @@
     { tag: "Bengali Home-Style · Salt Lake", cuisines: "Bengali · home-style · niramish", pMin: 300, pMax: 600, gMin: 10, gMax: 300, events: ["Party", "Annaprasan", "Bhai Phota", "Griha Pravesh", "Birthday"], areas: ["Salt Lake", "Newtown"] },
     { tag: "Banquet Kitchen · Rajarhat", cuisines: "Multi-cuisine · up to 5000", pMin: 350, pMax: 1200, gMin: 50, gMax: 5000, events: ["Wedding", "Corporate", "Party", "Birthday"], areas: ["Rajarhat", "Newtown", "Salt Lake"] },
     { tag: "Premium Bengali & Mughlai", cuisines: "Bengali · Mughlai · Chinese", pMin: 400, pMax: 1300, gMin: 15, gMax: 800, events: ["Wedding", "Party", "Annaprasan", "Birthday"], areas: ["Newtown", "Salt Lake"] },
-    { tag: "Continental & Chinese Kitchen", cuisines: "Continental · Chinese · multi", pMin: 350, pMax: 900, gMin: 10, gMax: 600, events: ["Party", "Birthday", "Corporate", "Wedding"], areas: ["Newtown", "Salt Lake", "Rajarhat"] }
+    { tag: "Continental & Chinese Kitchen", cuisines: "Continental · Chinese · multi", pMin: 350, pMax: 900, gMin: 10, gMax: 600, events: ["Party", "Birthday", "Corporate", "Wedding"], areas: ["Newtown", "Salt Lake", "Rajarhat"] },
+    { tag: "Multi-Cuisine & Fusion Kitchen · Newtown", cuisines: "Bengali · Mughlai · North Indian · Indo-Chinese · Fusion", pMin: 250, pMax: 900, gMin: 30, gMax: 2000, events: ["Wedding", "Party", "Jamai", "Birthday", "Corporate", "Annaprasan"], areas: ["Newtown", "Salt Lake", "Rajarhat"] }
   ];
   function hashJit(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 9973; return h % 6; }
   function detectEvent(s) {

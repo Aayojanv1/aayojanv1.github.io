@@ -106,6 +106,22 @@ const FEATURED = [
     logoScript: "Caterer & Events",
     logoBg: "#C0392B",
   },
+  {
+    issue: "07",
+    slug: "adda-times",
+    business: "Adda Times",
+    headlinePrefix: "Newtown's",
+    headlineAccent: "multi-cuisine event caterer",
+    headlineRest: "— now an Aayojan Verified Partner.",
+    quote: "From cozy house parties to grand weddings, Adda Times caters Bengali, Mughlai, North Indian, Indo-Chinese & fusion — for 30 to 2,000 guests across Newtown, Salt Lake & Rajarhat. Now matched to you through Aayojan.",
+    dishes: ["Bengali · Mughlai", "North Indian · Indo-Chinese", "Fusion · 30–2000 guests"],
+    href: "/partners/adda-times.html",
+    fssai: { status: "applied" },
+    logoType: "text",
+    logoLines: ["ADDA", "TIMES"],
+    logoScript: "Romance With Taste",
+    logoBg: "#6B4C9A",
+  },
 ];
 
 const HOLD_MS = 6500;
