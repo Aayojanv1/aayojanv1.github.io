@@ -1233,8 +1233,14 @@ export default function AayojanApp(){
 
                {/* Subtitle */}
                <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(16px,1.9vw,21px)",color:"rgba(255,248,239,0.75)",margin:"0 0 30px",lineHeight:1.55,maxWidth:440,fontWeight:500}}>
-                 Bengali-led kitchens — curated, not crowd-sourced. Tell us once, our AI matches you. all over Kolkata &amp; nearby.
+                 Bengali-led kitchens — curated, not crowd-sourced. Tell us once, our AI matches you. all over Kolkata.
                </p>
+
+               {/* Jamai Sasthi seasonal promo — consistent with /events */}
+               <a href="/events/" style={{display:"block",maxWidth:440,margin:"0 0 22px",background:"linear-gradient(135deg,rgba(243,200,105,0.18),rgba(232,118,10,0.16))",border:"1.5px solid rgba(243,200,105,0.5)",borderRadius:14,padding:"12px 16px",textDecoration:"none",boxShadow:"0 10px 30px rgba(232,118,10,0.25)"}}>
+                 <div style={{fontFamily:"'Playfair Display',serif",fontWeight:800,color:"#FFE9B0",fontSize:15,marginBottom:3}}>🎣 শুভ জামাই ষষ্ঠী · Jamai Sasthi · 20–21 June</div>
+                 <div style={{fontSize:12.5,color:"rgba(255,248,239,0.88)",lineHeight:1.4}}>Treat your jamai to a lavish feast — from <strong style={{color:"#FFE9B0"}}>₹500/plate</strong>. Order before 18 June →</div>
+               </a>
 
                {/* CTA — route every order into the /events AI planner funnel */}
                <div style={{display:"flex",gap:10,flexWrap:"wrap",marginBottom:26}}>
@@ -1355,6 +1361,12 @@ export default function AayojanApp(){
                <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,6vw,52px)",fontWeight:900,color:"#1C130A",margin:"0 0 12px",letterSpacing:"-0.02em",lineHeight:1.05}}>We're ready to <em style={{color:"#E8760A"}}>serve you</em>.</h2>
                <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(15px,2.2vw,20px)",color:"#513117",maxWidth:620,margin:"0 auto",lineHeight:1.5}}>The chefs, the kitchens, the city — together for all of Kolkata. Order now, get matched in minutes.</p>
              </div>
+
+             {/* Jamai Sasthi featured poster — consistent with /events */}
+             <a href="/events/" style={{display:"block",maxWidth:340,margin:"0 auto 34px",textDecoration:"none"}}>
+               <img src="/events/img/promo/jamai-sasthi.jpg" alt="শুভ জামাই ষষ্ঠী · Happy Jamai Sasthi — lavish Bengali feast from ₹500, featured by Aayojan" loading="lazy" width="340" height="609" style={{width:"100%",borderRadius:16,boxShadow:"0 18px 50px rgba(76,43,10,0.3)",border:"2px solid rgba(243,200,105,0.5)",display:"block"}} />
+               <div style={{textAlign:"center",marginTop:14}}><span style={{display:"inline-block",background:"#E8760A",color:"#fff",fontWeight:800,padding:"11px 24px",borderRadius:99,fontSize:14}}>✨ Plan your Jamai Sasthi feast →</span></div>
+             </a>
 
              {/* Food gallery — uneven masonry grid for visual interest */}
              <div style={{display:"grid",gridTemplateColumns:"repeat(12,1fr)",gap:12,marginBottom:36}} className="food-grid">
