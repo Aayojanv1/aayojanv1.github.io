@@ -77,6 +77,7 @@
     var g = b.guestsNum || 50;
     if (g >= k.gMin && g <= k.gMax) r.push(g + "-guest capacity");
     if (b.budgetMid && b.budgetMid >= k.pMin - 80 && b.budgetMid <= k.pMax + 80) r.push("Within budget");
+    if (!r.length) r.push("Matched to your event");
     return r.slice(0, 3);
   }
 
@@ -93,10 +94,10 @@
   // --- styles ---------------------------------------------------------------
   var css = document.createElement("style");
   css.textContent =
-    ".aip-ov{position:fixed;inset:0;z-index:100000;display:none;background:linear-gradient(180deg,#1A1208,#0F0A05);overflow:hidden;}" +
+    ".aip-ov{position:fixed;top:0;left:0;right:0;height:100vh;height:100dvh;z-index:100000;display:none;background:linear-gradient(180deg,#1A1208,#0F0A05);overflow:hidden;}" +
     ".aip-ov.on{display:flex;flex-direction:column;}" +
     ".aip-ov::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse,rgba(232,118,10,0.18),transparent 65%);pointer-events:none;}" +
-    ".aip-top{position:relative;display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(243,200,105,0.15);}" +
+    ".aip-top{position:relative;display:flex;align-items:center;gap:10px;padding:calc(14px + env(safe-area-inset-top)) 16px 14px;border-bottom:1px solid rgba(243,200,105,0.15);}" +
     ".aip-bot{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#FFF4DC,#F3C869);font-size:18px;}" +
     ".aip-ttl{font-family:'Playfair Display',serif;font-weight:800;color:#FFF8EF;font-size:1rem;line-height:1.1;}" +
     ".aip-ttl small{display:block;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.7rem;color:#86efac;}" +
@@ -115,7 +116,7 @@
     ".aip-typing i{width:7px;height:7px;border-radius:50%;background:#F3C869;animation:aipBlink 1.2s infinite;}" +
     ".aip-typing i:nth-child(2){animation-delay:.2s;}.aip-typing i:nth-child(3){animation-delay:.4s;}" +
     "@keyframes aipBlink{0%,80%,100%{opacity:.3;transform:translateY(0);}40%{opacity:1;transform:translateY(-3px);}}" +
-    ".aip-input{padding:8px 14px 14px;}" +
+    ".aip-input{padding:8px 14px calc(14px + env(safe-area-inset-bottom));}" +
     ".aip-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:8px;}" +
     ".aip-chip{background:rgba(255,248,239,0.06);border:1px solid rgba(243,200,105,0.3);color:#FFF8EF;border-radius:99px;padding:9px 14px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;}" +
     ".aip-chip:hover{background:var(--saffron,#E8760A);border-color:var(--saffron,#E8760A);}" +
@@ -266,7 +267,10 @@
         var reply = cleanReply(data.reply);
         if (reply) { addMsg(reply, "bot"); history.push({ role: "assistant", content: reply }); }
         track("ai_planner_turn", {});
-        if (data.complete) { track("ai_planner_brief_complete", { source: "gemini" }); runEngine(); }
+        // robust completion: don't rely only on the (sometimes-missing) complete flag
+        var filled = brief.event && brief.guests && brief.cuisine && brief.date && brief.area && brief.budget;
+        var saysDone = /matching you with verified kitchens|matching you now/i.test(reply);
+        if (data.complete || filled || saysDone) { track("ai_planner_brief_complete", { source: "gemini" }); runEngine(); }
         else renderFree(false);
       })
       .catch(function () { hideTyping(); goGuided(); });
