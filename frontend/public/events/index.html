@@ -63,6 +63,29 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem
 .pb-menu{font-size:0.82rem;color:#444;line-height:1.5;}
 .pb-cta{display:inline-block;background:#FFE14D;color:#3a1c06;font-weight:900;padding:14px 30px;border-radius:99px;font-size:1rem;text-decoration:none;box-shadow:0 14px 36px rgba(0,0,0,0.3);animation:pbBounce 2s ease-in-out infinite;}
 @keyframes pbBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
+.combo-sec{background:linear-gradient(135deg,#1A1208,#2A1B0C);padding:2.4rem 5%;text-align:center;}
+.combo-inner{max-width:900px;margin:0 auto;}
+.combo-eyebrow{display:inline-block;font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:#F3C869;background:rgba(243,200,105,0.12);border:1px solid rgba(243,200,105,0.3);padding:5px 12px;border-radius:99px;margin-bottom:0.7rem;}
+.combo-h{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3.6vw,2.1rem);font-weight:800;color:#FFF8EF;line-height:1.16;margin:0 0 0.4rem;}
+.combo-h em{color:#E8760A;font-style:italic;}
+.combo-sub{color:#cbbfa9;font-size:0.92rem;margin:0 0 1.4rem;}
+.combo-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;text-align:left;margin-bottom:1.4rem;}
+@media(max-width:640px){.combo-grid{grid-template-columns:1fr;}}
+.combo-card{background:rgba(255,255,255,0.05);border:1px solid rgba(243,200,105,0.25);border-radius:16px;padding:14px;display:flex;gap:12px;text-decoration:none;}
+.combo-card.party{flex-direction:column;}
+.combo-poster{width:120px;height:auto;align-self:flex-start;border-radius:10px;flex-shrink:0;border:1px solid rgba(243,200,105,0.4);}
+.combo-body{display:flex;flex-direction:column;}
+.combo-tag{font-weight:800;font-size:0.82rem;margin-bottom:6px;}
+.combo-tag.gold{color:#FFE9B0;} .combo-tag.red{color:#FF9E6B;}
+.combo-txt{font-size:0.8rem;color:rgba(255,248,239,0.85);line-height:1.45;flex:1;}
+.combo-txt strong,.combo-tier b{color:#FFE9B0;}
+.combo-go{margin-top:8px;font-weight:800;font-size:0.82rem;}
+.combo-go.gold{color:#F3C869;} .combo-go.red{color:#FF9E6B;}
+.combo-tiers{display:flex;flex-direction:column;gap:9px;margin:4px 0 8px;}
+.combo-tier b{font-family:'Playfair Display',serif;font-size:1.15rem;}
+.combo-tier .ctag{font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;padding:2px 7px;border-radius:99px;color:#fff;margin-left:6px;vertical-align:middle;}
+.ctag.veg{background:#2D7A4F;} .ctag.nv{background:#C0392B;}
+.cmenu{font-size:0.75rem;color:rgba(255,248,239,0.78);line-height:1.4;margin-top:3px;}
 .crumbs a{color:var(--saffron);font-weight:600;}
 .crumbs span{margin:0 0.4rem;color:var(--border);}
 .hero{background:linear-gradient(180deg,var(--dark) 0%,#2A1C0F 100%);padding:5rem 5% 3.5rem;text-align:center;position:relative;overflow:hidden;}
@@ -431,42 +454,31 @@ section.block{padding:4rem 5%;}
   </div>
 </section>
 
-<!-- AI PLANNER LAUNCHER -->
-<section style="background:linear-gradient(135deg,#1A1208,#2A1B0C);padding:2.6rem 5%;text-align:center;position:relative;overflow:hidden;">
-  <div style="max-width:640px;margin:0 auto;position:relative;z-index:1;">
-    <span style="display:inline-block;font-size:0.72rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:#F3C869;background:rgba(243,200,105,0.12);border:1px solid rgba(243,200,105,0.3);padding:5px 12px;border-radius:99px;margin-bottom:0.8rem;">✨ Meet Aayojan AI · your event planner</span>
-    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;color:#FFF8EF;line-height:1.15;margin:0 0 0.6rem;">Tell us your event. Aayojan AI shortlists<br><em style="color:#E8760A;font-style:italic;">3 verified kitchens</em> in seconds.</h2>
-    <p style="color:#cbbfa9;font-size:1rem;margin:0 0 1.4rem;">No calling 10 caterers. Chat once → get matched → connect on WhatsApp.</p>
-    <button id="ai-planner-open" class="aip-launch">✨ Plan with Aayojan AI →</button>
-  </div>
-</section>
-
-<!-- JAMAI SASTHI POSTER (featured seasonal promo) -->
-<section class="jamai-poster-sec">
-  <a data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi feast with Aayojan AI">
-    <img class="jps-img" src="/events/img/promo/jamai-sasthi.jpg?v=3" alt="শুভ জামাই ষষ্ঠী · Happy Jamai Sasthi — lavish Bengali feast at ₹700, featured by Aayojan" loading="lazy" width="340" height="609">
-  </a>
-  <div><a class="jps-cta" data-ai-planner href="#aiplan">✨ Plan your Jamai Sasthi feast →</a></div>
-</section>
-
-<!-- PARTY BLAST — party catering pricing + menus -->
-<section class="party-blast">
-  <div class="pb-inner">
-    <span class="pb-kicker">🎉 THIS WEEKEND · PARTY MODE: ON 🔥</span>
-    <h2 class="pb-h">Weekend party? <em>We bring the feast.</em></h2>
-    <p class="pb-sub">Saturday night · Sunday family lunch · house party — Bengali, Mughlai &amp; Chinese, delivered hot. Order by Friday, party all weekend.</p>
-    <div style="color:#FFE9B0;font-weight:800;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;">🍽️ Weekend Party Menu · per head</div>
-    <div class="pb-tiers">
-      <div class="pb-tier">
-        <div class="pb-tier-h"><span class="amt">₹250</span><span style="font-size:.8rem;color:#777">/head</span><span class="tag">🥗 Veg</span></div>
-        <div class="pb-menu">Paneer Tikka · Basanti Pulao · Paneer Butter Masala · Dhokar Dalna · Cholar Dal · Luchi · Salad &amp; papad · Mishti Doi + Rosogolla</div>
-      </div>
-      <div class="pb-tier nv">
-        <div class="pb-tier-h"><span class="amt">₹350</span><span style="font-size:.8rem;color:#777">/head</span><span class="tag">🍗 Non-veg</span></div>
-        <div class="pb-menu">Fish Fry · Pulao · Chicken Kosha · Cholar Dal · Luchi · Salad &amp; chutney · Rosogolla + Mishti Doi</div>
+<!-- AI PLANNER + FESTIVE OFFERS (clubbed: planner intro + Jamai + Weekend Party) -->
+<section class="combo-sec">
+  <div class="combo-inner">
+    <span class="combo-eyebrow">✨ Meet Aayojan AI · your event planner</span>
+    <h2 class="combo-h">Tell us your event. AI shortlists <em>3 verified kitchens</em> in seconds.</h2>
+    <p class="combo-sub">No calling 10 caterers. Chat once → get matched → connect on WhatsApp.</p>
+    <div class="combo-grid">
+      <a class="combo-card" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi feast">
+        <img class="combo-poster" src="/events/img/promo/jamai-sasthi.jpg?v=3" alt="শুভ জামাই ষষ্ঠী — Happy Jamai Sasthi feast, featured by Aayojan" loading="lazy" width="120" height="215">
+        <div class="combo-body">
+          <div class="combo-tag gold">🎣 Jamai Sasthi · 20–21 June</div>
+          <div class="combo-txt">Lavish feast — Fish Fry · Basanti Pulao · Chingri Malai Curry · Mutton Kasha · <strong>₹700/plate</strong></div>
+          <span class="combo-go gold">Plan Jamai feast →</span>
+        </div>
+      </a>
+      <div class="combo-card party">
+        <div class="combo-tag red">🎉 This weekend · Party menu / head</div>
+        <div class="combo-tiers">
+          <div class="combo-tier"><b>₹250</b><span class="ctag veg">Veg</span><div class="cmenu">Paneer Tikka · Basanti Pulao · Paneer Butter Masala · Dhokar Dalna · Dal · Luchi · 2 sweets</div></div>
+          <div class="combo-tier"><b>₹350</b><span class="ctag nv">Non-veg</span><div class="cmenu">Fish Fry · Pulao · Chicken Kosha · Dal · Luchi · Salad · 2 sweets</div></div>
+        </div>
+        <a class="combo-go red" data-ai-planner href="#aiplan">Plan my weekend party →</a>
       </div>
     </div>
-    <a class="pb-cta" data-ai-planner href="#aiplan">🎈 Plan my weekend party →</a>
+    <button id="ai-planner-open" class="aip-launch">✨ Plan with Aayojan AI →</button>
   </div>
 </section>
 
