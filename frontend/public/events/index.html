@@ -42,6 +42,9 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem
 .jc-offer strong{color:#FFE9B0;}
 .jc-go{margin-top:5px;display:inline-block;background:#F3C869;color:#3a1c06;font-weight:800;padding:9px 18px;border-radius:99px;font-size:0.86rem;align-self:center;}
 @keyframes jamaiGlow{0%,100%{box-shadow:0 12px 34px rgba(232,118,10,0.28);}50%{box-shadow:0 12px 44px rgba(243,200,105,0.5);}}
+.jamai-poster-sec{background:linear-gradient(180deg,#1A1208,#0F0A05);padding:2.6rem 5%;text-align:center;}
+.jps-img{width:100%;max-width:340px;border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,0.5);border:2px solid rgba(243,200,105,0.45);display:block;margin:0 auto;}
+.jps-cta{display:inline-block;margin-top:1.3rem;background:#F3C869;color:#3a1c06;font-weight:800;padding:12px 26px;border-radius:99px;font-size:0.95rem;text-decoration:none;box-shadow:0 10px 26px rgba(243,200,105,0.4);}
 .crumbs a{color:var(--saffron);font-weight:600;}
 .crumbs span{margin:0 0.4rem;color:var(--border);}
 .hero{background:linear-gradient(180deg,var(--dark) 0%,#2A1C0F 100%);padding:5rem 5% 3.5rem;text-align:center;position:relative;overflow:hidden;}
@@ -90,14 +93,15 @@ footer{background:#100C04;text-align:center;padding:2rem;color:#555;font-size:0.
 /* === ROTATING H1 === */
 .rotating-h1{position:relative;min-height:3.2em;display:block;font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.4rem);font-weight:900;color:#FFF8EF;line-height:1.08;max-width:780px;margin:0 auto 0.8rem;letter-spacing:-0.02em;z-index:2;}
 .rotating-h1 em{font-style:italic;color:#F3C869;}
-.rh-line{position:absolute;inset:0;display:block;opacity:0;animation:rhCycle 22s infinite;}
+.rh-line{position:absolute;inset:0;display:block;opacity:0;animation:rhCycle 26.4s infinite;}
 @media (max-width:600px){.rotating-h1{font-size:1.75rem;line-height:1.16;min-height:5.4em;margin-bottom:1rem;}.hero{padding:3.2rem 5% 2.6rem;}}
 .rh-line:nth-child(1){animation-delay:0s;}
 .rh-line:nth-child(2){animation-delay:4.4s;}
 .rh-line:nth-child(3){animation-delay:8.8s;}
 .rh-line:nth-child(4){animation-delay:13.2s;}
 .rh-line:nth-child(5){animation-delay:17.6s;}
-@keyframes rhCycle{0%{opacity:0;transform:translateY(14px);}3%{opacity:1;transform:translateY(0);}18%{opacity:1;transform:translateY(0);}22%{opacity:0;transform:translateY(-10px);}100%{opacity:0;}}
+.rh-line:nth-child(6){animation-delay:22s;}
+@keyframes rhCycle{0%{opacity:0;transform:translateY(14px);}2.5%{opacity:1;transform:translateY(0);}14%{opacity:1;transform:translateY(0);}17%{opacity:0;transform:translateY(-10px);}100%{opacity:0;}}
 
 /* === WEEKEND PARTY BAR (3 hot slots) === */
 .weekend-pulse{animation:wpPulse 2.2s infinite ease-in-out;}
@@ -389,6 +393,7 @@ section.block{padding:4rem 5%;}
     <span class="jc-go">✨ Plan my Jamai Sasthi feast →</span>
   </a>
   <h1 class="rotating-h1">
+    <span class="rh-line">This <em>Jamai Sasthi</em>?<br>Treat your jamai — feast from <em>₹500</em>.</span>
     <span class="rh-line">You bring the <em>people</em>.<br>We bring the <em>spread</em>.</span>
     <span class="rh-line">Tonight's <em>adda</em>?<br>WhatsApp us in <em>30 seconds</em>.</span>
     <span class="rh-line">Saturday <em>house party</em>?<br>Bengali kitchens, same day.</span>
@@ -416,6 +421,14 @@ section.block{padding:4rem 5%;}
     <p style="color:#cbbfa9;font-size:1rem;margin:0 0 1.4rem;">No calling 10 caterers. Chat once → get matched → connect on WhatsApp.</p>
     <button id="ai-planner-open" class="aip-launch">✨ Plan with Aayojan AI →</button>
   </div>
+</section>
+
+<!-- JAMAI SASTHI POSTER (featured seasonal promo) -->
+<section class="jamai-poster-sec">
+  <a data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi feast with Aayojan AI">
+    <img class="jps-img" src="/events/img/promo/jamai-sasthi.jpg" alt="শুভ জামাই ষষ্ঠী · Happy Jamai Sasthi — lavish Bengali feast from ₹500, featured by Aayojan" loading="lazy" width="340" height="609">
+  </a>
+  <div><a class="jps-cta" data-ai-planner href="#aiplan">✨ Plan your Jamai Sasthi feast →</a></div>
 </section>
 
 <!-- TESTIMONIALS — trust signal, placed high (real reviews of network kitchens, names gated) -->
