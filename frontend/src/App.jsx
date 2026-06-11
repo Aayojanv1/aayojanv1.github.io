@@ -3042,7 +3042,7 @@ export default function AayojanApp(){
               </div>
               <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"2rem"}}>
                 {[
-                  {initials:"SB",name:"Suparna Basak",role:"Founder & Operations",bio:"IT Consultant at a top leading MNC with 16 years of experience across international markets. Her deep expertise in customer-facing challenges gives Aayojan its edge in understanding what both customers and partners truly need.",gradient:"linear-gradient(135deg, #2D1A06, #6B3A10)"},
+                  {initials:"SB",name:"Suparna Basak",role:"Operations & Customer Experience",bio:"IT Consultant at a top leading MNC with 16 years of experience across international markets. Her deep expertise in customer-facing challenges gives Aayojan its edge in understanding what both customers and partners truly need.",gradient:"linear-gradient(135deg, #2D1A06, #6B3A10)"},
                   {initials:"GC",name:"Gourav Chatterjee",role:"Technology Advisor",bio:"Principal Engineer at a leading MNC with 17 years of experience across international projects. Holder of multiple patents and published journals, Gourav advises Aayojan on AI architecture and technology strategy in an advisory capacity.",gradient:"linear-gradient(135deg, #1A0A2D, #4A1A6B)"},
                 ].map(m=>(
                   <div key={m.initials} style={{background:"var(--bg-card)",border:"1px solid var(--border-default)",borderRadius:20,overflow:"hidden",transition:"transform 0.2s, box-shadow 0.2s"}} onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-5px)";e.currentTarget.style.boxShadow="0 16px 50px rgba(192,57,43,0.12)";}} onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="none";}}>
@@ -3268,7 +3268,7 @@ export default function AayojanApp(){
           <div style={{...S.card,marginBottom:20,background:"linear-gradient(135deg,var(--bg-card),var(--bg-secondary))"}}>
             <h2 style={{fontSize:18,fontWeight:800,color:"var(--text-primary)",marginBottom:12}}>About Aayojan</h2>
             <div style={{fontSize:13,color:"var(--text-secondary)",lineHeight:1.8,marginBottom:16}}>
-              <p style={{marginBottom:12}}>Aayojan (আয়োজন — "The Celebration") is Kolkata's first AI-powered catering aggregator, founded by <strong>Suparna Basak</strong> — a Newtown resident who saw how difficult it is to find good caterers for events.</p>
+              <p style={{marginBottom:12}}>Aayojan (আয়োজন — "The Celebration") is Kolkata's first AI-powered catering aggregator, built by <strong>Suparna Basak</strong> — a Newtown resident who saw how difficult it is to find good caterers for events.</p>
               <p style={{marginBottom:12}}>We started in May 2025 with a simple mission: <strong>make finding the right caterer as easy as ordering food online.</strong> No more calling 10 numbers, no more uncertainty about quality.</p>
               <p>Based in Newtown, Kolkata · Registered business · Built with love for Bengali food & celebrations 🎉</p>
             </div>
