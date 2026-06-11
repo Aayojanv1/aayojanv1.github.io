@@ -86,6 +86,26 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem
 .combo-tier .ctag{font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;padding:2px 7px;border-radius:99px;color:#fff;margin-left:6px;vertical-align:middle;}
 .ctag.veg{background:#2D7A4F;} .ctag.nv{background:#C0392B;}
 .cmenu{font-size:0.75rem;color:rgba(255,248,239,0.78);line-height:1.4;margin-top:3px;}
+.roll-promos{position:relative;background:linear-gradient(135deg,#1A1208,#2A1B0C);padding:2.4rem 5% 1.7rem;overflow:hidden;}
+.rp-stage{position:relative;max-width:680px;margin:0 auto;min-height:240px;}
+.rp-slide{position:absolute;top:0;left:0;right:0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px;text-decoration:none;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .45s ease, transform .45s ease;}
+.rp-slide.active{position:relative;opacity:1;visibility:visible;transform:none;}
+.rp-eyebrow{font-weight:800;font-size:0.76rem;letter-spacing:0.1em;text-transform:uppercase;}
+.rp-eyebrow.gold{color:#FFE9B0;}
+.rp-eyebrow.red{color:#FF9E6B;}
+.rp-h{font-family:'Playfair Display',serif;font-size:clamp(1.55rem,4.4vw,2.4rem);font-weight:900;color:#FFF8EF;line-height:1.1;margin:0;}
+.rp-h em{color:#E8760A;font-style:italic;}
+.rp-menu{font-size:0.84rem;color:rgba(255,248,239,0.86);line-height:1.45;max-width:580px;margin:0;}
+.rp-menu b{color:#FFE9B0;}
+.rp-price{font-family:'Playfair Display',serif;font-weight:900;font-size:1.5rem;color:#FFE9B0;}
+.rp-price span{font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.76rem;color:rgba(255,248,239,0.7);margin-left:6px;}
+.rp-cta{margin-top:6px;display:inline-block;font-weight:900;padding:12px 26px;border-radius:99px;font-size:0.95rem;color:#3a1c06;}
+.rp-cta.gold{background:#F3C869;}
+.rp-cta.red{background:#FFE14D;}
+.rp-dots{display:flex;gap:8px;justify-content:center;margin-top:1.1rem;}
+.rp-dot{width:9px;height:9px;border-radius:50%;border:none;background:rgba(243,200,105,0.35);cursor:pointer;padding:0;transition:all .3s;}
+.rp-dot.active{background:#F3C869;width:22px;border-radius:99px;}
+@media(max-width:560px){.rp-stage{min-height:320px;}}
 .crumbs a{color:var(--saffron);font-weight:600;}
 .crumbs span{margin:0 0.4rem;color:var(--border);}
 .hero{background:linear-gradient(180deg,var(--dark) 0%,#2A1C0F 100%);padding:5rem 5% 3.5rem;text-align:center;position:relative;overflow:hidden;}
@@ -454,33 +474,45 @@ section.block{padding:4rem 5%;}
   </div>
 </section>
 
-<!-- AI PLANNER + FESTIVE OFFERS (clubbed: planner intro + Jamai + Weekend Party) -->
-<section class="combo-sec">
-  <div class="combo-inner">
-    <span class="combo-eyebrow">🎉 This weekend · 20–21 June</span>
-    <h2 class="combo-h">Gather everyone. <em>We bring the feast.</em></h2>
-    <p class="combo-sub">Jamai Sasthi feast or a weekend party — tell Aayojan AI, get matched with a verified kitchen in seconds. No calling 10 caterers.</p>
-    <div class="combo-grid">
-      <a class="combo-card" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi feast">
-        <img class="combo-poster" src="/events/img/promo/jamai-sasthi.jpg?v=3" alt="শুভ জামাই ষষ্ঠী — Happy Jamai Sasthi feast, featured by Aayojan" loading="lazy" width="120" height="215">
-        <div class="combo-body">
-          <div class="combo-tag gold">🎣 Jamai Sasthi · 20–21 June</div>
-          <div class="combo-txt">Lavish feast — Fish Fry · Basanti Pulao · Chingri Malai Curry · Mutton Kasha · <strong>₹700/plate</strong></div>
-          <span class="combo-go gold">Plan Jamai feast →</span>
-        </div>
-      </a>
-      <div class="combo-card party">
-        <div class="combo-tag red">🎉 This weekend · Party menu / head</div>
-        <div class="combo-tiers">
-          <div class="combo-tier"><b>₹250</b><span class="ctag veg">Veg</span><div class="cmenu">Paneer Tikka · Basanti Pulao · Paneer Butter Masala · Dhokar Dalna · Dal · Luchi · 2 sweets</div></div>
-          <div class="combo-tier"><b>₹350</b><span class="ctag nv">Non-veg</span><div class="cmenu">Fish Fry · Pulao · Chicken Kosha · Dal · Luchi · Salad · 2 sweets</div></div>
-        </div>
-        <a class="combo-go red" data-ai-planner href="#aiplan">Plan my weekend party →</a>
-      </div>
-    </div>
-    <button id="ai-planner-open" class="aip-launch">✨ Plan with Aayojan AI →</button>
+<!-- ROLLING PROMOS — Jamai Sasthi / Weekend Party / Aayojan AI (auto-rotating, each separate) -->
+<section class="roll-promos">
+  <div class="rp-stage" id="rpStage">
+    <a class="rp-slide active" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi feast">
+      <span class="rp-eyebrow gold">🎣 শুভ জামাই ষষ্ঠী · 20–21 June</span>
+      <h2 class="rp-h">Treat your jamai to a <em>royal feast</em>.</h2>
+      <p class="rp-menu">Fish Fry · Basanti Pulao · Chingri Malai Curry · Mutton Kasha · Papad · Mishti</p>
+      <div class="rp-price">₹700<span>/plate · order before 18 June</span></div>
+      <span class="rp-cta gold">✨ Plan my Jamai Sasthi feast →</span>
+    </a>
+    <a class="rp-slide" data-ai-planner href="#aiplan" aria-label="Plan your weekend party">
+      <span class="rp-eyebrow red">🎉 THIS WEEKEND · PARTY MODE: ON 🔥</span>
+      <h2 class="rp-h">Weekend party? <em>We bring the feast.</em></h2>
+      <p class="rp-menu"><b>Veg ₹250</b> — Paneer Tikka · Basanti Pulao · Paneer Butter Masala · Dhokar Dalna · Dal · Luchi · 2 sweets</p>
+      <p class="rp-menu"><b>Non-veg ₹350</b> — Fish Fry · Pulao · Chicken Kosha · Dal · Luchi · Salad · 2 sweets</p>
+      <span class="rp-cta red">🎈 Plan my weekend party →</span>
+    </a>
+    <a class="rp-slide" id="ai-planner-open" data-ai-planner href="#aiplan" aria-label="Plan with Aayojan AI">
+      <span class="rp-eyebrow gold">✨ Meet Aayojan AI · your event planner</span>
+      <h2 class="rp-h">Tell us once. <em>3 verified kitchens</em> in seconds.</h2>
+      <p class="rp-menu">No calling 10 caterers. Chat → get matched → connect on WhatsApp. Free · no advance payment.</p>
+      <span class="rp-cta gold">✨ Plan with Aayojan AI →</span>
+    </a>
   </div>
+  <div class="rp-dots" id="rpDots" aria-label="Offer navigation"></div>
 </section>
+<script>
+(function(){
+  var stage=document.getElementById('rpStage'); if(!stage) return;
+  var slides=stage.querySelectorAll('.rp-slide'); var dotsWrap=document.getElementById('rpDots'); var idx=0,timer;
+  for(var i=0;i<slides.length;i++){(function(i){var d=document.createElement('button');d.className='rp-dot'+(i===0?' active':'');d.setAttribute('aria-label','Offer '+(i+1));d.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go(i);reset();});dotsWrap.appendChild(d);})(i);}
+  var dots=dotsWrap.querySelectorAll('.rp-dot');
+  function go(n){slides[idx].classList.remove('active');dots[idx].classList.remove('active');idx=(n+slides.length)%slides.length;slides[idx].classList.add('active');dots[idx].classList.add('active');}
+  function reset(){clearInterval(timer);timer=setInterval(function(){go(idx+1);},5000);}
+  reset();
+  stage.addEventListener('mouseenter',function(){clearInterval(timer);});
+  stage.addEventListener('mouseleave',reset);
+})();
+</script>
 
 <!-- TESTIMONIALS — trust signal, placed high (real reviews of network kitchens, names gated) -->
 <section class="tmoni">
