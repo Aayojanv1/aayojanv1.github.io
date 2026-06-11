@@ -326,7 +326,7 @@ PRICING:
 - Registration: ₹0 (free forever)
 - Monthly fee: ₹0
 - Commission: 3% per successful booking (only when caterer gets paid)
-- FOUNDING PARTNER OFFER: First 10 partners get 0% commission for first year (5 spots filled, 5 remain)
+- EARLY PARTNER OFFER: Early partners get 0% commission for the first year
 - No lock-in, no exclusivity, cancel anytime
 
 HOW IT WORKS:
@@ -2074,7 +2074,7 @@ export default function AayojanApp(){
               </div>}
               <div style={{display:"flex",gap:12,alignItems:"flex-start",background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:10,padding:"14px",marginTop:14}}>
                 <span style={{fontSize:24}}>⏳</span>
-                <div><div style={{fontWeight:700,color:"#1f2937",marginBottom:2}}>Quotation in 48 Hours</div><div style={{fontSize:12,color:"#6b7280",lineHeight:1.5}}>WhatsApp sent to <strong style={{color:accent}}>up to 5 caterers</strong> near you with budget <strong style={{color:accent}}>₹{perPlateBudget}/{serviceType==="full"?"plate":"portion"}</strong>.</div></div>
+                <div><div style={{fontWeight:700,color:"#1f2937",marginBottom:2}}>Quotation in 48 Hours</div><div style={{fontSize:12,color:"#6b7280",lineHeight:1.5}}>WhatsApp sent to <strong style={{color:accent}}>matched verified caterers</strong> near you with budget <strong style={{color:accent}}>₹{perPlateBudget}/{serviceType==="full"?"plate":"portion"}</strong>.</div></div>
               </div>
               {!user&&selectedItems.length>0&&<div style={{background:"#fff7ed",border:"1px solid #fdba74",borderRadius:8,padding:"10px 14px",fontSize:12,color:"var(--text-secondary)",marginTop:10}}>🔒 Login required to send quote requests.</div>}
               <div style={{display:"flex",gap:10,marginTop:18}}>

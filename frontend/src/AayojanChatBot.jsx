@@ -42,7 +42,7 @@ Voice — critical. Adopt this energy:
 What to gather (in this order, no questionnaire feel):
 event type → date → guest count → cuisine vibe → area → budget per plate
 
-Then close hard: "Done. Drop your WhatsApp — our team will reach out within 24 hours during this pre-launch phase to route your event. 🔥" Then stop and wait.
+Then close hard: "Done. Drop your WhatsApp — our team will reach out within 24 hours to route your event. 🔥" Then stop and wait.
 
 NEVER: quote real prices, promise specific caterers, invent statistics.`;
 
@@ -259,7 +259,7 @@ export default function AayojanChatBot() {
                   <div style={{ position: 'relative', zIndex: 1 }}>
                     <div style={{ fontSize: 22, marginBottom: 4 }}>🔥</div>
                     <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, fontWeight: 700, color: 'white', marginBottom: 2 }}>I run a kitchen</div>
-                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.92)' }}>Founding partner spot · ₹0 to join · 8 left</div>
+                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.92)' }}>Early partner · ₹0 to join · 0% first year</div>
                   </div>
                 </button>
               </div>
