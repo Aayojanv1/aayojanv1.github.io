@@ -45,6 +45,24 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem
 .jamai-poster-sec{background:linear-gradient(180deg,#1A1208,#0F0A05);padding:2.6rem 5%;text-align:center;}
 .jps-img{width:100%;max-width:340px;border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,0.5);border:2px solid rgba(243,200,105,0.45);display:block;margin:0 auto;}
 .jps-cta{display:inline-block;margin-top:1.3rem;background:#F3C869;color:#3a1c06;font-weight:800;padding:12px 26px;border-radius:99px;font-size:0.95rem;text-decoration:none;box-shadow:0 10px 26px rgba(243,200,105,0.4);}
+.party-blast{background:linear-gradient(120deg,#6A1B9A,#C0392B,#E8760A);position:relative;overflow:hidden;padding:2.8rem 5%;text-align:center;}
+.party-blast::before{content:"🎉";position:absolute;top:12px;left:18px;font-size:1.9rem;opacity:0.55;}
+.party-blast::after{content:"🎈";position:absolute;bottom:14px;right:20px;font-size:1.9rem;opacity:0.55;}
+.pb-inner{max-width:720px;margin:0 auto;position:relative;z-index:1;}
+.pb-kicker{display:inline-block;background:rgba(0,0,0,0.28);color:#FFE9B0;font-weight:900;letter-spacing:0.14em;font-size:0.74rem;padding:6px 16px;border-radius:99px;margin-bottom:0.9rem;}
+.pb-h{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,5vw,2.7rem);font-weight:900;color:#fff;margin:0 0 0.4rem;line-height:1.08;}
+.pb-h em{color:#FFE14D;font-style:italic;}
+.pb-sub{color:rgba(255,255,255,0.92);font-size:0.92rem;margin:0 auto 1.5rem;max-width:520px;}
+.pb-tiers{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:1.6rem;}
+.pb-tier{background:rgba(255,255,255,0.96);border-radius:16px;padding:14px 18px;max-width:300px;text-align:left;box-shadow:0 12px 30px rgba(0,0,0,0.25);}
+.pb-tier-h{display:flex;align-items:baseline;gap:7px;margin-bottom:8px;flex-wrap:wrap;}
+.pb-tier-h .amt{font-family:'Playfair Display',serif;font-weight:900;font-size:1.6rem;color:#C0392B;}
+.pb-tier.nv .amt{color:#6A1B9A;}
+.pb-tier-h .tag{font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#fff;background:#2D7A4F;padding:3px 9px;border-radius:99px;margin-left:auto;}
+.pb-tier.nv .tag{background:#C0392B;}
+.pb-menu{font-size:0.82rem;color:#444;line-height:1.5;}
+.pb-cta{display:inline-block;background:#FFE14D;color:#3a1c06;font-weight:900;padding:14px 30px;border-radius:99px;font-size:1rem;text-decoration:none;box-shadow:0 14px 36px rgba(0,0,0,0.3);animation:pbBounce 2s ease-in-out infinite;}
+@keyframes pbBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
 .crumbs a{color:var(--saffron);font-weight:600;}
 .crumbs span{margin:0 0.4rem;color:var(--border);}
 .hero{background:linear-gradient(180deg,var(--dark) 0%,#2A1C0F 100%);padding:5rem 5% 3.5rem;text-align:center;position:relative;overflow:hidden;}
@@ -429,6 +447,26 @@ section.block{padding:4rem 5%;}
     <img class="jps-img" src="/events/img/promo/jamai-sasthi.jpg?v=3" alt="শুভ জামাই ষষ্ঠী · Happy Jamai Sasthi — lavish Bengali feast at ₹700, featured by Aayojan" loading="lazy" width="340" height="609">
   </a>
   <div><a class="jps-cta" data-ai-planner href="#aiplan">✨ Plan your Jamai Sasthi feast →</a></div>
+</section>
+
+<!-- PARTY BLAST — party catering pricing + menus -->
+<section class="party-blast">
+  <div class="pb-inner">
+    <span class="pb-kicker">🎉 PARTY MODE: ON 🔥</span>
+    <h2 class="pb-h">Throw the party. <em>We bring the feast.</em></h2>
+    <p class="pb-sub">House party · birthday · get-together · kitty — Bengali, Mughlai &amp; Chinese, delivered hot. You cook <em>nothing</em>.</p>
+    <div class="pb-tiers">
+      <div class="pb-tier">
+        <div class="pb-tier-h"><span class="amt">₹150</span><span style="font-size:.8rem;color:#777">/head</span><span class="tag">🥗 Veg</span></div>
+        <div class="pb-menu">Basanti Pulao · Paneer · Aloo Dum · Cholar Dal · Luchi · Salad &amp; papad · Sweet</div>
+      </div>
+      <div class="pb-tier nv">
+        <div class="pb-tier-h"><span class="amt">₹300</span><span style="font-size:.8rem;color:#777">/head</span><span class="tag">🍗 Non-veg</span></div>
+        <div class="pb-menu">Mutton Biryani/Pulao · Chicken Chaap · Fish Fry · Mutton Kosha · Salad · Rosogolla + Mishti Doi</div>
+      </div>
+    </div>
+    <a class="pb-cta" data-ai-planner href="#aiplan">🎈 Plan my party — get matched →</a>
+  </div>
 </section>
 
 <!-- TESTIMONIALS — trust signal, placed high (real reviews of network kitchens, names gated) -->
