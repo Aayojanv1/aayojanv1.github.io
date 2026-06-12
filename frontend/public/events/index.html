@@ -508,6 +508,8 @@ section.block{padding:4rem 5%;}
   var dots=dotsWrap.querySelectorAll('.rp-dot');
   function go(n){slides[idx].classList.remove('active');dots[idx].classList.remove('active');idx=(n+slides.length)%slides.length;slides[idx].classList.add('active');dots[idx].classList.add('active');}
   function reset(){clearInterval(timer);timer=setInterval(function(){go(idx+1);},5000);}
+  var ev=(new URLSearchParams(location.search)).get('event')||'';
+  if(/party|birthday|corporate|get.?together|kitty/i.test(ev)) go(1);
   reset();
   stage.addEventListener('mouseenter',function(){clearInterval(timer);});
   stage.addEventListener('mouseleave',reset);
