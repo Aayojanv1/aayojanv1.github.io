@@ -133,8 +133,16 @@
       errMsg.textContent = "Please enter a valid phone number."; errMsg.style.display = "block"; return;
     }
     var event = form.querySelector('[name="event"]').value;
-    var date = (form.querySelector('[name="date"]').value || "").trim();
-    var guests = (form.querySelector('[name="guests"]').value || "").trim();
+    var dateEl = form.querySelector('[name="date"]'), guestsEl = form.querySelector('[name="guests"]');
+    var date = (dateEl.value || "").trim();
+    var guests = (guestsEl.value || "").trim();
+    // anti-spam minimum: guest count + date required on every lead
+    var missEl = !guests ? guestsEl : !date ? dateEl : null;
+    if (missEl) {
+      guestsEl.style.borderColor = ""; dateEl.style.borderColor = "";
+      missEl.style.borderColor = "#c0392b"; missEl.focus();
+      errMsg.textContent = "Please add guest count and event date so we can quote."; errMsg.style.display = "block"; return;
+    }
     var diet = (form.querySelector('[name="diet"]:checked') || {}).value || "";
     var brief = "Event: " + event + (guests ? " · Guests: " + guests : "") + (date ? " · Date: " + date : "") + (diet ? " · " + diet : "");
     var message = "Hi Aayojan! I'd like a quick quote.\nEvent: " + event + "\nGuests: " + guests + "\nDate: " + date + "\nFood: " + diet;

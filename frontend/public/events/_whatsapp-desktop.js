@@ -81,22 +81,21 @@
     '<div class="wad-modal" role="dialog" aria-modal="true" aria-label="Get your kitchens on WhatsApp">' +
     '<button class="wad-close" aria-label="Close">&times;</button>' +
     '<h3 class="wad-title">Almost there 🎉</h3>' +
-    '<p class="wad-sub">Leave your <strong>name &amp; phone</strong> and we&#39;ll connect you on WhatsApp. <strong>100% free — no payment, no spam.</strong></p>' +
+    '<p class="wad-sub">A few quick details and we&#39;ll WhatsApp you menus &amp; quotes. <strong>100% free — no payment, no spam.</strong></p>' +
     '<div class="wad-brief" style="display:none"></div>' +
     '<form class="wad-form" novalidate>' +
     '<input class="wad-in" name="name" placeholder="Your name *" autocomplete="name">' +
     '<input class="wad-in" name="phone" type="tel" placeholder="Phone / WhatsApp number *" autocomplete="tel" inputmode="tel">' +
-    // shown only when no brief is carried (generic WhatsApp clicks) — so every lead has a requirement
-    '<div class="wad-extra" style="display:none">' +
-    '<div class="wad-xhint">Tell us what you need so we can quote *</div>' +
+    // event + guests + date are required on EVERY lead (pre-filled from the planner when available)
+    '<div class="wad-extra">' +
     '<select class="wad-in" name="xevent">' +
     '<option value="">Event type *…</option>' +
     '<option>Party / get-together</option><option>Birthday</option><option>Jamai Sasthi</option>' +
     '<option>Wedding</option><option>Annaprasan</option><option>Corporate</option><option>Bhai Phota</option><option>Griha Pravesh</option>' +
     "</select>" +
     '<div style="display:flex;gap:8px;margin-top:8px">' +
-    '<input class="wad-in" name="xguests" type="number" inputmode="numeric" placeholder="Guests" style="flex:1">' +
-    '<input class="wad-in" name="xdate" placeholder="Date" style="flex:1">' +
+    '<input class="wad-in" name="xguests" type="number" inputmode="numeric" placeholder="Guest count *" style="flex:1">' +
+    '<input class="wad-in" name="xdate" placeholder="Event date *" style="flex:1">' +
     "</div></div>" +
     '<input class="wad-hp" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">' +
     '<button class="wad-submit" type="submit">Get my kitchens →</button>' +
@@ -123,7 +122,6 @@
   var successBox = overlay.querySelector(".wad-success");
   var goBtn = overlay.querySelector(".wad-go");
   var form = overlay.querySelector(".wad-form");
-  var extraBox = overlay.querySelector(".wad-extra");
 
   // brief carried in the wa.me ?text=, populated when any WhatsApp CTA is pressed
   var ctxMessage = "", ctxEvent = "", ctxBrief = "", ctxHref = "";
@@ -137,11 +135,13 @@
       return (new URLSearchParams(q)).get("text") || "";
     } catch (e) { return ""; }
   }
+  // event / guests / date are now collected as required fields, so the read-only
+  // brief box only shows the EXTRA context (food, area, budget, tasting…).
   function renderBrief(text) {
     var rows = [];
     (text || "").split("\n").forEach(function (l) {
       l = l.trim();
-      if (/^(Event|Guests|Food|Cuisine|Date|Area|Budget|Tasting|Pick|Match):/i.test(l)) rows.push(l);
+      if (/^(Food|Cuisine|Area|Budget|Tasting|Pick|Match):/i.test(l)) rows.push(l);
     });
     if (!rows.length) { briefBox.style.display = "none"; return ""; }
     briefBox.innerHTML = '<div class="wad-brief-h">✓ Your event details — already saved:</div>' +
@@ -152,6 +152,25 @@
     briefBox.style.display = "block";
     return rows.join(" · ");
   }
+
+  // parse "Key: value" lines from a carried brief, and map a free-form event
+  // string onto one of the dropdown options so planner leads pre-fill cleanly.
+  function parseBriefMap(msg) {
+    var m = {};
+    (msg || "").split("\n").forEach(function (l) {
+      var i = l.indexOf(":"); if (i < 0) return;
+      var k = l.slice(0, i).trim().toLowerCase(), v = l.slice(i + 1).trim();
+      if (k && !m[k]) m[k] = v;
+    });
+    return m;
+  }
+  var EVMAP = [
+    ["jamai|sasthi|shashti", "Jamai Sasthi"], ["wedding|reception|shaadi|marriage", "Wedding"],
+    ["birthday|bday", "Birthday"], ["annaprasan|mukhe|aiburo|bhat", "Annaprasan"],
+    ["corporate|office|conference|lunch", "Corporate"], ["bhai|phota", "Bhai Phota"],
+    ["griha|housewarm|pravesh", "Griha Pravesh"], ["party|get.?together|kitty|anniversary|reunion", "Party / get-together"]
+  ];
+  function matchEvent(s) { s = (s || "").toLowerCase(); for (var i = 0; i < EVMAP.length; i++) { if (new RegExp(EVMAP[i][0]).test(s)) return EVMAP[i][1]; } return ""; }
 
   function openModal(href) {
     ctxHref = href;
@@ -167,8 +186,14 @@
     var btn = form.querySelector(".wad-submit");
     btn.disabled = false; btn.textContent = "Get my kitchens →";
     overlay.querySelector(".wad-err").style.display = "none";
-    // no brief carried (generic WhatsApp click) -> ask for the requirement so the lead is useful
-    extraBox.style.display = ctxBrief ? "none" : "block";
+    // pre-fill event / guests / date from the carried brief (planner) so it's one tap;
+    // empty otherwise (generic clicks) — but always required before we save.
+    var bm = parseBriefMap(ctxMessage);
+    var xev = form.querySelector('[name="xevent"]'), xg = form.querySelector('[name="xguests"]'), xd = form.querySelector('[name="xdate"]');
+    xev.value = matchEvent(ctxEvent || bm.event || "");
+    xg.value = (bm.guests || "").replace(/[^\d]/g, "");
+    xd.value = bm.date || "";
+    [xev, xg, xd].forEach(function (el) { el.style.borderColor = ""; });
     // QR / "open on this computer" only make sense on desktop
     if (MOBILE) {
       secondary.style.display = "none";
@@ -243,20 +268,27 @@
       errMsg.textContent = "Please enter a valid phone number."; errMsg.style.display = "block";
       return;
     }
-    // no brief carried -> require the requirement (event) so we never store a blank lead
-    if (extraBox.style.display !== "none") {
-      var xev = form.querySelector('[name="xevent"]'), xg = form.querySelector('[name="xguests"]'), xd = form.querySelector('[name="xdate"]');
-      var evV = (xev && xev.value || "").trim(), gV = (xg && xg.value || "").trim(), dV = (xd && xd.value || "").trim();
-      if (!evV) {
-        xev.style.borderColor = "#c0392b"; xev.focus();
-        errMsg.textContent = "Please pick your event type so we can quote."; errMsg.style.display = "block";
-        return;
-      }
-      var parts = ["Event: " + evV]; if (gV) parts.push("Guests: " + gV); if (dV) parts.push("Date: " + dV);
-      ctxEvent = evV; ctxBrief = parts.join(" · "); ctxMessage = "Hi Aayojan! I'd like a quote.\n" + parts.join("\n");
-      var nh = "https://wa.me/" + WA + "?text=" + encodeURIComponent(ctxMessage);
-      goBtn.setAttribute("href", nh); web.setAttribute("href", nh); // carry the brief into WhatsApp too
+    // require event + guests + date on EVERY lead (anti-spam minimum)
+    var xev = form.querySelector('[name="xevent"]'), xg = form.querySelector('[name="xguests"]'), xd = form.querySelector('[name="xdate"]');
+    var evV = (xev.value || "").trim(), gV = (xg.value || "").trim(), dV = (xd.value || "").trim();
+    var miss = !evV ? xev : !gV ? xg : !dV ? xd : null;
+    if (miss) {
+      [xev, xg, xd].forEach(function (el) { el.style.borderColor = ""; });
+      miss.style.borderColor = "#c0392b"; miss.focus();
+      errMsg.textContent = "Please add your event, guest count and date so we can quote.";
+      errMsg.style.display = "block";
+      return;
     }
+    // keep any extra context the planner already gathered (food / area / budget / tasting)
+    var extras = [];
+    (ctxMessage || "").split("\n").forEach(function (l) { l = l.trim(); if (/^(Food|Cuisine|Area|Budget|Tasting):/i.test(l)) extras.push(l); });
+    ctxEvent = evV;
+    var lines = ["Event: " + evV, "Guests: " + gV, "Date: " + dV].concat(extras);
+    ctxBrief = lines.join(" · ");
+    ctxMessage = "Hi Aayojan! I'd like a quote.\n" + lines.join("\n");
+    var nh = "https://wa.me/" + WA + "?text=" + encodeURIComponent(ctxMessage);
+    goBtn.setAttribute("href", nh); web.setAttribute("href", nh); // carry full brief into WhatsApp
+
     var btn = form.querySelector(".wad-submit");
     btn.disabled = true; btn.textContent = "Saving…";
 
@@ -270,6 +302,8 @@
       name: (nameIn.value || "").trim(),
       phone: phone,
       event: ctxEvent || "",
+      guests: gV || "",
+      date: dV || "",
       brief: ctxBrief || "",
       message: ctxMessage || "",
       source: (location.pathname.split("/").filter(Boolean)[0] || "home"),
