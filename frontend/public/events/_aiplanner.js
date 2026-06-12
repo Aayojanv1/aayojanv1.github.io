@@ -174,7 +174,17 @@
   function isProfane(t) { return PROFANITY.test(t || ""); }
 
   ov.querySelector(".aip-x").addEventListener("click", close);
-  function close() { ov.classList.remove("on"); document.body.style.overflow = ""; }
+  function close() { ov.classList.remove("on"); document.body.style.overflow = ""; ov.style.height = ""; ov.style.top = ""; }
+
+  // iOS soft keyboard: shrink the overlay to the visible viewport (above the keyboard)
+  var VV = window.visualViewport;
+  function fitVV() {
+    if (!VV || !ov.classList.contains("on")) return;
+    ov.style.height = VV.height + "px";
+    ov.style.top = (VV.offsetTop || 0) + "px";
+    if (chat) chat.scrollTop = chat.scrollHeight;
+  }
+  if (VV) { VV.addEventListener("resize", fitVV); VV.addEventListener("scroll", fitVV); }
 
   function buildChatLayout() {
     bodyWrap.innerHTML = '<div class="aip-body"><div class="aip-chat" id="aipChat"></div><div class="aip-input" id="aipInput"></div></div>';
@@ -453,7 +463,7 @@
     brief = {}; history = []; mode = "gemini"; guidedIdx = 0; turnCount = 0;
     briefGrid.innerHTML = ""; briefBox.style.display = "none";
     buildChatLayout();
-    ov.classList.add("on"); document.body.style.overflow = "hidden";
+    ov.classList.add("on"); document.body.style.overflow = "hidden"; fitVV();
     track("ai_planner_opened", {});
     addMsg("Hi! I'm Aayojan AI 👋 Tell me about your event — what are you planning?", "bot");
     history.push({ role: "assistant", content: "Hi! I'm Aayojan AI. What are you planning?" });
