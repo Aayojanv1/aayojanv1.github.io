@@ -406,6 +406,7 @@ section.block{padding:4rem 5%;}
 <script defer src="/events/_analytics.js"></script>
 <script defer src="/events/_whatsapp-desktop.js"></script>
 <script defer src="/events/_aiplanner.js?v=2"></script>
+<script defer src="/events/_quickquote.js"></script>
 </head>
 <body>
 
@@ -506,6 +507,9 @@ section.block{padding:4rem 5%;}
     </a>
   </div>
   <div class="rp-dots" id="rpDots" aria-label="Offer navigation"></div>
+  <div style="text-align:center;margin-top:14px;">
+    <a href="#quote" data-quick-quote="" style="display:inline-block;color:#F3C869;font-weight:800;font-size:0.92rem;text-decoration:none;border-bottom:1px solid rgba(243,200,105,0.45);padding-bottom:2px;">⚡ In a hurry? Get a quick quote in 30 sec →</a>
+  </div>
 </section>
 <script>
 (function(){
@@ -516,8 +520,9 @@ section.block{padding:4rem 5%;}
   function go(n){slides[idx].classList.remove('active');dots[idx].classList.remove('active');idx=(n+slides.length)%slides.length;slides[idx].classList.add('active');dots[idx].classList.add('active');}
   function reset(){clearInterval(timer);timer=setInterval(function(){go(idx+1);},5000);}
   var ev=(new URLSearchParams(location.search)).get('event')||'';
-  if(/party|birthday|corporate|get.?together|kitty/i.test(ev)) go(1);
-  reset();
+  if(/party|birthday|corporate|get.?together|kitty/i.test(ev)){ go(1); }      // pin party slide (no auto-rotate)
+  else if(/jamai|sasthi/i.test(ev)){ /* slide 0 already active — pin Jamai */ }
+  else { reset(); }                                                            // no param -> auto-rotate
   stage.addEventListener('mouseenter',function(){clearInterval(timer);});
   stage.addEventListener('mouseleave',reset);
 })();
