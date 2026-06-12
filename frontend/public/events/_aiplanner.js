@@ -23,6 +23,58 @@
     else if (typeof window.gtag === "function") window.gtag("event", e, p || {});
   }
 
+  // --- chatbot search logging (session-scoped) -> Firestore chatLogs --------
+  // One doc per session (keyed by sid); every user message is appended so we
+  // can see exactly what Kolkata is searching for — even when they don't convert.
+  var FIREBASE_CONFIG = {
+    apiKey: "AIzaSyBPvK0452Kgkp0Oevxm1zMRUWiqKdhmaZA",
+    authDomain: "aayojan-a8c4f.firebaseapp.com",
+    projectId: "aayojan-a8c4f",
+    storageBucket: "aayojan-a8c4f.firebasestorage.app",
+    messagingSenderId: "673829788583",
+    appId: "1:673829788583:web:9f140241bf0466b197b482"
+  };
+  function newId() { return "s_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8); }
+  var SID = (function () {
+    try { var v = localStorage.getItem("aysid"); if (!v) { v = newId(); localStorage.setItem("aysid", v); } return v; }
+    catch (e) { return newId(); }
+  })();
+  window.aSID = SID; // expose so leads can be stitched to the session later
+  var QP = new URLSearchParams(location.search);
+  function withDb(cb) {
+    function go() {
+      try {
+        if (!window.firebase.apps || !window.firebase.apps.length) window.firebase.initializeApp(FIREBASE_CONFIG);
+        cb(window.firebase.firestore(), window.firebase.firestore.FieldValue);
+      } catch (e) {}
+    }
+    if (window.firebase && window.firebase.firestore) return go();
+    var base = "https://www.gstatic.com/firebasejs/10.12.2/";
+    var s1 = document.createElement("script"); s1.src = base + "firebase-app-compat.js";
+    s1.onload = function () { var s2 = document.createElement("script"); s2.src = base + "firebase-firestore-compat.js"; s2.onload = go; document.head.appendChild(s2); };
+    document.head.appendChild(s1);
+  }
+  var logInit = false;
+  function logChat(role, text) {
+    withDb(function (db, FV) {
+      try {
+        var entry = { role: role, text: String(text || "").slice(0, 500), t: new Date().toISOString() };
+        var payload = {
+          sid: SID, messages: FV.arrayUnion(entry), lastAt: new Date().toISOString(),
+          event: brief.event || "", brief: brief, source: "ai_planner", page: location.pathname
+        };
+        if (!logInit) {
+          payload.createdAt = new Date().toISOString();
+          payload.gclid = QP.get("gclid") || ""; payload.utm_source = QP.get("utm_source") || ""; payload.utm_campaign = QP.get("utm_campaign") || "";
+          payload.device = (window.innerWidth <= 768 ? "mobile" : "desktop");
+          payload.referrer = (document.referrer || "").slice(0, 200);
+          logInit = true;
+        }
+        db.collection("chatLogs").doc(SID).set(payload, { merge: true });
+      } catch (e) {}
+    });
+  }
+
   // --- aliased verified kitchens (names withheld until the lead connects) ----
   var KITCHENS = [
     { tag: "Multi-Cuisine Kitchen · Newtown", cuisines: "Bengali · Mughlai · Continental", pMin: 350, pMax: 1200, gMin: 10, gMax: 1000, events: ["Wedding", "Party", "Birthday", "Corporate", "Annaprasan", "Griha Pravesh", "Bhai Phota"], areas: ["Newtown", "Salt Lake", "Rajarhat"] },
@@ -193,6 +245,7 @@
   function addMsg(text, who) {
     var d = document.createElement("div"); d.className = "aip-msg " + who; d.textContent = text;
     chat.appendChild(d); chat.scrollTop = chat.scrollHeight;
+    if (who === "usr") logChat("user", text); // capture what users search/type
   }
   function showTyping() {
     var t = document.createElement("div"); t.className = "aip-typing"; t.id = "aipTyping"; t.innerHTML = "<i></i><i></i><i></i>";
@@ -450,6 +503,7 @@
       '<div class="aip-note">Kitchen names &amp; contacts are shared once you connect. Free · no advance payment.</div></div>';
     bodyWrap.innerHTML = html;
     track("ai_planner_matches_shown", { event: brief.eventType, count: ranked.length });
+    logChat("matched", (brief.eventType || "event") + " · " + (brief.guestsNum || "?") + " guests · " + (brief.area || "?")); // outcome marker
     bodyWrap.addEventListener("click", function (e) {
       var pk = e.target.closest && e.target.closest(".aip-pick");
       var al = e.target.closest && e.target.closest("#aipAll");
