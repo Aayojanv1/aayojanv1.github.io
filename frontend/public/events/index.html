@@ -106,6 +106,10 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem
 .rp-dot{width:9px;height:9px;border-radius:50%;border:none;background:rgba(243,200,105,0.35);cursor:pointer;padding:0;transition:all .3s;}
 .rp-dot.active{background:#F3C869;width:22px;border-radius:99px;}
 @media(max-width:560px){.rp-stage{min-height:320px;}}
+.rp-slide.rp-jamai{flex-direction:row;align-items:center;justify-content:center;gap:16px;text-align:left;}
+.rp-poster{width:100px;height:auto;border-radius:10px;border:1px solid rgba(243,200,105,0.5);flex-shrink:0;box-shadow:0 8px 22px rgba(0,0,0,0.4);}
+.rp-jbody{display:flex;flex-direction:column;align-items:flex-start;gap:7px;max-width:430px;}
+@media(max-width:560px){.rp-slide.rp-jamai{gap:12px;}.rp-poster{width:80px;}}
 .crumbs a{color:var(--saffron);font-weight:600;}
 .crumbs span{margin:0 0.4rem;color:var(--border);}
 .hero{background:linear-gradient(180deg,var(--dark) 0%,#2A1C0F 100%);padding:5rem 5% 3.5rem;text-align:center;position:relative;overflow:hidden;}
@@ -450,11 +454,11 @@ section.block{padding:4rem 5%;}
   </div>
   <a class="jamai-card" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi feast with Aayojan AI">
     <span class="jc-tag">🎣 শুভ জামাই ষষ্ঠী · Jamai Sasthi · 20–21 June</span>
-    <span class="jc-offer">Treat your jamai to a lavish feast — Fish Fry · Basanti Pulao · Chingri Malai Curry · Mutton Kasha, from <strong>₹700/plate</strong>. Order before 18 June.</span>
+    <span class="jc-offer">Treat your jamai to a lavish feast — Fish Fry · Basanti Pulao · Chingri Malai Curry · Mutton Kasha, from <strong>₹550/plate</strong>. Order before 18 June.</span>
     <span class="jc-go">✨ Plan my Jamai Sasthi feast →</span>
   </a>
   <h1 class="rotating-h1">
-    <span class="rh-line">This <em>Jamai Sasthi</em>?<br>Treat your jamai — feast at <em>₹700</em>.</span>
+    <span class="rh-line">This <em>Jamai Sasthi</em>?<br>Treat your jamai — feast at <em>₹550</em>.</span>
     <span class="rh-line">You bring the <em>people</em>.<br>We bring the <em>spread</em>.</span>
     <span class="rh-line">Tonight's <em>adda</em>?<br>WhatsApp us in <em>30 seconds</em>.</span>
     <span class="rh-line">Saturday <em>house party</em>?<br>Bengali kitchens, same day.</span>
@@ -477,12 +481,15 @@ section.block{padding:4rem 5%;}
 <!-- ROLLING PROMOS — Jamai Sasthi / Weekend Party / Aayojan AI (auto-rotating, each separate) -->
 <section class="roll-promos">
   <div class="rp-stage" id="rpStage">
-    <a class="rp-slide active" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi feast">
-      <span class="rp-eyebrow gold">🎣 শুভ জামাই ষষ্ঠী · 20–21 June</span>
-      <h2 class="rp-h">Treat your jamai to a <em>royal feast</em>.</h2>
-      <p class="rp-menu">Fish Fry · Basanti Pulao · Chingri Malai Curry · Mutton Kasha · Papad · Mishti</p>
-      <div class="rp-price">₹700<span>/plate · order before 18 June</span></div>
-      <span class="rp-cta gold">✨ Plan my Jamai Sasthi feast →</span>
+    <a class="rp-slide active rp-jamai" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi feast">
+      <img class="rp-poster" src="/events/img/promo/jamai-sasthi.jpg?v=3" alt="শুভ জামাই ষষ্ঠী — Happy Jamai Sasthi feast, featured by Aayojan" loading="lazy" width="100" height="179">
+      <div class="rp-jbody">
+        <span class="rp-eyebrow gold">🎣 শুভ জামাই ষষ্ঠী · 20–21 June</span>
+        <h2 class="rp-h">Treat your jamai to a <em>royal feast</em>.</h2>
+        <p class="rp-menu">Fish Fry · Basanti Pulao · Chingri Malai · Mutton Kasha · Mishti</p>
+        <div class="rp-price">₹550<span>/plate · order before 18 June</span></div>
+        <span class="rp-cta gold">✨ Plan my Jamai Sasthi feast →</span>
+      </div>
     </a>
     <a class="rp-slide" data-ai-planner href="#aiplan" aria-label="Plan your weekend party">
       <span class="rp-eyebrow red">🎉 THIS WEEKEND · PARTY MODE: ON 🔥</span>
