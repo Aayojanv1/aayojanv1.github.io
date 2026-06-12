@@ -25,6 +25,7 @@
   var MOBILE = !isDesktop();
 
   var NUMBER_DISPLAY = "+91 80884 34425";
+  var WA = "918088434425";
   var FIREBASE_CONFIG = {
     apiKey: "AIzaSyBPvK0452Kgkp0Oevxm1zMRUWiqKdhmaZA",
     authDomain: "aayojan-a8c4f.firebaseapp.com",
@@ -53,6 +54,8 @@
     ".wad-brow{font-size:0.84rem;color:#5b4632;line-height:1.65;}" +
     ".wad-brow b{color:#8B6E52;font-weight:700;}" +
     ".wad-form{display:flex;flex-direction:column;gap:8px;text-align:left;}" +
+    ".wad-xhint{font-size:0.74rem;font-weight:800;color:#236B43;margin:2px 2px 2px;}" +
+    ".wad-extra select.wad-in{background:#fff;}" +
     ".wad-in{width:100%;padding:12px 12px;border:1.5px solid #EDD8BC;border-radius:10px;font-size:0.95rem;font-family:inherit;}" +
     ".wad-in:focus{outline:none;border-color:#E8760A;}" +
     ".wad-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;}" +
@@ -83,6 +86,18 @@
     '<form class="wad-form" novalidate>' +
     '<input class="wad-in" name="name" placeholder="Your name *" autocomplete="name">' +
     '<input class="wad-in" name="phone" type="tel" placeholder="Phone / WhatsApp number *" autocomplete="tel" inputmode="tel">' +
+    // shown only when no brief is carried (generic WhatsApp clicks) — so every lead has a requirement
+    '<div class="wad-extra" style="display:none">' +
+    '<div class="wad-xhint">Tell us what you need so we can quote *</div>' +
+    '<select class="wad-in" name="xevent">' +
+    '<option value="">Event type *…</option>' +
+    '<option>Party / get-together</option><option>Birthday</option><option>Jamai Sasthi</option>' +
+    '<option>Wedding</option><option>Annaprasan</option><option>Corporate</option><option>Bhai Phota</option><option>Griha Pravesh</option>' +
+    "</select>" +
+    '<div style="display:flex;gap:8px;margin-top:8px">' +
+    '<input class="wad-in" name="xguests" type="number" inputmode="numeric" placeholder="Guests" style="flex:1">' +
+    '<input class="wad-in" name="xdate" placeholder="Date" style="flex:1">' +
+    "</div></div>" +
     '<input class="wad-hp" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">' +
     '<button class="wad-submit" type="submit">Get my kitchens →</button>' +
     '<div class="wad-consent">We&#39;ll only use this to contact you about your enquiry. <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a></div>' +
@@ -108,6 +123,7 @@
   var successBox = overlay.querySelector(".wad-success");
   var goBtn = overlay.querySelector(".wad-go");
   var form = overlay.querySelector(".wad-form");
+  var extraBox = overlay.querySelector(".wad-extra");
 
   // brief carried in the wa.me ?text=, populated when any WhatsApp CTA is pressed
   var ctxMessage = "", ctxEvent = "", ctxBrief = "", ctxHref = "";
@@ -151,6 +167,8 @@
     var btn = form.querySelector(".wad-submit");
     btn.disabled = false; btn.textContent = "Get my kitchens →";
     overlay.querySelector(".wad-err").style.display = "none";
+    // no brief carried (generic WhatsApp click) -> ask for the requirement so the lead is useful
+    extraBox.style.display = ctxBrief ? "none" : "block";
     // QR / "open on this computer" only make sense on desktop
     if (MOBILE) {
       secondary.style.display = "none";
@@ -225,6 +243,20 @@
       errMsg.textContent = "Please enter a valid phone number."; errMsg.style.display = "block";
       return;
     }
+    // no brief carried -> require the requirement (event) so we never store a blank lead
+    if (extraBox.style.display !== "none") {
+      var xev = form.querySelector('[name="xevent"]'), xg = form.querySelector('[name="xguests"]'), xd = form.querySelector('[name="xdate"]');
+      var evV = (xev && xev.value || "").trim(), gV = (xg && xg.value || "").trim(), dV = (xd && xd.value || "").trim();
+      if (!evV) {
+        xev.style.borderColor = "#c0392b"; xev.focus();
+        errMsg.textContent = "Please pick your event type so we can quote."; errMsg.style.display = "block";
+        return;
+      }
+      var parts = ["Event: " + evV]; if (gV) parts.push("Guests: " + gV); if (dV) parts.push("Date: " + dV);
+      ctxEvent = evV; ctxBrief = parts.join(" · "); ctxMessage = "Hi Aayojan! I'd like a quote.\n" + parts.join("\n");
+      var nh = "https://wa.me/" + WA + "?text=" + encodeURIComponent(ctxMessage);
+      goBtn.setAttribute("href", nh); web.setAttribute("href", nh); // carry the brief into WhatsApp too
+    }
     var btn = form.querySelector(".wad-submit");
     btn.disabled = true; btn.textContent = "Saving…";
 
@@ -240,7 +272,8 @@
       event: ctxEvent || "",
       brief: ctxBrief || "",
       message: ctxMessage || "",
-      source: "events",
+      source: (location.pathname.split("/").filter(Boolean)[0] || "home"),
+      sid: window.aSID || "",
       device: MOBILE ? "mobile" : "desktop",
       page: location.pathname,
       gclid: qp.get("gclid") || "",
@@ -262,14 +295,16 @@
     }, fail);
   });
 
-  // --- intercept ALL WhatsApp clicks (every device) -------------------------
+  // --- intercept customer WhatsApp clicks (every device) --------------------
   document.addEventListener("click", function (e) {
     var a = e.target && e.target.closest ? e.target.closest("a") : null;
     if (!a) return;
     var href = a.getAttribute("href") || "";
-    if (/wa\.me|api\.whatsapp\.com/i.test(href)) {
-      e.preventDefault();
-      openModal(href);
-    }
+    if (!/wa\.me|api\.whatsapp\.com/i.test(href)) return;
+    // Do NOT gate caterer/partner-recruitment chats — those aren't customer leads.
+    if (a.hasAttribute("data-no-gate")) return;                 // explicit opt-out
+    if (/partner/i.test(href.split("text=")[1] || "")) return;  // "...join as partner" / "I am a caterer ... partner"
+    e.preventDefault();
+    openModal(href);
   });
 })();
