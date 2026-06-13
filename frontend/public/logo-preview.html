@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Logo preview · Aayojan.online</title>
+<style>
+  :root{--dark:#1A1208;--saffron:#E8760A;--saffron-light:#F3C869;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:system-ui,-apple-system,'DM Sans',sans-serif;background:#F4ECE0;color:#2a1c0c;padding:24px;line-height:1.5;}
+  h1{font-size:1.4rem;margin:0 0 4px;}
+  .muted{color:#7B634E;font-size:0.9rem;margin:0 0 22px;}
+  .card{background:#fff;border:1px solid #E6D5BC;border-radius:14px;padding:18px;margin:0 0 16px;box-shadow:0 6px 18px rgba(76,43,10,0.06);}
+  .lbl{font-size:0.72rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#a07a4e;margin:0 0 12px;}
+
+  /* 1. real dark nav, exactly like the site */
+  .nav{display:flex;justify-content:space-between;align-items:center;padding:0.85rem 5%;background:var(--dark);border-radius:10px;}
+  .nav .logo img{height:46px;width:auto;display:block;border-radius:8px;}
+  .nav .links{color:#ccc;font-size:0.85rem;display:flex;gap:18px;}
+  .nav .cta{background:var(--saffron);color:#fff;padding:0.5rem 1rem;border-radius:99px;font-weight:800;font-size:0.82rem;}
+
+  /* 2. light header */
+  .lightnav{display:flex;justify-content:space-between;align-items:center;padding:0.85rem 5%;background:#fff;border:1px solid #eee;border-radius:10px;}
+  .lightnav img{height:46px;}
+
+  /* 3. small sizes */
+  .sizes{display:flex;align-items:flex-end;gap:26px;flex-wrap:wrap;}
+  .sz{text-align:center;}
+  .sz img{display:block;border:1px solid #ddd;border-radius:8px;object-fit:cover;}
+  .sz .s32 img,.sz img.s32{width:32px;height:32px;}
+  .sz small{display:block;color:#7B634E;font-size:0.72rem;margin-top:6px;}
+  .avatar{width:96px;height:96px;border-radius:50%;overflow:hidden;border:1px solid #ddd;}
+  .avatar img{width:100%;height:100%;object-fit:cover;}
+  .fav{width:32px;height:32px;border-radius:6px;overflow:hidden;border:1px solid #ddd;}
+  .fav img{width:100%;height:100%;object-fit:cover;}
+  .note{font-size:0.82rem;color:#b4521c;background:#FFF1E6;border:1px solid #F3C98C;border-radius:8px;padding:8px 11px;margin-top:12px;}
+  .full img{max-width:340px;width:100%;border:1px solid #eee;border-radius:10px;}
+  a{color:var(--saffron);}
+</style>
+</head>
+<body>
+  <h1>Logo preview — Aayojan.online</h1>
+  <p class="muted">How the new logo behaves in the real contexts it has to live in. Open <a href="/events/" target="_blank">/events/</a> to see it in the live nav too.</p>
+
+  <div class="card">
+    <p class="lbl">1 · The file as-is</p>
+    <div class="full"><img src="/img/logo-aayojan.jpg" alt="logo full"></div>
+  </div>
+
+  <div class="card">
+    <p class="lbl">2 · In the real dark site header (what your nav uses)</p>
+    <div class="nav">
+      <span class="logo"><img src="/img/logo-aayojan.jpg" alt="Aayojan"></span>
+      <span class="links">How it works · Cuisines · <span class="cta">WhatsApp</span></span>
+    </div>
+    <div class="note">⚠️ The JPEG has a <b>white background</b>, so it shows as a white box on the dark nav. Needs a transparent PNG / reversed (light) version.</div>
+  </div>
+
+  <div class="card">
+    <p class="lbl">3 · On a light header</p>
+    <div class="lightnav">
+      <img src="/img/logo-aayojan.jpg" alt="Aayojan">
+      <span style="color:#7B634E;font-size:0.85rem;">How it works · Cuisines</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="lbl">4 · Small sizes (favicon, WhatsApp avatar) — the real test</p>
+    <div class="sizes">
+      <div class="sz"><span class="fav"><img src="/img/logo-aayojan.jpg" alt=""></span><small>Favicon 32px</small></div>
+      <div class="sz"><span class="avatar"><img src="/img/logo-aayojan.jpg" alt=""></span><small>WhatsApp / social 96px</small></div>
+      <div class="sz"><img src="/img/logo-aayojan.jpg" alt="" style="height:64px;width:auto;border-radius:8px;"><small>64px tall</small></div>
+    </div>
+    <div class="note">⚠️ The full square lockup (script + tagline) becomes unreadable this small — this is why you need an <b>icon-only mark</b> (just the plate/fork/spoon circle) for these spots.</div>
+  </div>
+</body>
+</html>
