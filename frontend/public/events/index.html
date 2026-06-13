@@ -545,13 +545,12 @@ section.block{padding:4rem 5%;}
   for(var i=0;i<slides.length;i++){(function(i){var d=document.createElement('button');d.className='rp-dot'+(i===0?' active':'');d.setAttribute('aria-label','Offer '+(i+1));d.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go(i);reset();});dotsWrap.appendChild(d);})(i);}
   var dots=dotsWrap.querySelectorAll('.rp-dot');
   function go(n){slides[idx].classList.remove('active');dots[idx].classList.remove('active');idx=(n+slides.length)%slides.length;slides[idx].classList.add('active');dots[idx].classList.add('active');}
-  function reset(){clearInterval(timer);timer=setInterval(function(){go(idx+1);},5000);}
+  function reset(){clearInterval(timer);timer=setInterval(function(){go(idx+1);},6000);}
   var ev=(new URLSearchParams(location.search)).get('event')||'';
   if(/party|birthday|corporate|get.?together|kitty/i.test(ev)){ go(2); }      // pin party slide (index 2 after 2 jamai slides)
   else if(/jamai|sasthi/i.test(ev)){ reset(); }                                // jamai ad -> roll both ₹700 & ₹500 posters
   else { reset(); }                                                            // no param -> auto-rotate
-  stage.addEventListener('mouseenter',function(){clearInterval(timer);});
-  stage.addEventListener('mouseleave',reset);
+  // keep rolling even on hover (big poster means the cursor is usually over it)
 })();
 </script>
 
