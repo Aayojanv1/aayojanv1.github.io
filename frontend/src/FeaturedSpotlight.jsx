@@ -122,6 +122,23 @@ const FEATURED = [
     logoScript: "Romance With Taste",
     logoBg: "#6B4C9A",
   },
+  {
+    issue: "08",
+    slug: "mitras-catering",
+    chef: "Arittra Mitra",
+    business: "Mitra's Catering Service",
+    headlinePrefix: "Arittra Mitra plates",
+    headlineAccent: "Bengal's seafood",
+    headlineRest: "the way a Kolkata table demands.",
+    quote: "Bhetki Paturi steamed in banana leaf, Prawn Malai Curry rich with coconut, Mutton Kosha slow-cooked dark — and Chicken Maharani for the crowd. Mitra's Catering Service brings a proper Bengali non-veg feast, now matched to you through Aayojan.",
+    dishes: ["Bhetki Paturi · Prawn Malai Curry", "Fish Fry · Fish Amritsari", "Mutton Kosha · Chicken Maharani"],
+    href: "/partners/mitras-catering.html",
+    fssai: { status: "verified", number: "22821013002888" },
+    logoType: "text",
+    logoLines: ["MITRA'S", "CATERING"],
+    logoScript: "catering service",
+    logoBg: "#7A1F2B",
+  },
 ];
 
 const HOLD_MS = 6500;
