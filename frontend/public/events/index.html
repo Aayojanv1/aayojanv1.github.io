@@ -223,6 +223,10 @@ footer{background:#100C04;text-align:center;padding:2rem;color:#555;font-size:0.
 .hero-cta-primary:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(37,211,102,0.55);}
 .hero-cta-ghost{display:inline-flex;align-items:center;gap:6px;background:rgba(255,248,239,0.08);color:#FFF8EF;padding:0.95rem 1.4rem;border-radius:99px;font-weight:600;font-size:0.92rem;text-decoration:none;border:1px solid rgba(243,200,105,0.35);}
 .hero-trust{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.4rem;position:relative;z-index:2;}
+.bookbar{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;background:linear-gradient(135deg,#FFF1DE,#FFE7C4);border-top:1px solid #F0D9B5;border-bottom:1px solid #F0D9B5;padding:11px 5%;text-align:center;color:#5b3d1a;font-size:0.92rem;font-weight:600;line-height:1.5;}
+.bookbar strong{color:#236B43;font-weight:800;}
+.bb-dot{width:9px;height:9px;border-radius:50%;background:#2ecc71;flex-shrink:0;animation:bbPulse 1.8s infinite;}
+@keyframes bbPulse{0%{box-shadow:0 0 0 0 rgba(46,204,113,0.55);}70%{box-shadow:0 0 0 9px rgba(46,204,113,0);}100%{box-shadow:0 0 0 0 rgba(46,204,113,0);}}
 .trust-pill{background:rgba(255,255,255,0.08);color:#FBBF77;border:1px solid rgba(243,200,105,0.28);padding:0.4rem 0.9rem;border-radius:99px;font-size:0.78rem;font-weight:600;letter-spacing:0.02em;}
 
 /* === FEATURED KITCHENS === */
@@ -482,6 +486,12 @@ section.block{padding:4rem 5%;}
     <span class="trust-pill">✓ FSSAI declared</span>
   </div>
 </section>
+
+<!-- BOOKINGS SOCIAL PROOF -->
+<div class="bookbar">
+  <span class="bb-dot" aria-hidden="true"></span>
+  <span class="bb-txt"><strong>Booked this month:</strong> 6+ events in Newtown &amp; Salt Lake · 2+ in South Kolkata</span>
+</div>
 
 <!-- ROLLING PROMOS — Jamai Sasthi / Weekend Party / Aayojan AI (auto-rotating, each separate) -->
 <section class="roll-promos">
