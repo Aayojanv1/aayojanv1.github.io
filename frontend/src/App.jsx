@@ -1102,9 +1102,9 @@ export default function AayojanApp(){
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <header className="header-wrap" style={S.header}>
         <button onClick={()=>{navigate("landing");resetApp();}} style={{background:"none",border:"none",cursor:"pointer",padding:0,display:"flex",alignItems:"center",gap:10}}>
-          <img src="/logo-aayojan-compact.svg" alt="Aayojan" style={{width:42,height:42,borderRadius:12}}/>
+          <span style={{width:40,height:40,borderRadius:"50%",border:"2px solid #E8760A",display:"grid",placeItems:"center",fontSize:17,flexShrink:0}}>🍽️</span>
           <div>
-            <div style={{fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:700,color:"#E8760A"}}>Aayojan</div>
+            <div style={{fontFamily:"'Dancing Script',cursive",fontSize:27,fontWeight:700,color:"#E8760A",lineHeight:1}}>Aayojan<span style={{color:"#C95F08"}}>.online</span></div>
             <div style={{fontSize:10,color:"#7B634E",marginTop:1}}>📍 all over Kolkata</div>
           </div>
         </button>
