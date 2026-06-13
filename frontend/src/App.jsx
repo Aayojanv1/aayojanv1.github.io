@@ -320,13 +320,12 @@ KEY FACTS ABOUT AAYOJAN (use these in responses — be honest; we are LIVE and t
 - 15+ kitchens in our network — the kitchen's name is shared once we match the customer
 - Every kitchen is Aayojan-verified and FSSAI-checked before they cook for you
 - Customers get matched to the right kitchen via the AI planner / WhatsApp, then connect
-- Lead volume builds as customer base grows — early partners get priority placement
+- Lead volume builds as the customer base grows — partners are featured as we onboard
 
 PRICING:
 - Registration: ₹0 (free forever)
 - Monthly fee: ₹0
-- Commission: 3% per successful booking (only when caterer gets paid)
-- EARLY PARTNER OFFER: Early partners get 0% commission for the first year
+- Commission: flat 3% per successful booking (only when caterer gets paid) — same for every partner
 - No lock-in, no exclusivity, cancel anytime
 
 HOW IT WORKS:
@@ -346,7 +345,7 @@ FOOD TASTING PROGRAMME:
 OBJECTION HANDLING:
 - "Why should I join?" → "You get qualified leads on WhatsApp for free. No investment, pay only when you earn."
 - "I already have customers" → "Aayojan brings ADDITIONAL leads from people actively searching online. It's extra revenue, not replacement."
-- "3% is too much" → "3% only on orders we bring you. Other apps can take up to 30%. Plus first 10 founding partners pay 0% for the first year."
+- "3% is too much" → "Flat 3% only on orders we bring you. Other apps can take up to 30%. Same rate for every partner — no founding tiers."
 - "How do I know leads are genuine?" → "We pre-qualify customers — they tell us event type, guest count, budget. You only get relevant leads matching your capacity."
 - "What if I want to leave?" → "No contract, no lock-in. Leave anytime. Your data stays private."
 
@@ -1183,12 +1182,12 @@ export default function AayojanApp(){
 
                {/* Subtitle */}
                <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(16px,1.9vw,21px)",color:"rgba(255,248,239,0.75)",margin:"0 0 30px",lineHeight:1.55,maxWidth:440,fontWeight:500}}>
-                 Verified event leads on WhatsApp as we onboard customers. No app, no dashboard, no monthly fee. 3% commission only when you earn. Launch offer: early partners pay 0% for the first year.
+                 Verified event leads on WhatsApp as we onboard customers. No app, no dashboard, no monthly fee. Flat 3% commission only when you earn — the same for every partner.
                </p>
 
                {/* CTA */}
                <div style={{display:"flex",gap:10,flexWrap:"wrap",marginBottom:26}}>
-                 <a href="/partners.html" style={{display:"inline-flex",alignItems:"center",gap:8,background:"linear-gradient(135deg,#E8760A,#C95F08)",color:"#FFF8EF",padding:"14px 26px",borderRadius:99,fontSize:14,fontWeight:800,textDecoration:"none",boxShadow:"0 12px 32px rgba(232,118,10,0.45)",fontFamily:"'Playfair Display',serif"}}>🏅 Become a Founding Partner →</a>
+                 <a href="/partners.html" style={{display:"inline-flex",alignItems:"center",gap:8,background:"linear-gradient(135deg,#E8760A,#C95F08)",color:"#FFF8EF",padding:"14px 26px",borderRadius:99,fontSize:14,fontWeight:800,textDecoration:"none",boxShadow:"0 12px 32px rgba(232,118,10,0.45)",fontFamily:"'Playfair Display',serif"}}>🏅 Become a Verified Partner →</a>
                </div>
 
                {/* Trust strip */}
@@ -1470,7 +1469,7 @@ export default function AayojanApp(){
            <div style={{maxWidth:820,margin:"0 auto"}}>
              <div style={{textAlign:"center",marginBottom:28}}>
                <div style={{display:"inline-block",background:"rgba(232,118,10,0.1)",border:"1px solid rgba(232,118,10,0.2)",borderRadius:24,padding:"5px 14px",marginBottom:12}}>
-                 <span style={{fontSize:12,fontWeight:700,color:"#C95F08",letterSpacing:1}}>🔥 FOUNDING PARTNER PROGRAM</span>
+                 <span style={{fontSize:12,fontWeight:700,color:"#C95F08",letterSpacing:1}}>✅ VERIFIED PARTNER NETWORK</span>
                </div>
                <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(22px,5vw,32px)",fontWeight:800,color:"#1C130A",marginBottom:8}}>Are you a caterer in Kolkata?</h2>
                <p style={{fontSize:14,color:"#7B634E",maxWidth:520,margin:"0 auto",lineHeight:1.7}}>Stop waiting for referrals. Get verified event leads on WhatsApp — with guest count, budget & menu preference already filled in.</p>
@@ -1478,9 +1477,9 @@ export default function AayojanApp(){
 
              <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,marginBottom:24}} className="feat-grid">
                {[
-                 {icon:"💰",title:"₹0 to join",sub:"Free forever for founding partners"},
+                 {icon:"💰",title:"₹0 to join",sub:"₹0 monthly — for every partner"},
                  {icon:"📲",title:"Leads on WhatsApp",sub:"No app, no dashboard — just real enquiries"},
-                 {icon:"🏅",title:"0% first year",sub:"Early-partner pricing + lead priority"},
+                 {icon:"🏅",title:"Flat 3%",sub:"Same rate for every partner"},
                ].map((b,i)=>(
                  <div key={i} style={{background:"rgba(255,255,255,0.9)",border:"1px solid #EDD8BC",borderRadius:16,padding:"18px 14px",textAlign:"center"}}>
                    <div style={{fontSize:28,marginBottom:6}}>{b.icon}</div>
@@ -3215,9 +3214,9 @@ export default function AayojanApp(){
 
           {/* Launch Offer Card */}
           <div style={{background:"linear-gradient(135deg,#FFF7ED,#FEF3C7)",border:"2px solid #F59E0B",borderRadius:16,padding:24,marginBottom:20,textAlign:"center",position:"relative"}}>
-            <div style={{position:"absolute",top:-12,left:"50%",transform:"translateX(-50%)",background:"#F59E0B",color:"#fff",fontSize:11,fontWeight:700,padding:"4px 16px",borderRadius:20}}>🚀 FOUNDING PARTNER PROGRAM</div>
-            <h2 style={{fontSize:20,fontWeight:700,color:"#92400E",marginTop:8,marginBottom:6}}>First 10 Partners — 0% Commission · Year One</h2>
-            <p style={{fontSize:13,color:"#92400E",marginBottom:16}}>15+ kitchens already in our network · <strong>0% commission for early partners</strong>. No monthly fees, ever.</p>
+            <div style={{position:"absolute",top:-12,left:"50%",transform:"translateX(-50%)",background:"#F59E0B",color:"#fff",fontSize:11,fontWeight:700,padding:"4px 16px",borderRadius:20}}>💰 SIMPLE, FLAT PRICING</div>
+            <h2 style={{fontSize:20,fontWeight:700,color:"#92400E",marginTop:8,marginBottom:6}}>Flat 3% Commission — same for every partner.</h2>
+            <p style={{fontSize:13,color:"#92400E",marginBottom:16}}>15+ kitchens in our network · <strong>₹0 onboarding, ₹0 monthly fees</strong>. Just a flat 3% on bookings you actually close.</p>
             <div style={{display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap"}}>
               <div style={{background:"#fff",borderRadius:12,padding:"12px 20px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
                 <div style={{fontSize:24,fontWeight:800,color:"#16A34A"}}>₹0</div>
@@ -3228,48 +3227,21 @@ export default function AayojanApp(){
                 <div style={{fontSize:11,color:"#666"}}>Listing Fee</div>
               </div>
               <div style={{background:"#fff",borderRadius:12,padding:"12px 20px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
-                <div style={{fontSize:24,fontWeight:800,color:"#16A34A"}}>0%</div>
-                <div style={{fontSize:11,color:"#666"}}>Commission</div>
+                <div style={{fontSize:24,fontWeight:800,color:"#16A34A"}}>3%</div>
+                <div style={{fontSize:11,color:"#666"}}>Per closed booking</div>
               </div>
             </div>
           </div>
 
           {/* Commission Structure (for after 10 partners) */}
           <div style={{...S.card,marginBottom:20}}>
-            <h2 style={{fontSize:18,fontWeight:700,color:"var(--text-primary)",marginBottom:6}}>💰 Pricing After Launch Offer</h2>
-            <p style={{fontSize:12,color:"var(--text-secondary)",marginBottom:16}}>Only applies to partners who join after first 10 spots are filled</p>
+            <h2 style={{fontSize:18,fontWeight:700,color:"var(--text-primary)",marginBottom:6}}>💰 How pricing works</h2>
+            <p style={{fontSize:12,color:"var(--text-secondary)",marginBottom:16}}>The same flat rate for every partner — no founding-partner tiers, no exceptions.</p>
 
-            <div style={{background:"#F0FDF4",border:"1px solid #BBF7D0",borderRadius:12,padding:16,marginBottom:16}}>
-              <div style={{fontSize:14,fontWeight:600,color:"#166534",marginBottom:8}}>📦 First 10 Orders</div>
+            <div style={{background:"#F0FDF4",border:"1px solid #BBF7D0",borderRadius:12,padding:16}}>
+              <div style={{fontSize:14,fontWeight:600,color:"#166534",marginBottom:8}}>📦 Every booking</div>
               <div style={{fontSize:28,fontWeight:800,color:"#16A34A"}}>3% <span style={{fontSize:14,fontWeight:400,color:"#666"}}>per successful order</span></div>
-              <p style={{fontSize:12,color:"#666",marginTop:8}}>Only charged when customer pays you. No order = No charge. Zero risk.</p>
-            </div>
-
-            <div style={{fontSize:14,fontWeight:600,color:"var(--text-primary)",marginBottom:12,textAlign:"center"}}>After 10 orders, choose:</div>
-
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
-              <div style={{background:"linear-gradient(135deg,#FEF9C3,#FDE68A)",border:"2px solid #F59E0B",borderRadius:12,padding:16,textAlign:"center"}}>
-                <div style={{fontSize:11,fontWeight:700,color:"#92400E",marginBottom:4}}>⭐ GOLD MEMBERSHIP</div>
-                <div style={{fontSize:24,fontWeight:800,color:"#92400E"}}>₹3,999</div>
-                <div style={{fontSize:11,color:"#92400E"}}>/year (₹333/mo)</div>
-                <div style={{marginTop:12,fontSize:11,color:"#666",lineHeight:1.6}}>
-                  ✅ 0% commission<br/>
-                  ✅ Priority listing<br/>
-                  ✅ Gold badge ⭐<br/>
-                  ✅ Homepage feature
-                </div>
-              </div>
-              <div style={{background:"#F9FAFB",border:"1px solid #E5E7EB",borderRadius:12,padding:16,textAlign:"center"}}>
-                <div style={{fontSize:11,fontWeight:700,color:"#6B7280",marginBottom:4}}>PAY AS YOU GO</div>
-                <div style={{fontSize:24,fontWeight:800,color:"#374151"}}>3%</div>
-                <div style={{fontSize:11,color:"#6B7280"}}>per order (continues)</div>
-                <div style={{marginTop:12,fontSize:11,color:"#666",lineHeight:1.6}}>
-                  ✅ No annual fee<br/>
-                  ✅ Standard listing<br/>
-                  ✅ Cancel anytime<br/>
-                  ✅ No commitment
-                </div>
-              </div>
+              <p style={{fontSize:12,color:"#666",marginTop:8}}>Only charged when the customer pays you. No order = no charge. No monthly or annual fee, no lock-in, cancel anytime.</p>
             </div>
           </div>
 
@@ -3314,16 +3286,16 @@ export default function AayojanApp(){
           <div style={{background:"linear-gradient(135deg,#EDE9FE,#DDD6FE)",border:"2px solid #8B5CF6",borderRadius:16,padding:24,marginBottom:20,textAlign:"center"}}>
             <div style={{fontSize:36,marginBottom:8}}>🎁</div>
             <h2 style={{fontSize:18,fontWeight:700,color:"#5B21B6",marginBottom:8}}>Refer Another Caterer</h2>
-            <p style={{fontSize:14,color:"#6D28D9",marginBottom:12}}>Refer a caterer friend → <strong>Your next order is commission-FREE!</strong></p>
+            <p style={{fontSize:14,color:"#6D28D9",marginBottom:12}}>Know a great caterer? Refer them and we'll <strong>feature both of your kitchens</strong> to more customers.</p>
             <div style={{background:"#fff",borderRadius:10,padding:12,fontSize:12,color:"#666",lineHeight:1.6}}>
-              Example: You refer "ABC Caterers" → They join Aayojan → Your very next order = 0% commission (you keep 100%)
+              Everyone stays on the same flat 3% — referrals just help us grow the network faster, together.
             </div>
           </div>
 
           {/* Final CTA */}
           <div style={{background:"linear-gradient(135deg,#0f172a,#1e293b)",borderRadius:16,padding:"36px 24px",textAlign:"center",marginBottom:32}}>
             <h2 style={{fontSize:22,fontWeight:800,color:"#fff",marginBottom:8}}>Ready to Grow Your Business?</h2>
-            <p style={{fontSize:14,color:"rgba(255,255,255,0.7)",marginBottom:20}}>Join our growing network of 15+ Bengali kitchens · 0% for early partners</p>
+            <p style={{fontSize:14,color:"rgba(255,255,255,0.7)",marginBottom:20}}>Join our growing network of 15+ Bengali kitchens · flat 3% for every partner</p>
             <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20am%20a%20caterer%20in%20Newtown%2FSalt%20Lake%2FRajarhat%20and%20want%20to%20join%20as%20partner.%20My%20business%20name%20is%3A%20" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",background:"linear-gradient(135deg,#25D366,#128C7E)",color:"#fff",padding:"16px 36px",borderRadius:30,fontSize:16,fontWeight:700,textDecoration:"none",boxShadow:"0 4px 16px rgba(37,211,102,0.3)",marginBottom:12}}>
               📱 Register Free — WhatsApp Us
             </a>

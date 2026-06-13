@@ -15,7 +15,7 @@ Facts about Aayojan:
 - A catering marketplace serving all over Kolkata
 - ₹0 to join. 3% commission only on successful bookings (vs up to 30% on food partners)
 - Verified event leads delivered on WhatsApp — no app to learn
-- Founding partners get a featured brand page (Munia's Kitchen is the first)
+- Verified partners get a featured brand page (Munia's Kitchen is the first)
 
 Style:
 - Keep each reply to 2-3 short sentences. Warm, conversational, never salesy.
@@ -259,7 +259,7 @@ export default function AayojanChatBot() {
                   <div style={{ position: 'relative', zIndex: 1 }}>
                     <div style={{ fontSize: 22, marginBottom: 4 }}>🔥</div>
                     <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, fontWeight: 700, color: 'white', marginBottom: 2 }}>I run a kitchen</div>
-                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.92)' }}>Early partner · ₹0 to join · 0% first year</div>
+                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.92)' }}>Verified partner · ₹0 to join · flat 3%</div>
                   </div>
                 </button>
               </div>
