@@ -1362,10 +1362,29 @@ export default function AayojanApp(){
                <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(15px,2.2vw,20px)",color:"#513117",maxWidth:620,margin:"0 auto",lineHeight:1.5}}>The chefs, the kitchens, the city — together for all of Kolkata. Order now, get matched in minutes.</p>
              </div>
 
-             {/* Jamai Sasthi featured poster — consistent with /events */}
-             <a href="/events/" style={{display:"block",maxWidth:340,margin:"0 auto 34px",textDecoration:"none"}}>
-               <img src="/events/img/promo/jamai-sasthi.jpg?v=3" alt="শুভ জামাই ষষ্ঠী · Happy Jamai Sasthi — lavish Bengali feast at ₹550, featured by Aayojan" loading="lazy" width="340" height="609" style={{width:"100%",borderRadius:16,boxShadow:"0 18px 50px rgba(76,43,10,0.3)",border:"2px solid rgba(243,200,105,0.5)",display:"block"}} />
-               <div style={{textAlign:"center",marginTop:14}}><span style={{display:"inline-block",background:"#E8760A",color:"#fff",fontWeight:800,padding:"11px 24px",borderRadius:99,fontSize:14}}>✨ Plan your Jamai Sasthi feast →</span></div>
+             {/* Jamai Sasthi — BOTH posters (₹500 & ₹700), consistent with /events */}
+             <div style={{display:"flex",flexWrap:"wrap",gap:18,justifyContent:"center",marginBottom:14}}>
+               {[
+                 {img:"/events/img/promo/jamai-sasthi.jpg?v=3",price:"₹700",label:"Grand menu",alt:"শুভ জামাই ষষ্ঠী · Jamai Sasthi ₹700 grand menu — Fish Fry, Chingri Malai Curry, Mutton Kosha"},
+                 {img:"/events/img/promo/jamai-sasthi-500.jpg",price:"₹500",label:"Value menu",alt:"শুভ জামাই ষষ্ঠী · Jamai Sasthi ₹500 value menu — Chicken Pulao, Mutton Curry"},
+               ].map((p,i)=>(
+                 <a key={i} href="/events/?event=jamai" style={{display:"block",width:264,maxWidth:"45vw",textDecoration:"none"}}>
+                   <img src={p.img} alt={p.alt} loading="lazy" style={{width:"100%",borderRadius:14,boxShadow:"0 16px 40px rgba(76,43,10,0.3)",border:"2px solid rgba(243,200,105,0.5)",display:"block"}} />
+                   <div style={{textAlign:"center",marginTop:8,color:"#1C130A",fontWeight:800,fontSize:13.5}}>🎣 {p.label} · <span style={{color:"#C95F08"}}>{p.price}/plate</span></div>
+                 </a>
+               ))}
+             </div>
+             <div style={{textAlign:"center",marginBottom:30}}>
+               <span style={{fontSize:13,color:"#7B634E"}}>🎣 Jamai Sasthi · 20–21 June · serving Rajarhat, Newtown &amp; Salt Lake · order before 18 June</span>
+             </div>
+
+             {/* Weekend Party catering promo */}
+             <a href="/events/?event=party" style={{display:"block",maxWidth:560,margin:"0 auto 34px",background:"linear-gradient(135deg,#2B1B0C,#7A1F2B)",borderRadius:20,padding:"22px 24px",textDecoration:"none",boxShadow:"0 18px 44px rgba(122,31,43,0.32)",border:"1.5px solid rgba(243,200,105,0.4)"}}>
+               <div style={{fontSize:12,fontWeight:800,letterSpacing:"0.12em",color:"#FF9E6B",marginBottom:6}}>🎉 THIS WEEKEND · PARTY CATERING</div>
+               <div style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:800,color:"#FFF8EF",marginBottom:10,lineHeight:1.2}}>Weekend party? We bring the feast.</div>
+               <div style={{fontSize:13,color:"rgba(255,248,239,0.86)",lineHeight:1.5,marginBottom:5}}><b style={{color:"#FFE9B0"}}>Veg ₹250</b> — Paneer Tikka · Basanti Pulao · Paneer Butter Masala · Dhokar Dalna · Dal · Luchi · 2 sweets</div>
+               <div style={{fontSize:13,color:"rgba(255,248,239,0.86)",lineHeight:1.5,marginBottom:14}}><b style={{color:"#FFE9B0"}}>Non-veg ₹350</b> — Fish Fry · Pulao · Chicken Kosha · Dal · Luchi · Salad · 2 sweets</div>
+               <span style={{display:"inline-block",background:"#E8760A",color:"#fff",fontWeight:800,padding:"10px 22px",borderRadius:99,fontSize:14}}>🎈 Plan my weekend party →</span>
              </a>
 
              {/* Food gallery — uneven masonry grid for visual interest */}
