@@ -106,10 +106,11 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem
 .rp-dot{width:9px;height:9px;border-radius:50%;border:none;background:rgba(243,200,105,0.35);cursor:pointer;padding:0;transition:all .3s;}
 .rp-dot.active{background:#F3C869;width:22px;border-radius:99px;}
 @media(max-width:560px){.rp-stage{min-height:320px;}}
-.rp-slide.rp-jamai{flex-direction:row;align-items:center;justify-content:center;gap:16px;text-align:left;}
-.rp-poster{width:170px;height:auto;border-radius:12px;border:1.5px solid rgba(243,200,105,0.6);flex-shrink:0;box-shadow:0 12px 30px rgba(0,0,0,0.5);}
-.rp-jbody{display:flex;flex-direction:column;align-items:flex-start;gap:7px;max-width:430px;}
-@media(max-width:560px){.rp-slide.rp-jamai{gap:12px;}.rp-poster{width:128px;}}
+.rp-slide.rp-jamai{flex-direction:column;align-items:center;justify-content:center;gap:13px;text-align:center;}
+.rp-poster{width:300px;max-width:84vw;height:auto;border-radius:14px;border:1.5px solid rgba(243,200,105,0.6);flex-shrink:0;box-shadow:0 14px 36px rgba(0,0,0,0.55);}
+.rp-jbody{display:flex;flex-direction:column;align-items:center;gap:7px;max-width:520px;}
+.rp-viewfull{display:inline-block;margin-top:2px;color:#F3C869;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:underline;}
+@media(max-width:560px){.rp-slide.rp-jamai{gap:11px;}.rp-poster{width:88vw;}}
 .crumbs a{color:var(--saffron);font-weight:600;}
 .crumbs span{margin:0 0.4rem;color:var(--border);}
 .hero{background:linear-gradient(180deg,var(--dark) 0%,#2A1C0F 100%);padding:5rem 5% 3.5rem;text-align:center;position:relative;overflow:hidden;}
@@ -497,7 +498,8 @@ section.block{padding:4rem 5%;}
 <section class="roll-promos">
   <div class="rp-stage" id="rpStage">
     <a class="rp-slide active rp-jamai" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi feast">
-      <img class="rp-poster" src="/events/img/promo/jamai-sasthi.jpg?v=3" alt="শুভ জামাই ষষ্ঠী — Happy Jamai Sasthi feast · two menus ₹550 &amp; ₹700 · Rajarhat, Newtown &amp; Salt Lake" loading="lazy" width="170" height="305">
+      <img class="rp-poster" src="/events/img/promo/jamai-sasthi.jpg?v=3" alt="শুভ জামাই ষষ্ঠী — Happy Jamai Sasthi feast · two menus ₹550 &amp; ₹700 · Rajarhat, Newtown &amp; Salt Lake" loading="lazy" width="300" height="537">
+      <span class="rp-viewfull" role="link" tabindex="0" onclick="event.stopPropagation();event.preventDefault();window.open('/events/img/promo/jamai-sasthi.jpg?v=3','_blank');">🔍 Tap to view full menu →</span>
       <div class="rp-jbody">
         <span class="rp-eyebrow gold">🎣 শুভ জামাই ষষ্ঠী · 20–21 June</span>
         <h2 class="rp-h">Treat your jamai to a <em>royal feast</em>.</h2>
