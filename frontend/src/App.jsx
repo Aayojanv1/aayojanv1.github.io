@@ -1239,7 +1239,7 @@ export default function AayojanApp(){
                {/* Jamai Sasthi seasonal promo — consistent with /events */}
                <a href="/events/" style={{display:"block",maxWidth:440,margin:"0 0 22px",background:"linear-gradient(135deg,rgba(243,200,105,0.18),rgba(232,118,10,0.16))",border:"1.5px solid rgba(243,200,105,0.5)",borderRadius:14,padding:"12px 16px",textDecoration:"none",boxShadow:"0 10px 30px rgba(232,118,10,0.25)"}}>
                  <div style={{fontFamily:"'Playfair Display',serif",fontWeight:800,color:"#FFE9B0",fontSize:15,marginBottom:3}}>🎣 শুভ জামাই ষষ্ঠী · Jamai Sasthi · 20–21 June</div>
-                 <div style={{fontSize:12.5,color:"rgba(255,248,239,0.88)",lineHeight:1.4}}>Treat your jamai to a lavish feast — from <strong style={{color:"#FFE9B0"}}>₹550/plate</strong>. Order before 18 June →</div>
+                 <div style={{fontSize:12.5,color:"rgba(255,248,239,0.88)",lineHeight:1.4}}>Treat your jamai to a lavish feast — two menus at <strong style={{color:"#FFE9B0"}}>₹550 & ₹700/plate</strong>. Serving Rajarhat, Newtown & Salt Lake · order before 18 June →</div>
                </a>
 
                {/* CTA — route every order into the /events AI planner funnel */}
