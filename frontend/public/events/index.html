@@ -464,11 +464,11 @@ section.block{padding:4rem 5%;}
   </div>
   <a class="jamai-card" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi feast with Aayojan AI">
     <span class="jc-tag">🎣 শুভ জামাই ষষ্ঠী · Jamai Sasthi · 20–21 June</span>
-    <span class="jc-offer">Treat your jamai to a lavish feast — two menus at <strong>₹550 &amp; ₹700/plate</strong>. Serving Rajarhat, Newtown &amp; Salt Lake · order before 18 June.</span>
+    <span class="jc-offer">Treat your jamai to a lavish feast — two menus at <strong>₹500 &amp; ₹700/plate</strong>. Serving Rajarhat, Newtown &amp; Salt Lake · order before 18 June.</span>
     <span class="jc-go">✨ Plan my Jamai Sasthi feast →</span>
   </a>
   <h1 class="rotating-h1">
-    <span class="rh-line">This <em>Jamai Sasthi</em>?<br>Treat your jamai — feast from <em>₹550</em>.</span>
+    <span class="rh-line">This <em>Jamai Sasthi</em>?<br>Treat your jamai — feast from <em>₹500</em>.</span>
     <span class="rh-line">You bring the <em>people</em>.<br>We bring the <em>spread</em>.</span>
     <span class="rh-line">Tonight's <em>adda</em>?<br>WhatsApp us in <em>30 seconds</em>.</span>
     <span class="rh-line">Saturday <em>house party</em>?<br>Bengali kitchens, same day.</span>
@@ -497,14 +497,25 @@ section.block{padding:4rem 5%;}
 <!-- ROLLING PROMOS — Jamai Sasthi / Weekend Party / Aayojan AI (auto-rotating, each separate) -->
 <section class="roll-promos">
   <div class="rp-stage" id="rpStage">
-    <a class="rp-slide active rp-jamai" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi feast">
-      <img class="rp-poster" src="/events/img/promo/jamai-sasthi.jpg?v=3" alt="শুভ জামাই ষষ্ঠী — Happy Jamai Sasthi feast · two menus ₹550 &amp; ₹700 · Rajarhat, Newtown &amp; Salt Lake" loading="lazy" width="300" height="537">
-      <span class="rp-viewfull" role="link" tabindex="0" onclick="event.stopPropagation();event.preventDefault();window.open('/events/img/promo/jamai-sasthi.jpg?v=3','_blank');">🔍 Tap to view full menu →</span>
+    <a class="rp-slide active rp-jamai" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi ₹700 grand menu">
+      <img class="rp-poster" src="/events/img/promo/jamai-sasthi.jpg?v=3" alt="শুভ জামাই ষষ্ঠী — Jamai Sasthi ₹700 grand menu · Fish Fry, Chingri Malai Curry, Mutton Kasha" loading="lazy" width="300" height="537">
+      <span class="rp-viewfull" role="link" tabindex="0" onclick="event.stopPropagation();event.preventDefault();window.open('/events/img/promo/jamai-sasthi.jpg?v=3','_blank');">🔍 Tap to view full ₹700 menu →</span>
       <div class="rp-jbody">
-        <span class="rp-eyebrow gold">🎣 শুভ জামাই ষষ্ঠী · 20–21 June</span>
-        <h2 class="rp-h">Treat your jamai to a <em>royal feast</em>.</h2>
-        <p class="rp-menu">Fish Fry · Basanti Pulao · Chingri Malai · Mutton Kasha · Mishti</p>
-        <div class="rp-price">₹550 &amp; ₹700<span>/plate · two menus · Rajarhat · Newtown · Salt Lake</span></div>
+        <span class="rp-eyebrow gold">🎣 শুভ জামাই ষষ্ঠী · 20–21 June · Grand menu</span>
+        <h2 class="rp-h">Jamai Sasthi <em>Grand</em> feast — ₹700</h2>
+        <p class="rp-menu">Fish Fry · Basanti Pulao · Chingri Malai Curry · Mutton Kasha · Papad · Aamni</p>
+        <div class="rp-price">₹700<span>/plate · Rajarhat · Newtown · Salt Lake · order before 18 June</span></div>
+        <span class="rp-cta gold">✨ Plan my Jamai Sasthi feast →</span>
+      </div>
+    </a>
+    <a class="rp-slide rp-jamai" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi ₹500 value menu">
+      <img class="rp-poster" src="/events/img/promo/jamai-sasthi-500.jpg" alt="শুভ জামাই ষষ্ঠী — Jamai Sasthi ₹500 value menu · Chicken Pulao, Mutton Curry, Pepsi" loading="lazy" width="300" height="538">
+      <span class="rp-viewfull" role="link" tabindex="0" onclick="event.stopPropagation();event.preventDefault();window.open('/events/img/promo/jamai-sasthi-500.jpg','_blank');">🔍 Tap to view full ₹500 menu →</span>
+      <div class="rp-jbody">
+        <span class="rp-eyebrow gold">🎣 শুভ জামাই ষষ্ঠী · 20–21 June · Value menu</span>
+        <h2 class="rp-h">Jamai Sasthi <em>Value</em> feast — ₹500</h2>
+        <p class="rp-menu">Chicken Pulao · Mutton Curry · Papad · Pepsi 200ml · Aamni</p>
+        <div class="rp-price">₹500<span>/plate · Rajarhat · Newtown · Salt Lake · order before 18 June</span></div>
         <span class="rp-cta gold">✨ Plan my Jamai Sasthi feast →</span>
       </div>
     </a>
@@ -536,8 +547,8 @@ section.block{padding:4rem 5%;}
   function go(n){slides[idx].classList.remove('active');dots[idx].classList.remove('active');idx=(n+slides.length)%slides.length;slides[idx].classList.add('active');dots[idx].classList.add('active');}
   function reset(){clearInterval(timer);timer=setInterval(function(){go(idx+1);},5000);}
   var ev=(new URLSearchParams(location.search)).get('event')||'';
-  if(/party|birthday|corporate|get.?together|kitty/i.test(ev)){ go(1); }      // pin party slide (no auto-rotate)
-  else if(/jamai|sasthi/i.test(ev)){ /* slide 0 already active — pin Jamai */ }
+  if(/party|birthday|corporate|get.?together|kitty/i.test(ev)){ go(2); }      // pin party slide (index 2 after 2 jamai slides)
+  else if(/jamai|sasthi/i.test(ev)){ reset(); }                                // jamai ad -> roll both ₹700 & ₹500 posters
   else { reset(); }                                                            // no param -> auto-rotate
   stage.addEventListener('mouseenter',function(){clearInterval(timer);});
   stage.addEventListener('mouseleave',reset);
