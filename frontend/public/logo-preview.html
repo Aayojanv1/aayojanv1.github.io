@@ -4,75 +4,97 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Logo preview · Aayojan.online</title>
+<title>Logo versions · Aayojan.online</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:wght@400;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
 <style>
-  :root{--dark:#1A1208;--saffron:#E8760A;--saffron-light:#F3C869;}
+  :root{--dark:#1A1208;--saffron:#E8760A;--saffron-light:#F3C869;--cream:#FFF8EF;}
   *{box-sizing:border-box;}
-  body{margin:0;font-family:system-ui,-apple-system,'DM Sans',sans-serif;background:#F4ECE0;color:#2a1c0c;padding:24px;line-height:1.5;}
-  h1{font-size:1.4rem;margin:0 0 4px;}
-  .muted{color:#7B634E;font-size:0.9rem;margin:0 0 22px;}
-  .card{background:#fff;border:1px solid #E6D5BC;border-radius:14px;padding:18px;margin:0 0 16px;box-shadow:0 6px 18px rgba(76,43,10,0.06);}
-  .lbl{font-size:0.72rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#a07a4e;margin:0 0 12px;}
+  body{margin:0;font-family:'DM Sans',system-ui,sans-serif;background:#EDE3D4;color:#2a1c0c;padding:22px;}
+  h1{font-size:1.35rem;margin:0 0 2px;}
+  .muted{color:#7B634E;font-size:0.9rem;margin:0 0 20px;}
+  .v{background:#fff;border:1px solid #E3D2B8;border-radius:14px;padding:14px 16px 16px;margin:0 0 14px;box-shadow:0 6px 16px rgba(76,43,10,0.06);}
+  .v h3{margin:0 0 3px;font-size:0.98rem;}
+  .v p{margin:0 0 12px;color:#7B634E;font-size:0.82rem;}
+  .v .best{color:#1a7a45;font-weight:700;}
 
-  /* 1. real dark nav, exactly like the site */
-  .nav{display:flex;justify-content:space-between;align-items:center;padding:0.85rem 5%;background:var(--dark);border-radius:10px;}
-  .nav .logo img{height:46px;width:auto;display:block;border-radius:8px;}
-  .nav .links{color:#ccc;font-size:0.85rem;display:flex;gap:18px;}
-  .nav .cta{background:var(--saffron);color:#fff;padding:0.5rem 1rem;border-radius:99px;font-weight:800;font-size:0.82rem;}
+  /* a real dark nav bar to drop each treatment into */
+  .nav{display:flex;justify-content:space-between;align-items:center;padding:0.7rem 1.1rem;background:var(--dark);border-radius:10px;}
+  .nav .links{color:#bbb;font-size:0.8rem;display:flex;gap:14px;align-items:center;}
+  .nav .cta{background:var(--saffron);color:#fff;padding:0.4rem 0.85rem;border-radius:99px;font-weight:800;font-size:0.76rem;}
 
-  /* 2. light header */
-  .lightnav{display:flex;justify-content:space-between;align-items:center;padding:0.85rem 5%;background:#fff;border:1px solid #eee;border-radius:10px;}
-  .lightnav img{height:46px;}
+  /* V1 — white pill + zoom (current live one) */
+  .v1-logo{display:inline-flex;align-items:center;height:50px;overflow:hidden;background:#fff;border-radius:13px;box-shadow:0 4px 14px rgba(0,0,0,0.28);padding:0 14px;}
+  .v1-logo img{width:auto;height:82px;display:block;object-fit:cover;object-position:center 73%;}
 
-  /* 3. small sizes */
-  .sizes{display:flex;align-items:flex-end;gap:26px;flex-wrap:wrap;}
-  .sz{text-align:center;}
-  .sz img{display:block;border:1px solid #ddd;border-radius:8px;object-fit:cover;}
-  .sz .s32 img,.sz img.s32{width:32px;height:32px;}
-  .sz small{display:block;color:#7B634E;font-size:0.72rem;margin-top:6px;}
-  .avatar{width:96px;height:96px;border-radius:50%;overflow:hidden;border:1px solid #ddd;}
-  .avatar img{width:100%;height:100%;object-fit:cover;}
-  .fav{width:32px;height:32px;border-radius:6px;overflow:hidden;border:1px solid #ddd;}
-  .fav img{width:100%;height:100%;object-fit:cover;}
-  .note{font-size:0.82rem;color:#b4521c;background:#FFF1E6;border:1px solid #F3C98C;border-radius:8px;padding:8px 11px;margin-top:12px;}
-  .full img{max-width:340px;width:100%;border:1px solid #eee;border-radius:10px;}
-  a{color:var(--saffron);}
+  /* V2 — inverted to a light logo, white background blended away (NO box) */
+  .v2-logo{display:inline-flex;align-items:center;height:50px;overflow:hidden;}
+  .v2-logo img{width:auto;height:82px;display:block;object-fit:cover;object-position:center 73%;filter:invert(1) hue-rotate(180deg) saturate(1.15) brightness(1.12);mix-blend-mode:screen;}
+
+  /* V3 — pure live-text wordmark (no image at all) */
+  .wm{display:inline-flex;align-items:baseline;gap:8px;font-family:'Playfair Display',serif;line-height:1;}
+  .wm .ic{font-size:1.15rem;}
+  .wm .a{color:var(--cream);font-weight:800;font-size:1.5rem;letter-spacing:-0.01em;}
+  .wm .o{color:var(--saffron-light);font-weight:700;font-size:1.5rem;}
+  .wm .tag{display:block;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase;color:#9b8b6f;}
+
+  /* V4 — script wordmark in live text (Dancing Script) + saffron dot icon */
+  .wm2{display:inline-flex;align-items:center;gap:9px;}
+  .wm2 .plate{width:34px;height:34px;border-radius:50%;border:2px solid var(--saffron-light);display:grid;place-items:center;font-size:0.95rem;flex-shrink:0;}
+  .wm2 .txt{font-family:'Dancing Script',cursive;font-weight:700;font-size:1.75rem;color:var(--cream);line-height:1;}
+  .wm2 .txt b{color:var(--saffron-light);font-weight:700;}
+
+  /* V5 — circular plate icon CROPPED from the file + live text */
+  .wm3{display:inline-flex;align-items:center;gap:10px;}
+  .wm3 .plate{width:42px;height:42px;border-radius:50%;background-image:url('/img/logo-aayojan-trim.jpg');background-repeat:no-repeat;background-size:300px auto;background-position:-208px -2px;border:1px solid #e7d8bf;flex-shrink:0;box-shadow:0 3px 8px rgba(0,0,0,0.3);}
+  .wm3 .txt{font-family:'Playfair Display',serif;font-weight:800;font-size:1.4rem;color:var(--cream);line-height:1;}
+  .wm3 .txt span{color:var(--saffron-light);}
+
+  /* V6 — keep the brown logo, but on a CREAM nav (no box needed) */
+  .navcream{display:flex;justify-content:space-between;align-items:center;padding:0.6rem 1.1rem;background:var(--cream);border:1px solid #ecddc6;border-radius:10px;}
+  .navcream .links{color:#8a6d4d;font-size:0.8rem;display:flex;gap:14px;align-items:center;}
+  .navcream .cta{background:var(--saffron);color:#fff;padding:0.4rem 0.85rem;border-radius:99px;font-weight:800;font-size:0.76rem;}
+  .v6-logo{display:inline-flex;align-items:center;height:50px;overflow:hidden;}
+  .v6-logo img{width:auto;height:82px;display:block;object-fit:cover;object-position:center 73%;}
 </style>
 </head>
 <body>
-  <h1>Logo preview — Aayojan.online</h1>
-  <p class="muted">How the new logo behaves in the real contexts it has to live in. Open <a href="/events/" target="_blank">/events/</a> to see it in the live nav too.</p>
+  <h1>Logo — 6 versions to compare</h1>
+  <p class="muted">Each is dropped into the real dark nav (V6 on a cream nav). Pick the direction you like and I'll wire it in.</p>
 
-  <div class="card">
-    <p class="lbl">1 · The file as-is</p>
-    <div class="full"><img src="/img/logo-aayojan.jpg" alt="logo full"></div>
+  <div class="v">
+    <h3>V1 · White pill + zoom <span style="color:#999">(what's live now)</span></h3>
+    <p>Honest stopgap for a white-background JPEG on a dark bar.</p>
+    <div class="nav"><span class="v1-logo"><img src="/img/logo-aayojan-trim.jpg" alt=""></span><span class="links">How it works <span class="cta">WhatsApp</span></span></div>
   </div>
 
-  <div class="card">
-    <p class="lbl">2 · In the real dark site header (what your nav uses)</p>
-    <div class="nav">
-      <span class="logo"><img src="/img/logo-aayojan.jpg" alt="Aayojan"></span>
-      <span class="links">How it works · Cuisines · <span class="cta">WhatsApp</span></span>
-    </div>
-    <div class="note">⚠️ The JPEG has a <b>white background</b>, so it shows as a white box on the dark nav. Needs a transparent PNG / reversed (light) version.</div>
+  <div class="v">
+    <h3>V2 · Inverted to light — no box <span class="best">(uses your file, removes the white box)</span></h3>
+    <p>CSS flips it to a warm-light logo and blends the white away. Color shifts slightly — but no box.</p>
+    <div class="nav"><span class="v2-logo"><img src="/img/logo-aayojan-trim.jpg" alt=""></span><span class="links">How it works <span class="cta">WhatsApp</span></span></div>
   </div>
 
-  <div class="card">
-    <p class="lbl">3 · On a light header</p>
-    <div class="lightnav">
-      <img src="/img/logo-aayojan.jpg" alt="Aayojan">
-      <span style="color:#7B634E;font-size:0.85rem;">How it works · Cuisines</span>
-    </div>
+  <div class="v">
+    <h3>V3 · Pure live-text wordmark <span class="best">(crispest, fully scalable, on-brand)</span></h3>
+    <p>No image — pure CSS. Sharp at every size, matches your saffron. Pair with the icon as a separate favicon.</p>
+    <div class="nav"><span class="wm"><span class="ic">🍴</span><span><span class="a">Aayojan</span><span class="o">.online</span></span></span><span class="links">How it works <span class="cta">WhatsApp</span></span></div>
   </div>
 
-  <div class="card">
-    <p class="lbl">4 · Small sizes (favicon, WhatsApp avatar) — the real test</p>
-    <div class="sizes">
-      <div class="sz"><span class="fav"><img src="/img/logo-aayojan.jpg" alt=""></span><small>Favicon 32px</small></div>
-      <div class="sz"><span class="avatar"><img src="/img/logo-aayojan.jpg" alt=""></span><small>WhatsApp / social 96px</small></div>
-      <div class="sz"><img src="/img/logo-aayojan.jpg" alt="" style="height:64px;width:auto;border-radius:8px;"><small>64px tall</small></div>
-    </div>
-    <div class="note">⚠️ The full square lockup (script + tagline) becomes unreadable this small — this is why you need an <b>icon-only mark</b> (just the plate/fork/spoon circle) for these spots.</div>
+  <div class="v">
+    <h3>V4 · Live script wordmark + plate ring</h3>
+    <p>Keeps the handwritten feel of your logo, but as crisp live text (Dancing Script) so it never blurs.</p>
+    <div class="nav"><span class="wm2"><span class="plate">🍽️</span><span class="txt">Aayojan<b>.online</b></span></span><span class="links">How it works <span class="cta">WhatsApp</span></span></div>
+  </div>
+
+  <div class="v">
+    <h3>V5 · Cropped plate icon + live text</h3>
+    <p>Uses just the fork/spoon plate from your file as a round icon, with crisp text beside it.</p>
+    <div class="nav"><span class="wm3"><span class="plate"></span><span class="txt">Aayojan<span>.online</span></span></span><span class="links">How it works <span class="cta">WhatsApp</span></span></div>
+  </div>
+
+  <div class="v">
+    <h3>V6 · Your logo as-is, but on a CREAM nav</h3>
+    <p>If you switch the header to cream, the brown logo sits naturally — no box, no tricks. (Changes the nav look.)</p>
+    <div class="navcream"><span class="v6-logo"><img src="/img/logo-aayojan-trim.jpg" alt=""></span><span class="links">How it works <span class="cta">WhatsApp</span></span></div>
   </div>
 </body>
 </html>
