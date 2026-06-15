@@ -139,6 +139,23 @@ const FEATURED = [
     logoScript: "catering service",
     logoBg: "#7A1F2B",
   },
+  {
+    issue: "09",
+    slug: "debi-events-caterers",
+    chef: "Madhumita Dalui",
+    business: "DEBI Events & Caterers",
+    headlinePrefix: "Madhumita Dalui caters",
+    headlineAccent: "three cuisines",
+    headlineRest: "under one trusted kitchen.",
+    quote: "Mughlai biryani and chaap for the feast, Bengali classics for the elders, Indo-Chinese for the younger crowd — DEBI Events & Caterers plates all three at scale, built for 150–200+ guest celebrations across Kolkata.",
+    dishes: ["Mughlai · Biryani · Chaap", "Bengali classics", "Indo-Chinese · 150–200+ guests"],
+    href: "/partners/debi-events-caterers.html",
+    fssai: { status: "applied" },
+    logoType: "image",
+    logoImg: "/partners/debi-events-caterers/logo.png",
+    logoAlt: "DEBI Events & Caterers — Mughlai, Bengali & Chinese catering",
+    logoBg: "#FDF1E7",
+  },
 ];
 
 const HOLD_MS = 6500;
