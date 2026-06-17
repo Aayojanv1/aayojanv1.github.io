@@ -59,8 +59,11 @@
     withDb(function (db, FV) {
       try {
         var entry = { role: role, text: String(text || "").slice(0, 500), t: new Date().toISOString() };
+        // TTL: auto-expire 7 days after the last message (Firestore TTL needs a Timestamp field).
+        var ttlMs = Date.now() + 7 * 24 * 60 * 60 * 1000;
         var payload = {
           sid: SID, messages: FV.arrayUnion(entry), lastAt: new Date().toISOString(),
+          expireAt: window.firebase.firestore.Timestamp.fromDate(new Date(ttlMs)),
           event: brief.event || "", brief: brief, source: "ai_planner", page: location.pathname
         };
         if (!logInit) {
@@ -488,6 +491,8 @@
       return "https://wa.me/" + WA + "?text=" + encodeURIComponent(
         "Hi Aayojan! Aayojan AI matched me — please connect me with " + label + ".\n" + bl);
     }
+    var waDirect = "https://wa.me/" + WA + "?text=" + encodeURIComponent(
+      "Hi Aayojan! I'd like to talk to your team directly about my event.\n" + bl);
     var html = '<div class="aip-res"><h3>✨ 3 kitchens matched</h3><p class="sub">Your AI shortlist · ' + (brief.eventType || "event").toLowerCase() + " · " + (brief.guestsNum || "") + ' guests · unlock any you like</p>' +
       '<div class="aip-free">💬 100% free — no payment, no spam. We just connect you on WhatsApp 🙂</div>' +
       (brief.eventType === "Wedding" ? '<div class="aip-taste">🍴 <b>Free food tasting</b> — for weddings we set up a tasting with your matched kitchens before you book.</div>' : "");
@@ -500,15 +505,21 @@
         '<a class="aip-pick" href="' + waFor(label) + '" target="_blank" rel="noopener" data-pick="' + (i + 1) + '">🔓 Unlock</a></div>';
     });
     html += '<a class="aip-unlock" id="aipAll" href="' + waFor("all 3 shortlisted kitchens — I want to compare quotes") + '" target="_blank" rel="noopener">Or get all 3 quotes to compare →</a>' +
-      '<div class="aip-note">Kitchen names &amp; contacts are shared once you connect. Free · no advance payment.</div></div>';
+      '<div class="aip-note">Kitchen names &amp; contacts are shared once you connect. Free · no advance payment.</div>' +
+      '<div class="aip-direct" style="margin-top:16px;border-top:1px solid #F0E3CE;padding-top:14px;text-align:center">' +
+        '<div style="font-size:0.72rem;color:#8B6E52;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:9px">prefer to chat now?</div>' +
+        '<a class="aip-talk" id="aipTalk" href="' + waDirect + '" data-no-gate target="_blank" rel="noopener" style="display:inline-block;background:#25D366;color:#fff;padding:13px 22px;border-radius:12px;font-weight:800;font-size:0.95rem;text-decoration:none;box-shadow:0 10px 26px rgba(37,211,102,0.32)">💬 Directly talk to the Aayojan team →</a>' +
+      '</div></div>';
     bodyWrap.innerHTML = html;
     track("ai_planner_matches_shown", { event: brief.eventType, count: ranked.length });
     logChat("matched", (brief.eventType || "event") + " · " + (brief.guestsNum || "?") + " guests · " + (brief.area || "?")); // outcome marker
     bodyWrap.addEventListener("click", function (e) {
       var pk = e.target.closest && e.target.closest(".aip-pick");
       var al = e.target.closest && e.target.closest("#aipAll");
+      var tk = e.target.closest && e.target.closest("#aipTalk");
       if (pk) track("ai_planner_whatsapp_click", { pick: pk.getAttribute("data-pick"), event: brief.eventType });
       else if (al) track("ai_planner_whatsapp_click", { pick: "all", event: brief.eventType });
+      else if (tk) track("ai_planner_direct_talk", { event: brief.eventType });
     });
   }
 
