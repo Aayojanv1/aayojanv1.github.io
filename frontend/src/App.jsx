@@ -1098,6 +1098,16 @@ export default function AayojanApp(){
         </div>
       </div>
 
+      {/* ── Flash Offers Banner ──────────────────────────────────────────── */}
+      <div className="flash-offers-bar" style={{padding:"10px 14px"}}>
+        <div style={{maxWidth:1100,margin:"0 auto",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"center",gap:"8px 12px",position:"relative",zIndex:1}}>
+          <span className="fo-badge" style={{display:"inline-flex",alignItems:"center",gap:5,background:"#FFE9B0",color:"#7A1F2B",fontWeight:900,fontSize:12,letterSpacing:"0.06em",padding:"4px 11px",borderRadius:99,textTransform:"uppercase"}}>⚡ Flash Sale</span>
+          <span className="fo-chip-pulse" style={{display:"inline-flex",alignItems:"center",gap:6,background:"rgba(255,255,255,0.18)",border:"1px solid rgba(255,233,176,0.55)",color:"#FFF8EF",padding:"5px 13px",borderRadius:99,fontSize:13,fontWeight:600}}>🎉 <strong style={{color:"#FFE9B0",fontWeight:900,fontSize:15}}>5% OFF</strong> your first 3 bookings</span>
+          <span className="fo-chip-pulse" style={{display:"inline-flex",alignItems:"center",gap:6,background:"rgba(255,255,255,0.18)",border:"1px solid rgba(255,233,176,0.55)",color:"#FFF8EF",padding:"5px 13px",borderRadius:99,fontSize:13,fontWeight:600}}>💍 <strong style={{color:"#FFE9B0",fontWeight:900,fontSize:15}}>UP TO 20% OFF</strong> weddings</span>
+          <span style={{fontSize:11.5,color:"#FFF8EF",fontWeight:700}}>⏳ Ends 29 June</span>
+        </div>
+      </div>
+
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <header className="header-wrap" style={S.header}>
         <button onClick={()=>{navigate("landing");resetApp();}} style={{background:"none",border:"none",cursor:"pointer",padding:0,display:"flex",alignItems:"center",gap:10}}>
@@ -3345,6 +3355,16 @@ export default function AayojanApp(){
         @keyframes bounceDown{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
         @keyframes scrollDot{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(10px)}}
         @keyframes scrollRibbon{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        @keyframes foGradient{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+        @keyframes foShine{0%{transform:translateX(-140%) skewX(-18deg)}55%,100%{transform:translateX(900%) skewX(-18deg)}}
+        @keyframes foBadgeBlink{0%,100%{opacity:1;box-shadow:0 0 10px rgba(255,233,176,0.95),0 0 4px rgba(255,255,255,0.6)}50%{opacity:0.5;box-shadow:0 0 2px rgba(255,233,176,0.2)}}
+        @keyframes foChipPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.055)}}
+        .flash-offers-bar{background:linear-gradient(90deg,#7A1F2B,#B0392B,#E8760A,#F3A84E,#E8760A,#B0392B,#7A1F2B);background-size:220% 100%;animation:foGradient 5s linear infinite;position:relative;overflow:hidden;}
+        .flash-offers-bar::after{content:"";position:absolute;top:0;bottom:0;left:0;width:70px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent);animation:foShine 3s ease-in-out infinite;pointer-events:none;}
+        .fo-badge{animation:foBadgeBlink 1.05s ease-in-out infinite;}
+        .fo-chip-pulse{animation:foChipPulse 1.5s ease-in-out infinite;}
+        .fo-chip-pulse:nth-of-type(2){animation-delay:.75s;}
+        @media(prefers-reduced-motion:reduce){.flash-offers-bar,.flash-offers-bar::after,.fo-badge,.fo-chip-pulse{animation:none;}}
         @keyframes heroGlowA{0%,100%{transform:translate(0,0) scale(1);opacity:1}50%{transform:translate(40px,-20px) scale(1.1);opacity:0.8}}
         @keyframes heroGlowB{0%,100%{transform:translate(0,0) scale(1);opacity:0.9}50%{transform:translate(-30px,30px) scale(1.08);opacity:1}}
         @keyframes heroPulseDot{0%,100%{box-shadow:0 0 10px #86efac,0 0 0 0 rgba(134,239,172,0.6)}50%{box-shadow:0 0 18px #86efac,0 0 0 10px rgba(134,239,172,0)}}
