@@ -206,7 +206,24 @@
     ".aip-taste b{color:#FFE9B0;}" +
     ".aip-note{text-align:center;color:#a89878;font-size:11px;margin-top:8px;}" +
     ".aip-launch{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(135deg,#E8760A,#C95F08);color:#fff;border:none;border-radius:99px;padding:15px 26px;font-family:'Playfair Display',serif;font-weight:800;font-size:1rem;cursor:pointer;box-shadow:0 14px 36px rgba(232,118,10,0.4);animation:aipGlow 2.4s ease-in-out infinite;}" +
-    "@keyframes aipGlow{0%,100%{box-shadow:0 14px 36px rgba(232,118,10,0.4);}50%{box-shadow:0 14px 46px rgba(232,118,10,0.65);}}";
+    "@keyframes aipGlow{0%,100%{box-shadow:0 14px 36px rgba(232,118,10,0.4);}50%{box-shadow:0 14px 46px rgba(232,118,10,0.65);}}" +
+    ".aip-exit{position:fixed;inset:0;background:rgba(20,12,4,0.72);display:none;align-items:center;justify-content:center;z-index:100010;padding:20px;}" +
+    ".aip-exit.on{display:flex;}" +
+    ".aipx-card{background:#FDF6ED;border-radius:20px;max-width:360px;width:100%;padding:26px 22px 20px;text-align:center;position:relative;box-shadow:0 30px 80px rgba(0,0,0,0.45);font-family:'DM Sans',system-ui,sans-serif;}" +
+    ".aipx-x{position:absolute;top:8px;right:12px;border:none;background:none;font-size:26px;line-height:1;color:#8B6E52;cursor:pointer;}" +
+    ".aipx-emoji{font-size:40px;margin-bottom:4px;}" +
+    ".aipx-h{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:800;color:#1A1208;margin:0 0 6px;}" +
+    ".aipx-p{font-size:0.9rem;color:#6b5436;line-height:1.5;margin:0 auto 16px;max-width:300px;}" +
+    ".aipx-p b{color:#236B43;}" +
+    ".aipx-form{display:flex;flex-direction:column;gap:9px;}" +
+    ".aipx-in{width:100%;padding:13px 12px;border:1.5px solid #EDD8BC;border-radius:11px;font-size:1rem;font-family:inherit;}" +
+    ".aipx-in:focus{outline:none;border-color:#E8760A;}" +
+    ".aipx-go{width:100%;min-height:48px;background:#E8760A;color:#fff;border:none;border-radius:11px;font-weight:800;font-size:1rem;cursor:pointer;}" +
+    ".aipx-go:disabled{opacity:0.6;}" +
+    ".aipx-err{color:#c0392b;font-size:0.82rem;margin-top:8px;}" +
+    ".aipx-skip{margin-top:12px;border:none;background:none;color:#a89878;font-size:0.82rem;text-decoration:underline;cursor:pointer;}" +
+    ".aipx-done{color:#236B43;font-weight:700;font-size:0.95rem;margin-top:6px;line-height:1.5;}" +
+    ".aipx-done a{color:#E8760A;font-weight:800;}";
   document.head.appendChild(css);
 
   // --- overlay --------------------------------------------------------------
@@ -224,12 +241,122 @@
   var chat, inputArea;
 
   var brief = {}, history = [], mode = "gemini", guidedIdx = 0, turnCount = 0;
+  // exit-intent / abandonment recovery state
+  var engaged = false, convClicked = false, recoveryShown = false, resultsShown = false, idleTimer = null;
   var MAX_TURNS = 15;
   var PROFANITY = /\b(fuck|f+u+c+k|shit|bullshit|bitch|asshole|a\$\$|bastard|cunt|dick|prick|pussy|slut|whore|wanker|bollocks|motherf|mf|bhenchod|madarchod|chutiya|chutiye|gandu|randi|lund|behenchod|bsdk|mc|bc)\b/i;
   function isProfane(t) { return PROFANITY.test(t || ""); }
 
-  ov.querySelector(".aip-x").addEventListener("click", close);
-  function close() { ov.classList.remove("on"); document.body.style.overflow = ""; ov.style.height = ""; ov.style.top = ""; }
+  ov.querySelector(".aip-x").addEventListener("click", requestClose);
+  function close() { clearTimeout(idleTimer); ov.classList.remove("on"); document.body.style.overflow = ""; ov.style.height = ""; ov.style.top = ""; }
+
+  // --- exit-intent / abandonment recovery -----------------------------------
+  // If an engaged visitor tries to leave without converting, offer a one-tap
+  // "leave your number, we'll WhatsApp your matches" catcher (once per session).
+  function briefLines() {
+    var taste = (brief.tasting && !/^no/i.test(brief.tasting)) ? brief.tasting
+      : (detectEvent(brief.event || "") === "Wedding" ? "yes — before booking" : "");
+    return [
+      brief.event ? "Event: " + brief.event : "",
+      brief.guests ? "Guests: " + brief.guests : "",
+      brief.cuisine ? "Food: " + brief.cuisine : "",
+      brief.date ? "Date: " + brief.date : "",
+      brief.area ? "Area: " + brief.area : "",
+      brief.budget ? "Budget: " + brief.budget : "",
+      taste ? "Tasting: " + taste : ""
+    ].filter(Boolean).join("\n");
+  }
+  function requestClose() {
+    if (engaged && !convClicked && !recoveryShown) { recoveryShown = true; showExitCatcher(); return; }
+    close();
+  }
+  // desktop exit-intent: pointer leaves toward the top of the window
+  document.addEventListener("mouseout", function (e) {
+    if (!ov.classList.contains("on")) return;
+    if (e.clientY <= 0 && !e.relatedTarget && engaged && !convClicked && !recoveryShown) {
+      recoveryShown = true; showExitCatcher();
+    }
+  });
+  function maybeCatch() {
+    if (engaged && !convClicked && !recoveryShown) { recoveryShown = true; showExitCatcher(); return true; }
+    return false;
+  }
+  // mobile/desktop BACK button: we push a history state on open; the first Back
+  // press fires popstate -> show the catcher (and re-trap) instead of leaving.
+  window.addEventListener("popstate", function () {
+    if (!ov.classList.contains("on")) return;
+    if (engaged && !convClicked && !recoveryShown) {
+      try { window.history.pushState({ aip: 1 }, ""); } catch (e) {}   // stay put until they act
+      recoveryShown = true; showExitCatcher();
+    } else { close(); }
+  });
+  // idle on results: if engaged + parked without converting, surface the catcher
+  function resetIdle() {
+    clearTimeout(idleTimer);
+    if (!resultsShown || convClicked || recoveryShown) return;
+    idleTimer = setTimeout(function () {
+      if (ov.classList.contains("on")) maybeCatch();
+    }, 25000);
+  }
+  ["click", "touchstart", "keydown"].forEach(function (ev) {
+    ov.addEventListener(ev, resetIdle, { passive: true });
+  });
+
+  var exitOv;
+  function showExitCatcher() {
+    track("ai_planner_exit_shown", { event: brief.event || "", resultsShown: resultsShown });
+    var bl = briefLines();
+    var wa = "https://wa.me/" + WA + "?text=" + encodeURIComponent("Hi Aayojan! Please send my matches.\n" + bl);
+    if (!exitOv) {
+      exitOv = document.createElement("div");
+      exitOv.className = "aip-exit";
+      document.body.appendChild(exitOv);
+    }
+    exitOv.innerHTML =
+      '<div class="aipx-card">' +
+      '<button class="aipx-x" aria-label="No thanks">&times;</button>' +
+      '<div class="aipx-emoji">🎁</div>' +
+      '<h3 class="aipx-h">Wait — don\'t lose your matches!</h3>' +
+      '<p class="aipx-p">Drop your number and we\'ll WhatsApp your ' + (resultsShown ? "3 matched kitchens" : "shortlist") + ' — <b>free, no spam.</b></p>' +
+      '<form class="aipx-form"><input class="aipx-in" name="phone" type="tel" inputmode="tel" placeholder="WhatsApp number *" autocomplete="tel">' +
+      '<button class="aipx-go" type="submit">Send my matches →</button></form>' +
+      '<div class="aipx-err" style="display:none"></div>' +
+      '<button class="aipx-skip">No thanks, I\'ll leave</button>' +
+      '<div class="aipx-done" style="display:none">✓ Got it! We\'ll WhatsApp you within 4 hours. <a href="' + wa + '" data-no-gate target="_blank" rel="noopener">Or message us now →</a></div>' +
+      "</div>";
+    exitOv.classList.add("on");
+    var form = exitOv.querySelector(".aipx-form");
+    var err = exitOv.querySelector(".aipx-err");
+    function dismiss() { exitOv.classList.remove("on"); close(); }
+    exitOv.querySelector(".aipx-x").addEventListener("click", dismiss);
+    exitOv.querySelector(".aipx-skip").addEventListener("click", dismiss);
+    exitOv.addEventListener("click", function (e) { if (e.target === exitOv) exitOv.classList.remove("on"); });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var phone = (form.phone.value || "").trim();
+      if (phone.replace(/\D/g, "").length < 10) {
+        form.phone.style.borderColor = "#c0392b"; form.phone.focus();
+        err.textContent = "Please enter a valid number."; err.style.display = "block"; return;
+      }
+      var btn = form.querySelector(".aipx-go"); btn.disabled = true; btn.textContent = "Saving…";
+      var qp = new URLSearchParams(location.search);
+      var lead = {
+        name: "", phone: phone, event: brief.event || "", guests: brief.guests || "", date: brief.date || "",
+        brief: bl, message: "Exit-intent recovery.\n" + bl, source: "ai_planner_exit",
+        sid: window.aSID || "", device: (window.innerWidth <= 768 ? "mobile" : "desktop"), page: location.pathname,
+        gclid: qp.get("gclid") || "", utm_source: qp.get("utm_source") || "", utm_campaign: qp.get("utm_campaign") || "",
+        status: "new", createdAt: new Date().toISOString()
+      };
+      function done() {
+        form.style.display = "none"; err.style.display = "none";
+        exitOv.querySelector(".aipx-skip").style.display = "none";
+        exitOv.querySelector(".aipx-done").style.display = "block";
+        track("ai_planner_exit_lead", { event: brief.event || "" });
+        track("lead_submitted", { source: "ai_planner_exit", event: brief.event || "" });
+      }
+      withDb(function (db) { db.collection("customerLeads").add(lead).then(done).catch(done); });
+    });
+  }
 
   // iOS soft keyboard: shrink the overlay to the visible viewport (above the keyboard)
   var VV = window.visualViewport;
@@ -248,7 +375,7 @@
   function addMsg(text, who) {
     var d = document.createElement("div"); d.className = "aip-msg " + who; d.textContent = text;
     chat.appendChild(d); chat.scrollTop = chat.scrollHeight;
-    if (who === "usr") logChat("user", text); // capture what users search/type
+    if (who === "usr") { engaged = true; logChat("user", text); } // capture what users search/type
   }
   function showTyping() {
     var t = document.createElement("div"); t.className = "aip-typing"; t.id = "aipTyping"; t.innerHTML = "<i></i><i></i><i></i>";
@@ -480,6 +607,7 @@
     setTimeout(showResults, 2600);
   }
   function showResults() {
+    resultsShown = true; resetIdle();
     var ranked = KITCHENS.map(function (k) { return { k: k, pct: score(k, brief) }; })
       .sort(function (a, b) { return b.pct - a.pct; }).slice(0, 3);
     var taste = (brief.tasting && !/^no/i.test(brief.tasting)) ? brief.tasting
@@ -517,6 +645,7 @@
       var pk = e.target.closest && e.target.closest(".aip-pick");
       var al = e.target.closest && e.target.closest("#aipAll");
       var tk = e.target.closest && e.target.closest("#aipTalk");
+      if (pk || al || tk) convClicked = true; // converted — don't show exit catcher
       if (pk) track("ai_planner_whatsapp_click", { pick: pk.getAttribute("data-pick"), event: brief.eventType });
       else if (al) track("ai_planner_whatsapp_click", { pick: "all", event: brief.eventType });
       else if (tk) track("ai_planner_direct_talk", { event: brief.eventType });
@@ -526,9 +655,11 @@
   // --- open -----------------------------------------------------------------
   function open() {
     brief = {}; history = []; mode = "gemini"; guidedIdx = 0; turnCount = 0;
+    engaged = false; convClicked = false; recoveryShown = false; resultsShown = false; clearTimeout(idleTimer);
     briefGrid.innerHTML = ""; briefBox.style.display = "none";
     buildChatLayout();
     ov.classList.add("on"); document.body.style.overflow = "hidden"; fitVV();
+    try { window.history.pushState({ aip: 1 }, ""); } catch (e) {} // trap Back to show exit catcher
     track("ai_planner_opened", {});
     addMsg("Hi! I'm Aayojan AI 👋 Tell me about your event — what are you planning?", "bot");
     history.push({ role: "assistant", content: "Hi! I'm Aayojan AI. What are you planning?" });
