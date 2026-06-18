@@ -221,9 +221,23 @@
     ".aipx-go{width:100%;min-height:48px;background:#E8760A;color:#fff;border:none;border-radius:11px;font-weight:800;font-size:1rem;cursor:pointer;}" +
     ".aipx-go:disabled{opacity:0.6;}" +
     ".aipx-err{color:#c0392b;font-size:0.82rem;margin-top:8px;}" +
+    ".aipx-consent{font-size:0.68rem;color:#a89878;line-height:1.4;margin:9px auto 0;max-width:300px;}" +
+    ".aipx-consent a{color:#E8760A;}" +
     ".aipx-skip{margin-top:12px;border:none;background:none;color:#a89878;font-size:0.82rem;text-decoration:underline;cursor:pointer;}" +
     ".aipx-done{color:#236B43;font-weight:700;font-size:0.95rem;margin-top:6px;line-height:1.5;}" +
-    ".aipx-done a{color:#E8760A;font-weight:800;}";
+    ".aipx-done a{color:#E8760A;font-weight:800;}" +
+    ".aip-sub{margin-top:16px;border-top:1px solid #F0E3CE;padding-top:14px;text-align:center;}" +
+    ".aip-sub-h{font-family:'Playfair Display',serif;font-weight:800;color:#1A1208;font-size:0.98rem;margin-bottom:4px;}" +
+    ".aip-sub-h span{font-weight:600;color:#a89878;font-size:0.8rem;}" +
+    ".aip-sub-p{font-size:0.8rem;color:#6b5436;line-height:1.45;margin-bottom:10px;}" +
+    ".aip-sub-form{display:flex;gap:7px;max-width:340px;margin:0 auto;}" +
+    ".aip-sub-in{flex:1;min-width:0;padding:11px 12px;border:1.5px solid #EDD8BC;border-radius:10px;font-size:0.95rem;font-family:inherit;}" +
+    ".aip-sub-in:focus{outline:none;border-color:#E8760A;}" +
+    ".aip-sub-go{background:#E8760A;color:#fff;border:none;border-radius:10px;padding:0 16px;font-weight:800;font-size:0.9rem;cursor:pointer;white-space:nowrap;}" +
+    ".aip-sub-go:disabled{opacity:0.6;}" +
+    ".aip-sub-consent{font-size:0.68rem;color:#a89878;line-height:1.4;margin:9px auto 0;max-width:330px;}" +
+    ".aip-sub-consent a{color:#E8760A;}" +
+    ".aip-sub-msg{color:#236B43;font-weight:700;font-size:0.9rem;margin-top:8px;}";
   document.head.appendChild(css);
 
   // --- overlay --------------------------------------------------------------
@@ -319,7 +333,9 @@
       '<h3 class="aipx-h">Wait — don\'t lose your matches!</h3>' +
       '<p class="aipx-p">Drop your number and we\'ll WhatsApp your ' + (resultsShown ? "3 matched kitchens" : "shortlist") + ' — <b>free, no spam.</b></p>' +
       '<form class="aipx-form"><input class="aipx-in" name="phone" type="tel" inputmode="tel" placeholder="WhatsApp number *" autocomplete="tel">' +
+      '<input class="aipx-in" name="email" type="email" inputmode="email" placeholder="Email for seasonal offers (optional)" autocomplete="email">' +
       '<button class="aipx-go" type="submit">Send my matches →</button></form>' +
+      '<div class="aipx-consent">Number is used only for your event. Email is optional — occasional offers, no spam, unsubscribe anytime · <a href="/privacy.html" target="_blank" rel="noopener">Privacy</a>.</div>' +
       '<div class="aipx-err" style="display:none"></div>' +
       '<button class="aipx-skip">No thanks, I\'ll leave</button>' +
       '<div class="aipx-done" style="display:none">✓ Got it! We\'ll WhatsApp you within 4 hours. <a href="' + wa + '" data-no-gate target="_blank" rel="noopener">Or message us now →</a></div>' +
@@ -338,15 +354,30 @@
         form.phone.style.borderColor = "#c0392b"; form.phone.focus();
         err.textContent = "Please enter a valid number."; err.style.display = "block"; return;
       }
+      var email = (form.email.value || "").trim();
+      var emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
       var btn = form.querySelector(".aipx-go"); btn.disabled = true; btn.textContent = "Saving…";
       var qp = new URLSearchParams(location.search);
       var lead = {
-        name: "", phone: phone, event: brief.event || "", guests: brief.guests || "", date: brief.date || "",
+        name: "", phone: phone, email: emailOk ? email : "", event: brief.event || "", guests: brief.guests || "", date: brief.date || "",
         brief: bl, message: "Exit-intent recovery.\n" + bl, source: "ai_planner_exit",
-        sid: window.aSID || "", device: (window.innerWidth <= 768 ? "mobile" : "desktop"), page: location.pathname,
+        marketingConsent: emailOk, sid: window.aSID || "", device: (window.innerWidth <= 768 ? "mobile" : "desktop"), page: location.pathname,
         gclid: qp.get("gclid") || "", utm_source: qp.get("utm_source") || "", utm_campaign: qp.get("utm_campaign") || "",
         status: "new", createdAt: new Date().toISOString()
       };
+      // optional consented seasonal-offer subscription
+      if (emailOk) {
+        withDb(function (db) {
+          db.collection("subscribers").add({
+            email: email, marketingConsent: true, consentAt: new Date().toISOString(),
+            consentText: "Opted in to promotional/seasonal offers via Aayojan AI planner (exit catcher)",
+            source: "ai_planner_exit", event: brief.event || "", brief: bl, sid: window.aSID || "",
+            page: location.pathname, gclid: qp.get("gclid") || "", utm_source: qp.get("utm_source") || "",
+            createdAt: new Date().toISOString()
+          }).catch(function () {});
+        });
+        track("ai_planner_subscribe", { source: "ai_planner_exit", event: brief.event || "" });
+      }
       function done() {
         form.style.display = "none"; err.style.display = "none";
         exitOv.querySelector(".aipx-skip").style.display = "none";
@@ -637,6 +668,13 @@
       '<div class="aip-direct" style="margin-top:16px;border-top:1px solid #F0E3CE;padding-top:14px;text-align:center">' +
         '<div style="font-size:0.72rem;color:#8B6E52;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:9px">prefer to chat now?</div>' +
         '<a class="aip-talk" id="aipTalk" href="' + waDirect + '" data-no-gate target="_blank" rel="noopener" style="display:inline-block;background:#25D366;color:#fff;padding:13px 22px;border-radius:12px;font-weight:800;font-size:0.95rem;text-decoration:none;box-shadow:0 10px 26px rgba(37,211,102,0.32)">💬 Directly talk to the Aayojan team →</a>' +
+      '</div>' +
+      '<div class="aip-sub">' +
+        '<div class="aip-sub-h">📩 Get festive menus &amp; seasonal deals <span>(optional)</span></div>' +
+        '<div class="aip-sub-p">Jamai Sasthi · Durga Pujo · Poila Boishakh — early access &amp; member-only prices.</div>' +
+        '<form class="aip-sub-form"><input class="aip-sub-in" type="email" inputmode="email" placeholder="Your email"><button class="aip-sub-go" type="submit">Notify me →</button></form>' +
+        '<div class="aip-sub-consent">Optional. By subscribing you agree to receive occasional promotional emails from Aayojan. No spam · unsubscribe anytime · <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</div>' +
+        '<div class="aip-sub-msg" style="display:none"></div>' +
       '</div></div>';
     bodyWrap.innerHTML = html;
     track("ai_planner_matches_shown", { event: brief.eventType, count: ranked.length });
@@ -649,6 +687,30 @@
       if (pk) track("ai_planner_whatsapp_click", { pick: pk.getAttribute("data-pick"), event: brief.eventType });
       else if (al) track("ai_planner_whatsapp_click", { pick: "all", event: brief.eventType });
       else if (tk) track("ai_planner_direct_talk", { event: brief.eventType });
+    });
+    // optional email opt-in for seasonal/promotional offers (consent-based)
+    var subForm = bodyWrap.querySelector(".aip-sub-form");
+    if (subForm) subForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var inEl = subForm.querySelector(".aip-sub-in");
+      var msg = bodyWrap.querySelector(".aip-sub-msg");
+      var email = (inEl.value || "").trim();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { inEl.style.borderColor = "#c0392b"; inEl.focus(); return; }
+      var btn = subForm.querySelector(".aip-sub-go"); btn.disabled = true; btn.textContent = "Saving…";
+      var qp = new URLSearchParams(location.search);
+      var sub = {
+        email: email, marketingConsent: true, consentAt: new Date().toISOString(),
+        consentText: "Opted in to promotional/seasonal offers via Aayojan AI planner",
+        source: "ai_planner", event: brief.event || "", brief: bl, sid: window.aSID || "",
+        page: location.pathname, gclid: qp.get("gclid") || "", utm_source: qp.get("utm_source") || "",
+        createdAt: new Date().toISOString()
+      };
+      function done() {
+        subForm.style.display = "none"; msg.style.display = "block";
+        msg.textContent = "✓ You're in! We'll send only the good stuff. 🎉";
+        track("ai_planner_subscribe", { event: brief.event || "" });
+      }
+      withDb(function (db) { db.collection("subscribers").add(sub).then(done).catch(done); });
     });
   }
 
