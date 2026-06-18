@@ -62,6 +62,8 @@
     ".wad-submit{width:100%;min-height:48px;background:#E8760A;color:#fff;border:none;border-radius:10px;font-weight:800;font-size:1rem;cursor:pointer;}" +
     ".wad-submit:disabled{opacity:0.6;cursor:default;}" +
     ".wad-consent{font-size:0.72rem;color:#8B6E52;text-align:center;line-height:1.45;}" +
+    ".wad-direct{display:block;text-align:center;margin-top:12px;color:#1FA855;font-weight:800;font-size:0.92rem;text-decoration:none;}" +
+    ".wad-direct:hover{text-decoration:underline;}" +
     ".wad-err{color:#c0392b;font-size:0.82rem;margin-top:8px;}" +
     ".wad-done{color:#236B43;font-weight:800;font-size:1rem;margin:6px 0 14px;}" +
     ".wad-go{display:block;width:100%;min-height:50px;line-height:50px;background:#25D366;color:#fff;border-radius:12px;font-weight:800;font-size:1rem;text-decoration:none;box-shadow:0 12px 30px rgba(37,211,102,0.32);}" +
@@ -100,6 +102,7 @@
     '<input class="wad-hp" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">' +
     '<button class="wad-submit" type="submit">Get my kitchens →</button>' +
     '<div class="wad-consent">We&#39;ll only use this to contact you about your enquiry. <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a></div>' +
+    '<a class="wad-direct" data-no-gate target="_blank" rel="noopener">💬 Or talk to us directly on WhatsApp →</a>' +
     '<div class="wad-err" style="display:none"></div>' +
     "</form>" +
     '<div class="wad-success" style="display:none">' +
@@ -122,6 +125,7 @@
   var successBox = overlay.querySelector(".wad-success");
   var goBtn = overlay.querySelector(".wad-go");
   var form = overlay.querySelector(".wad-form");
+  var directLink = overlay.querySelector(".wad-direct");
 
   // brief carried in the wa.me ?text=, populated when any WhatsApp CTA is pressed
   var ctxMessage = "", ctxEvent = "", ctxBrief = "", ctxHref = "";
@@ -179,6 +183,7 @@
     var m = /Event:\s*(.+)/i.exec(ctxMessage);
     ctxEvent = m ? m[1].trim() : "";
     goBtn.setAttribute("href", href);
+    if (directLink) directLink.setAttribute("href", href);
     web.setAttribute("href", href);
     // reset state for reuse
     form.style.display = "";
@@ -215,6 +220,7 @@
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModal(); });
   qr.addEventListener("error", function () { qr.style.display = "none"; });
   goBtn.addEventListener("click", function () { track("whatsapp_continue", { event: ctxEvent, device: MOBILE ? "mobile" : "desktop" }); });
+  if (directLink) directLink.addEventListener("click", function () { track("whatsapp_direct_skip", { event: ctxEvent, device: MOBILE ? "mobile" : "desktop" }); closeModal(); });
 
   // --- Firebase (lazy-loaded only when the form is submitted) ----------------
   function withDb(cb, onerr) {

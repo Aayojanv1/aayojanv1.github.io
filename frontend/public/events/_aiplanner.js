@@ -237,7 +237,27 @@
     ".aip-sub-go:disabled{opacity:0.6;}" +
     ".aip-sub-consent{font-size:0.68rem;color:#a89878;line-height:1.4;margin:9px auto 0;max-width:330px;}" +
     ".aip-sub-consent a{color:#E8760A;}" +
-    ".aip-sub-msg{color:#236B43;font-weight:700;font-size:0.9rem;margin-top:8px;}";
+    ".aip-sub-msg{color:#236B43;font-weight:700;font-size:0.9rem;margin-top:8px;}" +
+    /* Menu Creation window */
+    ".aip-menu{display:flex;flex-direction:column;height:100%;overflow:hidden;}" +
+    ".aipm-head{padding:14px 16px 8px;flex-shrink:0;}" +
+    ".aipm-head h3{font-family:'Playfair Display',serif;color:#FFF8EF;font-size:1.25rem;font-weight:800;margin:0;}" +
+    ".aipm-head p{color:rgba(255,248,239,0.62);font-size:12.5px;margin:3px 0 0;line-height:1.4;}" +
+    ".aipm-cats{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:4px 14px 14px;}" +
+    ".aipm-cat{margin-bottom:15px;}" +
+    ".aipm-ct{color:#F3C869;font-family:'Playfair Display',serif;font-weight:800;font-size:0.98rem;margin-bottom:8px;}" +
+    ".aipm-chips{display:flex;flex-wrap:wrap;gap:7px;align-items:center;}" +
+    ".aipm-chip{background:rgba(255,248,239,0.06);border:1px solid rgba(243,200,105,0.3);color:#FFF8EF;border-radius:99px;padding:9px 13px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;line-height:1;}" +
+    ".aipm-chip.on{background:#236B43;border-color:#2e8a56;color:#fff;}" +
+    ".aipm-add{display:inline-flex;align-items:center;background:rgba(255,248,239,0.04);border:1px dashed rgba(243,200,105,0.45);border-radius:99px;overflow:hidden;}" +
+    ".aipm-in{background:none;border:none;color:#FFF8EF;padding:9px 12px;font-size:13px;font-family:inherit;width:118px;outline:none;}" +
+    ".aipm-in::placeholder{color:rgba(255,248,239,0.5);}" +
+    ".aipm-addbtn{background:rgba(243,200,105,0.18);border:none;color:#F3C869;padding:9px 13px;font-weight:800;font-size:12.5px;cursor:pointer;font-family:inherit;}" +
+    ".aipm-bar{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-top:1px solid rgba(243,200,105,0.18);background:#0F0A05;}" +
+    ".aipm-count{color:rgba(255,248,239,0.8);font-size:13px;}" +
+    ".aipm-count b{color:#F3C869;font-size:15px;}" +
+    ".aipm-go{background:linear-gradient(135deg,#E8760A,#C95F08);color:#fff;border:none;border-radius:12px;padding:13px 18px;font-weight:800;font-size:0.95rem;cursor:pointer;font-family:inherit;white-space:nowrap;}" +
+    ".aipm-skip{flex-shrink:0;display:block;width:100%;background:#0F0A05;border:none;border-top:1px solid rgba(243,200,105,0.1);color:rgba(255,248,239,0.5);font-size:12px;text-decoration:underline;cursor:pointer;padding:10px;font-family:inherit;}";
   document.head.appendChild(css);
 
   // --- overlay --------------------------------------------------------------
@@ -277,7 +297,8 @@
       brief.date ? "Date: " + brief.date : "",
       brief.area ? "Area: " + brief.area : "",
       brief.budget ? "Budget: " + brief.budget : "",
-      taste ? "Tasting: " + taste : ""
+      taste ? "Tasting: " + taste : "",
+      (brief.menu && brief.menu.length) ? "Menu: " + brief.menu.join(", ") : ""
     ].filter(Boolean).join("\n");
   }
   function requestClose() {
@@ -478,7 +499,7 @@
     if (turnCount >= MAX_TURNS) {
       addMsg("Got enough to match you — let's go! 🎯", "bot");
       track("ai_planner_maxturns", {});
-      runEngine();
+      showMenuBuilder();
       return;
     }
     showTyping();
@@ -496,7 +517,7 @@
         // robust completion: don't rely only on the (sometimes-missing) complete flag
         var filled = brief.event && brief.guests && brief.cuisine && brief.date && brief.area && brief.budget;
         var saysDone = /matching you with verified kitchens|matching you now/i.test(reply);
-        if (data.complete || filled || saysDone) { track("ai_planner_brief_complete", { source: "gemini" }); runEngine(); }
+        if (data.complete || filled || saysDone) { track("ai_planner_brief_complete", { source: "gemini" }); showMenuBuilder(); }
         else renderFree(false);
       })
       .catch(function () { hideTyping(); goGuided(); });
@@ -511,7 +532,7 @@
     askGuided();
   }
   function askGuided() {
-    if (guidedIdx >= STEPS.length) { track("ai_planner_brief_complete", { source: "guided" }); runEngine(); return; }
+    if (guidedIdx >= STEPS.length) { track("ai_planner_brief_complete", { source: "guided" }); showMenuBuilder(); return; }
     var st = STEPS[guidedIdx];
     showTyping();
     setTimeout(function () {
@@ -628,6 +649,76 @@
     var bm = String(brief.budget || "").match(/\d+/g);
     brief.budgetMid = bm ? (bm.length > 1 ? (parseInt(bm[0]) + parseInt(bm[1])) / 2 : parseInt(bm[0])) : 0;
   }
+  // --- Menu Creation window (customer engagement) ---------------------------
+  // Comprehensive catalog (curated for mobile), [name, isVeg]. Veg/Jain diets
+  // see only veg items; non-veg/both see all. Every section has "add your own".
+  var MENU_CATALOG = [
+    { c: "🥤 Welcome Drinks", items: [["Mocktails (live)", 1], ["Aam Panna", 1], ["Lassi", 1], ["Fresh Lime Soda", 1], ["Tomato Soup", 1], ["Sweet Corn Soup", 1]] },
+    { c: "🍢 Starters", items: [["Paneer Tikka", 1], ["Chilli Baby Corn", 1], ["Veg Pakora", 1], ["Cheese Balls", 1], ["Fish Fry", 0], ["Fish Tikka", 0], ["Chicken Tikka", 0], ["Reshmi Kebab", 0], ["Mutton Seekh Kebab", 0], ["Tandoori Prawn", 0]] },
+    { c: "🍛 Bengali Mains", items: [["Chhanar Dalna", 1], ["Dhokar Dalna", 1], ["Sukto", 1], ["Echor Kalia", 1], ["Kosha Mangsho", 0], ["Chingri Malai Curry", 0], ["Ilish Bhapa", 0], ["Bhetki Paturi", 0], ["Murgi Kosha", 0], ["Daab Chingri", 0]] },
+    { c: "🧀 Indian Mains", items: [["Paneer Butter Masala", 1], ["Malai Kofta", 1], ["Navratan Korma", 1], ["Palak Paneer", 1], ["Murgh Butter Masala", 0], ["Murgh Rezala", 0], ["Mutton Rogan Josh", 0], ["Mutton Chaap", 0]] },
+    { c: "🍚 Rice & Biryani", items: [["Basanti Pulao", 1], ["Veg Fried Rice", 1], ["Dry-fruit Pulao", 1], ["Mutton Biryani", 0], ["Chicken Biryani", 0], ["Chicken Fried Rice", 0]] },
+    { c: "🫓 Breads", items: [["Luchi", 1], ["Radhaballavi", 1], ["Lachha Paratha", 1], ["Butter Naan", 1], ["Bhatura", 1]] },
+    { c: "🥣 Dal", items: [["Cholar Dal", 1], ["Dal Makhani", 1], ["Yellow Dal Fry", 1], ["Kali Dal", 1]] },
+    { c: "🍮 Desserts", items: [["Rasgolla", 1], ["Mishti Doi", 1], ["Gulab Jamun", 1], ["Rajbhog", 1], ["Kulfi", 1], ["Rabri", 1], ["Ice Cream", 1]] }
+  ];
+  var menuSel = {};
+  function showMenuBuilder() {
+    var d = dietOf(brief.cuisine || "");
+    var vegOnly = (d === "veg" || d === "jain");
+    menuSel = {};
+    var html = '<div class="aip-menu">' +
+      '<div class="aipm-head"><h3>Build your menu 🍽️</h3>' +
+      '<p>Tap dishes for your ' + (brief.event || "event").toLowerCase() + (brief.guests ? " · " + brief.guests + " guests" : "") + (vegOnly ? " · veg only" : "") + ". Not listed? Add your own.</p></div>" +
+      '<div class="aipm-cats">';
+    MENU_CATALOG.forEach(function (cat, ci) {
+      var its = cat.items.filter(function (it) { return vegOnly ? it[1] === 1 : true; });
+      if (!its.length) return;
+      html += '<div class="aipm-cat"><div class="aipm-ct">' + cat.c + '</div><div class="aipm-chips">';
+      its.forEach(function (it) {
+        var dish = String(it[0]).replace(/"/g, "");
+        html += '<button type="button" class="aipm-chip" data-dish="' + dish + '">' + it[0] + (it[1] ? "" : " 🍗") + "</button>";
+      });
+      html += '<span class="aipm-add"><input class="aipm-in" placeholder="✚ add your own…" aria-label="Add your own dish"><button type="button" class="aipm-addbtn">Add</button></span>';
+      html += "</div></div>";
+    });
+    html += "</div>" +
+      '<div class="aipm-bar"><span class="aipm-count">Your spread: <b id="aipmCount">0</b></span>' +
+      '<button type="button" class="aipm-go" id="aipmGo">Find my caterers →</button></div>' +
+      '<button type="button" class="aipm-skip" id="aipmSkip">Skip — just match me →</button>' +
+      "</div>";
+    bodyWrap.innerHTML = html;
+    track("ai_planner_menu_shown", { event: brief.event || "", vegOnly: vegOnly });
+    function updateCount() { var el = document.getElementById("aipmCount"); if (el) el.textContent = Object.keys(menuSel).length; }
+    bodyWrap.addEventListener("click", function (e) {
+      var chip = e.target.closest && e.target.closest(".aipm-chip");
+      if (chip) {
+        var dish = chip.getAttribute("data-dish");
+        if (menuSel[dish]) { delete menuSel[dish]; chip.classList.remove("on"); }
+        else { menuSel[dish] = 1; chip.classList.add("on"); }
+        updateCount(); return;
+      }
+      var addb = e.target.closest && e.target.closest(".aipm-addbtn");
+      if (addb) {
+        var wrap = addb.closest(".aipm-add"), inp = wrap.querySelector(".aipm-in");
+        var v = (inp.value || "").trim(); if (!v) return;
+        menuSel[v] = 1;
+        var nb = document.createElement("button");
+        nb.type = "button"; nb.className = "aipm-chip on"; nb.setAttribute("data-dish", v.replace(/"/g, "")); nb.textContent = v;
+        wrap.parentNode.insertBefore(nb, wrap);
+        inp.value = ""; updateCount(); track("ai_planner_menu_custom", {}); return;
+      }
+      if (e.target.closest && e.target.closest("#aipmGo")) finishMenu(false);
+      else if (e.target.closest && e.target.closest("#aipmSkip")) finishMenu(true);
+    });
+  }
+  function finishMenu(skipped) {
+    var dishes = Object.keys(menuSel);
+    brief.menu = dishes;
+    track("ai_planner_menu_done", { count: dishes.length, skipped: !!skipped });
+    runEngine();
+  }
+
   function runEngine() {
     derive();
     bodyWrap.innerHTML =
@@ -645,7 +736,8 @@
       : (brief.eventType === "Wedding" ? "yes — before booking" : "");
     var bl = "Event: " + (brief.event || "") + "\nGuests: " + (brief.guests || "") + "\nFood: " + (brief.cuisine || "") +
       "\nDate: " + (brief.date || "") + "\nArea: " + (brief.area || "") + "\nBudget: " + (brief.budget || "") +
-      (taste ? "\nTasting: " + taste : "");
+      (taste ? "\nTasting: " + taste : "") +
+      (brief.menu && brief.menu.length ? "\nMenu: " + brief.menu.join(", ") : "");
     function waFor(label) {
       return "https://wa.me/" + WA + "?text=" + encodeURIComponent(
         "Hi Aayojan! Aayojan AI matched me — please connect me with " + label + ".\n" + bl);
