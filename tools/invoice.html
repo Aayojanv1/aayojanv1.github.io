@@ -84,7 +84,8 @@
       <div class="fld"><label>Caterer</label><input id="f_caterer" value="Magnolia Catering"></div>
       <div class="fld"><label>Caterer rating</label><input id="f_rating" value="4.7"></div>
       <div class="fld"><label>Total guests</label><input id="f_guests" type="number" value="250"></div>
-      <div class="fld"><label>Price / plate (₹)</label><input id="f_plate" type="number" value="825"></div>
+      <div class="fld"><label>Service / meal type</label><input id="f_service" value="Dinner Buffet"></div>
+      <div class="fld"><label>Price / plate ₹ (tentative)</label><input id="f_plate" type="number" value="825"></div>
       <div class="fld"><label>Offer note</label><input id="f_offer" value="20% offer applied"></div>
       <div class="fld"><label>Token paid (₹)</label><input id="f_token" type="number" value="199"></div>
       <div class="fld full"><label>Menu (optional)</label><input id="f_menu" value="" placeholder="e.g. Basanti Pulao, Kosha Mangsho, Chingri Malai Curry, Mishti Doi…"></div>
@@ -132,9 +133,9 @@
       <thead><tr><th>Description</th><th class="r">Guests</th><th class="r">Rate/plate</th><th class="r">Amount</th></tr></thead>
       <tbody>
         <tr>
-          <td class="desc"><b>Catering — full service</b><small id="o_menu">Menu to be finalised</small></td>
+          <td class="desc"><b id="o_service">Dinner Buffet</b><small id="o_menu">Menu to be finalised</small></td>
           <td class="r" id="o_qty">250</td>
-          <td class="r" id="o_rate">₹825</td>
+          <td class="r"><b id="o_rate">₹825</b><small style="display:block;color:#8B6E52;font-weight:600;font-size:11px">tentative</small></td>
           <td class="r" id="o_amount">₹2,06,250</td>
         </tr>
       </tbody>
@@ -174,8 +175,9 @@
     var no=$("f_no").value, date=$("f_date").value, name=$("f_name").value, phone=$("f_phone").value,
         addr=$("f_addr").value, caterer=$("f_caterer").value, rating=$("f_rating").value,
         guests=+$("f_guests").value||0, plate=+$("f_plate").value||0, offer=$("f_offer").value,
-        token=+$("f_token").value||0, menu=$("f_menu").value.trim();
+        token=+$("f_token").value||0, menu=$("f_menu").value.trim(), service=($("f_service").value||"Catering").trim();
     var sub = guests*plate, bal = sub - token;
+    $("o_service").textContent = service;
     $("o_no").textContent=no; $("o_name").textContent=name; $("o_phone").textContent=phone; $("o_addr").textContent=addr;
     $("o_date").textContent=date; $("o_guests").textContent=guests; $("o_caterer").textContent=caterer;
     $("o_rating").textContent="★ "+rating+" verified";
@@ -184,20 +186,20 @@
     $("o_menu").textContent = menu || "Menu to be finalised";
     $("o_issued").textContent = new Date().toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
     // shareable link — encodes the whole invoice in the URL
-    var qp = new URLSearchParams({no:no,date:date,name:name,phone:phone,addr:addr,caterer:caterer,rating:rating,guests:guests,plate:plate,offer:offer,token:token,menu:menu});
+    var qp = new URLSearchParams({no:no,date:date,name:name,phone:phone,addr:addr,caterer:caterer,rating:rating,guests:guests,plate:plate,offer:offer,token:token,menu:menu,service:service});
     window.__link = location.origin + location.pathname + "?" + qp.toString();
     // WhatsApp message to the Aayojak (with the invoice link)
     var msg = "Hi "+name.split(" ")[0]+"! 🍽️ Your Aayojan booking is confirmed.\n\n"+
-      "📅 "+date+"\n👥 "+guests+" guests\n👨‍🍳 "+caterer+" ("+rating+"★)\n💰 ₹"+plate+"/plate ("+offer+")\n"+
-      "Subtotal: "+inr(sub)+"\nToken paid: ₹"+token+"\nBalance: "+inr(bal)+"\n\n🧾 View your invoice: "+window.__link+"\n\n— Aayojan.online";
+      "📅 "+date+"\n👥 "+guests+" guests\n🍽 "+service+"\n👨‍🍳 "+caterer+" ("+rating+"★)\n💰 ₹"+plate+"/plate (tentative · "+offer+")\n"+
+      "Est. total: "+inr(sub)+"\nToken paid: ₹"+token+"\nEst. balance: "+inr(bal)+"\n\n🧾 View your invoice: "+window.__link+"\n\n— Aayojan.online";
     $("waBtn").setAttribute("href","https://wa.me/"+phone.replace(/\D/g,"")+"?text="+encodeURIComponent(msg));
     window.__order = { invoiceNo:no, eventDate:date, aayojakName:name, aayojakNumber:phone, aayojakAddress:addr,
-      caterer:caterer, catererRating:rating, totalGuests:guests, platePrice:plate, offer:offer,
+      caterer:caterer, catererRating:rating, totalGuests:guests, service:service, platePrice:plate, platePriceTentative:true, offer:offer,
       tokenAmount:token, subtotal:sub, balanceDue:bal, menu:menu, status:"confirmed" };
   }
   document.querySelectorAll(".controls input").forEach(function(i){ i.addEventListener("input", render); });
   // shareable link: if URL carries order params, populate fields + show clean customer view
-  (function(){ var q=new URLSearchParams(location.search); var keys=["no","date","name","phone","addr","caterer","rating","guests","plate","offer","token","menu"];
+  (function(){ var q=new URLSearchParams(location.search); var keys=["no","date","name","phone","addr","caterer","rating","guests","plate","offer","token","menu","service"];
     if(!keys.some(function(k){return q.has(k);})) return;
     keys.forEach(function(k){ if(q.has(k)){ var el=$("f_"+k); if(el) el.value=q.get(k); } });
     document.body.classList.add("viewmode"); })();
