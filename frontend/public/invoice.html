@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Aayojan · Booking Invoice</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--saffron:#E8760A;--gold:#F3C869;--dark:#1C130A;--cream:#FFF8EF;--muted:#8B6E52;--green:#236B43;--border:#EDD8BC;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',system-ui,sans-serif;background:#EFE7DA;color:var(--dark);padding:18px;}
+  .wrap{max-width:780px;margin:0 auto;}
+  /* controls */
+  .controls{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:18px;}
+  .controls h2{font-family:'Playfair Display',serif;font-size:1rem;color:var(--saffron);margin-bottom:10px;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .fld{display:flex;flex-direction:column;gap:3px;}
+  .fld label{font-size:11px;font-weight:700;color:var(--muted);}
+  .fld input{padding:9px 10px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;}
+  .fld input:focus{outline:none;border-color:var(--saffron);}
+  .fld.full{grid-column:1/-1;}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+  .btn{flex:1;min-width:150px;border:none;border-radius:10px;padding:13px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;text-decoration:none;text-align:center;}
+  .btn-print{background:var(--dark);color:var(--cream);}
+  .btn-wa{background:#25D366;color:#fff;}
+  .btn-save{background:var(--saffron);color:#fff;}
+  .btn-link{background:#0F2A4A;color:#fff;}
+  .savemsg{font-size:12px;color:var(--green);font-weight:700;margin-top:8px;}
+  /* customer view (opened via shareable link) — hide admin controls, keep Save-PDF */
+  body.viewmode .controls h2,body.viewmode .grid,body.viewmode #waBtn,body.viewmode #saveBtn,body.viewmode #linkBtn,body.viewmode .savemsg{display:none!important;}
+  body.viewmode .controls{padding:10px;border:none;background:transparent;}
+  body.viewmode .actions{margin-top:0;justify-content:center;}
+  body.viewmode .btn-print{flex:none;min-width:220px;}
+  /* invoice */
+  .inv{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 14px 44px rgba(76,43,10,0.14);}
+  .inv-stripe{height:6px;background:linear-gradient(90deg,#E8760A,#F3C869,#E8760A);}
+  .inv-head{display:flex;justify-content:space-between;align-items:flex-start;padding:26px 30px 18px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:12px;}
+  .brand{font-family:Georgia,'Playfair Display',serif;font-weight:800;font-size:1.7rem;color:var(--saffron);line-height:1;}
+  .brand span{color:#C95F08;}
+  .brand small{display:block;font-family:'DM Sans';font-size:11px;color:var(--muted);font-weight:600;margin-top:4px;letter-spacing:.02em;}
+  .inv-meta{text-align:right;font-size:12.5px;color:var(--muted);line-height:1.6;}
+  .inv-meta b{color:var(--dark);}
+  .inv-title{display:inline-block;background:var(--cream);border:1px solid var(--border);border-radius:7px;padding:3px 10px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--saffron);margin-bottom:8px;}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:20px 30px;}
+  .col h4{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  .col .big{font-family:'Playfair Display',serif;font-weight:800;font-size:1.05rem;color:var(--dark);}
+  .col .line{font-size:13px;color:#4b3a24;line-height:1.65;}
+  .rate-badge{display:inline-block;background:rgba(35,107,67,.12);color:var(--green);border:1px solid rgba(35,107,67,.3);border-radius:6px;font-size:11px;font-weight:800;padding:2px 8px;margin-top:4px;}
+  table{width:100%;border-collapse:collapse;margin:0;}
+  thead th{background:var(--dark);color:var(--gold);font-size:11px;letter-spacing:.08em;text-transform:uppercase;text-align:left;padding:11px 30px;}
+  thead th.r{text-align:right;}
+  tbody td{padding:14px 30px;border-bottom:1px solid var(--border);font-size:14px;}
+  tbody td.r{text-align:right;}
+  .desc b{font-family:'Playfair Display',serif;}
+  .desc small{display:block;color:var(--muted);font-size:12px;}
+  .totals{padding:10px 30px 4px;margin-left:auto;}
+  .trow{display:flex;justify-content:flex-end;gap:40px;padding:6px 0;font-size:14px;}
+  .trow .lbl{color:var(--muted);}
+  .trow.token .val{color:var(--green);font-weight:700;}
+  .trow.bal{border-top:2px solid var(--dark);margin-top:6px;padding-top:12px;font-size:1.15rem;font-weight:900;font-family:'Playfair Display',serif;}
+  .paidtag{display:inline-block;background:var(--green);color:#fff;font-size:10px;font-weight:800;border-radius:5px;padding:2px 7px;margin-left:8px;letter-spacing:.06em;}
+  .inv-foot{background:var(--cream);padding:18px 30px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  .inv-foot .ty{font-family:'Playfair Display',serif;font-style:italic;color:var(--saffron);font-size:1rem;}
+  .inv-foot .contact{font-size:12px;color:var(--muted);text-align:right;line-height:1.6;}
+  .inv-foot .contact b{color:var(--dark);}
+  .terms{padding:12px 30px 22px;font-size:10.5px;color:#a89878;line-height:1.5;}
+  @media(max-width:560px){.grid,.cols{grid-template-columns:1fr;}.inv-head{flex-direction:column;}.inv-meta{text-align:left;}}
+  @media print{body{background:#fff;padding:0;}.controls{display:none!important;}.inv{box-shadow:none;border-radius:0;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- CONTROLS (hidden when printing) -->
+  <div class="controls">
+    <h2>🧾 Booking Invoice — edit & generate</h2>
+    <div class="grid">
+      <div class="fld"><label>Invoice #</label><input id="f_no" value="AAY-0001"></div>
+      <div class="fld"><label>Event date</label><input id="f_date" value="16 Feb 2027"></div>
+      <div class="fld"><label>Aayojak name</label><input id="f_name" value="Lahani Sarkar"></div>
+      <div class="fld"><label>Aayojak number</label><input id="f_phone" value="+91-9748318444"></div>
+      <div class="fld full"><label>Aayojak address</label><input id="f_addr" value="Kolkata – 700094"></div>
+      <div class="fld"><label>Caterer</label><input id="f_caterer" value="Magnolia Catering"></div>
+      <div class="fld"><label>Caterer rating</label><input id="f_rating" value="4.7"></div>
+      <div class="fld"><label>Total guests</label><input id="f_guests" type="number" value="250"></div>
+      <div class="fld"><label>Price / plate (₹)</label><input id="f_plate" type="number" value="825"></div>
+      <div class="fld"><label>Offer note</label><input id="f_offer" value="20% offer applied"></div>
+      <div class="fld"><label>Token paid (₹)</label><input id="f_token" type="number" value="199"></div>
+      <div class="fld full"><label>Menu (optional)</label><input id="f_menu" value="" placeholder="e.g. Basanti Pulao, Kosha Mangsho, Chingri Malai Curry, Mishti Doi…"></div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-print" onclick="window.print()">🖨️ Print / Save PDF</button>
+      <button class="btn btn-link" id="linkBtn">🔗 Copy shareable link</button>
+      <a class="btn btn-wa" id="waBtn" target="_blank" rel="noopener">💬 Send to Aayojak</a>
+      <button class="btn btn-save" id="saveBtn">💾 Save to records</button>
+    </div>
+    <div class="savemsg" id="saveMsg"></div>
+  </div>
+
+  <!-- INVOICE -->
+  <div class="inv" id="invoice">
+    <div class="inv-stripe"></div>
+    <div class="inv-head">
+      <div>
+        <div class="brand">Aayojan<span>.online</span><small>Kolkata's verified-kitchen marketplace</small></div>
+      </div>
+      <div class="inv-meta">
+        <div class="inv-title">Booking Invoice</div>
+        <div>Invoice <b id="o_no">AAY-0001</b></div>
+        <div>Issued <b id="o_issued"></b></div>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="col">
+        <h4>Billed to (Aayojak)</h4>
+        <div class="big" id="o_name">Lahani Sarkar</div>
+        <div class="line" id="o_phone">+91-9748318444</div>
+        <div class="line" id="o_addr">Kolkata – 700094</div>
+      </div>
+      <div class="col">
+        <h4>Booking details</h4>
+        <div class="line"><b>Event date:</b> <span id="o_date">16 Feb 2027</span></div>
+        <div class="line"><b>Guests:</b> <span id="o_guests">250</span></div>
+        <div class="line"><b>Caterer:</b> <span id="o_caterer">Magnolia Catering</span></div>
+        <div class="rate-badge" id="o_rating">★ 4.7 verified</div>
+      </div>
+    </div>
+
+    <table>
+      <thead><tr><th>Description</th><th class="r">Guests</th><th class="r">Rate/plate</th><th class="r">Amount</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="desc"><b>Catering — full service</b><small id="o_menu">Menu to be finalised</small></td>
+          <td class="r" id="o_qty">250</td>
+          <td class="r" id="o_rate">₹825</td>
+          <td class="r" id="o_amount">₹2,06,250</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="totals">
+      <div class="trow"><span class="lbl" id="o_offer">20% offer applied</span></div>
+      <div class="trow"><span class="lbl">Subtotal</span><span class="val" id="o_sub">₹2,06,250</span></div>
+      <div class="trow token"><span class="lbl">Token paid <span class="paidtag">PAID</span></span><span class="val" id="o_token">– ₹199</span></div>
+      <div class="trow bal"><span class="lbl">Balance due</span><span class="val" id="o_bal">₹2,06,051</span></div>
+    </div>
+
+    <div class="inv-foot">
+      <div class="ty">Thank you for booking with Aayojan! 🍽️</div>
+      <div class="contact">
+        <b>Aayojan.online</b><br>
+        💬 WhatsApp +91 80884 34425<br>
+        ✉️ aayojan11@gmail.com
+      </div>
+    </div>
+    <div class="terms">
+      Token of ₹199 confirms your booking and is adjusted against the final bill. Balance payable as per agreement with the caterer.
+      Final menu, headcount and pricing confirmed before the event. Aayojan connects you with verified kitchens; food is prepared and served by the caterer.
+    </div>
+  </div>
+</div>
+
+<!-- Firebase config (public client config) for "Save to records" -->
+<script>
+  var FB = { apiKey:"AIzaSyBPvK0452Kgkp0Oevxm1zMRUWiqKdhmaZA", authDomain:"aayojan-a8c4f.firebaseapp.com", projectId:"aayojan-a8c4f", storageBucket:"aayojan-a8c4f.firebasestorage.app", messagingSenderId:"673829788583", appId:"1:673829788583:web:9f140241bf0466b197b482" };
+  var $ = function(id){ return document.getElementById(id); };
+  function inr(n){ n = Math.round(n||0); return "₹" + n.toLocaleString("en-IN"); }
+
+  function render(){
+    var no=$("f_no").value, date=$("f_date").value, name=$("f_name").value, phone=$("f_phone").value,
+        addr=$("f_addr").value, caterer=$("f_caterer").value, rating=$("f_rating").value,
+        guests=+$("f_guests").value||0, plate=+$("f_plate").value||0, offer=$("f_offer").value,
+        token=+$("f_token").value||0, menu=$("f_menu").value.trim();
+    var sub = guests*plate, bal = sub - token;
+    $("o_no").textContent=no; $("o_name").textContent=name; $("o_phone").textContent=phone; $("o_addr").textContent=addr;
+    $("o_date").textContent=date; $("o_guests").textContent=guests; $("o_caterer").textContent=caterer;
+    $("o_rating").textContent="★ "+rating+" verified";
+    $("o_qty").textContent=guests; $("o_rate").textContent=inr(plate); $("o_amount").textContent=inr(sub);
+    $("o_offer").textContent=offer||""; $("o_sub").textContent=inr(sub); $("o_token").textContent="– "+inr(token); $("o_bal").textContent=inr(bal);
+    $("o_menu").textContent = menu || "Menu to be finalised";
+    $("o_issued").textContent = new Date().toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
+    // shareable link — encodes the whole invoice in the URL
+    var qp = new URLSearchParams({no:no,date:date,name:name,phone:phone,addr:addr,caterer:caterer,rating:rating,guests:guests,plate:plate,offer:offer,token:token,menu:menu});
+    window.__link = location.origin + location.pathname + "?" + qp.toString();
+    // WhatsApp message to the Aayojak (with the invoice link)
+    var msg = "Hi "+name.split(" ")[0]+"! 🍽️ Your Aayojan booking is confirmed.\n\n"+
+      "📅 "+date+"\n👥 "+guests+" guests\n👨‍🍳 "+caterer+" ("+rating+"★)\n💰 ₹"+plate+"/plate ("+offer+")\n"+
+      "Subtotal: "+inr(sub)+"\nToken paid: ₹"+token+"\nBalance: "+inr(bal)+"\n\n🧾 View your invoice: "+window.__link+"\n\n— Aayojan.online";
+    $("waBtn").setAttribute("href","https://wa.me/"+phone.replace(/\D/g,"")+"?text="+encodeURIComponent(msg));
+    window.__order = { invoiceNo:no, eventDate:date, aayojakName:name, aayojakNumber:phone, aayojakAddress:addr,
+      caterer:caterer, catererRating:rating, totalGuests:guests, platePrice:plate, offer:offer,
+      tokenAmount:token, subtotal:sub, balanceDue:bal, menu:menu, status:"confirmed" };
+  }
+  document.querySelectorAll(".controls input").forEach(function(i){ i.addEventListener("input", render); });
+  // shareable link: if URL carries order params, populate fields + show clean customer view
+  (function(){ var q=new URLSearchParams(location.search); var keys=["no","date","name","phone","addr","caterer","rating","guests","plate","offer","token","menu"];
+    if(!keys.some(function(k){return q.has(k);})) return;
+    keys.forEach(function(k){ if(q.has(k)){ var el=$("f_"+k); if(el) el.value=q.get(k); } });
+    document.body.classList.add("viewmode"); })();
+  render();
+  // copy shareable link
+  $("linkBtn").addEventListener("click", function(){ var l=window.__link;
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(l).then(function(){ var b=$("linkBtn"),t=b.textContent; b.textContent="✓ Link copied!"; setTimeout(function(){b.textContent=t;},1800); }).catch(function(){ prompt("Copy this link:",l); }); }
+    else prompt("Copy this link:",l); });
+
+  // Save to Firestore (bookings) — lazy-load compat SDK
+  $("saveBtn").addEventListener("click", function(){
+    var msg=$("saveMsg"); msg.textContent="Saving…";
+    function go(){
+      try{ if(!firebase.apps||!firebase.apps.length) firebase.initializeApp(FB);
+        var o = window.__order; o.createdAt = new Date().toISOString();
+        firebase.firestore().collection("bookings").add(o)
+          .then(function(r){ msg.textContent="✓ Saved to records (bookings/"+r.id+")"; })
+          .catch(function(e){ msg.style.color="#c0392b"; msg.textContent="Save failed: "+(e.code||e.message); });
+      }catch(e){ msg.style.color="#c0392b"; msg.textContent="Save error: "+e.message; }
+    }
+    if(window.firebase&&firebase.firestore) return go();
+    var b="https://www.gstatic.com/firebasejs/10.12.2/", s1=document.createElement("script"); s1.src=b+"firebase-app-compat.js";
+    s1.onload=function(){ var s2=document.createElement("script"); s2.src=b+"firebase-firestore-compat.js"; s2.onload=go; document.head.appendChild(s2); };
+    document.head.appendChild(s1);
+  });
+</script>
+</body>
+</html>

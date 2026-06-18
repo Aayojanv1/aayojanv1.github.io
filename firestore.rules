@@ -19,6 +19,12 @@ service cloud.firestore {
       allow read, update, delete: if request.auth != null;
     }
 
+    // Booking/order records created from the invoice tool (create only)
+    match /bookings/{doc} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+
     // Allow anonymous chat logging — one doc per session, appended via merge
     // (create + update), so we can see what visitors search even without a lead.
     match /chatLogs/{doc} {
