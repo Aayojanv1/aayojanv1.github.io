@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Aayojan · Flash Offer Reel (recording tool)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=DM+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--saffron:#E8760A;--gold:#F3C869;--cream:#FDF6ED;--dark:#1A1208;--green:#236B43;--muted:#8B6E52;--border:#EDD8BC;--maroon:#7A1F2B;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;}
+  body{font-family:'DM Sans',system-ui,sans-serif;background:#000;overflow:hidden;}
+  .stage{position:relative;width:100vw;height:100vh;max-width:calc(100vh * 9/16);margin:0 auto;overflow:hidden;background:var(--cream);}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8% 8%;opacity:0;transform:translateY(16px) scale(.99);transition:opacity .5s ease,transform .5s ease;pointer-events:none;}
+  .scene.on{opacity:1;transform:none;}
+  .dark{background:linear-gradient(180deg,#1A1208,#2A1B0C);}
+  /* flashy animated bg */
+  .flash{background:linear-gradient(120deg,#7A1F2B,#B0392B,#E8760A,#F3A84E,#E8760A,#B0392B,#7A1F2B);background-size:300% 100%;animation:fbg 6s linear infinite;overflow:hidden;}
+  .flash::after{content:"";position:absolute;top:0;bottom:0;left:0;width:30%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:fshine 3.4s ease-in-out infinite;}
+  @keyframes fbg{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+  @keyframes fshine{0%{transform:translateX(-120%) skewX(-16deg)}55%,100%{transform:translateX(450%) skewX(-16deg)}}
+  .say{font-family:'Playfair Display',serif;font-weight:800;line-height:1.16;letter-spacing:-0.01em;font-size:max(22px,4.6vh);max-width:94%;}
+  .say.onlight{color:var(--dark);} .say.ondark{color:#FFF8EF;}
+  .em{color:var(--saffron);font-style:italic;} .emg{color:var(--gold);font-style:italic;}
+  .sub{font-weight:700;font-size:max(14px,2.3vh);margin-top:1.7vh;}
+  .sub.onlight{color:var(--muted);} .sub.ondark{color:rgba(255,248,239,.8);} .sub.onflash{color:#FFF8EF;}
+  /* pain rows */
+  .pain{background:rgba(255,255,255,.06);border:1px solid rgba(255,138,101,.32);color:#FFE3D6;border-radius:1.6vh;padding:1.5vh 2vh;font-size:max(13px,2.3vh);font-weight:700;margin:0.7vh 0;width:100%;max-width:48vh;text-align:left;opacity:0;}
+  .scene.on .pain{animation:rise .5s ease both;}
+  /* Aayojan avatar — stressed customer mascot */
+  .avatar-wrap{position:relative;width:min(92%,52vh);height:38vh;margin:0.5vh auto;}
+  .avatar{position:absolute;left:50%;top:50%;width:max(120px,24vh);filter:drop-shadow(0 10px 20px rgba(0,0,0,.42));animation:avshake 2.4s ease-in-out infinite;}
+  @keyframes avshake{0%,100%{transform:translate(-50%,-50%) rotate(-2.5deg)}50%{transform:translate(-50%,-50%) rotate(2.5deg)}}
+  .sweat{animation:drip 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:top center;}
+  @keyframes drip{0%{opacity:0;transform:translateY(-2px)}25%{opacity:1}100%{opacity:0;transform:translateY(13px)}}
+  .pb{position:absolute;background:rgba(255,255,255,.1);border:1px solid rgba(255,138,101,.42);color:#FFE3D6;font-weight:700;font-size:max(12px,2.1vh);padding:0.9vh 1.6vh;border-radius:99px;white-space:nowrap;opacity:0;}
+  .scene.on .pb{animation:floatpb 3.4s ease-in-out infinite;}
+  .pb1{top:2%;left:0;} .pb2{top:14%;right:0;} .pb3{bottom:14%;left:1%;} .pb4{bottom:2%;right:2%;}
+  .pb2{animation-delay:.25s!important;} .pb3{animation-delay:.5s!important;} .pb4{animation-delay:.75s!important;}
+  @keyframes floatpb{0%{opacity:0;transform:translateY(10px) scale(.92)}13%{opacity:1;transform:none}72%{opacity:1}88%{opacity:0}100%{opacity:0}}
+  /* brand reveal — 'Aayojan kicks in' */
+  .brand-pop{display:inline-flex;align-items:center;gap:1.3vh;margin-bottom:1vh;opacity:0;}
+  .scene.on .brand-pop{animation:bpop .65s cubic-bezier(.2,.9,.3,1.25) both;}
+  @keyframes bpop{0%{opacity:0;transform:scale(.6) translateY(-8px)}60%{transform:scale(1.08)}100%{opacity:1;transform:none}}
+  .brand-pop img{width:max(40px,6vh);height:max(40px,6vh);border-radius:50%;box-shadow:0 6px 16px rgba(232,118,10,.4);}
+  .brand-pop b{font-family:'Playfair Display',serif;font-weight:900;font-size:max(22px,4vh);color:var(--saffron);}
+  .brand-pop b span{color:#C95F08;}
+  .badge{display:inline-flex;align-items:center;gap:0.9vh;background:#FFE9B0;color:var(--maroon);font-weight:900;font-size:max(13px,2.1vh);letter-spacing:.08em;text-transform:uppercase;padding:1vh 2.3vh;border-radius:99px;animation:blink 1.05s ease-in-out infinite;position:relative;z-index:2;}
+  @keyframes blink{0%,100%{opacity:1;box-shadow:0 0 14px rgba(255,233,176,.95)}50%{opacity:.55;box-shadow:0 0 3px rgba(255,233,176,.3)}}
+  .big{font-family:'Playfair Display',serif;font-weight:900;color:#fff;font-size:max(72px,16vh);line-height:.95;text-shadow:0 6px 24px rgba(0,0,0,.3);position:relative;z-index:2;animation:pulse 1.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  .big small{font-size:.42em;vertical-align:super;font-weight:900;}
+  .offlabel{color:#FFE9B0;font-weight:900;font-size:max(20px,3.4vh);letter-spacing:.04em;text-transform:uppercase;position:relative;z-index:2;}
+  .offdesc{color:#FFF8EF;font-weight:700;font-size:max(16px,2.7vh);margin-top:1.4vh;position:relative;z-index:2;max-width:92%;}
+  .logo{font-family:'Playfair Display',serif;font-weight:900;color:#fff;font-size:max(32px,6.4vh);position:relative;z-index:2;}
+  .logo span{color:#FFE9B0;}
+  .url{margin-top:1.1vh;font-weight:900;color:#FFF8EF;font-size:max(17px,3vh);position:relative;z-index:2;}
+  .cta{margin-top:2.2vh;background:#25D366;color:#fff;border-radius:1.9vh;padding:1.8vh 3.3vh;font-weight:900;font-size:max(16px,2.8vh);position:relative;z-index:2;box-shadow:0 10px 26px rgba(37,211,102,.4);}
+  .endtag{display:inline-block;margin-top:1.9vh;background:rgba(0,0,0,.28);border:1px solid rgba(255,233,176,.5);color:#FFE9B0;font-weight:800;font-size:max(14px,2.3vh);padding:1.1vh 2.2vh;border-radius:99px;position:relative;z-index:2;}
+  /* food grid */
+  .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.1vh;width:100%;max-width:54vh;margin-top:1.9vh;}
+  .fgrid figure{position:relative;border-radius:1.9vh;overflow:hidden;aspect-ratio:1/1;box-shadow:0 10px 24px rgba(76,43,10,.18);opacity:0;transform:translateY(14px) scale(.95);}
+  .scene.on .fgrid figure{animation:pop .5s cubic-bezier(.2,.8,.2,1) forwards;}
+  .scene.on .fgrid figure:nth-child(1){animation-delay:.15s}
+  .scene.on .fgrid figure:nth-child(2){animation-delay:.35s}
+  .scene.on .fgrid figure:nth-child(3){animation-delay:.55s}
+  .scene.on .fgrid figure:nth-child(4){animation-delay:.75s}
+  @keyframes pop{to{opacity:1;transform:none}}
+  .fgrid img{width:100%;height:100%;object-fit:cover;display:block;}
+  .fgrid figcaption{position:absolute;left:0;right:0;bottom:0;padding:1.9vh 1.1vh 0.8vh;background:linear-gradient(transparent,rgba(20,12,4,.85));color:#fff;font-family:'Playfair Display',serif;font-weight:800;font-size:max(13px,2vh);}
+  /* steps */
+  .step{display:flex;align-items:center;gap:1.6vh;background:#fff;border:1px solid var(--border);border-radius:1.9vh;padding:1.7vh 2.1vh;width:100%;max-width:50vh;margin:0.85vh 0;box-shadow:0 8px 20px rgba(76,43,10,.1);opacity:0;text-align:left;}
+  .scene.on .step{animation:rise .5s ease both;}
+  .scene.on .step:nth-of-type(2){animation-delay:.3s}
+  .scene.on .step:nth-of-type(3){animation-delay:.6s}
+  .scene.on .step:nth-of-type(4){animation-delay:.9s}
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .step .ic{flex-shrink:0;width:5.5vh;height:5.5vh;border-radius:1.5vh;display:grid;place-items:center;font-size:max(19px,2.8vh);background:linear-gradient(135deg,#FFF4DC,#FFE8B0);}
+  .step b{font-family:'Playfair Display',serif;font-size:max(15px,2.2vh);color:var(--dark);}
+  .step span{display:block;font-size:max(12px,1.7vh);color:var(--muted);font-weight:600;}
+  .bar{position:absolute;top:0;left:0;height:0.7vh;background:var(--gold);width:0;z-index:30;}
+  .tip{position:fixed;bottom:8px;left:0;right:0;text-align:center;color:#666;font-size:11px;z-index:40;}
+  @media(min-width:480px){.tip{display:none;}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="bar" id="bar"></div>
+
+  <!-- 1 · PAIN — Aayojan avatar showing the customer's frustration -->
+  <section class="scene dark on" data-s="1">
+    <div class="say ondark" style="font-size:max(40px,8.4vh);line-height:0.98;margin-bottom:1vh;font-weight:900">Catering<br>stress? 😩</div>
+    <div class="avatar-wrap">
+      <svg class="avatar" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stressed customer">
+        <!-- shoulders -->
+        <path d="M44 240 q0 -62 76 -62 t76 62 z" fill="#E8760A"/>
+        <!-- neck -->
+        <rect x="106" y="148" width="28" height="34" rx="13" fill="#E3A877"/>
+        <!-- ears -->
+        <circle cx="68" cy="110" r="10" fill="#F2C49A"/>
+        <circle cx="172" cy="110" r="10" fill="#F2C49A"/>
+        <!-- head -->
+        <ellipse cx="120" cy="106" rx="54" ry="58" fill="#F2C49A"/>
+        <!-- hair -->
+        <path d="M64 98 q-2 -60 56 -60 t56 60 q-12 -28 -56 -26 t-56 26z" fill="#2E2118"/>
+        <!-- worried eyebrows -->
+        <path d="M90 92 q14 -8 26 -2" stroke="#2E2118" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M150 92 q-14 -8 -26 -2" stroke="#2E2118" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <!-- eyes -->
+        <circle cx="101" cy="109" r="7" fill="#2A1B12"/>
+        <circle cx="139" cy="109" r="7" fill="#2A1B12"/>
+        <!-- worried frown -->
+        <path d="M106 139 q14 -12 28 0" fill="none" stroke="#8A4326" stroke-width="5" stroke-linecap="round"/>
+        <!-- sweat drop -->
+        <path class="sweat" d="M161 84 q9 13 0 24 q-9 -11 0 -24z" fill="#7FD0F5"/>
+      </svg>
+      <span class="pb pb1">📞 No replies</span>
+      <span class="pb pb2">😟 Good food?</span>
+      <span class="pb pb3">🤔 Which menu?</span>
+      <span class="pb pb4">💸 Fair price?</span>
+    </div>
+    <div class="sub ondark" style="margin-top:1vh;font-size:max(15px,2.6vh)">Planning a Kolkata event? 10 caterers later… still stuck.</div>
+  </section>
+
+  <!-- 2 · SOLUTION — Aayojan kicks in: compare, quote, select, book -->
+  <section class="scene" data-s="2">
+    <div class="brand-pop"><img src="/img/aayojan-cloche.png" alt=""><b>Aayojan<span>.online</span></b></div>
+    <div class="say onlight" style="font-size:max(22px,4vh);margin:1vh 0">Catering, <span class="em">finally sorted.</span></div>
+    <div class="sub onlight" style="margin-top:2px;margin-bottom:8px">One place for Kolkata's <b style="color:var(--dark)">verified kitchens</b> — free to compare 🍽️</div>
+    <div class="step"><div class="ic">🔍</div><div><b>Compare</b><span>Verified kitchens · ratings · menus</span></div></div>
+    <div class="step"><div class="ic">💰</div><div><b>Quote</b><span>Real quotes — no calling around</span></div></div>
+    <div class="step"><div class="ic">✅</div><div><b>Select</b><span>Pick your best match</span></div></div>
+    <div class="step"><div class="ic">📲</div><div><b>Book</b><span>Confirm on WhatsApp · ₹0 to use</span></div></div>
+  </section>
+
+  <!-- 3 · FOOD — proof: real food, real kitchens -->
+  <section class="scene" data-s="3">
+    <div class="say onlight" style="font-size:max(24px,4.4vh)">Real food.<br><span class="em">Real Kolkata kitchens.</span></div>
+    <div class="fgrid">
+      <figure><img src="/events/img/hub/palak-paneer.jpg" alt=""><figcaption>Bengali Thali</figcaption></figure>
+      <figure><img src="/events/img/hub/continental.jpg" alt=""><figcaption>Biryani &amp; Pulao</figcaption></figure>
+      <figure><img src="/events/img/hub/tandoori-kebab.jpg" alt=""><figcaption>Tandoori Kebabs</figcaption></figure>
+      <figure><img src="/events/img/hub/papad.jpg" alt=""><figcaption>Fried Starters</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- 4 · OFFER 1 -->
+  <section class="scene flash" data-s="4">
+    <div class="badge">⚡ Flash Sale</div>
+    <div class="big" style="margin-top:10px">5<small>%</small></div>
+    <div class="offlabel">flat OFF</div>
+    <div class="offdesc">on your <b>first 3 bookings</b></div>
+  </section>
+
+  <!-- 5 · OFFER 2 (wedding) -->
+  <section class="scene flash" data-s="5">
+    <div class="offdesc" style="font-size:max(20px,3.6vh);margin-bottom:1vh">💍 Getting married?</div>
+    <div class="big">20<small>%</small></div>
+    <div class="offlabel">up to · OFF weddings</div>
+  </section>
+
+  <!-- 6 · CTA -->
+  <section class="scene flash" data-s="6">
+    <div class="logo">Aayojan<span>.online</span></div>
+    <div class="endtag">⏳ Hurry — offer ends 29 June</div>
+    <div class="cta">💬 WhatsApp +91 80884 34425</div>
+    <div class="url" style="margin-top:14px">aayojan.online</div>
+    <div class="offdesc" style="font-size:max(14px,2.3vh);margin-top:1.4vh">Kolkata's verified catering marketplace · compare · quote · book</div>
+  </section>
+</div>
+<div class="tip">↻ Auto-loops · open on a phone-ratio window &amp; screen-record</div>
+
+<script>
+  var scenes = {};
+  document.querySelectorAll(".scene").forEach(function (el) { scenes[el.getAttribute("data-s")] = el; });
+  var bar = document.getElementById("bar");
+  // {s: sceneNo, at: startMs}
+  // Varied pacing: linger on pain + solution + CTA, snap through offers.
+  var TL = [
+    { s: 1, at: 0 },      // PAIN — hold (bubbles land)        3.8s
+    { s: 2, at: 3800 },   // SOLUTION — hold (4 steps to read) 3.6s
+    { s: 3, at: 7400 },   // FOOD — medium                     2.6s
+    { s: 4, at: 10000 },  // 5% OFF — snappy                   2.0s
+    { s: 5, at: 12000 },  // 20% weddings — snappy             2.0s
+    { s: 6, at: 14000 }   // CTA — longest (read + act)        4.2s
+  ];
+  var LOOP = 18200;
+  var timers = [];
+  function show(n) {
+    Object.keys(scenes).forEach(function (k) { scenes[k].classList.remove("on"); });
+    var el = scenes[String(n)]; void el.offsetWidth; el.classList.add("on");
+  }
+  function run() {
+    timers.forEach(clearTimeout); timers = [];
+    bar.style.transition = "none"; bar.style.width = "0";
+    void bar.offsetWidth;
+    bar.style.transition = "width " + LOOP + "ms linear"; bar.style.width = "100%";
+    TL.forEach(function (step) { timers.push(setTimeout(function () { show(step.s); }, step.at)); });
+    timers.push(setTimeout(run, LOOP));
+  }
+  run();
+</script>
+</body>
+</html>
