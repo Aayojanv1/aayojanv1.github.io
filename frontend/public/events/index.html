@@ -298,6 +298,15 @@ footer{background:#100C04;text-align:center;padding:2rem;color:#555;font-size:0.
 @media(max-width:640px){.fo-note{width:100%;text-align:center;}.fo-chip{font-size:0.8rem;}}
 @media(prefers-reduced-motion:reduce){.flash-offers,.flash-offers::after,.fo-badge,.fo-chip{animation:none;}}
 
+/* === JAMAI SASTHI TEASER === */
+.jamai-teaser{display:block;background:linear-gradient(90deg,#5B0E14,#9E1B22,#E8760A,#9E1B22,#5B0E14);background-size:240% 100%;animation:foGradient 6s linear infinite;padding:9px 14px;text-decoration:none;}
+.jt-inner{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 12px;}
+.jt-ttl{font-family:'Playfair Display',serif;font-weight:900;color:#FFE9B0;font-size:0.95rem;}
+.jt-chip{color:#FFF8EF;font-weight:700;font-size:0.82rem;}
+.jt-chip b{color:#FFE9B0;}
+.jt-cta{background:#FFE9B0;color:#7A1F2B;font-weight:900;font-size:0.8rem;padding:5px 13px;border-radius:99px;}
+@media(prefers-reduced-motion:reduce){.jamai-teaser{animation:none;}}
+
 /* === CUISINE QUICK-LINK STRIP === */
 .cuisine-strip{padding:1.6rem 5%;background:#FFFAEF;border-top:1px solid #EDD8BC;border-bottom:1px solid #EDD8BC;}
 .cs-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;justify-content:center;}
@@ -451,6 +460,17 @@ section.block{padding:4rem 5%;}
 </nav>
 
 <div class="crumbs"><a href="/">Home</a><span>›</span>Events</div>
+
+<!-- Jamai Sasthi teaser — seasonal urgency, opens the AI planner -->
+<a class="jamai-teaser" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi feast">
+  <div class="jt-inner">
+    <span class="jt-ttl">🎣 শুভ জামাই ষষ্ঠী · Jamai Sasthi</span>
+    <span class="jt-chip">🔥 <b>80% kitchens booked</b></span>
+    <span class="jt-chip">⏳ Order by <b>19 June, evening</b></span>
+    <span class="jt-chip">Plates from <b>₹299</b></span>
+    <span class="jt-cta">Plan now →</span>
+  </div>
+</a>
 
 <!-- Live status ticker (honest — no fake transactions) -->
 <div class="live-ticker">

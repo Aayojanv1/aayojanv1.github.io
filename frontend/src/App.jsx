@@ -1155,6 +1155,17 @@ export default function AayojanApp(){
       {view==="landing"&&(
         <div style={{...anim,overflowX:"hidden"}}>
 
+         {/* ── Jamai Sasthi Teaser ─────────────────────────────────────── */}
+         <a href="/events/" className="jamai-teaser-bar" style={{display:"block",padding:"9px 14px",textDecoration:"none"}}>
+           <div style={{maxWidth:1100,margin:"0 auto",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"center",gap:"6px 12px"}}>
+             <span style={{fontFamily:"'Playfair Display',serif",fontWeight:900,color:"#FFE9B0",fontSize:14}}>🎣 শুভ জামাই ষষ্ঠী · Jamai Sasthi</span>
+             <span style={{color:"#FFF8EF",fontWeight:700,fontSize:12.5}}>🔥 <strong style={{color:"#FFE9B0"}}>80% kitchens booked</strong></span>
+             <span style={{color:"#FFF8EF",fontWeight:700,fontSize:12.5}}>⏳ Order by <strong style={{color:"#FFE9B0"}}>19 June, evening</strong></span>
+             <span style={{color:"#FFF8EF",fontWeight:700,fontSize:12.5}}>Plates from <strong style={{color:"#FFE9B0"}}>₹299</strong></span>
+             <span style={{background:"#FFE9B0",color:"#7A1F2B",fontWeight:900,fontSize:12,padding:"5px 13px",borderRadius:99}}>Plan now →</span>
+           </div>
+         </a>
+
          {/* ── HERO SECTION — Two-door marketplace split ────────────────── */}
          <div className="landing-hero" style={{position:"relative",minHeight:"86vh",overflow:"hidden",background:"linear-gradient(180deg,#0F0A05 0%,#1A1208 50%,#2A1C0F 100%)"}}>
 
@@ -3360,6 +3371,7 @@ export default function AayojanApp(){
         @keyframes foBadgeBlink{0%,100%{opacity:1;box-shadow:0 0 10px rgba(255,233,176,0.95),0 0 4px rgba(255,255,255,0.6)}50%{opacity:0.5;box-shadow:0 0 2px rgba(255,233,176,0.2)}}
         @keyframes foChipPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.055)}}
         .flash-offers-bar{background:linear-gradient(90deg,#7A1F2B,#B0392B,#E8760A,#F3A84E,#E8760A,#B0392B,#7A1F2B);background-size:220% 100%;animation:foGradient 5s linear infinite;position:relative;overflow:hidden;}
+        .jamai-teaser-bar{background:linear-gradient(90deg,#5B0E14,#9E1B22,#E8760A,#9E1B22,#5B0E14);background-size:240% 100%;animation:foGradient 6s linear infinite;}
         .flash-offers-bar::after{content:"";position:absolute;top:0;bottom:0;left:0;width:70px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent);animation:foShine 3s ease-in-out infinite;pointer-events:none;}
         .fo-badge{animation:foBadgeBlink 1.05s ease-in-out infinite;}
         .fo-chip-pulse{animation:foChipPulse 1.5s ease-in-out infinite;}
