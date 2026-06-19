@@ -800,7 +800,14 @@
       ["🍽️ Cuisine fit", "👥 Guest capacity", "📍 Area coverage", "💰 Budget range", "📅 Availability", "✓ FSSAI verified"].map(function (c, i) {
         return '<span style="animation-delay:' + (0.3 + i * 0.32) + 's">' + c + " ✓</span>";
       }).join("") + "</div></div>";
-    setTimeout(showResults, 2600);
+    setTimeout(function() {
+      try { showResults(); }
+      catch(e) {
+        // fallback: direct WhatsApp if results render fails
+        var wa = "https://wa.me/" + WA + "?text=" + encodeURIComponent("Hi Aayojan! Please help me find a caterer.\nEvent: " + (brief.event||"") + "\nGuests: " + (brief.guests||"") + "\nArea: " + (brief.area||""));
+        bodyWrap.innerHTML = '<div class="aip-res" style="text-align:center;padding:30px 20px"><h3 style="color:#FFF8EF;margin-bottom:12px">✨ Great news — we have matches!</h3><p style="color:#cbbfa9;margin-bottom:20px">Tap below and our team will send you the best caterers within minutes.</p><a href="' + wa + '" target="_blank" style="display:inline-block;background:#25D366;color:#fff;padding:14px 28px;border-radius:14px;font-weight:800;font-size:1rem;text-decoration:none">💬 Get my caterer matches →</a></div>';
+      }
+    }, 1500);
   }
   // Customer reviews pool — shown on result cards to build confidence
   var REVIEWS = [
@@ -850,18 +857,14 @@
       (brief.eventType === "Wedding" ? '<div class="aip-taste">🍴 <b>Free food tasting</b> — for weddings we set up a tasting with your matched kitchens before you book.</div>' : "");
     ranked.forEach(function (r, i) {
       var label = "match #" + (i + 1) + " (" + r.pct + "% · " + r.k.cuisines + ")";
-      var rev = reviews[i % reviews.length];
+      var rev = reviews.length ? reviews[i % reviews.length] : null;
       html += '<div class="aip-card">' +
         '<div class="aip-card-top"><div class="aip-score">' + r.pct + '%</div><div class="aip-cbody">' +
         '<div class="aip-cname">🔒 <span class="aip-lock">' + r.k.tag + "</span></div>" +
         '<div class="aip-ccui">' + r.k.cuisines + "</div>" +
         '<div class="aip-why">✓ ' + reasons(r.k, brief).join(" · ") + "</div>" +
         '</div></div>' +
-        '<div class="aip-rev">' +
-          '<span class="aip-rev-stars">★★★★★</span>' +
-          '<span class="aip-rev-txt">"' + rev.text + '"</span>' +
-          '<span class="aip-rev-name">— ' + rev.name + ' · ' + rev.event + '</span>' +
-        '</div>' +
+        (rev ? '<div class="aip-rev"><span class="aip-rev-stars">★★★★★</span><span class="aip-rev-txt">"' + rev.text + '"</span><span class="aip-rev-name">— ' + rev.name + ' · ' + rev.event + '</span></div>' : '') +
         '<a class="aip-pick" href="' + waFor(label) + '" target="_blank" rel="noopener" data-pick="' + (i + 1) + '">🔓 Unlock & get quote</a></div>';
     });
     // Offer pill — event-relevant discount shown in results
