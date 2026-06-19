@@ -212,6 +212,8 @@
     ".aip-rev-txt{font-size:12px;color:#ede3d4;line-height:1.5;font-style:italic;display:block;}" +
     ".aip-rev-name{font-size:10.5px;color:#b8aa97;display:block;margin-top:5px;font-weight:600;}" +
     ".aip-pick{background:#25D366;color:#fff;border-radius:11px;padding:12px;font-weight:800;font-size:13px;text-decoration:none;text-align:center;display:block;box-shadow:0 8px 20px rgba(37,211,102,0.3);}" +
+    ".aip-offer-pill{background:linear-gradient(90deg,rgba(120,18,32,0.7),rgba(192,57,43,0.6));border:1px solid rgba(243,200,105,0.4);border-radius:12px;padding:11px 14px;font-size:13px;color:#FFF8EF;text-align:center;margin:10px 0;}" +
+    ".aip-offer-pill b{color:#F3C869;}" +
     ".aip-unlock{display:block;width:100%;margin-top:8px;background:transparent;border:1.5px solid rgba(243,200,105,0.45);color:#F3C869;text-align:center;border-radius:13px;padding:12px;font-weight:800;font-size:13.5px;text-decoration:none;cursor:pointer;}" +
     ".aip-free{display:flex;align-items:center;justify-content:center;gap:7px;background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.32);color:#86efac;font-size:12.5px;font-weight:700;border-radius:11px;padding:11px 12px;margin:2px 0 10px;text-align:center;line-height:1.45;}" +
     ".aip-taste{background:rgba(243,200,105,0.12);border:1px solid rgba(243,200,105,0.34);color:#F3C869;font-size:12.5px;border-radius:11px;padding:11px 12px;margin:0 0 10px;text-align:center;line-height:1.45;}" +
@@ -672,86 +674,60 @@
     var bm = String(brief.budget || "").match(/\d+/g);
     brief.budgetMid = bm ? (bm.length > 1 ? (parseInt(bm[0]) + parseInt(bm[1])) / 2 : parseInt(bm[0])) : 0;
   }
-  // --- Menu type catalogs — shown based on user's selected menu format --------
-  var MENU_TYPES = [
-    { key: "dinner", label: "🍽️ Dinner Buffet" },
-    { key: "lunch",  label: "🥗 Lunch Menu" },
-    { key: "breakfast", label: "☕ Breakfast" },
-    { key: "starters", label: "🍢 Starters & Drinks" },
-    { key: "bhog",   label: "🪷 Bhog / Prasad" }
+  // --- Comprehensive catalog: flag 0=non-veg, 1=veg, 2=Jain/Satwik safe ------
+  var MENU_CATALOG = [
+    { c: "🥤 Welcome Drinks", items: [["Mocktails (live)", 2], ["Aam Panna", 2], ["Lassi", 2], ["Fresh Lime Soda", 2], ["Tomato Soup", 2], ["Sweet Corn Soup", 2], ["Jaljeera", 2], ["Sherbet", 2]] },
+    { c: "🍢 Starters", items: [["Paneer Tikka", 1], ["Chilli Baby Corn", 2], ["Veg Pakora", 1], ["Cheese Balls", 2], ["Hara Bhara Kabab", 2], ["Stuffed Mushroom", 2], ["Fish Fry", 0], ["Fish Tikka", 0], ["Chicken Tikka", 0], ["Reshmi Kebab", 0], ["Mutton Seekh Kebab", 0], ["Tandoori Prawn", 0]] },
+    { c: "🍛 Bengali Mains", items: [["Niramish Khichuri", 2], ["Chhanar Dalna", 2], ["Dhokar Dalna", 2], ["Sukto", 2], ["Echor Kalia", 1], ["Labra", 2], ["Beguni", 2], ["Kosha Mangsho", 0], ["Chingri Malai Curry", 0], ["Ilish Bhapa", 0], ["Bhetki Paturi", 0], ["Murgi Kosha", 0], ["Daab Chingri", 0]] },
+    { c: "🧀 Indian Mains", items: [["Malai Kofta", 2], ["Navratan Korma", 2], ["Palak Paneer", 2], ["Paneer Butter Masala", 1], ["Murgh Butter Masala", 0], ["Murgh Rezala", 0], ["Mutton Rogan Josh", 0], ["Mutton Chaap", 0]] },
+    { c: "🍚 Rice & Biryani", items: [["Basanti Pulao", 2], ["Dry-fruit Pulao", 2], ["Steamed Rice", 2], ["Veg Fried Rice", 1], ["Mutton Biryani", 0], ["Chicken Biryani", 0], ["Chicken Fried Rice", 0]] },
+    { c: "🫓 Breads", items: [["Luchi", 2], ["Radhaballavi", 2], ["Lachha Paratha", 2], ["Butter Naan", 2], ["Bhatura", 1]] },
+    { c: "🥣 Dal", items: [["Cholar Dal", 2], ["Moong Dal", 2], ["Yellow Dal Fry", 2], ["Dal Makhani", 1], ["Kali Dal", 1]] },
+    { c: "🍮 Desserts", items: [["Payesh", 2], ["Sandesh", 2], ["Rasgolla", 2], ["Mishti Doi", 2], ["Rajbhog", 2], ["Rabri", 2], ["Naru", 2], ["Gulab Jamun", 2], ["Kulfi", 2], ["Ice Cream", 2]] }
   ];
-  var MENU_CATALOGS = {
-    dinner: [
-      { c: "🥤 Welcome Drinks", items: [["Mocktails (live)", 1], ["Aam Panna", 1], ["Lassi", 1], ["Fresh Lime Soda", 1], ["Tomato Soup", 1], ["Sweet Corn Soup", 1]] },
-      { c: "🍢 Starters", items: [["Paneer Tikka", 1], ["Chilli Baby Corn", 1], ["Veg Pakora", 1], ["Cheese Balls", 1], ["Fish Fry", 0], ["Fish Tikka", 0], ["Chicken Tikka", 0], ["Reshmi Kebab", 0], ["Mutton Seekh Kebab", 0], ["Tandoori Prawn", 0]] },
-      { c: "🍛 Bengali Mains", items: [["Chhanar Dalna", 1], ["Dhokar Dalna", 1], ["Sukto", 1], ["Echor Kalia", 1], ["Kosha Mangsho", 0], ["Chingri Malai Curry", 0], ["Ilish Bhapa", 0], ["Bhetki Paturi", 0], ["Murgi Kosha", 0], ["Daab Chingri", 0]] },
-      { c: "🧀 Indian Mains", items: [["Paneer Butter Masala", 1], ["Malai Kofta", 1], ["Navratan Korma", 1], ["Palak Paneer", 1], ["Murgh Butter Masala", 0], ["Murgh Rezala", 0], ["Mutton Rogan Josh", 0], ["Mutton Chaap", 0]] },
-      { c: "🍚 Rice & Biryani", items: [["Basanti Pulao", 1], ["Veg Fried Rice", 1], ["Dry-fruit Pulao", 1], ["Mutton Biryani", 0], ["Chicken Biryani", 0], ["Chicken Fried Rice", 0]] },
-      { c: "🫓 Breads", items: [["Luchi", 1], ["Radhaballavi", 1], ["Lachha Paratha", 1], ["Butter Naan", 1], ["Bhatura", 1]] },
-      { c: "🥣 Dal", items: [["Cholar Dal", 1], ["Dal Makhani", 1], ["Yellow Dal Fry", 1], ["Kali Dal", 1]] },
-      { c: "🍮 Desserts", items: [["Rasgolla", 1], ["Mishti Doi", 1], ["Gulab Jamun", 1], ["Rajbhog", 1], ["Kulfi", 1], ["Rabri", 1], ["Ice Cream", 1]] }
-    ],
-    lunch: [
-      { c: "🥤 Beverages", items: [["Aam Panna", 1], ["Lassi", 1], ["Fresh Lime Soda", 1], ["Buttermilk", 1]] },
-      { c: "🍢 Light Starters", items: [["Veg Pakora", 1], ["Chilli Baby Corn", 1], ["Samosa", 1], ["Fish Fry", 0], ["Chicken Cutlet", 0]] },
-      { c: "🍛 Mains", items: [["Chhanar Dalna", 1], ["Aloo Posto", 1], ["Paneer Butter Masala", 1], ["Palak Paneer", 1], ["Murgi Kosha", 0], ["Macher Jhol", 0], ["Mutton Curry", 0]] },
-      { c: "🍚 Rice", items: [["Steamed Rice", 1], ["Basanti Pulao", 1], ["Veg Fried Rice", 1], ["Chicken Fried Rice", 0]] },
-      { c: "🫓 Breads", items: [["Luchi", 1], ["Lachha Paratha", 1], ["Butter Naan", 1]] },
-      { c: "🥣 Dal & Salad", items: [["Cholar Dal", 1], ["Yellow Dal Fry", 1], ["Green Salad", 1], ["Raita", 1]] },
-      { c: "🍮 Desserts", items: [["Rasgolla", 1], ["Mishti Doi", 1], ["Gulab Jamun", 1], ["Ice Cream", 1]] }
-    ],
-    breakfast: [
-      { c: "🥤 Hot Beverages", items: [["Chai", 1], ["Coffee", 1], ["Hot Chocolate", 1]] },
-      { c: "🥤 Cold Beverages", items: [["Fresh Juice", 1], ["Lassi", 1], ["Aam Panna", 1]] },
-      { c: "🫓 Bengali Breakfast", items: [["Luchi-Alur Torkari", 1], ["Radhaballavi-Cholar Dal", 1], ["Kochuri-Sabzi", 1], ["Poori-Sabzi", 1]] },
-      { c: "🍳 South Indian", items: [["Idli-Sambar", 1], ["Dosa-Chutney", 1], ["Upma", 1], ["Vada-Sambar", 1]] },
-      { c: "🥐 Continental", items: [["Bread Toast & Butter", 1], ["Fruit Salad", 1], ["Corn Flakes & Milk", 1], ["Omelette", 0], ["Boiled Egg", 0]] },
-      { c: "🍮 Sweets", items: [["Mishti Doi", 1], ["Sandesh", 1], ["Rasgolla", 1]] }
-    ],
-    starters: [
-      { c: "🥤 Welcome Drinks", items: [["Mocktails (live)", 1], ["Aam Panna", 1], ["Fresh Lime Soda", 1], ["Tomato Soup", 1], ["Sweet Corn Soup", 1], ["Virgin Mary", 1]] },
-      { c: "🍢 Veg Starters", items: [["Paneer Tikka", 1], ["Chilli Baby Corn", 1], ["Veg Pakora", 1], ["Cheese Balls", 1], ["Stuffed Mushroom", 1], ["Hara Bhara Kabab", 1]] },
-      { c: "🍗 Non-Veg Starters", items: [["Chicken Tikka", 0], ["Reshmi Kebab", 0], ["Fish Tikka", 0], ["Mutton Seekh Kebab", 0], ["Tandoori Prawn", 0], ["Chicken Wings", 0]] },
-      { c: "🍱 Finger Foods", items: [["Mini Samosa", 1], ["Pav Bhaji", 1], ["Mini Burger", 1], ["Spring Roll", 1], ["Chicken Roll", 0], ["Fish Finger", 0]] },
-      { c: "🍮 Sweets & Dessert", items: [["Rasgolla", 1], ["Gulab Jamun", 1], ["Kulfi", 1], ["Brownie", 1]] }
-    ],
-    bhog: [
-      { c: "🪷 Prasad / Bhog (all niramish)", items: [["Niramish Khichuri", 1], ["Labra", 1], ["Sukto", 1], ["Beguni", 1], ["Chhanar Dalna", 1], ["Dhokar Dalna", 1], ["Echor Kalia", 1]] },
-      { c: "🫓 Breads", items: [["Luchi", 1], ["Radhaballavi", 1], ["Suji-r Halwa Luchi", 1]] },
-      { c: "🥣 Dal", items: [["Cholar Dal", 1], ["Moong Dal", 1], ["Musur Dal", 1]] },
-      { c: "🍚 Rice", items: [["Khichuri", 1], ["Basanti Pulao", 1], ["Steamed Rice", 1]] },
-      { c: "🍮 Mishti / Desserts", items: [["Payesh", 1], ["Sandesh", 1], ["Rasgolla", 1], ["Mishti Doi", 1], ["Naru", 1]] },
-      { c: "🥤 Drinks", items: [["Aam Panna", 1], ["Sherbet", 1], ["Lassi", 1], ["Jaljeera", 1]] }
-    ]
-  };
-  // Default menu type based on event
-  function defaultMenuType(ev) {
-    if (/pujo|puja|durga|bhog|ratha/i.test(ev || "")) return "bhog";
-    if (/corporate|office/i.test(ev || "")) return "lunch";
-    return "dinner";
+  // Diet options for dropdown
+  var DIET_OPTS = [
+    { key: "mix",    label: "🍽️ Mix (Veg + Non-Veg)" },
+    { key: "veg",    label: "🥬 Veg" },
+    { key: "nonveg", label: "🍗 Non-Veg" },
+    { key: "jain",   label: "🌱 Jain (niramish)" },
+    { key: "satwik", label: "🪷 Satwik (niramish)" }
+  ];
+  function dietKeyOf(d) {
+    if (d === "jain") return "jain";
+    if (d === "satwik") return "satwik";
+    if (d === "veg") return "veg";
+    if (d === "nonveg") return "nonveg";
+    return "mix";
   }
+  function filterByDiet(items, dk) {
+    if (dk === "jain" || dk === "satwik") return items.filter(function(it){ return it[1] === 2; });
+    if (dk === "veg") return items.filter(function(it){ return it[1] >= 1; });
+    return items; // mix / nonveg — show all
+  }
+
   var menuSel = {};
   function showMenuBuilder() {
     var d = dietOf(brief.cuisine || "");
-    var vegOnly = (d === "veg" || d === "jain" || d === "satwik");
-    var dietLbl = d === "satwik" ? " · satwik (niramish)" : d === "jain" ? " · Jain (niramish)" : vegOnly ? " · veg only" : "";
+    var activeDiet = dietKeyOf(d);
     menuSel = {};
-    var activeType = defaultMenuType(brief.event);
-    // If diet is satwik/jain, default to bhog (all niramish anyway)
-    if (vegOnly && activeType === "dinner") activeType = (d === "satwik" ? "bhog" : "dinner");
 
+    function dietLabel(dk) {
+      var o = DIET_OPTS.find(function(x){ return x.key === dk; });
+      return o ? o.label : "";
+    }
     function renderCatalog() {
-      var catalog = MENU_CATALOGS[activeType] || MENU_CATALOGS.dinner;
       var cats = document.getElementById("aipmCats"); if (!cats) return;
       var html = "";
-      catalog.forEach(function (cat) {
-        var its = cat.items.filter(function (it) { return vegOnly ? it[1] === 1 : true; });
+      MENU_CATALOG.forEach(function (cat) {
+        var its = filterByDiet(cat.items, activeDiet);
         if (!its.length) return;
         html += '<div class="aipm-cat"><div class="aipm-ct">' + cat.c + '</div><div class="aipm-chips">';
         its.forEach(function (it) {
           var dish = String(it[0]).replace(/"/g, "");
           var on = menuSel[dish] ? " on" : "";
-          html += '<button type="button" class="aipm-chip' + on + '" data-dish="' + dish + '">' + it[0] + (it[1] ? "" : " 🍗") + "</button>";
+          var tag = it[1] === 0 ? " 🍗" : (it[1] === 2 && (activeDiet === "mix" || activeDiet === "nonveg") ? " 🌿" : "");
+          html += '<button type="button" class="aipm-chip' + on + '" data-dish="' + dish + '">' + it[0] + tag + "</button>";
         });
         html += '<span class="aipm-add"><input class="aipm-in" placeholder="✚ add your own…" aria-label="Add your own dish"><button type="button" class="aipm-addbtn">Add</button></span>';
         html += "</div></div>";
@@ -759,17 +735,17 @@
       cats.innerHTML = html;
     }
 
-    var typeOpts = MENU_TYPES.map(function(t) {
-      return '<option value="' + t.key + '"' + (t.key === activeType ? " selected" : "") + ">" + t.label + "</option>";
+    var dietOpts = DIET_OPTS.map(function(o) {
+      return '<option value="' + o.key + '"' + (o.key === activeDiet ? " selected" : "") + ">" + o.label + "</option>";
     }).join("");
 
     var html = '<div class="aip-menu">' +
       '<div class="aipm-head"><h3>Build your menu 🍽️</h3>' +
       '<div class="aipm-type-wrap">' +
-        '<label class="aipm-type-lbl">Select menu format</label>' +
-        '<select class="aipm-type-sel" id="aipmTypeSel">' + typeOpts + '</select>' +
+        '<label class="aipm-type-lbl">Dietary preference</label>' +
+        '<select class="aipm-type-sel" id="aipmDietSel">' + dietOpts + '</select>' +
       '</div>' +
-      '<p>Tap dishes for your ' + (brief.event || "event").toLowerCase() + (brief.guests ? " · " + brief.guests + " guests" : "") + dietLbl + ". Not listed? Add your own.</p></div>" +
+      '<p>Tap dishes for your ' + (brief.event || "event").toLowerCase() + (brief.guests ? " · " + brief.guests + " guests" : "") + ". Not listed? Add your own.</p></div>" +
       '<div class="aipm-cats" id="aipmCats"></div>' +
       '<div class="aipm-bar"><span class="aipm-count">Your spread: <b id="aipmCount">0</b></span>' +
       '<button type="button" class="aipm-go" id="aipmGo">Find my caterers →</button></div>' +
@@ -777,13 +753,13 @@
       "</div>";
     bodyWrap.innerHTML = html;
     renderCatalog();
-    track("ai_planner_menu_shown", { event: brief.event || "", vegOnly: vegOnly, menuType: activeType });
+    track("ai_planner_menu_shown", { event: brief.event || "", diet: activeDiet });
 
-    document.getElementById("aipmTypeSel").addEventListener("change", function() {
-      activeType = this.value;
-      brief.menuType = activeType;
+    document.getElementById("aipmDietSel").addEventListener("change", function() {
+      activeDiet = this.value;
+      brief.cuisine = activeDiet; // update brief so matching uses correct diet
       renderCatalog();
-      track("ai_planner_menu_type", { type: activeType });
+      track("ai_planner_diet_change", { diet: activeDiet });
     });
 
     function updateCount() { var el = document.getElementById("aipmCount"); if (el) el.textContent = Object.keys(menuSel).length; }
@@ -813,9 +789,7 @@
     var dishes = Object.keys(menuSel);
     brief.menu = dishes;
     // carry menu type label into brief for WhatsApp brief
-    var mt = MENU_TYPES.find(function(t){ return t.key === (brief.menuType||"dinner"); });
-    if (mt) brief.menuTypeLabel = mt.label;
-    track("ai_planner_menu_done", { count: dishes.length, skipped: !!skipped, menuType: brief.menuType || "dinner" });
+    track("ai_planner_menu_done", { count: dishes.length, skipped: !!skipped, diet: brief.cuisine || "" });
     runEngine();
   }
 
@@ -863,7 +837,6 @@
     var bl = "Event: " + (brief.event || "") + "\nGuests: " + (brief.guests || "") + "\nFood: " + (brief.cuisine || "") +
       "\nDate: " + (brief.date || "") + "\nArea: " + (brief.area || "") + "\nBudget: " + (brief.budget || "") +
       (taste ? "\nTasting: " + taste : "") +
-      (brief.menuTypeLabel ? "\nMenu format: " + brief.menuTypeLabel : "") +
       (brief.menu && brief.menu.length ? "\nDishes: " + brief.menu.join(", ") : "");
     function waFor(label) {
       return "https://wa.me/" + WA + "?text=" + encodeURIComponent(
@@ -891,7 +864,17 @@
         '</div>' +
         '<a class="aip-pick" href="' + waFor(label) + '" target="_blank" rel="noopener" data-pick="' + (i + 1) + '">🔓 Unlock & get quote</a></div>';
     });
-    html += '<a class="aip-unlock" id="aipAll" href="' + waFor("all " + ranked.length + " shortlisted kitchens — I want to compare quotes") + '" target="_blank" rel="noopener">Or get all ' + ranked.length + ' quotes to compare →</a>' +
+    // Offer pill — event-relevant discount shown in results
+    var offerPill = "";
+    if (/pujo|puja|durga|bhog|ratha/i.test(brief.eventType || "")) {
+      offerPill = '<div class="aip-offer-pill">🥁 Flat <b>10% OFF</b> on Pujo catering · book by 29 June</div>';
+    } else if (/wedding/i.test(brief.eventType || "")) {
+      offerPill = '<div class="aip-offer-pill">💍 Up to <b>20% OFF</b> on weddings · mention "Aayojan AI" when you connect</div>';
+    } else if (/party|birthday|corporate/i.test(brief.eventType || "")) {
+      offerPill = '<div class="aip-offer-pill">🎉 Flat <b>10% OFF</b> on party catering · from ₹250/plate · mention "Aayojan AI"</div>';
+    }
+    html += offerPill +
+      '<a class="aip-unlock" id="aipAll" href="' + waFor("all " + ranked.length + " shortlisted kitchens — I want to compare quotes") + '" target="_blank" rel="noopener">Or get all ' + ranked.length + ' quotes to compare →</a>' +
       '<div class="aip-note">Kitchen names &amp; contacts are shared once you connect. Free · no advance payment.</div>' +
       '<div class="aip-direct" style="margin-top:16px;border-top:1px solid #F0E3CE;padding-top:14px;text-align:center">' +
         '<div style="font-size:0.72rem;color:#8B6E52;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:9px">prefer to chat now?</div>' +
