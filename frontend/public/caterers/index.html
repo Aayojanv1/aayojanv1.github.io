@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Aayojan">
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"Aayojan — Catering Marketplace · Kolkata","alternateName":"Aayojan","description":"Aayojan is a catering marketplace — we do not prepare or serve food. We connect customers across Kolkata with verified independent caterers. 100% free for customers.","url":"https://aayojan.online/caterers/","logo":"https://aayojan.online/logo-aayojan.svg","telephone":"+91 8088434425","email":"aayojan11@gmail.com","areaServed":[{"@type":"Place","name":"Newtown"},{"@type":"Place","name":"Salt Lake"},{"@type":"Place","name":"Rajarhat"}],"knowsLanguage":["English","Bengali","Hindi"]}
+{"@context":"https://schema.org","@type":"Organization","name":"Aayojan — Catering Marketplace · Kolkata","alternateName":"Aayojan","description":"Aayojan is a catering marketplace — we do not prepare or serve food. We connect customers across Kolkata with verified independent caterers. 100% free for customers.","url":"https://aayojan.online/caterers/","logo":"https://aayojan.online/logo-aayojan.svg","telephone":"+91 8088434425","email":"aayojan11@gmail.com","areaServed":[{"@type":"Place","name":"Kolkata"},{"@type":"Place","name":"Newtown"},{"@type":"Place","name":"Salt Lake"},{"@type":"Place","name":"Rajarhat"},{"@type":"Place","name":"South Kolkata"},{"@type":"Place","name":"North Kolkata"},{"@type":"Place","name":"Jadavpur"},{"@type":"Place","name":"Behala"},{"@type":"Place","name":"Howrah"}],"knowsLanguage":["English","Bengali","Hindi"]}
 </script>
 <script>if(localStorage.getItem('ga_opt_out')==='1'){window['ga-disable-G-VSGREVV7RS']=true;}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VSGREVV7RS"></script>
@@ -45,7 +45,8 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem
 
 .areas{padding:4rem 5%;}
 .area-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;max-width:1100px;margin:0 auto;}
-@media (max-width:880px){.area-grid{grid-template-columns:1fr;}}
+@media (max-width:960px){.area-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:600px){.area-grid{grid-template-columns:1fr;}}
 .area-card{background:white;border:1px solid var(--border);border-radius:22px;padding:2rem 1.8rem;transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;display:block;position:relative;overflow:hidden;}
 .area-card:hover{transform:translateY(-6px);box-shadow:0 24px 50px rgba(232,118,10,0.18);border-color:var(--saffron);}
 .area-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--saffron),var(--saffron-light));transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease;}
@@ -92,9 +93,9 @@ footer a{color:var(--saffron);}
 </nav>
 
 <section class="hero">
-  <div class="hero-badge">🇮🇳 Kolkata · Newtown corridor</div>
+  <div class="hero-badge">🇮🇳 All Kolkata · Every neighbourhood</div>
   <h1>Catering across <em>all of Kolkata</em>.</h1>
-  <p class="hero-sub">Aayojan is hyper-local. Pick your area — we'll tell you who the partners are, what pricing looks like, and route your enquiry to the right kitchen.</p>
+  <p class="hero-sub">Pick your area — we'll match you with verified caterers nearby, tell you what pricing looks like, and route your enquiry to the right kitchen.</p>
 </section>
 
 <section class="areas">
@@ -137,8 +138,76 @@ footer a{color:var(--saffron);}
         <span class="area-pin">700135</span>
         <span class="area-pin">700136</span>
       </div>
-      <p class="area-features">Strong for <strong>value-friendly weddings, ceremonies, house parties</strong>. Most affordable per-plate in the corridor without quality compromise. Growing residential — and growing demand.</p>
+      <p class="area-features">Strong for <strong>value-friendly weddings, ceremonies, house parties</strong>. Most affordable per-plate without quality compromise. Growing residential — and growing demand.</p>
       <span class="area-cta">View Rajarhat caterers →</span>
+    </a>
+
+    <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20catering%20in%20South%20Kolkata%20(Jadavpur%2FBehala%2FTollygunge)" class="area-card">
+      <div class="area-icon">🌆</div>
+      <div class="area-priceband">₹250 – ₹900+ /plate</div>
+      <h2 class="area-name">South Kolkata</h2>
+      <p class="area-tagline">Jadavpur. Behala. Tollygunge. Gariahat. Garia. Sonarpur.</p>
+      <div class="area-pins">
+        <span class="area-pin">700032</span>
+        <span class="area-pin">700034</span>
+        <span class="area-pin">700053</span>
+        <span class="area-pin">700068</span>
+      </div>
+      <p class="area-features">Strong for <strong>weddings, Annaprasan, Griha Pravesh, pujo catering</strong>. Rich Bengali residential pockets — Jadavpur, Tollygunge, Gariahat, Ballygunge, Behala.</p>
+      <span class="area-cta">Get caterers for South Kolkata →</span>
+    </a>
+
+    <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20catering%20in%20North%20Kolkata%20(Shyambazar%2FDumDum%2FBaghbazar)" class="area-card">
+      <div class="area-icon">🏛️</div>
+      <div class="area-priceband">₹200 – ₹800+ /plate</div>
+      <h2 class="area-name">North Kolkata</h2>
+      <p class="area-tagline">Shyambazar. Dum Dum. Baghbazar. Bangur. Dunlop. Lake Town.</p>
+      <div class="area-pins">
+        <span class="area-pin">700004</span>
+        <span class="area-pin">700028</span>
+        <span class="area-pin">700055</span>
+        <span class="area-pin">700080</span>
+      </div>
+      <p class="area-features">Strong for <strong>traditional Bengali ceremonies, pujo bhog, community feasts</strong>. Heritage neighbourhoods — classic satwik menus, Ilish/Kosha Mangsho spreads.</p>
+      <span class="area-cta">Get caterers for North Kolkata →</span>
+    </a>
+
+    <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20catering%20in%20Central%20Kolkata%20(Park%20Street%2FBallygunge%2FKalighat)" class="area-card">
+      <div class="area-icon">🎪</div>
+      <div class="area-priceband">₹300 – ₹1200+ /plate</div>
+      <h2 class="area-name">Central Kolkata</h2>
+      <p class="area-tagline">Park Street. Ballygunge. Kalighat. Alipore. Chowringhee.</p>
+      <div class="area-pins">
+        <span class="area-pin">700016</span>
+        <span class="area-pin">700019</span>
+        <span class="area-pin">700027</span>
+        <span class="area-pin">700071</span>
+      </div>
+      <p class="area-features">Strong for <strong>premium weddings, corporate events, cocktail receptions</strong>. Continental, multi-cuisine and fusion spreads for upscale venues along Park Street and Ballygunge.</p>
+      <span class="area-cta">Get caterers for Central Kolkata →</span>
+    </a>
+
+    <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20catering%20near%20Howrah%2FBarasat%2FNarendrapur" class="area-card">
+      <div class="area-icon">🌉</div>
+      <div class="area-priceband">₹180 – ₹700+ /plate</div>
+      <h2 class="area-name">Howrah & Outskirts</h2>
+      <p class="area-tagline">Howrah. Barasat. Narendrapur. Baruipur. Garia outskirts.</p>
+      <div class="area-pins">
+        <span class="area-pin">711101</span>
+        <span class="area-pin">700124</span>
+        <span class="area-pin">700148</span>
+      </div>
+      <p class="area-features">Strong for <strong>large-scale weddings, community feasts, budget bulk orders</strong>. Extensive capacity — ideal for 200–2000 guest events with full setup.</p>
+      <span class="area-cta">Get caterers for Howrah & outskirts →</span>
+    </a>
+
+    <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20catering%20in%20my%20area" class="area-card" style="background:linear-gradient(135deg,#FDF6ED,#FFF9F1);border:2px dashed var(--saffron);">
+      <div class="area-icon">📍</div>
+      <div class="area-priceband" style="color:var(--brown);">YOUR AREA</div>
+      <h2 class="area-name">Anywhere in Kolkata</h2>
+      <p class="area-tagline">Don't see your area? We cover all of Kolkata.</p>
+      <p class="area-features" style="margin-top:0.5rem;">Tell us where your event is — we'll match you with the closest verified kitchen. <strong>WhatsApp us in 30 seconds.</strong></p>
+      <span class="area-cta" style="background:var(--brown);">Tell us your area →</span>
     </a>
 
   </div>
