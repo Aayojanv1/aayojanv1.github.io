@@ -136,7 +136,7 @@
   function reasons(k, b) {
     var r = [];
     if (k.events.indexOf(b.eventType) >= 0) r.push("Does " + b.eventType.toLowerCase() + "s");
-    if (b.area && (k.areas.indexOf(b.area) >= 0 || CATCHMENT.indexOf(b.area) >= 0)) r.push("Covers " + b.area);
+    if (b.area) r.push("Covers " + b.area);
     var g = b.guestsNum || 50;
     if (g >= k.gMin && g <= k.gMax) r.push(g + "-guest capacity");
     if (b.budgetMid && b.budgetMid >= k.pMin - 80 && b.budgetMid <= k.pMax + 80) r.push("Within budget");
@@ -333,14 +333,16 @@
     if (engaged && !convClicked && !recoveryShown) { recoveryShown = true; showExitCatcher(); return true; }
     return false;
   }
-  // mobile/desktop BACK button: we push a history state on open; the first Back
-  // press fires popstate -> show the catcher (and re-trap) instead of leaving.
+  // mobile/desktop BACK button: only show exit catcher if user has already seen results.
+  // During Q&A, just close — don't intercept (chips/navigation fire spurious popstate on Android).
   window.addEventListener("popstate", function () {
     if (!ov.classList.contains("on")) return;
-    if (engaged && !convClicked && !recoveryShown) {
-      try { window.history.pushState({ aip: 1 }, ""); } catch (e) {}   // stay put until they act
+    if (resultsShown && engaged && !convClicked && !recoveryShown) {
+      try { window.history.pushState({ aip: 1 }, ""); } catch (e) {}
       recoveryShown = true; showExitCatcher();
-    } else { close(); }
+    } else {
+      close();
+    }
   });
   // idle on results: if engaged + parked without converting, surface the catcher
   function resetIdle() {
