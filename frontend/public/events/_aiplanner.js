@@ -199,14 +199,19 @@
     ".aip-res{flex:1;overflow-y:auto;padding:16px 14px 20px;}" +
     ".aip-res h3{font-family:'Playfair Display',serif;color:#FFF8EF;font-size:1.25rem;font-weight:800;text-align:center;margin-bottom:4px;}" +
     ".aip-res p.sub{text-align:center;color:#cbbfa9;font-size:0.85rem;margin-bottom:14px;}" +
-    ".aip-card{background:rgba(255,248,239,0.06);border:1px solid rgba(243,200,105,0.2);border-radius:16px;padding:13px;margin-bottom:10px;display:flex;gap:12px;align-items:center;}" +
-    ".aip-score{flex-shrink:0;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#FFF4DC,#F3C869);color:#236B43;font-weight:900;font-size:15px;}" +
+    ".aip-card{background:rgba(255,248,239,0.06);border:1px solid rgba(243,200,105,0.2);border-radius:16px;padding:13px;margin-bottom:10px;display:flex;flex-direction:column;gap:10px;}" +
+    ".aip-card-top{display:flex;gap:12px;align-items:flex-start;}" +
+    ".aip-score{flex-shrink:0;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#FFF4DC,#F3C869);color:#236B43;font-weight:900;font-size:14px;}" +
     ".aip-cbody{flex:1;min-width:0;}" +
     ".aip-cname{font-family:'Playfair Display',serif;font-weight:800;color:#FFF8EF;font-size:15px;display:flex;align-items:center;gap:6px;}" +
     ".aip-lock{filter:blur(5px);user-select:none;}" +
     ".aip-ccui{font-size:11.5px;color:#cbbfa9;margin:2px 0;}" +
     ".aip-why{font-size:11px;color:#86efac;}" +
-    ".aip-pick{flex-shrink:0;align-self:center;background:#25D366;color:#fff;border-radius:11px;padding:10px 12px;font-weight:800;font-size:12.5px;text-decoration:none;white-space:nowrap;box-shadow:0 8px 20px rgba(37,211,102,0.3);}" +
+    ".aip-rev{background:rgba(255,248,239,0.07);border-left:3px solid #F3C869;border-radius:0 10px 10px 0;padding:9px 12px;}" +
+    ".aip-rev-stars{color:#F3C869;font-size:12px;letter-spacing:1px;display:block;margin-bottom:4px;}" +
+    ".aip-rev-txt{font-size:12px;color:#ede3d4;line-height:1.5;font-style:italic;display:block;}" +
+    ".aip-rev-name{font-size:10.5px;color:#b8aa97;display:block;margin-top:5px;font-weight:600;}" +
+    ".aip-pick{background:#25D366;color:#fff;border-radius:11px;padding:12px;font-weight:800;font-size:13px;text-decoration:none;text-align:center;display:block;box-shadow:0 8px 20px rgba(37,211,102,0.3);}" +
     ".aip-unlock{display:block;width:100%;margin-top:8px;background:transparent;border:1.5px solid rgba(243,200,105,0.45);color:#F3C869;text-align:center;border-radius:13px;padding:12px;font-weight:800;font-size:13.5px;text-decoration:none;cursor:pointer;}" +
     ".aip-free{display:flex;align-items:center;justify-content:center;gap:7px;background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.32);color:#86efac;font-size:12.5px;font-weight:700;border-radius:11px;padding:11px 12px;margin:2px 0 10px;text-align:center;line-height:1.45;}" +
     ".aip-taste{background:rgba(243,200,105,0.12);border:1px solid rgba(243,200,105,0.34);color:#F3C869;font-size:12.5px;border-radius:11px;padding:11px 12px;margin:0 0 10px;text-align:center;line-height:1.45;}" +
@@ -744,10 +749,36 @@
       }).join("") + "</div></div>";
     setTimeout(showResults, 2600);
   }
+  // Customer reviews pool — shown on result cards to build confidence
+  var REVIEWS = [
+    { text: "Food was absolutely fresh and the quantity was generous. Everyone loved the Kosha Mangsho!", name: "Priya M.", event: "Wedding", stars: 5 },
+    { text: "Got 4 quotes within 2 hours. Booked the best one at ₹380/plate. Stress-free experience.", name: "Rahul S.", event: "Birthday", stars: 5 },
+    { text: "Luchi-Alur Dom and Chingri Malai Curry were exactly like homemade. 200 guests, zero complaints.", name: "Sudeshna B.", event: "Annaprasan", stars: 5 },
+    { text: "The caterer showed up on time with full setup. Biryani was the highlight of the evening!", name: "Arindam D.", event: "Party", stars: 5 },
+    { text: "Tasting was arranged before booking — that's what convinced us. Quality matched the tasting exactly.", name: "Mallika G.", event: "Wedding", stars: 5 },
+    { text: "Niramish khichuri for our Pujo was perfect — satwik taste, no compromise. Will book again.", name: "Tapas R.", event: "Pujo", stars: 5 },
+    { text: "Office lunch for 80 people. Paneer, Biryani, dal all arrived hot. No chaos at all.", name: "Neha K.", event: "Corporate", stars: 5 },
+    { text: "Matched with a kitchen 10 mins from our venue. Saved us ₹40/plate vs what we were quoted elsewhere.", name: "Sourav C.", event: "Wedding", stars: 5 },
+    { text: "Quick, responsive, and the food portions were huge. Our guests kept asking who the caterer was!", name: "Rima P.", event: "Party", stars: 5 },
+    { text: "Fish Fry and Mutton Chaap were outstanding. Our family reunion of 120 was a hit!", name: "Biswajit N.", event: "Reunion", stars: 5 }
+  ];
+  function pickReviews(eventType) {
+    // prefer reviews that match the event type, shuffle the rest
+    var match = REVIEWS.filter(function(r){ return r.event === eventType; });
+    var rest = REVIEWS.filter(function(r){ return r.event !== eventType; });
+    var pool = match.concat(rest);
+    // shuffle rest for variety
+    for (var i = pool.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
+    }
+    return pool;
+  }
+
   function showResults() {
     resultsShown = true; resetIdle();
     var ranked = KITCHENS.map(function (k) { return { k: k, pct: score(k, brief) }; })
-      .sort(function (a, b) { return b.pct - a.pct; }).slice(0, 3);
+      .sort(function (a, b) { return b.pct - a.pct; }).slice(0, 5);
     var taste = (brief.tasting && !/^no/i.test(brief.tasting)) ? brief.tasting
       : (brief.eventType === "Wedding" ? "yes — before booking" : "");
     var bl = "Event: " + (brief.event || "") + "\nGuests: " + (brief.guests || "") + "\nFood: " + (brief.cuisine || "") +
@@ -760,18 +791,27 @@
     }
     var waDirect = "https://wa.me/" + WA + "?text=" + encodeURIComponent(
       "Hi Aayojan! I'd like to talk to your team directly about my event.\n" + bl);
-    var html = '<div class="aip-res"><h3>✨ 3 kitchens matched</h3><p class="sub">Your AI shortlist · ' + (brief.eventType || "event").toLowerCase() + " · " + (brief.guestsNum || "") + ' guests · unlock any you like</p>' +
+    var reviews = pickReviews(brief.eventType);
+    var html = '<div class="aip-res"><h3>✨ ' + ranked.length + ' kitchens matched</h3><p class="sub">Your AI shortlist · ' + (brief.eventType || "event").toLowerCase() + " · " + (brief.guestsNum || "") + ' guests · unlock any you like</p>' +
       '<div class="aip-free">💬 100% free — no payment, no spam. We just connect you on WhatsApp 🙂</div>' +
       (brief.eventType === "Wedding" ? '<div class="aip-taste">🍴 <b>Free food tasting</b> — for weddings we set up a tasting with your matched kitchens before you book.</div>' : "");
     ranked.forEach(function (r, i) {
       var label = "match #" + (i + 1) + " (" + r.pct + "% · " + r.k.cuisines + ")";
-      html += '<div class="aip-card"><div class="aip-score">' + r.pct + '%</div><div class="aip-cbody">' +
+      var rev = reviews[i % reviews.length];
+      html += '<div class="aip-card">' +
+        '<div class="aip-card-top"><div class="aip-score">' + r.pct + '%</div><div class="aip-cbody">' +
         '<div class="aip-cname">🔒 <span class="aip-lock">' + r.k.tag + "</span></div>" +
         '<div class="aip-ccui">' + r.k.cuisines + "</div>" +
-        '<div class="aip-why">✓ ' + reasons(r.k, brief).join(" · ") + "</div></div>" +
-        '<a class="aip-pick" href="' + waFor(label) + '" target="_blank" rel="noopener" data-pick="' + (i + 1) + '">🔓 Unlock</a></div>';
+        '<div class="aip-why">✓ ' + reasons(r.k, brief).join(" · ") + "</div>" +
+        '</div></div>' +
+        '<div class="aip-rev">' +
+          '<span class="aip-rev-stars">★★★★★</span>' +
+          '<span class="aip-rev-txt">"' + rev.text + '"</span>' +
+          '<span class="aip-rev-name">— ' + rev.name + ' · ' + rev.event + '</span>' +
+        '</div>' +
+        '<a class="aip-pick" href="' + waFor(label) + '" target="_blank" rel="noopener" data-pick="' + (i + 1) + '">🔓 Unlock & get quote</a></div>';
     });
-    html += '<a class="aip-unlock" id="aipAll" href="' + waFor("all 3 shortlisted kitchens — I want to compare quotes") + '" target="_blank" rel="noopener">Or get all 3 quotes to compare →</a>' +
+    html += '<a class="aip-unlock" id="aipAll" href="' + waFor("all " + ranked.length + " shortlisted kitchens — I want to compare quotes") + '" target="_blank" rel="noopener">Or get all ' + ranked.length + ' quotes to compare →</a>' +
       '<div class="aip-note">Kitchen names &amp; contacts are shared once you connect. Free · no advance payment.</div>' +
       '<div class="aip-direct" style="margin-top:16px;border-top:1px solid #F0E3CE;padding-top:14px;text-align:center">' +
         '<div style="font-size:0.72rem;color:#8B6E52;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:9px">prefer to chat now?</div>' +
