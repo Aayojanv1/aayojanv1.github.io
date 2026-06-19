@@ -253,7 +253,10 @@
     /* Menu Creation window */
     ".aip-menu{display:flex;flex-direction:column;height:100%;overflow:hidden;}" +
     ".aipm-head{padding:14px 16px 8px;flex-shrink:0;}" +
-    ".aipm-head h3{font-family:'Playfair Display',serif;color:#FFF8EF;font-size:1.25rem;font-weight:800;margin:0;}" +
+    ".aipm-head h3{font-family:'Playfair Display',serif;color:#FFF8EF;font-size:1.25rem;font-weight:800;margin:0 0 10px;}" +
+    ".aipm-type-wrap{margin-bottom:10px;}" +
+    ".aipm-type-lbl{display:block;font-size:11px;font-weight:700;color:rgba(255,248,239,0.5);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;}" +
+    ".aipm-type-sel{width:100%;background:#1E1409;border:1.5px solid rgba(243,200,105,0.45);color:#F3C869;border-radius:10px;padding:10px 12px;font-size:14px;font-weight:700;font-family:inherit;appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23F3C869' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 12px center;}" +
     ".aipm-head p{color:rgba(255,248,239,0.62);font-size:12.5px;margin:3px 0 0;line-height:1.4;}" +
     ".aipm-cats{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:4px 14px 14px;}" +
     ".aipm-cat{margin-bottom:15px;}" +
@@ -669,47 +672,120 @@
     var bm = String(brief.budget || "").match(/\d+/g);
     brief.budgetMid = bm ? (bm.length > 1 ? (parseInt(bm[0]) + parseInt(bm[1])) / 2 : parseInt(bm[0])) : 0;
   }
-  // --- Menu Creation window (customer engagement) ---------------------------
-  // Comprehensive catalog (curated for mobile), [name, isVeg]. Veg/Jain diets
-  // see only veg items; non-veg/both see all. Every section has "add your own".
-  var MENU_CATALOG = [
-    { c: "🥤 Welcome Drinks", items: [["Mocktails (live)", 1], ["Aam Panna", 1], ["Lassi", 1], ["Fresh Lime Soda", 1], ["Tomato Soup", 1], ["Sweet Corn Soup", 1]] },
-    { c: "🍢 Starters", items: [["Paneer Tikka", 1], ["Chilli Baby Corn", 1], ["Veg Pakora", 1], ["Cheese Balls", 1], ["Fish Fry", 0], ["Fish Tikka", 0], ["Chicken Tikka", 0], ["Reshmi Kebab", 0], ["Mutton Seekh Kebab", 0], ["Tandoori Prawn", 0]] },
-    { c: "🍛 Bengali Mains", items: [["Chhanar Dalna", 1], ["Dhokar Dalna", 1], ["Sukto", 1], ["Echor Kalia", 1], ["Kosha Mangsho", 0], ["Chingri Malai Curry", 0], ["Ilish Bhapa", 0], ["Bhetki Paturi", 0], ["Murgi Kosha", 0], ["Daab Chingri", 0]] },
-    { c: "🧀 Indian Mains", items: [["Paneer Butter Masala", 1], ["Malai Kofta", 1], ["Navratan Korma", 1], ["Palak Paneer", 1], ["Murgh Butter Masala", 0], ["Murgh Rezala", 0], ["Mutton Rogan Josh", 0], ["Mutton Chaap", 0]] },
-    { c: "🍚 Rice & Biryani", items: [["Basanti Pulao", 1], ["Veg Fried Rice", 1], ["Dry-fruit Pulao", 1], ["Mutton Biryani", 0], ["Chicken Biryani", 0], ["Chicken Fried Rice", 0]] },
-    { c: "🫓 Breads", items: [["Luchi", 1], ["Radhaballavi", 1], ["Lachha Paratha", 1], ["Butter Naan", 1], ["Bhatura", 1]] },
-    { c: "🥣 Dal", items: [["Cholar Dal", 1], ["Dal Makhani", 1], ["Yellow Dal Fry", 1], ["Kali Dal", 1]] },
-    { c: "🍮 Desserts", items: [["Rasgolla", 1], ["Mishti Doi", 1], ["Gulab Jamun", 1], ["Rajbhog", 1], ["Kulfi", 1], ["Rabri", 1], ["Ice Cream", 1]] }
+  // --- Menu type catalogs — shown based on user's selected menu format --------
+  var MENU_TYPES = [
+    { key: "dinner", label: "🍽️ Dinner Buffet" },
+    { key: "lunch",  label: "🥗 Lunch Menu" },
+    { key: "breakfast", label: "☕ Breakfast" },
+    { key: "starters", label: "🍢 Starters & Drinks" },
+    { key: "bhog",   label: "🪷 Bhog / Prasad" }
   ];
+  var MENU_CATALOGS = {
+    dinner: [
+      { c: "🥤 Welcome Drinks", items: [["Mocktails (live)", 1], ["Aam Panna", 1], ["Lassi", 1], ["Fresh Lime Soda", 1], ["Tomato Soup", 1], ["Sweet Corn Soup", 1]] },
+      { c: "🍢 Starters", items: [["Paneer Tikka", 1], ["Chilli Baby Corn", 1], ["Veg Pakora", 1], ["Cheese Balls", 1], ["Fish Fry", 0], ["Fish Tikka", 0], ["Chicken Tikka", 0], ["Reshmi Kebab", 0], ["Mutton Seekh Kebab", 0], ["Tandoori Prawn", 0]] },
+      { c: "🍛 Bengali Mains", items: [["Chhanar Dalna", 1], ["Dhokar Dalna", 1], ["Sukto", 1], ["Echor Kalia", 1], ["Kosha Mangsho", 0], ["Chingri Malai Curry", 0], ["Ilish Bhapa", 0], ["Bhetki Paturi", 0], ["Murgi Kosha", 0], ["Daab Chingri", 0]] },
+      { c: "🧀 Indian Mains", items: [["Paneer Butter Masala", 1], ["Malai Kofta", 1], ["Navratan Korma", 1], ["Palak Paneer", 1], ["Murgh Butter Masala", 0], ["Murgh Rezala", 0], ["Mutton Rogan Josh", 0], ["Mutton Chaap", 0]] },
+      { c: "🍚 Rice & Biryani", items: [["Basanti Pulao", 1], ["Veg Fried Rice", 1], ["Dry-fruit Pulao", 1], ["Mutton Biryani", 0], ["Chicken Biryani", 0], ["Chicken Fried Rice", 0]] },
+      { c: "🫓 Breads", items: [["Luchi", 1], ["Radhaballavi", 1], ["Lachha Paratha", 1], ["Butter Naan", 1], ["Bhatura", 1]] },
+      { c: "🥣 Dal", items: [["Cholar Dal", 1], ["Dal Makhani", 1], ["Yellow Dal Fry", 1], ["Kali Dal", 1]] },
+      { c: "🍮 Desserts", items: [["Rasgolla", 1], ["Mishti Doi", 1], ["Gulab Jamun", 1], ["Rajbhog", 1], ["Kulfi", 1], ["Rabri", 1], ["Ice Cream", 1]] }
+    ],
+    lunch: [
+      { c: "🥤 Beverages", items: [["Aam Panna", 1], ["Lassi", 1], ["Fresh Lime Soda", 1], ["Buttermilk", 1]] },
+      { c: "🍢 Light Starters", items: [["Veg Pakora", 1], ["Chilli Baby Corn", 1], ["Samosa", 1], ["Fish Fry", 0], ["Chicken Cutlet", 0]] },
+      { c: "🍛 Mains", items: [["Chhanar Dalna", 1], ["Aloo Posto", 1], ["Paneer Butter Masala", 1], ["Palak Paneer", 1], ["Murgi Kosha", 0], ["Macher Jhol", 0], ["Mutton Curry", 0]] },
+      { c: "🍚 Rice", items: [["Steamed Rice", 1], ["Basanti Pulao", 1], ["Veg Fried Rice", 1], ["Chicken Fried Rice", 0]] },
+      { c: "🫓 Breads", items: [["Luchi", 1], ["Lachha Paratha", 1], ["Butter Naan", 1]] },
+      { c: "🥣 Dal & Salad", items: [["Cholar Dal", 1], ["Yellow Dal Fry", 1], ["Green Salad", 1], ["Raita", 1]] },
+      { c: "🍮 Desserts", items: [["Rasgolla", 1], ["Mishti Doi", 1], ["Gulab Jamun", 1], ["Ice Cream", 1]] }
+    ],
+    breakfast: [
+      { c: "🥤 Hot Beverages", items: [["Chai", 1], ["Coffee", 1], ["Hot Chocolate", 1]] },
+      { c: "🥤 Cold Beverages", items: [["Fresh Juice", 1], ["Lassi", 1], ["Aam Panna", 1]] },
+      { c: "🫓 Bengali Breakfast", items: [["Luchi-Alur Torkari", 1], ["Radhaballavi-Cholar Dal", 1], ["Kochuri-Sabzi", 1], ["Poori-Sabzi", 1]] },
+      { c: "🍳 South Indian", items: [["Idli-Sambar", 1], ["Dosa-Chutney", 1], ["Upma", 1], ["Vada-Sambar", 1]] },
+      { c: "🥐 Continental", items: [["Bread Toast & Butter", 1], ["Fruit Salad", 1], ["Corn Flakes & Milk", 1], ["Omelette", 0], ["Boiled Egg", 0]] },
+      { c: "🍮 Sweets", items: [["Mishti Doi", 1], ["Sandesh", 1], ["Rasgolla", 1]] }
+    ],
+    starters: [
+      { c: "🥤 Welcome Drinks", items: [["Mocktails (live)", 1], ["Aam Panna", 1], ["Fresh Lime Soda", 1], ["Tomato Soup", 1], ["Sweet Corn Soup", 1], ["Virgin Mary", 1]] },
+      { c: "🍢 Veg Starters", items: [["Paneer Tikka", 1], ["Chilli Baby Corn", 1], ["Veg Pakora", 1], ["Cheese Balls", 1], ["Stuffed Mushroom", 1], ["Hara Bhara Kabab", 1]] },
+      { c: "🍗 Non-Veg Starters", items: [["Chicken Tikka", 0], ["Reshmi Kebab", 0], ["Fish Tikka", 0], ["Mutton Seekh Kebab", 0], ["Tandoori Prawn", 0], ["Chicken Wings", 0]] },
+      { c: "🍱 Finger Foods", items: [["Mini Samosa", 1], ["Pav Bhaji", 1], ["Mini Burger", 1], ["Spring Roll", 1], ["Chicken Roll", 0], ["Fish Finger", 0]] },
+      { c: "🍮 Sweets & Dessert", items: [["Rasgolla", 1], ["Gulab Jamun", 1], ["Kulfi", 1], ["Brownie", 1]] }
+    ],
+    bhog: [
+      { c: "🪷 Prasad / Bhog (all niramish)", items: [["Niramish Khichuri", 1], ["Labra", 1], ["Sukto", 1], ["Beguni", 1], ["Chhanar Dalna", 1], ["Dhokar Dalna", 1], ["Echor Kalia", 1]] },
+      { c: "🫓 Breads", items: [["Luchi", 1], ["Radhaballavi", 1], ["Suji-r Halwa Luchi", 1]] },
+      { c: "🥣 Dal", items: [["Cholar Dal", 1], ["Moong Dal", 1], ["Musur Dal", 1]] },
+      { c: "🍚 Rice", items: [["Khichuri", 1], ["Basanti Pulao", 1], ["Steamed Rice", 1]] },
+      { c: "🍮 Mishti / Desserts", items: [["Payesh", 1], ["Sandesh", 1], ["Rasgolla", 1], ["Mishti Doi", 1], ["Naru", 1]] },
+      { c: "🥤 Drinks", items: [["Aam Panna", 1], ["Sherbet", 1], ["Lassi", 1], ["Jaljeera", 1]] }
+    ]
+  };
+  // Default menu type based on event
+  function defaultMenuType(ev) {
+    if (/pujo|puja|durga|bhog|ratha/i.test(ev || "")) return "bhog";
+    if (/corporate|office/i.test(ev || "")) return "lunch";
+    return "dinner";
+  }
   var menuSel = {};
   function showMenuBuilder() {
     var d = dietOf(brief.cuisine || "");
     var vegOnly = (d === "veg" || d === "jain" || d === "satwik");
     var dietLbl = d === "satwik" ? " · satwik (niramish)" : d === "jain" ? " · Jain (niramish)" : vegOnly ? " · veg only" : "";
     menuSel = {};
+    var activeType = defaultMenuType(brief.event);
+    // If diet is satwik/jain, default to bhog (all niramish anyway)
+    if (vegOnly && activeType === "dinner") activeType = (d === "satwik" ? "bhog" : "dinner");
+
+    function renderCatalog() {
+      var catalog = MENU_CATALOGS[activeType] || MENU_CATALOGS.dinner;
+      var cats = document.getElementById("aipmCats"); if (!cats) return;
+      var html = "";
+      catalog.forEach(function (cat) {
+        var its = cat.items.filter(function (it) { return vegOnly ? it[1] === 1 : true; });
+        if (!its.length) return;
+        html += '<div class="aipm-cat"><div class="aipm-ct">' + cat.c + '</div><div class="aipm-chips">';
+        its.forEach(function (it) {
+          var dish = String(it[0]).replace(/"/g, "");
+          var on = menuSel[dish] ? " on" : "";
+          html += '<button type="button" class="aipm-chip' + on + '" data-dish="' + dish + '">' + it[0] + (it[1] ? "" : " 🍗") + "</button>";
+        });
+        html += '<span class="aipm-add"><input class="aipm-in" placeholder="✚ add your own…" aria-label="Add your own dish"><button type="button" class="aipm-addbtn">Add</button></span>';
+        html += "</div></div>";
+      });
+      cats.innerHTML = html;
+    }
+
+    var typeOpts = MENU_TYPES.map(function(t) {
+      return '<option value="' + t.key + '"' + (t.key === activeType ? " selected" : "") + ">" + t.label + "</option>";
+    }).join("");
+
     var html = '<div class="aip-menu">' +
       '<div class="aipm-head"><h3>Build your menu 🍽️</h3>' +
+      '<div class="aipm-type-wrap">' +
+        '<label class="aipm-type-lbl">Select menu format</label>' +
+        '<select class="aipm-type-sel" id="aipmTypeSel">' + typeOpts + '</select>' +
+      '</div>' +
       '<p>Tap dishes for your ' + (brief.event || "event").toLowerCase() + (brief.guests ? " · " + brief.guests + " guests" : "") + dietLbl + ". Not listed? Add your own.</p></div>" +
-      '<div class="aipm-cats">';
-    MENU_CATALOG.forEach(function (cat, ci) {
-      var its = cat.items.filter(function (it) { return vegOnly ? it[1] === 1 : true; });
-      if (!its.length) return;
-      html += '<div class="aipm-cat"><div class="aipm-ct">' + cat.c + '</div><div class="aipm-chips">';
-      its.forEach(function (it) {
-        var dish = String(it[0]).replace(/"/g, "");
-        html += '<button type="button" class="aipm-chip" data-dish="' + dish + '">' + it[0] + (it[1] ? "" : " 🍗") + "</button>";
-      });
-      html += '<span class="aipm-add"><input class="aipm-in" placeholder="✚ add your own…" aria-label="Add your own dish"><button type="button" class="aipm-addbtn">Add</button></span>';
-      html += "</div></div>";
-    });
-    html += "</div>" +
+      '<div class="aipm-cats" id="aipmCats"></div>' +
       '<div class="aipm-bar"><span class="aipm-count">Your spread: <b id="aipmCount">0</b></span>' +
       '<button type="button" class="aipm-go" id="aipmGo">Find my caterers →</button></div>' +
       '<button type="button" class="aipm-skip" id="aipmSkip">Skip — just match me →</button>' +
       "</div>";
     bodyWrap.innerHTML = html;
-    track("ai_planner_menu_shown", { event: brief.event || "", vegOnly: vegOnly });
+    renderCatalog();
+    track("ai_planner_menu_shown", { event: brief.event || "", vegOnly: vegOnly, menuType: activeType });
+
+    document.getElementById("aipmTypeSel").addEventListener("change", function() {
+      activeType = this.value;
+      brief.menuType = activeType;
+      renderCatalog();
+      track("ai_planner_menu_type", { type: activeType });
+    });
+
     function updateCount() { var el = document.getElementById("aipmCount"); if (el) el.textContent = Object.keys(menuSel).length; }
     bodyWrap.addEventListener("click", function (e) {
       var chip = e.target.closest && e.target.closest(".aipm-chip");
@@ -736,7 +812,10 @@
   function finishMenu(skipped) {
     var dishes = Object.keys(menuSel);
     brief.menu = dishes;
-    track("ai_planner_menu_done", { count: dishes.length, skipped: !!skipped });
+    // carry menu type label into brief for WhatsApp brief
+    var mt = MENU_TYPES.find(function(t){ return t.key === (brief.menuType||"dinner"); });
+    if (mt) brief.menuTypeLabel = mt.label;
+    track("ai_planner_menu_done", { count: dishes.length, skipped: !!skipped, menuType: brief.menuType || "dinner" });
     runEngine();
   }
 
@@ -784,7 +863,8 @@
     var bl = "Event: " + (brief.event || "") + "\nGuests: " + (brief.guests || "") + "\nFood: " + (brief.cuisine || "") +
       "\nDate: " + (brief.date || "") + "\nArea: " + (brief.area || "") + "\nBudget: " + (brief.budget || "") +
       (taste ? "\nTasting: " + taste : "") +
-      (brief.menu && brief.menu.length ? "\nMenu: " + brief.menu.join(", ") : "");
+      (brief.menuTypeLabel ? "\nMenu format: " + brief.menuTypeLabel : "") +
+      (brief.menu && brief.menu.length ? "\nDishes: " + brief.menu.join(", ") : "");
     function waFor(label) {
       return "https://wa.me/" + WA + "?text=" + encodeURIComponent(
         "Hi Aayojan! Aayojan AI matched me — please connect me with " + label + ".\n" + bl);
