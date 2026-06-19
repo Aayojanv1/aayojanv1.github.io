@@ -293,7 +293,7 @@
 
   var brief = {}, history = [], mode = "gemini", guidedIdx = 0, turnCount = 0;
   // exit-intent / abandonment recovery state
-  var engaged = false, convClicked = false, recoveryShown = false, resultsShown = false, idleTimer = null;
+  var engaged = false, leadDone = false, waClicked = false, recoveryShown = false, resultsShown = false, idleTimer = null;
   var MAX_TURNS = 15;
   var PROFANITY = /\b(fuck|f+u+c+k|shit|bullshit|bitch|asshole|a\$\$|bastard|cunt|dick|prick|pussy|slut|whore|wanker|bollocks|motherf|mf|bhenchod|madarchod|chutiya|chutiye|gandu|randi|lund|behenchod|bsdk|mc|bc)\b/i;
   function isProfane(t) { return PROFANITY.test(t || ""); }
@@ -322,7 +322,13 @@
   // converted. Before results (during Q&A / menu build) it must NEVER appear —
   // closing simply closes. This single gate prevents spurious pop-ups on mobile.
   var IS_TOUCH = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-  function canCatch() { return resultsShown && engaged && !convClicked && !recoveryShown && ov.classList.contains("on"); }
+  // EXPLICIT exit (X button / Back): show catcher unless a real lead was captured.
+  // Clicking WhatsApp does NOT count as a captured lead — they may not have sent —
+  // so if they bounce back and try to leave, we still recover them.
+  function canCatch() { return resultsShown && engaged && !leadDone && !recoveryShown && ov.classList.contains("on"); }
+  // PASSIVE triggers (idle timer / desktop mouseout): also suppress if they already
+  // opened WhatsApp, so we don't nag someone who is mid-conversation there.
+  function canCatchPassive() { return canCatch() && !waClicked; }
   function requestClose() {
     if (canCatch()) { recoveryShown = true; showExitCatcher(); return; }
     close();
@@ -331,13 +337,13 @@
   // Disabled on touch devices (mobile browsers fire spurious mouseout on scroll/tap).
   if (!IS_TOUCH) {
     document.addEventListener("mouseout", function (e) {
-      if (e.clientY <= 0 && !e.relatedTarget && canCatch()) {
+      if (e.clientY <= 0 && !e.relatedTarget && canCatchPassive()) {
         recoveryShown = true; showExitCatcher();
       }
     });
   }
   function maybeCatch() {
-    if (canCatch()) { recoveryShown = true; showExitCatcher(); return true; }
+    if (canCatchPassive()) { recoveryShown = true; showExitCatcher(); return true; }
     return false;
   }
   // BACK button: only intercept (show catcher) once results are visible.
@@ -354,7 +360,7 @@
   // idle on results: if parked on results without converting, surface the catcher
   function resetIdle() {
     clearTimeout(idleTimer);
-    if (!resultsShown || convClicked || recoveryShown) return;
+    if (!resultsShown || leadDone || waClicked || recoveryShown) return;
     idleTimer = setTimeout(function () {
       if (ov.classList.contains("on")) maybeCatch();
     }, 25000);
@@ -426,6 +432,7 @@
         track("ai_planner_subscribe", { source: "ai_planner_exit", event: brief.event || "" });
       }
       function done() {
+        leadDone = true; // real lead captured — suppress any further exit prompts
         form.style.display = "none"; err.style.display = "none";
         exitOv.querySelector(".aipx-skip").style.display = "none";
         exitOv.querySelector(".aipx-done").style.display = "block";
@@ -906,7 +913,7 @@
       var pk = e.target.closest && e.target.closest(".aip-pick");
       var al = e.target.closest && e.target.closest("#aipAll");
       var tk = e.target.closest && e.target.closest("#aipTalk");
-      if (pk || al || tk) convClicked = true; // converted — don't show exit catcher
+      if (pk || al || tk) waClicked = true; // WhatsApp opened (not a confirmed lead) — only suppress passive nags
       if (pk) track("ai_planner_whatsapp_click", { pick: pk.getAttribute("data-pick"), event: brief.eventType });
       else if (al) track("ai_planner_whatsapp_click", { pick: "all", event: brief.eventType });
       else if (tk) track("ai_planner_direct_talk", { event: brief.eventType });
@@ -940,7 +947,7 @@
   // --- open -----------------------------------------------------------------
   function open() {
     brief = {}; history = []; mode = "guided"; guidedIdx = 0; turnCount = 0;
-    engaged = false; convClicked = false; recoveryShown = false; resultsShown = false; clearTimeout(idleTimer);
+    engaged = false; leadDone = false; waClicked = false; recoveryShown = false; resultsShown = false; clearTimeout(idleTimer);
     briefGrid.innerHTML = ""; briefBox.style.display = "none";
     buildChatLayout();
     ov.classList.add("on"); document.body.style.overflow = "hidden"; fitVV();
