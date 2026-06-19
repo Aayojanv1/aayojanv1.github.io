@@ -101,9 +101,7 @@
     if (/party|get.?together|kitty|anniversary|house ?party|reunion|farewell|small order|order for/.test(s)) return "Party";
     return "Party";
   }
-  // --- service area: Newtown, Salt Lake, Rajarhat + adjoining -----------------
-  var CATCHMENT = ["Newtown", "Salt Lake", "Rajarhat", "Baguiati", "Kestopur", "VIP Road",
-    "Lake Town", "Chinar Park", "Teghoria", "Dum Dum", "Ultadanga", "Kaikhali", "Hatiara", "Sector V"];
+  // --- service area: all of Kolkata -----------------------------------------
   function normArea(a) {
     a = (a || "").toLowerCase();
     var map = [
@@ -112,12 +110,20 @@
       ["rajarhat|gopalpur", "Rajarhat"],
       ["bagui?h?ati", "Baguiati"], ["ke?shtopur|kestopur", "Kestopur"], ["vip ?(road|rd)", "VIP Road"],
       ["lake ?town", "Lake Town"], ["chinar", "Chinar Park"], ["teghor", "Teghoria"],
-      ["dum ?dum", "Dum Dum"], ["ultadanga", "Ultadanga"], ["kaikhali", "Kaikhali"], ["hatiara", "Hatiara"]
+      ["dum ?dum", "Dum Dum"], ["ultadanga", "Ultadanga"], ["kaikhali", "Kaikhali"], ["hatiara", "Hatiara"],
+      ["jadav?pur", "Jadavpur"], ["behala", "Behala"], ["tollygunge|tolly", "Tollygunge"],
+      ["ballygunge", "Ballygunge"], ["park ?street|parkstreet", "Park Street"],
+      ["south ?kolkata", "South Kolkata"], ["north ?kolkata", "North Kolkata"],
+      ["howrah", "Howrah"], ["barasat", "Barasat"], ["dum ?dum", "Dum Dum"],
+      ["garia", "Garia"], ["sonar?pur", "Sonarpur"], ["narendrapur", "Narendrapur"],
+      ["esplanade|bbd ?bagh", "BBD Bagh"], ["shyambazar|shyam ?bazar", "Shyambazar"],
+      ["bangur", "Bangur"], ["dunlop", "Dunlop"], ["baghbazar", "Baghbazar"],
+      ["kalighat", "Kalighat"], ["gariahat", "Gariahat"], ["dhakuria", "Dhakuria"]
     ];
     for (var i = 0; i < map.length; i++) { if (new RegExp(map[i][0]).test(a)) return map[i][1]; }
     return a ? a.charAt(0).toUpperCase() + a.slice(1) : "";
   }
-  function inCatchment(area) { return !area || CATCHMENT.indexOf(area) >= 0; }
+  function inCatchment(area) { return true; } // serve all Kolkata
   function score(k, b) {
     var s = (k.events.indexOf(b.eventType) >= 0) ? 30 : 8;
     var g = b.guestsNum || 50;
@@ -144,7 +150,7 @@
     { key: "guests", q: "Roughly how many guests?", chips: ["25", "50", "100", "200", "500"], ph: "guests" },
     { key: "cuisine", q: "Veg, non-veg, satwik or Jain — any must-haves?", chips: ["🥬 Veg", "🍗 Non-veg", "🍽️ Both", "🪷 Satwik", "🌱 Jain"], ph: "e.g. satwik, must have luchi" },
     { key: "date", q: "When's the event?", chips: ["This month", "Next month", "In 2–3 months"], ph: "date / timeframe" },
-    { key: "area", q: "Which area? (we cover Newtown, Salt Lake, Rajarhat & nearby)", chips: ["Newtown", "Salt Lake", "Rajarhat", "Baguiati", "VIP Road", "Other"], ph: "your area" },
+    { key: "area", q: "Which area of Kolkata?", chips: ["Newtown", "Salt Lake", "Rajarhat", "Jadavpur", "Behala", "Other area"], ph: "your area in Kolkata" },
     { key: "budget", q: "Budget per plate?", chips: ["₹300–500", "₹500–800", "₹800–1200"], ph: "₹ per plate" }
   ];
 
