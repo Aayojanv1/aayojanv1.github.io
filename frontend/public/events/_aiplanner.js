@@ -80,10 +80,10 @@
 
   // --- aliased verified kitchens (names withheld until the lead connects) ----
   var KITCHENS = [
-    { tag: "Multi-Cuisine Kitchen · Newtown", cuisines: "Bengali · Mughlai · Continental", pMin: 350, pMax: 1200, gMin: 10, gMax: 1000, events: ["Wedding", "Party", "Birthday", "Corporate", "Annaprasan", "Griha Pravesh", "Bhai Phota"], areas: ["Newtown", "Salt Lake", "Rajarhat"] },
-    { tag: "Bengali Home-Style · Salt Lake", cuisines: "Bengali · home-style · niramish", pMin: 300, pMax: 600, gMin: 10, gMax: 300, events: ["Party", "Annaprasan", "Bhai Phota", "Griha Pravesh", "Birthday"], areas: ["Salt Lake", "Newtown"] },
-    { tag: "Banquet Kitchen · Rajarhat", cuisines: "Multi-cuisine · up to 5000", pMin: 350, pMax: 1200, gMin: 50, gMax: 5000, events: ["Wedding", "Corporate", "Party", "Birthday"], areas: ["Rajarhat", "Newtown", "Salt Lake"] },
-    { tag: "Premium Bengali & Mughlai", cuisines: "Bengali · Mughlai · Chinese", pMin: 400, pMax: 1300, gMin: 15, gMax: 800, events: ["Wedding", "Party", "Annaprasan", "Birthday"], areas: ["Newtown", "Salt Lake"] },
+    { tag: "Multi-Cuisine Kitchen · Newtown", cuisines: "Bengali · Mughlai · Continental", pMin: 350, pMax: 1200, gMin: 10, gMax: 1000, events: ["Wedding", "Party", "Birthday", "Corporate", "Annaprasan", "Griha Pravesh", "Bhai Phota", "Pujo"], areas: ["Newtown", "Salt Lake", "Rajarhat"] },
+    { tag: "Bengali Home-Style · Salt Lake", cuisines: "Bengali · home-style · niramish · satwik bhog", pMin: 300, pMax: 600, gMin: 10, gMax: 300, events: ["Party", "Annaprasan", "Bhai Phota", "Griha Pravesh", "Birthday", "Pujo"], areas: ["Salt Lake", "Newtown"] },
+    { tag: "Banquet Kitchen · Rajarhat", cuisines: "Multi-cuisine · up to 5000", pMin: 350, pMax: 1200, gMin: 50, gMax: 5000, events: ["Wedding", "Corporate", "Party", "Birthday", "Pujo"], areas: ["Rajarhat", "Newtown", "Salt Lake"] },
+    { tag: "Premium Bengali & Mughlai", cuisines: "Bengali · Mughlai · Chinese", pMin: 400, pMax: 1300, gMin: 15, gMax: 800, events: ["Wedding", "Party", "Annaprasan", "Birthday", "Pujo"], areas: ["Newtown", "Salt Lake"] },
     { tag: "Continental & Chinese Kitchen", cuisines: "Continental · Chinese · multi", pMin: 350, pMax: 900, gMin: 10, gMax: 600, events: ["Party", "Birthday", "Corporate", "Wedding"], areas: ["Newtown", "Salt Lake", "Rajarhat"] },
     { tag: "Multi-Cuisine & Fusion Kitchen · Newtown", cuisines: "Bengali · Mughlai · North Indian · Indo-Chinese · Fusion", pMin: 250, pMax: 900, gMin: 30, gMax: 2000, events: ["Wedding", "Party", "Jamai", "Birthday", "Corporate", "Annaprasan"], areas: ["Newtown", "Salt Lake", "Rajarhat"] }
   ];
@@ -96,6 +96,7 @@
     if (/corporate|office|conference/.test(s)) return "Corporate";
     if (/griha|housewarm/.test(s)) return "Griha Pravesh";
     if (/bhai|phota/.test(s)) return "Bhai Phota";
+    if (/pujo|puja|durga|ratha|rath ?yatra|pandal|bhog|ashtami|navami|niramish feast/.test(s)) return "Pujo";
     if (/jamai|sasthi|shashti|son.?in.?law/.test(s)) return "Jamai";
     if (/party|get.?together|kitty|anniversary|house ?party|reunion|farewell|small order|order for/.test(s)) return "Party";
     return "Party";
@@ -139,9 +140,9 @@
 
   // --- guided fallback steps (used only if Gemini is unavailable) -----------
   var STEPS = [
-    { key: "event", q: "What are you planning?", chips: ["🎣 Jamai Sasthi", "💍 Wedding", "🎉 Party order", "🎂 Birthday", "🏢 Corporate"], ph: "your event" },
+    { key: "event", q: "What are you planning?", chips: ["🪷 Pujo catering", "💍 Wedding", "🎉 Party order", "🎂 Birthday", "🏢 Corporate"], ph: "your event" },
     { key: "guests", q: "Roughly how many guests?", chips: ["25", "50", "100", "200", "500"], ph: "guests" },
-    { key: "cuisine", q: "Veg, non-veg, or both — any must-haves?", chips: ["🥬 Veg", "🍗 Non-veg", "🍽️ Both", "🌱 Jain"], ph: "e.g. both, must have biryani" },
+    { key: "cuisine", q: "Veg, non-veg, satwik or Jain — any must-haves?", chips: ["🥬 Veg", "🍗 Non-veg", "🍽️ Both", "🪷 Satwik", "🌱 Jain"], ph: "e.g. satwik, must have luchi" },
     { key: "date", q: "When's the event?", chips: ["This month", "Next month", "In 2–3 months"], ph: "date / timeframe" },
     { key: "area", q: "Which area? (we cover Newtown, Salt Lake, Rajarhat & nearby)", chips: ["Newtown", "Salt Lake", "Rajarhat", "Baguiati", "VIP Road", "Other"], ph: "your area" },
     { key: "budget", q: "Budget per plate?", chips: ["₹300–500", "₹500–800", "₹800–1200"], ph: "₹ per plate" }
@@ -458,7 +459,7 @@
     inputArea.innerHTML = "";
     if (showChips) {
       var chips = document.createElement("div"); chips.className = "aip-chips";
-      ["🎣 Jamai Sasthi", "💍 Wedding", "🎉 Party order", "🎂 Birthday", "🏢 Corporate lunch"].forEach(function (c) {
+      ["🪷 Pujo catering", "💍 Wedding", "🎉 Party order", "🎂 Birthday", "🏢 Corporate lunch"].forEach(function (c) {
         var b = document.createElement("button"); b.className = "aip-chip"; b.textContent = c;
         b.addEventListener("click", function () { sendUser(c.replace(/^[^\w]+\s*/, "")); });
         chips.appendChild(b);
@@ -575,6 +576,12 @@
       veg: ["🍚 Basanti Pulao", "🧀 Chhanar Dalna", "🫓 Luchi", "🥬 Dhokar Dalna", "🥭 Aam-Mishti Doi"],
       jain: ["🍚 Basanti Pulao", "🧀 Chhanar Dalna", "🫓 Luchi", "🥬 Phulkopir Dalna", "🍮 Mishti Doi"]
     },
+    Pujo: {
+      satwik: ["🪷 Niramish Khichuri", "🍆 Beguni", "🥬 Labra", "🫓 Luchi-Suji", "🍚 Payesh"],
+      veg: ["🍚 Basanti Pulao", "🧀 Chhanar Dalna", "🥬 Labra", "🫓 Luchi", "🍮 Mishti Doi"],
+      jain: ["🪷 Niramish Khichuri", "🥬 Phulkopir Dalna", "🫓 Luchi", "🍆 Beguni", "🍮 Mishti Doi"],
+      nonveg: ["🍚 Bhuna Khichuri", "🐟 Macher Kalia", "🍖 Mutton Kosha", "🫓 Luchi", "🍮 Mishti Doi"]
+    },
     Annaprasan: {
       nonveg: ["🍚 Payesh", "🫓 Luchi", "🐟 Macher Jhol", "🍗 Chicken Kebab", "🍮 Rosogolla"],
       veg: ["🍚 Payesh", "🫓 Luchi", "🥬 Shukto", "🥔 Aloo Bhaja", "🍮 Rosogolla"],
@@ -599,18 +606,20 @@
   function dietOf(val) {
     var s = (val || "").toLowerCase();
     if (/jain/.test(s)) return "jain";
+    if (/satwik|satvik|sattvik|niramish|bhog/.test(s)) return "satwik"; // pure veg, no onion-garlic
     var saysNon = /non.?veg|nonveg/.test(s);
-    var saysVeg = /\b(pure ?veg|veg|vegetarian|niramish)\b/.test(s);
+    var saysVeg = /\b(pure ?veg|veg|vegetarian)\b/.test(s);
     if (saysVeg && !saysNon) return "veg";          // explicit veg wins over dish words
     if (saysNon) return "nonveg";
     if (/chicken|mutton|fish|egg|prawn|chingri|kebab|ilish|hilsa|\bmeat/.test(s)) return "nonveg";
-    if (/paneer|aloo|dal|sabzi|niramish/.test(s)) return "veg";
+    if (/paneer|aloo|dal|sabzi/.test(s)) return "veg";
     return "nonveg";
   }
   function dishesFor(val) {
     var ev = detectEvent(brief.event || "");
     var key = MENU[ev] ? ev : (ev === "Birthday" ? "Party" : "default");
-    return MENU[key][dietOf(val)];
+    var d = dietOf(val);
+    return MENU[key][d] || MENU[key].veg || MENU[key].nonveg; // satwik falls back to veg where not curated
   }
   function suggestDishes(val) {
     var items = dishesFor(val);
@@ -665,11 +674,12 @@
   var menuSel = {};
   function showMenuBuilder() {
     var d = dietOf(brief.cuisine || "");
-    var vegOnly = (d === "veg" || d === "jain");
+    var vegOnly = (d === "veg" || d === "jain" || d === "satwik");
+    var dietLbl = d === "satwik" ? " · satwik (niramish)" : d === "jain" ? " · Jain (niramish)" : vegOnly ? " · veg only" : "";
     menuSel = {};
     var html = '<div class="aip-menu">' +
       '<div class="aipm-head"><h3>Build your menu 🍽️</h3>' +
-      '<p>Tap dishes for your ' + (brief.event || "event").toLowerCase() + (brief.guests ? " · " + brief.guests + " guests" : "") + (vegOnly ? " · veg only" : "") + ". Not listed? Add your own.</p></div>" +
+      '<p>Tap dishes for your ' + (brief.event || "event").toLowerCase() + (brief.guests ? " · " + brief.guests + " guests" : "") + dietLbl + ". Not listed? Add your own.</p></div>" +
       '<div class="aipm-cats">';
     MENU_CATALOG.forEach(function (cat, ci) {
       var its = cat.items.filter(function (it) { return vegOnly ? it[1] === 1 : true; });
