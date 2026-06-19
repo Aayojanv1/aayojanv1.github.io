@@ -323,6 +323,17 @@ footer{background:#100C04;text-align:center;padding:2rem;color:#555;font-size:0.
 .pf-meta b{color:#FFE9B0;}
 .pf-cta{display:inline-block;margin-top:15px;background:#fff;color:#1C130A;font-weight:800;font-size:13.5px;padding:11px 20px;border-radius:99px;}
 .pf-deco{font-size:26px;}
+/* rotating offer banner — one slide at a time (Pujo → Party → Wedding) */
+.offer-rotator{position:relative;max-width:1040px;margin:0 auto;}
+.orot-slide{display:none;border-radius:20px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.16);text-decoration:none;}
+.orot-slide.active{display:flex;animation:ocfade .5s ease;}
+.orot-slide.op-puja{background:linear-gradient(135deg,#7A1320,#C0392B 52%,#F1A93B);}
+.orot-slide.op-party{background:linear-gradient(135deg,#241848,#6B2FA0 52%,#E8760A);}
+.orot-slide.op-wed{background:linear-gradient(135deg,#4A0E2A,#B8456A 58%,#F3A8C2);}
+.orot-dots{display:flex;justify-content:center;gap:8px;margin-top:14px;}
+.orot-dot{width:8px;height:8px;border-radius:99px;background:rgba(243,200,105,0.3);border:none;cursor:pointer;padding:0;transition:width .3s ease,background .2s;}
+.orot-dot.active{width:24px;background:#F3C869;}
+@media(max-width:680px){.orot-slide{flex-direction:column;}}
 @media(max-width:680px){.puja-feature{flex-direction:column;}.pf-img{flex:none;width:100%;height:190px;min-height:0;}.pf-body{padding:18px 18px 20px;}.pf-offer{font-size:2rem;}}
 .offer-card{position:relative;display:flex;flex-direction:column;border-radius:18px;padding:18px 18px 58px;min-height:182px;text-decoration:none;overflow:hidden;box-shadow:0 16px 42px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.14);}
 .oc-puja{background:linear-gradient(150deg,#7A1320,#C0392B 46%,#F1A93B);}
@@ -529,53 +540,58 @@ section.block{padding:4rem 5%;}
     <span style="font-family:'Playfair Display',serif;font-weight:800;color:#F3C869;font-size:1.1rem;">🎟️ Aayojan Offers</span>
     <div style="font-size:11.5px;color:rgba(255,248,239,0.55);margin-top:2px;">live deals by occasion — more roll in as they drop</div>
   </div>
-  <!-- DURGA PUJO — featured big banner with Pujo satwik veg thali photo -->
-  <a class="puja-feature" data-ai-planner href="#aiplan" aria-label="Durga Pujo catering — flat 10% off">
-    <div class="pf-img"><img src="/events/img/promo/pujo-bhog-thali.jpg" alt="Pujo satwik veg bhog thali — khichuri, beguni, papad, chutney, payesh, saag" loading="lazy"></div>
-    <div class="pf-body">
-      <span class="oc-deco pf-deco">🥁🪷</span>
-      <span class="pf-badge">🥁 Durga Pujo · Pujo Bhog · Ratha Yatra · ঢাকের তালে</span>
-      <div class="pf-offer">Flat <em>10% OFF</em> on Pujo catering</div>
-      <div class="pf-sub">Satwik veg bhog — niramish khichuri · labra · beguni · payesh — for pandals, housing &amp; community feasts.</div>
-      <div class="pf-meta">🥁 Dhaak-dhol · panjabi-saree · dhunuchi vibes · <b>book by 29 June</b></div>
-      <span class="pf-cta">🥁 Plan my Pujo catering →</span>
-    </div>
-  </a>
+  <!-- ROTATING OFFER BANNER — one slide at a time: Pujo → Party → Wedding -->
+  <div class="offer-rotator" id="offerRot">
 
-  <div class="offer-cols">
-
-    <!-- PARTY SECTION -->
-    <a class="offer-card oc-party" data-ai-planner href="#aiplan" aria-label="Plan your weekend party">
-      <div class="oc-slide active">
-        <span class="oc-badge">🎉 Weekend Party</span>
-        <div class="oc-offer">Flat 10% OFF <span>· from ₹250/plate</span></div>
-        <div class="oc-sub">Veg ₹250 · Non-veg ₹350 · Paneer Tikka, Fish Fry, Chicken Kosha, 2 sweets</div>
+    <a class="orot-slide op-puja active" data-ai-planner href="#aiplan" aria-label="Durga Pujo catering — flat 10% off">
+      <div class="pf-img"><img src="/events/img/promo/pujo-bhog-thali.jpg" alt="Pujo satwik veg bhog thali — khichuri, beguni, papad, chutney, payesh, saag" loading="lazy"></div>
+      <div class="pf-body">
+        <span class="oc-deco pf-deco">🥁🪷</span>
+        <span class="pf-badge">🥁 Durga Pujo · Pujo Bhog · Ratha Yatra · ঢাকের তালে</span>
+        <div class="pf-offer">Flat <em>10% OFF</em> on Pujo catering</div>
+        <div class="pf-sub">Satwik veg bhog — niramish khichuri · labra · beguni · payesh — for pandals, housing &amp; community feasts.</div>
+        <div class="pf-meta">🥁 Dhaak-dhol · panjabi-saree · dhunuchi vibes · <b>book by 29 June</b></div>
+        <span class="pf-cta">🥁 Plan my Pujo catering →</span>
       </div>
-      <span class="oc-cta">🎈 Plan my party →</span>
     </a>
 
-    <!-- WEDDING SECTION -->
-    <a class="offer-card oc-wed" data-ai-planner href="#aiplan" aria-label="Wedding 20% off">
-      <div class="oc-slide active">
-        <span class="oc-badge">💍 Weddings</span>
-        <div class="oc-offer">Up to <em>20% OFF</em></div>
-        <div class="oc-sub">5+ weddings availed this month · verified kitchens · free tasting before you book</div>
+    <a class="orot-slide op-party" data-ai-planner href="#aiplan" aria-label="Weekend party catering — flat 10% off">
+      <div class="pf-img"><img src="/events/img/hub/tandoori-kebab.jpg" alt="Party catering — tandoori kebabs" loading="lazy"></div>
+      <div class="pf-body">
+        <span class="pf-badge">🎉 Weekend Party · House Parties · Birthdays</span>
+        <div class="pf-offer">Flat <em>10% OFF</em> <span>· from ₹250/plate</span></div>
+        <div class="pf-sub">Veg ₹250 · Non-veg ₹350 — Paneer Tikka · Fish Fry · Chicken Kosha · Pulao · Dal · 2 sweets.</div>
+        <div class="pf-meta">🎈 Get-togethers · kitty parties · same-day slots available</div>
+        <span class="pf-cta">🎈 Plan my party →</span>
       </div>
-      <span class="oc-cta">💍 Plan my wedding →</span>
+    </a>
+
+    <a class="orot-slide op-wed" data-ai-planner href="#aiplan" aria-label="Wedding catering — up to 20% off">
+      <div class="pf-img"><img src="/events/img/hub/continental.jpg" alt="Wedding catering — grand biryani & feast spread" loading="lazy"></div>
+      <div class="pf-body">
+        <span class="pf-badge">💍 Weddings · Receptions</span>
+        <div class="pf-offer">Up to <em>20% OFF</em> on wedding catering</div>
+        <div class="pf-sub">Grand multi-cuisine spreads · verified kitchens · free tasting before you book.</div>
+        <div class="pf-meta">💍 5+ weddings availed this month</div>
+        <span class="pf-cta">💍 Plan my wedding →</span>
+      </div>
     </a>
 
   </div>
-  <div style="text-align:center;margin-top:16px;">
+  <div class="orot-dots" id="orotDots" aria-label="Offer navigation"></div>
+  <div style="text-align:center;margin-top:14px;">
     <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quick%20quote%20for%20my%20event." style="display:inline-block;color:#F3C869;font-weight:800;font-size:0.92rem;text-decoration:none;border-bottom:1px solid rgba(243,200,105,0.45);padding-bottom:2px;">⚡ In a hurry? Get a quick quote in 30 sec →</a>
   </div>
 </section>
 <script>
 (function(){
-  // each section rolls its own deals (sections with 2+ offers auto-rotate)
-  document.querySelectorAll('#offers .offer-card').forEach(function(card){
-    var s=card.querySelectorAll('.oc-slide'); if(s.length<2) return;
-    var i=0; setInterval(function(){ s[i].classList.remove('active'); i=(i+1)%s.length; s[i].classList.add('active'); }, 4000);
-  });
+  var rot=document.getElementById('offerRot'); if(!rot) return;
+  var slides=rot.querySelectorAll('.orot-slide'); var dotsWrap=document.getElementById('orotDots'); var idx=0,timer;
+  for(var i=0;i<slides.length;i++){(function(i){var d=document.createElement('button');d.className='orot-dot'+(i===0?' active':'');d.setAttribute('aria-label','Offer '+(i+1));d.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go(i);reset();});dotsWrap.appendChild(d);})(i);}
+  var dots=dotsWrap.querySelectorAll('.orot-dot');
+  function go(n){slides[idx].classList.remove('active');dots[idx].classList.remove('active');idx=(n+slides.length)%slides.length;slides[idx].classList.add('active');dots[idx].classList.add('active');}
+  function reset(){clearInterval(timer);timer=setInterval(function(){go(idx+1);},5000);}
+  reset();
 })();
 </script>
 
