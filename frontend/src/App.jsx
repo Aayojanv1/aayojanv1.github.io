@@ -1155,14 +1155,12 @@ export default function AayojanApp(){
       {view==="landing"&&(
         <div style={{...anim,overflowX:"hidden"}}>
 
-         {/* ── Jamai Sasthi Teaser ─────────────────────────────────────── */}
-         <a href="/events/" className="jamai-teaser-bar" style={{display:"block",padding:"9px 14px",textDecoration:"none"}}>
+         {/* ── Live Offers pointer → the single Offers section on /events ── */}
+         <a href="/events/#offers" className="jamai-teaser-bar" style={{display:"block",padding:"9px 14px",textDecoration:"none"}}>
            <div style={{maxWidth:1100,margin:"0 auto",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"center",gap:"6px 12px"}}>
-             <span style={{fontFamily:"'Playfair Display',serif",fontWeight:900,color:"#FFE9B0",fontSize:14}}>🎣 শুভ জামাই ষষ্ঠী · Jamai Sasthi</span>
-             <span style={{color:"#FFF8EF",fontWeight:700,fontSize:12.5}}>🔥 <strong style={{color:"#FFE9B0"}}>80% kitchens booked</strong></span>
-             <span style={{color:"#FFF8EF",fontWeight:700,fontSize:12.5}}>⏳ Order by <strong style={{color:"#FFE9B0"}}>19 June, evening</strong></span>
-             <span style={{color:"#FFF8EF",fontWeight:700,fontSize:12.5}}>Plates from <strong style={{color:"#FFE9B0"}}>₹299</strong></span>
-             <span style={{background:"#FFE9B0",color:"#7A1F2B",fontWeight:900,fontSize:12,padding:"5px 13px",borderRadius:99}}>Plan now →</span>
+             <span style={{fontFamily:"'Playfair Display',serif",fontWeight:900,color:"#FFE9B0",fontSize:14}}>🎟️ Live Offers</span>
+             <span style={{color:"#FFF8EF",fontWeight:700,fontSize:12.5}}>🥁 <strong style={{color:"#FFE9B0"}}>10% off</strong> Pujo catering · 💍 up to <strong style={{color:"#FFE9B0"}}>20% off</strong> weddings · 🎉 party deals</span>
+             <span style={{background:"#FFE9B0",color:"#7A1F2B",fontWeight:900,fontSize:12,padding:"5px 13px",borderRadius:99}}>See offers →</span>
            </div>
          </a>
 
@@ -1256,11 +1254,6 @@ export default function AayojanApp(){
                  Bengali-led kitchens — curated, not crowd-sourced. Tell us once, our AI matches you. all over Kolkata.
                </p>
 
-               {/* Jamai Sasthi seasonal promo — consistent with /events */}
-               <a href="/events/" style={{display:"block",maxWidth:440,margin:"0 0 22px",background:"linear-gradient(135deg,rgba(243,200,105,0.18),rgba(232,118,10,0.16))",border:"1.5px solid rgba(243,200,105,0.5)",borderRadius:14,padding:"12px 16px",textDecoration:"none",boxShadow:"0 10px 30px rgba(232,118,10,0.25)"}}>
-                 <div style={{fontFamily:"'Playfair Display',serif",fontWeight:800,color:"#FFE9B0",fontSize:15,marginBottom:3}}>🎣 শুভ জামাই ষষ্ঠী · Jamai Sasthi · 20–21 June</div>
-                 <div style={{fontSize:12.5,color:"rgba(255,248,239,0.88)",lineHeight:1.4}}>Treat your jamai to a lavish feast — two menus at <strong style={{color:"#FFE9B0"}}>₹500 & ₹700/plate</strong>. Serving Rajarhat, Newtown & Salt Lake · order before 18 June →</div>
-               </a>
 
                {/* CTA — route every order into the /events AI planner funnel */}
                <div style={{display:"flex",gap:10,flexWrap:"wrap",marginBottom:26}}>
@@ -1382,20 +1375,9 @@ export default function AayojanApp(){
                <p style={{fontFamily:"'Cormorant Garamond',serif",fontStyle:"italic",fontSize:"clamp(15px,2.2vw,20px)",color:"#513117",maxWidth:620,margin:"0 auto",lineHeight:1.5}}>The chefs, the kitchens, the city — together for all of Kolkata. Order now, get matched in minutes.</p>
              </div>
 
-             {/* Jamai Sasthi — BOTH posters (₹500 & ₹700), consistent with /events */}
-             <div style={{display:"flex",flexWrap:"wrap",gap:18,justifyContent:"center",marginBottom:14}}>
-               {[
-                 {img:"/events/img/promo/jamai-sasthi.jpg?v=3",price:"₹700",label:"Grand menu",alt:"শুভ জামাই ষষ্ঠী · Jamai Sasthi ₹700 grand menu — Fish Fry, Chingri Malai Curry, Mutton Kosha"},
-                 {img:"/events/img/promo/jamai-sasthi-500.jpg",price:"₹500",label:"Value menu",alt:"শুভ জামাই ষষ্ঠী · Jamai Sasthi ₹500 value menu — Chicken Pulao, Mutton Curry"},
-               ].map((p,i)=>(
-                 <a key={i} href="/events/?event=jamai" style={{display:"block",width:264,maxWidth:"45vw",textDecoration:"none"}}>
-                   <img src={p.img} alt={p.alt} loading="lazy" style={{width:"100%",borderRadius:14,boxShadow:"0 16px 40px rgba(76,43,10,0.3)",border:"2px solid rgba(243,200,105,0.5)",display:"block"}} />
-                   <div style={{textAlign:"center",marginTop:8,color:"#1C130A",fontWeight:800,fontSize:13.5}}>🎣 {p.label} · <span style={{color:"#C95F08"}}>{p.price}/plate</span></div>
-                 </a>
-               ))}
-             </div>
+             {/* Offers → the single rolling Offers section on /events */}
              <div style={{textAlign:"center",marginBottom:30}}>
-               <span style={{fontSize:13,color:"#7B634E"}}>🎣 Jamai Sasthi · 20–21 June · serving Rajarhat, Newtown &amp; Salt Lake · order before 18 June</span>
+               <a href="/events/#offers" style={{display:"inline-block",background:"linear-gradient(135deg,#E8760A,#C95F08)",color:"#fff",fontWeight:800,padding:"12px 26px",borderRadius:99,fontSize:14,textDecoration:"none",boxShadow:"0 12px 32px rgba(232,118,10,0.4)"}}>🎟️ See all live offers →</a>
              </div>
 
              {/* Weekend Party catering promo */}

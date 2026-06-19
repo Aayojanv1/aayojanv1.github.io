@@ -307,6 +307,25 @@ footer{background:#100C04;text-align:center;padding:2rem;color:#555;font-size:0.
 .jt-cta{background:#FFE9B0;color:#7A1F2B;font-weight:900;font-size:0.8rem;padding:5px 13px;border-radius:99px;}
 @media(prefers-reduced-motion:reduce){.jamai-teaser{animation:none;}}
 
+/* === OFFERS — three themed sections, each rolls its own deals === */
+.offer-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1040px;margin:0 auto;padding:0 5%;}
+@media(max-width:680px){.offer-cols{grid-template-columns:1fr;}}
+.offer-card{position:relative;display:flex;flex-direction:column;border-radius:18px;padding:18px 18px 58px;min-height:182px;text-decoration:none;overflow:hidden;box-shadow:0 16px 42px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.14);}
+.oc-puja{background:linear-gradient(150deg,#7A1320,#C0392B 46%,#F1A93B);}
+.oc-deco{position:absolute;top:10px;right:12px;font-size:22px;opacity:.6;letter-spacing:2px;animation:ocbob 2.2s ease-in-out infinite;pointer-events:none;}
+@keyframes ocbob{0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-5px) rotate(5deg);}}
+.oc-party{background:linear-gradient(150deg,#241848,#6B2FA0 55%,#E8760A);}
+.oc-wed{background:linear-gradient(150deg,#4A0E2A,#B8456A 60%,#F3A8C2);}
+.oc-badge{align-self:flex-start;background:rgba(0,0,0,0.32);border:1px solid rgba(255,255,255,0.4);color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:4px 11px;border-radius:99px;margin-bottom:11px;}
+.oc-offer{font-family:'Playfair Display',serif;font-weight:900;font-size:1.75rem;color:#fff;line-height:1.02;text-shadow:0 2px 12px rgba(0,0,0,0.35);}
+.oc-offer span{font-size:.46em;font-weight:700;opacity:0.85;}
+.oc-offer em{font-style:normal;color:#FFE9B0;}
+.oc-sub{font-size:12px;color:rgba(255,255,255,0.88);line-height:1.5;margin-top:7px;}
+.oc-slide{display:none;}
+.oc-slide.active{display:block;animation:ocfade .45s ease;}
+@keyframes ocfade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.oc-cta{position:absolute;left:18px;bottom:15px;background:#fff;color:#1C130A;font-weight:800;font-size:12.5px;padding:8px 15px;border-radius:99px;}
+
 /* === CUISINE QUICK-LINK STRIP === */
 .cuisine-strip{padding:1.6rem 5%;background:#FFFAEF;border-top:1px solid #EDD8BC;border-bottom:1px solid #EDD8BC;}
 .cs-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;justify-content:center;}
@@ -460,16 +479,6 @@ section.block{padding:4rem 5%;}
 
 <div class="crumbs"><a href="/">Home</a><span>›</span>Events</div>
 
-<!-- Jamai Sasthi teaser — seasonal urgency, opens the AI planner -->
-<a class="jamai-teaser" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi feast">
-  <div class="jt-inner">
-    <span class="jt-ttl">🎣 শুভ জামাই ষষ্ঠী · Jamai Sasthi</span>
-    <span class="jt-chip">🔥 <b>80% kitchens booked</b></span>
-    <span class="jt-chip">⏳ Order by <b>19 June, evening</b></span>
-    <span class="jt-chip">Plates from <b>₹299</b></span>
-    <span class="jt-cta">Plan now →</span>
-  </div>
-</a>
 
 <!-- Live status ticker (honest — no fake transactions) -->
 <div class="live-ticker">
@@ -500,28 +509,76 @@ section.block{padding:4rem 5%;}
   </div>
 </div>
 
-<!-- FLASH OFFERS — limited-time launch deals -->
-<div class="flash-offers" role="region" aria-label="Limited-time offers">
-  <div class="fo-inner">
-    <span class="fo-badge">⚡ Flash Sale</span>
-    <span class="fo-chip">🎉 <strong>5% OFF</strong> your first 3 bookings</span>
-    <span class="fo-chip">💍 <strong>UP TO 20% OFF</strong> weddings</span>
-    <span class="fo-note">⏳ Ends 29 June</span>
+<!-- OFFERS — three themed sections (Jamai · Party · Weddings); each rolls its own deals · lead magnet, shown first -->
+<section class="roll-promos" id="offers">
+  <div style="text-align:center;padding:0 5% 12px;">
+    <span style="font-family:'Playfair Display',serif;font-weight:800;color:#F3C869;font-size:1.1rem;">🎟️ Aayojan Offers</span>
+    <div style="font-size:11.5px;color:rgba(255,248,239,0.55);margin-top:2px;">live deals by occasion — more roll in as they drop</div>
   </div>
-</div>
+  <div class="offer-cols">
+
+    <!-- PUJA & FESTIVAL SECTION (rolls Durga Puja / Pujo Bhog / Ratha Yatra) -->
+    <a class="offer-card oc-puja" data-ai-planner href="#aiplan" aria-label="Puja & festival catering — flat 10% off">
+      <span class="oc-deco">🥁🪷</span>
+      <div class="oc-slide active">
+        <span class="oc-badge">🥁 Durga Pujo · ঢাকের তালে</span>
+        <div class="oc-offer">Flat <em>10% OFF</em></div>
+        <div class="oc-sub">🥁 Dhaak-dhol · panjabi-saree · dhunuchi &amp; grand pandal bhog · book by 29 June</div>
+      </div>
+      <div class="oc-slide">
+        <span class="oc-badge">🪷 Pujo Bhog Catering</span>
+        <div class="oc-offer">Flat <em>10% OFF</em></div>
+        <div class="oc-sub">Niramish khichuri · labra · beguni · payesh · chutney · book by 29 June</div>
+      </div>
+      <div class="oc-slide">
+        <span class="oc-badge">🚩 Ratha Yatra</span>
+        <div class="oc-offer">Flat <em>10% OFF</em></div>
+        <div class="oc-sub">Festive prasad, khichuri &amp; community bhog · book by 29 June</div>
+      </div>
+      <span class="oc-cta">🥁 Plan my pujo catering →</span>
+    </a>
+
+    <!-- PARTY SECTION -->
+    <a class="offer-card oc-party" data-ai-planner href="#aiplan" aria-label="Plan your weekend party">
+      <div class="oc-slide active">
+        <span class="oc-badge">🎉 Weekend Party</span>
+        <div class="oc-offer">Flat 10% OFF <span>· from ₹250/plate</span></div>
+        <div class="oc-sub">Veg ₹250 · Non-veg ₹350 · Paneer Tikka, Fish Fry, Chicken Kosha, 2 sweets</div>
+      </div>
+      <span class="oc-cta">🎈 Plan my party →</span>
+    </a>
+
+    <!-- WEDDING SECTION -->
+    <a class="offer-card oc-wed" data-ai-planner href="#aiplan" aria-label="Wedding 20% off">
+      <div class="oc-slide active">
+        <span class="oc-badge">💍 Weddings</span>
+        <div class="oc-offer">Up to <em>20% OFF</em></div>
+        <div class="oc-sub">5+ weddings availed this month · verified kitchens · free tasting before you book</div>
+      </div>
+      <span class="oc-cta">💍 Plan my wedding →</span>
+    </a>
+
+  </div>
+  <div style="text-align:center;margin-top:16px;">
+    <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quick%20quote%20for%20my%20event." style="display:inline-block;color:#F3C869;font-weight:800;font-size:0.92rem;text-decoration:none;border-bottom:1px solid rgba(243,200,105,0.45);padding-bottom:2px;">⚡ In a hurry? Get a quick quote in 30 sec →</a>
+  </div>
+</section>
+<script>
+(function(){
+  // each section rolls its own deals (sections with 2+ offers auto-rotate)
+  document.querySelectorAll('#offers .offer-card').forEach(function(card){
+    var s=card.querySelectorAll('.oc-slide'); if(s.length<2) return;
+    var i=0; setInterval(function(){ s[i].classList.remove('active'); i=(i+1)%s.length; s[i].classList.add('active'); }, 4000);
+  });
+})();
+</script>
 
 <section class="hero">
   <!-- Floating party emojis -->
   <div class="floaters" aria-hidden="true">
     <span class="fl">🎉</span><span class="fl">🍱</span><span class="fl">🎂</span><span class="fl">🍢</span><span class="fl">🥂</span><span class="fl">🐟</span><span class="fl">🍮</span><span class="fl">🎊</span>
   </div>
-  <a class="jamai-card" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi feast with Aayojan AI">
-    <span class="jc-tag">🎣 শুভ জামাই ষষ্ঠী · Jamai Sasthi · 20–21 June</span>
-    <span class="jc-offer">Treat your jamai to a lavish feast — two menus at <strong>₹500 &amp; ₹700/plate</strong>. Serving Rajarhat, Newtown &amp; Salt Lake · order before 18 June.</span>
-    <span class="jc-go">✨ Plan my Jamai Sasthi feast →</span>
-  </a>
   <h1 class="rotating-h1">
-    <span class="rh-line">This <em>Jamai Sasthi</em>?<br>Treat your jamai — feast from <em>₹500</em>.</span>
     <span class="rh-line">You bring the <em>people</em>.<br>We bring the <em>spread</em>.</span>
     <span class="rh-line">Tonight's <em>adda</em>?<br>WhatsApp us in <em>30 seconds</em>.</span>
     <span class="rh-line">Saturday <em>house party</em>?<br>Bengali kitchens, same day.</span>
@@ -546,66 +603,6 @@ section.block{padding:4rem 5%;}
   <span class="bb-dot" aria-hidden="true"></span>
   <span class="bb-txt"><strong>Booked this month:</strong> 6+ events in Newtown &amp; Salt Lake · <strong style="color:#B8456A">💍 5+ weddings availed 20% off</strong> — hurry to claim yours!</span>
 </div>
-
-<!-- ROLLING PROMOS — Jamai Sasthi / Weekend Party / Aayojan AI (auto-rotating, each separate) -->
-<section class="roll-promos">
-  <div class="rp-stage" id="rpStage">
-    <a class="rp-slide active rp-jamai" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi ₹700 grand menu">
-      <img class="rp-poster" src="/events/img/promo/jamai-sasthi.jpg?v=3" alt="শুভ জামাই ষষ্ঠী — Jamai Sasthi ₹700 grand menu · Fish Fry, Chingri Malai Curry, Mutton Kasha" loading="lazy" width="300" height="537">
-      <span class="rp-viewfull" role="link" tabindex="0" onclick="event.stopPropagation();event.preventDefault();window.open('/events/img/promo/jamai-sasthi.jpg?v=3','_blank');">🔍 Tap to view full ₹700 menu →</span>
-      <div class="rp-jbody">
-        <span class="rp-eyebrow gold">🎣 শুভ জামাই ষষ্ঠী · 20–21 June · Grand menu</span>
-        <h2 class="rp-h">Jamai Sasthi <em>Grand</em> feast — ₹700</h2>
-        <p class="rp-menu">Fish Fry · Basanti Pulao · Chingri Malai Curry · Mutton Kasha · Papad · Aamni</p>
-        <div class="rp-price">₹700<span>/plate · Rajarhat · Newtown · Salt Lake · order before 18 June</span></div>
-        <span class="rp-cta gold">✨ Plan my Jamai Sasthi feast →</span>
-      </div>
-    </a>
-    <a class="rp-slide rp-jamai" data-ai-planner href="#aiplan" aria-label="Plan your Jamai Sasthi ₹500 value menu">
-      <img class="rp-poster" src="/events/img/promo/jamai-sasthi-500.jpg" alt="শুভ জামাই ষষ্ঠী — Jamai Sasthi ₹500 value menu · Chicken Pulao, Mutton Curry, Pepsi" loading="lazy" width="300" height="538">
-      <span class="rp-viewfull" role="link" tabindex="0" onclick="event.stopPropagation();event.preventDefault();window.open('/events/img/promo/jamai-sasthi-500.jpg','_blank');">🔍 Tap to view full ₹500 menu →</span>
-      <div class="rp-jbody">
-        <span class="rp-eyebrow gold">🎣 শুভ জামাই ষষ্ঠী · 20–21 June · Value menu</span>
-        <h2 class="rp-h">Jamai Sasthi <em>Value</em> feast — ₹500</h2>
-        <p class="rp-menu">Chicken Pulao · Mutton Curry · Papad · Pepsi 200ml · Aamni</p>
-        <div class="rp-price">₹500<span>/plate · Rajarhat · Newtown · Salt Lake · order before 18 June</span></div>
-        <span class="rp-cta gold">✨ Plan my Jamai Sasthi feast →</span>
-      </div>
-    </a>
-    <a class="rp-slide" data-ai-planner href="#aiplan" aria-label="Plan your weekend party">
-      <span class="rp-eyebrow red">🎉 THIS WEEKEND · PARTY MODE: ON 🔥</span>
-      <h2 class="rp-h">Weekend party? <em>We bring the feast.</em></h2>
-      <p class="rp-menu"><b>Veg ₹250</b> — Paneer Tikka · Basanti Pulao · Paneer Butter Masala · Dhokar Dalna · Dal · Luchi · 2 sweets</p>
-      <p class="rp-menu"><b>Non-veg ₹350</b> — Fish Fry · Pulao · Chicken Kosha · Dal · Luchi · Salad · 2 sweets</p>
-      <span class="rp-cta red">🎈 Plan my weekend party →</span>
-    </a>
-    <a class="rp-slide" id="ai-planner-open" data-ai-planner href="#aiplan" aria-label="Plan with Aayojan AI">
-      <span class="rp-eyebrow gold">✨ Meet Aayojan AI · your event planner</span>
-      <h2 class="rp-h">Tell us once. <em>3 verified kitchens</em> in seconds.</h2>
-      <p class="rp-menu">No calling 10 caterers. Chat → get matched → connect on WhatsApp. Free · no advance payment.</p>
-      <span class="rp-cta gold">✨ Plan with Aayojan AI →</span>
-    </a>
-  </div>
-  <div class="rp-dots" id="rpDots" aria-label="Offer navigation"></div>
-  <div style="text-align:center;margin-top:14px;">
-    <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quick%20quote%20for%20my%20event." style="display:inline-block;color:#F3C869;font-weight:800;font-size:0.92rem;text-decoration:none;border-bottom:1px solid rgba(243,200,105,0.45);padding-bottom:2px;">⚡ In a hurry? Get a quick quote in 30 sec →</a>
-  </div>
-</section>
-<script>
-(function(){
-  var stage=document.getElementById('rpStage'); if(!stage) return;
-  var slides=stage.querySelectorAll('.rp-slide'); var dotsWrap=document.getElementById('rpDots'); var idx=0,timer;
-  for(var i=0;i<slides.length;i++){(function(i){var d=document.createElement('button');d.className='rp-dot'+(i===0?' active':'');d.setAttribute('aria-label','Offer '+(i+1));d.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();go(i);reset();});dotsWrap.appendChild(d);})(i);}
-  var dots=dotsWrap.querySelectorAll('.rp-dot');
-  function go(n){slides[idx].classList.remove('active');dots[idx].classList.remove('active');idx=(n+slides.length)%slides.length;slides[idx].classList.add('active');dots[idx].classList.add('active');}
-  function reset(){clearInterval(timer);timer=setInterval(function(){go(idx+1);},6000);}
-  var ev=(new URLSearchParams(location.search)).get('event')||'';
-  if(/party|birthday|corporate|get.?together|kitty/i.test(ev)){ go(2); }      // pin party slide (index 2 after 2 jamai slides)
-  else if(/jamai|sasthi/i.test(ev)){ reset(); }                                // jamai ad -> roll both ₹700 & ₹500 posters
-  else { reset(); }                                                            // no param -> auto-rotate
-  // keep rolling even on hover (big poster means the cursor is usually over it)
-})();
-</script>
 
 <!-- TESTIMONIALS — trust signal, placed high (real reviews of network kitchens, names gated) -->
 <section class="tmoni">
