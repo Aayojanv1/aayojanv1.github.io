@@ -318,33 +318,40 @@
       (brief.menu && brief.menu.length) ? "Menu: " + brief.menu.join(", ") : ""
     ].filter(Boolean).join("\n");
   }
+  // Exit catcher is ONLY allowed after the user has seen their matches and hasn't
+  // converted. Before results (during Q&A / menu build) it must NEVER appear —
+  // closing simply closes. This single gate prevents spurious pop-ups on mobile.
+  var IS_TOUCH = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  function canCatch() { return resultsShown && engaged && !convClicked && !recoveryShown && ov.classList.contains("on"); }
   function requestClose() {
-    if (engaged && !convClicked && !recoveryShown) { recoveryShown = true; showExitCatcher(); return; }
+    if (canCatch()) { recoveryShown = true; showExitCatcher(); return; }
     close();
   }
-  // desktop exit-intent: pointer leaves toward the top of the window
-  document.addEventListener("mouseout", function (e) {
-    if (!ov.classList.contains("on")) return;
-    if (e.clientY <= 0 && !e.relatedTarget && engaged && !convClicked && !recoveryShown) {
-      recoveryShown = true; showExitCatcher();
-    }
-  });
+  // desktop-only exit-intent: pointer leaves toward the top of the window.
+  // Disabled on touch devices (mobile browsers fire spurious mouseout on scroll/tap).
+  if (!IS_TOUCH) {
+    document.addEventListener("mouseout", function (e) {
+      if (e.clientY <= 0 && !e.relatedTarget && canCatch()) {
+        recoveryShown = true; showExitCatcher();
+      }
+    });
+  }
   function maybeCatch() {
-    if (engaged && !convClicked && !recoveryShown) { recoveryShown = true; showExitCatcher(); return true; }
+    if (canCatch()) { recoveryShown = true; showExitCatcher(); return true; }
     return false;
   }
-  // mobile/desktop BACK button: only show exit catcher if user has already seen results.
-  // During Q&A, just close — don't intercept (chips/navigation fire spurious popstate on Android).
+  // BACK button: only intercept (show catcher) once results are visible.
+  // During Q&A, Back just closes — chips/navigation fire spurious popstate on Android.
   window.addEventListener("popstate", function () {
     if (!ov.classList.contains("on")) return;
-    if (resultsShown && engaged && !convClicked && !recoveryShown) {
+    if (canCatch()) {
       try { window.history.pushState({ aip: 1 }, ""); } catch (e) {}
       recoveryShown = true; showExitCatcher();
     } else {
       close();
     }
   });
-  // idle on results: if engaged + parked without converting, surface the catcher
+  // idle on results: if parked on results without converting, surface the catcher
   function resetIdle() {
     clearTimeout(idleTimer);
     if (!resultsShown || convClicked || recoveryShown) return;
