@@ -824,16 +824,32 @@
 
   // --- open -----------------------------------------------------------------
   function open() {
-    brief = {}; history = []; mode = "gemini"; guidedIdx = 0; turnCount = 0;
+    brief = {}; history = []; mode = "guided"; guidedIdx = 0; turnCount = 0;
     engaged = false; convClicked = false; recoveryShown = false; resultsShown = false; clearTimeout(idleTimer);
     briefGrid.innerHTML = ""; briefBox.style.display = "none";
     buildChatLayout();
     ov.classList.add("on"); document.body.style.overflow = "hidden"; fitVV();
-    try { window.history.pushState({ aip: 1 }, ""); } catch (e) {} // trap Back to show exit catcher
+    try { window.history.pushState({ aip: 1 }, ""); } catch (e) {}
     track("ai_planner_opened", {});
     addMsg("Hi! I'm Aayojan AI 👋 Tell me about your event — what are you planning?", "bot");
     history.push({ role: "assistant", content: "Hi! I'm Aayojan AI. What are you planning?" });
-    renderFree(true);
+    // Render first step chips directly — one question at a time, no Gemini on opening turn
+    var st = STEPS[0];
+    var chips = document.createElement("div"); chips.className = "aip-chips";
+    st.chips.forEach(function (c) {
+      var b = document.createElement("button"); b.className = "aip-chip"; b.textContent = c;
+      b.addEventListener("click", function () { addMsg(c, "usr"); guidedAnswer(c.replace(/^[^\w₹🪷💍🎉🎂🏢]+\s*/, "")); });
+      chips.appendChild(b);
+    });
+    inputArea.appendChild(chips);
+    var form = document.createElement("form"); form.className = "aip-form";
+    form.innerHTML = '<input class="aip-in" placeholder="' + st.ph + '"><button class="aip-send" type="submit">→</button>';
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var v = form.querySelector(".aip-in").value.trim();
+      if (v) { addMsg(v, "usr"); guidedAnswer(v); }
+    });
+    inputArea.appendChild(form);
   }
   window.AayojanAI = { open: open };
 
