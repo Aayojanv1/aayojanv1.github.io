@@ -242,16 +242,16 @@
     ".aipx-skip{margin-top:12px;border:none;background:none;color:#a89878;font-size:0.82rem;text-decoration:underline;cursor:pointer;}" +
     ".aipx-done{color:#236B43;font-weight:700;font-size:0.95rem;margin-top:6px;line-height:1.5;}" +
     ".aipx-done a{color:#E8760A;font-weight:800;}" +
-    ".aip-sub{margin-top:16px;border-top:1px solid #F0E3CE;padding-top:14px;text-align:center;}" +
-    ".aip-sub-h{font-family:'Playfair Display',serif;font-weight:800;color:#1A1208;font-size:0.98rem;margin-bottom:4px;}" +
-    ".aip-sub-h span{font-weight:600;color:#a89878;font-size:0.8rem;}" +
-    ".aip-sub-p{font-size:0.8rem;color:#6b5436;line-height:1.45;margin-bottom:10px;}" +
+    ".aip-sub{margin-top:16px;border-top:1px solid rgba(243,200,105,0.18);padding-top:14px;text-align:center;}" +
+    ".aip-sub-h{font-family:'Playfair Display',serif;font-weight:800;color:#F3C869;font-size:0.98rem;margin-bottom:4px;}" +
+    ".aip-sub-h span{font-weight:600;color:#cbbfa9;font-size:0.8rem;}" +
+    ".aip-sub-p{font-size:0.8rem;color:#cbbfa9;line-height:1.45;margin-bottom:10px;}" +
     ".aip-sub-form{display:flex;gap:7px;max-width:340px;margin:0 auto;}" +
     ".aip-sub-in{flex:1;min-width:0;padding:11px 12px;border:1.5px solid #EDD8BC;border-radius:10px;font-size:0.95rem;font-family:inherit;}" +
     ".aip-sub-in:focus{outline:none;border-color:#E8760A;}" +
     ".aip-sub-go{background:#E8760A;color:#fff;border:none;border-radius:10px;padding:0 16px;font-weight:800;font-size:0.9rem;cursor:pointer;white-space:nowrap;}" +
     ".aip-sub-go:disabled{opacity:0.6;}" +
-    ".aip-sub-consent{font-size:0.68rem;color:#a89878;line-height:1.4;margin:9px auto 0;max-width:330px;}" +
+    ".aip-sub-consent{font-size:0.68rem;color:#b8aa97;line-height:1.4;margin:9px auto 0;max-width:330px;}" +
     ".aip-sub-consent a{color:#E8760A;}" +
     ".aip-sub-msg{color:#236B43;font-weight:700;font-size:0.9rem;margin-top:8px;}" +
     /* Menu Creation window */
@@ -913,7 +913,7 @@
       '</div>' +
       '<div class="aip-sub">' +
         '<div class="aip-sub-h">📩 Get festive menus &amp; seasonal deals <span>(optional)</span></div>' +
-        '<div class="aip-sub-p">Jamai Sasthi · Durga Pujo · Poila Boishakh — early access &amp; member-only prices.</div>' +
+        '<div class="aip-sub-p">Durga Pujo · Poila Boishakh · Bhai Phota — early access &amp; member-only prices.</div>' +
         '<form class="aip-sub-form"><input class="aip-sub-in" type="email" inputmode="email" placeholder="Your email"><button class="aip-sub-go" type="submit">Notify me →</button></form>' +
         '<div class="aip-sub-consent">Optional. By subscribing you agree to receive occasional promotional emails from Aayojan. No spam · unsubscribe anytime · <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</div>' +
         '<div class="aip-sub-msg" style="display:none"></div>' +

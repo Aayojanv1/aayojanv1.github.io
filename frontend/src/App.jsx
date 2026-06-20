@@ -1392,12 +1392,12 @@ export default function AayojanApp(){
              {/* Food gallery — uneven masonry grid for visual interest */}
              <div style={{display:"grid",gridTemplateColumns:"repeat(12,1fr)",gap:12,marginBottom:36}} className="food-grid">
                {[
-                 {img:"https://foodish-api.com/images/biryani/biryani1.jpg",label:"Slow-dum Biryani",cuisine:"Mughlai",note:"Long-grain rice, hand-trimmed mutton",span:"span 4",h:260},
-                 {img:"https://foodish-api.com/images/butter-chicken/butter-chicken1.jpg",label:"Butter Chicken",cuisine:"North Indian",note:"Smoked tomato, fenugreek, cream",span:"span 5",h:260},
-                 {img:"https://foodish-api.com/images/samosa/samosa1.jpg",label:"Samosa Chaat",cuisine:"Chaat Counter",note:"Crisp, tangy, layered",span:"span 3",h:260},
-                 {img:"https://foodish-api.com/images/dosa/dosa1.jpg",label:"Masala Dosa",cuisine:"South Indian",note:"Crisp lentil crepe, golden ghee",span:"span 3",h:200},
-                 {img:"https://foodish-api.com/images/rice/rice1.jpg",label:"Aromatic Pulao",cuisine:"Bengali",note:"Bay leaf, ghee, whole spices",span:"span 5",h:200},
-                 {img:"https://foodish-api.com/images/dessert/dessert1.jpg",label:"Festive Sweets",cuisine:"Mishti",note:"Rosogolla, sandesh, gulab jamun",span:"span 4",h:200},
+                 {img:"/events/img/hub/tandoori-kebab.jpg",label:"Tandoori Kebabs",cuisine:"Tandoor",note:"Charred, smoky, marinated overnight",span:"span 4",h:260},
+                 {img:"/events/img/hub/live-counter.jpg",label:"Live Counter Buffet",cuisine:"Weddings",note:"Chefs plating fresh at your venue",span:"span 5",h:260},
+                 {img:"/events/img/hub/welcome-drinks.jpg",label:"Steamed Dhokla",cuisine:"Snacks",note:"Soft, fluffy, coconut garnish",span:"span 3",h:260},
+                 {img:"/events/img/hub/papad.jpg",label:"Chilli Chicken",cuisine:"Indo-Chinese",note:"Crispy, tangy, spring onion",span:"span 3",h:200},
+                 {img:"/events/img/hub/continental.jpg",label:"Basanti Pulao",cuisine:"Bengali",note:"Saffron rice, whole spices, ghee",span:"span 5",h:200},
+                 {img:"/events/img/hub/palak-paneer.jpg",label:"Grand Bengali Thali",cuisine:"Festive",note:"Rice, fish, dal, mishti & more",span:"span 4",h:200},
                ].map((d,i)=>(
                  <div key={i} style={{gridColumn:d.span,height:d.h,borderRadius:18,overflow:"hidden",position:"relative",boxShadow:"0 14px 32px rgba(76,43,10,0.22)",cursor:"default",transition:"transform 0.4s ease, box-shadow 0.4s ease",background:"#2B1B0C"}}
                    onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 22px 44px rgba(232,118,10,0.32)";}}
