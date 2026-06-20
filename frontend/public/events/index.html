@@ -530,7 +530,7 @@ section.block{padding:4rem 5%;}
 <link rel="icon" href="/img/aayojan-cloche-48.png" type="image/png">
 </head>
 <body>
-<script>/* no-flash: tag wedding ad traffic before paint so the grand wedding promo shows instead of the default hero */(function(){try{var p=new URLSearchParams(location.search);var e=(p.get('event')||p.get('evt')||p.get('utm_term')||'').toLowerCase().replace(/[^a-z]/g,'');if(/wedding|reception|marriage|shaadi|shadi/.test(e))document.documentElement.className+=' evt-wedding';}catch(_){}})();</script>
+<script>/* no-flash: tag wedding ad traffic before paint so the grand wedding promo shows instead of the default hero. Checks event param first, then common Google Ads fields (campaign/keyword/term/content) as a fallback. */(function(){try{var p=new URLSearchParams(location.search);var blob=[p.get('event'),p.get('evt'),p.get('utm_term'),p.get('utm_campaign'),p.get('utm_content'),p.get('keyword'),p.get('campaignid')].join(' ').toLowerCase();if(/wedding|reception|marriage|shaadi|shadi|\bbiye\b/.test(blob))document.documentElement.className+=' evt-wedding';}catch(_){}})();</script>
 
 <nav>
   <a href="/" class="nav-logo" aria-label="Aayojan.online home"><img src="/img/aayojan-cloche.png" alt=""><span class="wm">Aayojan.online</span></a>
@@ -894,7 +894,7 @@ section.block{padding:4rem 5%;}
     };
     function norm(s){ return (s||"").toLowerCase().replace(/[^a-z0-9]/g,""); }
     var p = new URLSearchParams(location.search);
-    var key = norm(p.get("event") || p.get("evt") || p.get("utm_term") || "");
+    var key = norm(p.get("event") || p.get("evt") || p.get("utm_term") || p.get("utm_campaign") || p.get("utm_content") || "");
     var label = ALIASES[key] || "";
     if (!label && key) {
       for (var i=0;i<TIERS.length;i++){ var n=norm(TIERS[i].label); if(n===key||n.indexOf(key)===0||key.indexOf(n)===0){ label=TIERS[i].label; break; } }
