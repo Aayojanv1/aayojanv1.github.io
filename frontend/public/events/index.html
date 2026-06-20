@@ -26,6 +26,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);
 a{color:inherit;text-decoration:none;}
 .container{width:min(1100px,calc(100% - 2.5rem));margin:0 auto;}
 nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 5%;background:var(--dark);position:sticky;top:0;z-index:100;}
+#offers,#gallery,#testimonials,#howto,#events-list{scroll-margin-top:76px;}
 .nav-logo{display:inline-flex;align-items:center;gap:8px;text-decoration:none;}
 .nav-logo img{width:36px;height:36px;border-radius:50%;display:block;flex-shrink:0;}
 .nav-logo .wm{font-family:Georgia,'Playfair Display',serif;font-weight:700;font-size:1.32rem;color:var(--saffron-light);letter-spacing:0.01em;}
@@ -36,8 +37,21 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem
 .nav-cater{color:var(--saffron-light)!important;border:1.5px solid var(--saffron);border-radius:99px;padding:0.35rem 0.9rem;font-weight:800!important;animation:caterPulse 2.2s ease-in-out infinite;}
 .nav-cater:hover{background:var(--saffron);color:#fff!important;}
 @keyframes caterPulse{0%,100%{box-shadow:0 0 0 0 rgba(232,118,10,0.55);}50%{box-shadow:0 0 0 7px rgba(232,118,10,0);}}
-@media (max-width:720px){.nav-links a:not(.nav-cta):not(.nav-cater){display:none;}}
-@media (max-width:600px){nav{padding:0.85rem 5%;gap:8px;}.nav-cater{display:none;}.nav-logo{font-size:1.3rem;}.nav-cta{padding:0.45rem 0.9rem;font-size:0.82rem;white-space:nowrap;}}
+/* hamburger menu (mobile) */
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:42px;height:38px;padding:8px 6px;background:none;border:none;cursor:pointer;flex-shrink:0;}
+.nav-burger span{display:block;height:2.5px;width:100%;background:var(--saffron-light);border-radius:2px;transition:transform .28s ease,opacity .2s ease;}
+.nav-burger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+.nav-burger.open span:nth-child(2){opacity:0;}
+.nav-burger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+@media (max-width:720px){
+  .nav-burger{display:flex;}
+  .nav-links{display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;background:var(--dark);gap:0;border-top:1px solid rgba(255,255,255,0.08);box-shadow:0 18px 34px rgba(0,0,0,0.45);max-height:0;overflow:hidden;opacity:0;pointer-events:none;transition:max-height .32s ease,opacity .22s ease,padding .32s ease;padding:0 5%;}
+  .nav-links.open{max-height:420px;opacity:1;pointer-events:auto;padding:0.3rem 5% 1rem;}
+  .nav-links a{margin:0;padding:0.9rem 0.3rem;border-bottom:1px solid rgba(255,255,255,0.07);font-size:1rem;}
+  .nav-cater{display:block!important;margin:0.7rem 0 0!important;text-align:center;animation:none;border-radius:10px;}
+  .nav-cta{display:block;margin:0.7rem 0 0;text-align:center;padding:0.8rem 1rem;border-radius:10px;}
+}
+@media (max-width:600px){nav{padding:0.85rem 5%;gap:8px;}.nav-logo .wm{font-size:1.12rem;}}
 .crumbs{padding:0.8rem 5%;background:var(--cream-2);font-size:0.78rem;color:var(--muted);border-bottom:1px solid var(--border);}
 .jamai-card{display:flex;flex-direction:column;gap:6px;max-width:560px;margin:0 auto 1.5rem;background:linear-gradient(135deg,rgba(243,200,105,0.18),rgba(232,118,10,0.16));border:1.5px solid rgba(243,200,105,0.55);border-radius:16px;padding:14px 18px;text-decoration:none;text-align:center;box-shadow:0 12px 34px rgba(232,118,10,0.28);position:relative;z-index:2;animation:jamaiGlow 2.6s ease-in-out infinite;}
 .jc-tag{font-family:'Playfair Display',serif;font-weight:800;color:#FFE9B0;font-size:1.02rem;letter-spacing:0.01em;}
@@ -500,14 +514,27 @@ section.block{padding:4rem 5%;}
 
 <nav>
   <a href="/" class="nav-logo" aria-label="Aayojan.online home"><img src="/img/aayojan-cloche.png" alt=""><span class="wm">Aayojan.online</span></a>
-  <div class="nav-links">
+  <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+  <div class="nav-links" id="navLinks">
+    <a href="#offers">Offers</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#testimonials">Testimonials</a>
     <a href="/caterers/">Areas</a>
-    <a href="/events/">Events</a>
-    <a href="/partners.html" class="nav-cater">🍳 Caterers — Join Free</a>
     <a href="/faq.html">FAQ</a>
+    <a href="/partners.html" class="nav-cater">🍳 Caterers — Join Free</a>
     <a href="https://wa.me/918088434425?text=Hi%20Aayojan!" class="nav-cta">Get Quote</a>
   </div>
 </nav>
+<script>
+(function(){
+  var b=document.getElementById('navBurger'),l=document.getElementById('navLinks');
+  if(!b||!l)return;
+  function setOpen(o){l.classList.toggle('open',o);b.classList.toggle('open',o);b.setAttribute('aria-expanded',o?'true':'false');b.setAttribute('aria-label',o?'Close menu':'Open menu');}
+  b.addEventListener('click',function(e){e.stopPropagation();setOpen(!l.classList.contains('open'));});
+  l.addEventListener('click',function(e){if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('click',function(e){if(l.classList.contains('open')&&!e.target.closest('nav'))setOpen(false);});
+})();
+</script>
 
 <div class="crumbs"><a href="/">Home</a><span>›</span>Events</div>
 
@@ -586,9 +613,6 @@ section.block{padding:4rem 5%;}
 
   </div>
   <div class="orot-dots" id="orotDots" aria-label="Offer navigation"></div>
-  <div style="text-align:center;margin-top:14px;">
-    <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quick%20quote%20for%20my%20event." style="display:inline-block;color:#F3C869;font-weight:800;font-size:0.92rem;text-decoration:none;border-bottom:1px solid rgba(243,200,105,0.45);padding-bottom:2px;">⚡ In a hurry? Get a quick quote in 30 sec →</a>
-  </div>
 </section>
 <script>
 (function(){
@@ -616,8 +640,8 @@ section.block{padding:4rem 5%;}
   </h1>
   <p class="hero-sub">15+ kitchens · all over Kolkata · ₹0 to you.</p>
   <div class="hero-cta-wrap">
-    <a class="hero-cta-primary" data-ai-planner href="#aiplan">✨ Plan your event with AI →</a>
-    <a class="hero-cta-ghost" href="#howto">↓ See how it works</a>
+    <a class="hero-cta-primary" data-ai-planner href="#aiplan">✨ Plan your event with Aayojan AI →</a>
+    <a class="hero-cta-ghost" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quick%20quote%20for%20my%20event.">⚡ Quick quote in 30 sec →</a>
   </div>
   <div class="hero-trust">
     <span class="trust-pill">💬 WhatsApp routing</span>
@@ -634,7 +658,7 @@ section.block{padding:4rem 5%;}
 </div>
 
 <!-- TESTIMONIALS — trust signal, placed high (real reviews of network kitchens, names gated) -->
-<section class="tmoni">
+<section class="tmoni" id="testimonials">
   <div class="tmoni-inner">
     <h2>Loved by <em>Bengali families</em></h2>
     <p class="tmoni-sub">Real reviews of kitchens in the Aayojan network. The kitchen's name is shared once we match you.</p>
@@ -671,7 +695,6 @@ section.block{padding:4rem 5%;}
         <figcaption class="tmoni-cap">— Chanchal, Newtown · booked via Aayojan.Online</figcaption>
       </figure>
     </div>
-    <a class="aip-launch" data-ai-planner href="#aiplan">✨ Get matched with Aayojan AI →</a>
   </div>
 </section>
 
@@ -874,29 +897,6 @@ section.block{padding:4rem 5%;}
   <p style="max-width:1080px;margin:1rem auto 0;text-align:center;color:#9c8e7b;font-size:0.76rem;">Aayojan Technologies · Udyam Reg. No. <strong style="color:#c9bca9;">UDYAM-WB-14-0277694</strong> · Registered MSME, Government of India</p>
 </section>
 
-<!-- WEEKEND TIMELINE — 3 hot windows -->
-<section class="weekend-bar">
-  <div class="wb-inner">
-    <div class="wb-label">🔥 PARTY-MONGER MENU · Pick your slot</div>
-    <div class="wb-cards">
-      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20catering%20TONIGHT%20-%20urgent.%0AEvent%3A%20%0AGuests%3A%20%0AArea%3A%20%0ACuisine%3A%20" target="_blank" rel="noopener" class="wb-card">
-        <span class="wb-tag">🌙 TONIGHT</span>
-        <span class="wb-when">Friday night adda</span>
-        <span class="wb-cta">📱 Tap to WhatsApp</span>
-      </a>
-      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Saturday%20party%20catering%20needed.%0AGuests%3A%20%0AArea%3A%20%0ACuisine%3A%20%0AVibe%3A%20" target="_blank" rel="noopener" class="wb-card wb-hot">
-        <span class="wb-tag">🎉 SATURDAY</span>
-        <span class="wb-when">Birthday · anniversary · house party</span>
-        <span class="wb-cta">📱 Tap to WhatsApp</span>
-      </a>
-      <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20Sunday%20family%20lunch%20catering%20needed.%0AGuests%3A%20%0AArea%3A%20%0ACuisine%3A%20" target="_blank" rel="noopener" class="wb-card">
-        <span class="wb-tag">🍱 SUNDAY</span>
-        <span class="wb-when">Family adda · Bengali home-style</span>
-        <span class="wb-cta">📱 Tap to WhatsApp</span>
-      </a>
-    </div>
-  </div>
-</section>
 
 <!-- INTENT-DRIVEN WhatsApp CTAs — 6 cards, each pre-fills the chat -->
 <section class="intent-strip">
@@ -909,38 +909,32 @@ section.block{padding:4rem 5%;}
         <div class="is-emoji">🎉</div>
         <div class="is-name">Saturday Night Party</div>
         <div class="is-tag">House party · birthday · anniversary</div>
-        <span class="is-wa">✨ Plan with Aayojan AI</span>
       </a>
       <a data-ai-planner href="#aiplan" class="is-card">
         <div class="is-emoji">🍱</div>
         <div class="is-name">Sunday Family Lunch</div>
         <div class="is-tag">Adda · niramish · home-style</div>
-        <span class="is-wa">✨ Plan with Aayojan AI</span>
       </a>
       <a data-ai-planner href="#aiplan" class="is-card urgent">
         <span class="is-flag urgent-flag">⚡ TONIGHT</span>
         <div class="is-emoji">🌙</div>
         <div class="is-name">Last-Minute · Tonight</div>
         <div class="is-tag">Same-day routing · just-add-people</div>
-        <span class="is-wa">✨ Plan with Aayojan AI</span>
       </a>
       <a data-ai-planner href="#aiplan" class="is-card">
         <div class="is-emoji">🍚</div>
         <div class="is-name">Annaprasan</div>
         <div class="is-tag">Mukhe Bhaat · Bengali ceremony</div>
-        <span class="is-wa">✨ Plan with Aayojan AI</span>
       </a>
       <a data-ai-planner href="#aiplan" class="is-card">
         <div class="is-emoji">💍</div>
         <div class="is-name">Wedding / Reception</div>
         <div class="is-tag">Banquet or home setup</div>
-        <span class="is-wa">✨ Plan with Aayojan AI</span>
       </a>
       <a data-ai-planner href="#aiplan" class="is-card">
         <div class="is-emoji">🏢</div>
         <div class="is-name">Office Lunch</div>
         <div class="is-tag">Sector V / Newtown · Friday team</div>
-        <span class="is-wa">✨ Plan with Aayojan AI</span>
       </a>
     </div>
   </div>
@@ -1091,9 +1085,6 @@ section.block{padding:4rem 5%;}
         <span class="fk-unlock">✨ Get matched →</span>
       </a>
     </div>
-    <div class="fk-cta-wrap">
-      <a class="aip-launch" data-ai-planner href="#aiplan">✨ Get matched with your kitchen →</a>
-    </div>
   </div>
 </section>
 
@@ -1104,7 +1095,6 @@ section.block{padding:4rem 5%;}
     <div class="founder-body">
       <p class="founder-quote">"I started Aayojan in Newtown because booking a good caterer for a family event shouldn't feel like a gamble. I personally vet every kitchen we route you to — and we never take an advance. Message me directly; I read every chat."</p>
       <div class="founder-sign">— <strong>Suparna</strong> · Team Aayojan</div>
-      <a class="founder-wa" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20have%20a%20question%20before%20I%20book." target="_blank" rel="noopener">💬 WhatsApp me directly</a>
     </div>
   </div>
 </section>
@@ -1113,18 +1103,11 @@ section.block{padding:4rem 5%;}
   <h2>Don't see your event? <em>WhatsApp us</em>.</h2>
   <p>Anniversary, retirement, baby shower, Saraswati Puja, Lakshmi Puja, Eid, Christmas — Aayojan partners handle every Kolkata occasion. Tell us the event, we'll route the right kitchen.</p>
   <div class="cta-wrap">
-    <a class="btn primary" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20need%20a%20caterer.%0AEvent%3A%20%0ADate%3A%20%0AGuests%3A%20%0AArea%3A%20" target="_blank" rel="noopener">📱 WhatsApp your event</a>
     <a class="btn secondary" href="/caterers/">Browse by area</a>
   </div>
 </section>
 
 <footer>© 2026 Aayojan · <a href="/">Home</a> · <a href="/about.html">About</a> · <a href="/faq.html">FAQ</a> · <a href="/privacy.html">Privacy</a> &middot; <a href="mailto:aayojan11@gmail.com">aayojan11@gmail.com</a></footer>
 
-<!-- Sticky primary CTA — always visible, opens Aayojan AI -->
-<a class="sticky-wa" data-ai-planner href="#aiplan" aria-label="Plan with Aayojan AI">
-  <span class="sw-pulse"></span>
-  <span class="sw-icon">✨</span>
-  <span class="sw-text">Plan with Aayojan AI</span>
-</a>
 </body>
 </html>
