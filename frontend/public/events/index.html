@@ -244,7 +244,11 @@ footer{background:#100C04;text-align:center;padding:2rem;color:#555;font-size:0.
 /* === GRAND WEDDING PROMO (shown for ?event=wedding ad traffic) === */
 .wed-promo{position:relative;min-height:clamp(440px,72vh,600px);display:none;align-items:center;justify-content:center;text-align:center;background:#1A1208 url('/events/img/hub/wedding-hero.jpg') center 38%/cover no-repeat;padding:3.2rem 5%;overflow:hidden;}
 .wp-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
-.wp-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(26,18,8,0.55) 0%,rgba(26,18,8,0.80) 100%);}
+.wp-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(26,18,8,0.55) 0%,rgba(26,18,8,0.80) 100%);opacity:0;transition:opacity 1s ease;}
+/* cinematic intro: video plays clean once, THEN overlay + content fade up */
+.wp-inner{opacity:0;transform:translateY(20px);transition:opacity .9s ease,transform .9s ease;}
+.wed-promo.wp-revealed .wp-overlay{opacity:1;}
+.wed-promo.wp-revealed .wp-inner{opacity:1;transform:none;}
 .wp-inner{position:relative;z-index:2;max-width:760px;}
 .wp-badge{display:inline-block;background:rgba(232,118,10,0.24);border:1px solid rgba(243,200,105,0.55);color:#F3C869;font-size:0.76rem;font-weight:800;letter-spacing:0.09em;text-transform:uppercase;padding:0.42rem 1.05rem;border-radius:99px;margin-bottom:1.15rem;}
 .wp-h1{font-family:'Playfair Display',serif;font-size:clamp(2.3rem,6vw,4rem);font-weight:900;color:#FFF8EF;line-height:1.05;margin:0 0 0.55rem;letter-spacing:-0.02em;text-shadow:0 4px 26px rgba(0,0,0,0.55);}
@@ -561,7 +565,7 @@ section.block{padding:4rem 5%;}
 
 <!-- GRAND WEDDING PROMO — revealed for ?event=wedding ad traffic (Quality Score match) -->
 <section class="wed-promo" id="wedPromo" hidden aria-label="Wedding catering offer">
-  <video class="wp-video" autoplay muted loop playsinline preload="none" poster="/events/img/hub/wedding-hero.jpg" aria-hidden="true">
+  <video class="wp-video" id="wpVideo" autoplay muted loop playsinline preload="none" poster="/events/img/hub/wedding-hero.jpg" aria-hidden="true">
     <source src="/events/img/hub/wedding-bg.mp4" type="video/mp4">
   </video>
   <div class="wp-overlay"></div>
@@ -577,6 +581,13 @@ section.block{padding:4rem 5%;}
     <div class="wp-trust"><span>🍴 Free tasting</span><span>🔒 No advance</span><span>✓ FSSAI verified</span><span>💬 WhatsApp support</span></div>
   </div>
 </section>
+<script>/* wedding hero: video keeps looping behind; after a short clean intro the offer fades up over it. Fallbacks guarantee the offer always shows. */
+(function(){var s=document.getElementById('wedPromo'),v=document.getElementById('wpVideo');if(!s)return;var done=false;function reveal(){if(done)return;done=true;s.classList.add('wp-revealed');}
+if(!v){reveal();return;}
+var armed=false;function arm(){if(armed)return;armed=true;setTimeout(reveal,3000);} /* 3s clean intro once it starts playing */
+v.addEventListener('playing',arm);
+v.addEventListener('error',reveal);
+setTimeout(reveal,4500); /* hard fallback if autoplay is blocked or video never starts */})();</script>
 
 
 <!-- Live status ticker (honest — no fake transactions) -->
