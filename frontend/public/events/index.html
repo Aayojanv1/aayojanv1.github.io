@@ -661,7 +661,7 @@ var dotsWrap=document.getElementById('evtDots');var idx=slides.findIndex(functio
 slides.forEach(function(s,i){var d=document.createElement('button');d.className='evt-dot'+(i===idx?' active':'');d.setAttribute('aria-label','Offer '+(i+1));d.addEventListener('click',function(){go(i);reset();});dotsWrap.appendChild(d);});
 var dots=[].slice.call(dotsWrap.children);
 function go(n){slides[idx].classList.remove('active');dots[idx].classList.remove('active');idx=(n+slides.length)%slides.length;slides[idx].classList.add('active');dots[idx].classList.add('active');playActive();}
-var timer;function reset(){clearTimeout(timer);timer=setTimeout(function(){go(idx+1);},7000);}
+var timer;function reset(){clearInterval(timer);timer=setInterval(function(){go(idx+1);},3800);}
 playActive();reset();})();</script>
 
 
