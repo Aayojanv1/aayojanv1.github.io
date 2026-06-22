@@ -57,9 +57,9 @@
   .totals{padding:10px 30px 4px;margin-left:auto;}
   .trow{display:flex;justify-content:flex-end;gap:40px;padding:6px 0;font-size:14px;}
   .trow .lbl{color:var(--muted);}
-  .trow.token .val{color:var(--green);font-weight:700;}
+  .trow.token .val{color:var(--saffron);font-weight:700;}
   .trow.bal{border-top:2px solid var(--dark);margin-top:6px;padding-top:12px;font-size:1.15rem;font-weight:900;font-family:'Playfair Display',serif;}
-  .paidtag{display:inline-block;background:var(--green);color:#fff;font-size:10px;font-weight:800;border-radius:5px;padding:2px 7px;margin-left:8px;letter-spacing:.06em;}
+  .paidtag{display:inline-block;background:var(--saffron);color:#fff;font-size:10px;font-weight:800;border-radius:5px;padding:2px 7px;margin-left:8px;letter-spacing:.06em;}
   .inv-foot{background:var(--cream);padding:18px 30px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
   .inv-foot .ty{font-family:'Playfair Display',serif;font-style:italic;color:var(--saffron);font-size:1rem;}
   .inv-foot .contact{font-size:12px;color:var(--muted);text-align:right;line-height:1.6;}
@@ -88,6 +88,9 @@
       <div class="fld"><label>Price / plate ₹ (tentative)</label><input id="f_plate" type="number" value="825"></div>
       <div class="fld"><label>Offer note</label><input id="f_offer" value="20% offer applied"></div>
       <div class="fld"><label>Token paid (₹)</label><input id="f_token" type="number" value="199"></div>
+      <div class="fld"><label>Pricing confirmed? (yes/no)</label><input id="f_tent" value="no"></div>
+      <div class="fld"><label>Extra line label</label><input id="f_extra" value="" placeholder="e.g. Two serving (incl. cutlery sets)"></div>
+      <div class="fld"><label>Extra line ₹</label><input id="f_extra_amt" type="number" value="0"></div>
       <div class="fld full"><label>Menu (optional)</label><input id="f_menu" value="" placeholder="e.g. Basanti Pulao, Kosha Mangsho, Chingri Malai Curry, Mishti Doi…"></div>
     </div>
     <div class="actions">
@@ -135,17 +138,23 @@
         <tr>
           <td class="desc"><b id="o_service">Dinner Buffet</b><small id="o_menu">Menu to be finalised</small></td>
           <td class="r" id="o_qty">250</td>
-          <td class="r"><b id="o_rate">₹825</b><small style="display:block;color:#8B6E52;font-weight:600;font-size:11px">tentative</small></td>
+          <td class="r"><b id="o_rate">₹825</b><small id="o_tent" style="display:block;color:#8B6E52;font-weight:600;font-size:11px">tentative</small></td>
           <td class="r" id="o_amount">₹2,06,250</td>
+        </tr>
+        <tr id="o_extrarow" style="display:none">
+          <td class="desc"><b id="o_extra">Extra</b></td>
+          <td class="r">—</td>
+          <td class="r">—</td>
+          <td class="r" id="o_extraamt">₹0</td>
         </tr>
       </tbody>
     </table>
 
     <div class="totals">
       <div class="trow"><span class="lbl" id="o_offer">20% offer applied</span></div>
-      <div class="trow"><span class="lbl">Subtotal</span><span class="val" id="o_sub">₹2,06,250</span></div>
-      <div class="trow token"><span class="lbl">Token paid <span class="paidtag">PAID</span></span><span class="val" id="o_token">– ₹199</span></div>
-      <div class="trow bal"><span class="lbl">Balance due</span><span class="val" id="o_bal">₹2,06,051</span></div>
+      <div class="trow"><span class="lbl" id="o_sublbl">Catering estimate (tentative)</span><span class="val" id="o_sub">₹2,06,250</span></div>
+      <div class="trow token"><span class="lbl">Aayojan service charge · pay to lock vendor 24 hrs <span class="paidtag">PAY NOW</span></span><span class="val" id="o_token">₹199</span></div>
+      <div class="trow bal"><span class="lbl">Payable to caterer</span><span class="val" id="o_bal">₹2,06,250</span></div>
     </div>
 
     <div class="inv-foot">
@@ -157,10 +166,12 @@
       </div>
     </div>
     <div class="terms">
-      Token of ₹199 confirms your booking and is adjusted against the final bill. Balance payable as per agreement with the caterer.
-      Final menu, headcount and pricing confirmed before the event. Aayojan connects you with verified kitchens; food is prepared and served by the caterer.
+      The ₹199 Aayojan service charge locks your selected vendor for 24 hours, within which your booking is confirmed. It is a platform service fee and is separate from the catering amount, which is payable directly to the caterer as per your agreement.
+      Final menu, headcount and pricing are confirmed before the event. Aayojan connects you with verified kitchens; food is prepared and served by the caterer.
       <br><br>
-      <b style="color:#5b4632">Aayojan Technologies</b> (Prop. Suparna Basak) · WB Trade Licence No. <b style="color:#5b4632">0917P195926497999</b> · Udyam (MSME) Reg. <b style="color:#5b4632">UDYAM-WB-14-0277694</b> · Reg. office: 327/1, HA Block, Sector III, Salt Lake, Kolkata&nbsp;–&nbsp;700097.
+      <b style="color:#5b4632">Aayojan Technologies</b> &nbsp;·&nbsp; Proprietor: Suparna Basak<br>
+      Trade Licence No.: <b style="color:#5b4632">0917P195926497999</b> &nbsp;·&nbsp; Udyam Registration No. (MSME, Govt. of India): <b style="color:#5b4632">UDYAM-WB-14-0277694</b><br>
+      GSTIN: <b style="color:#5b4632">Applied for</b> &nbsp;·&nbsp; Registered Office: 327/1, HA Block, Sector III, Salt Lake, Kolkata&nbsp;–&nbsp;700097.
     </div>
   </div>
 </div>
@@ -175,31 +186,39 @@
     var no=$("f_no").value, date=$("f_date").value, name=$("f_name").value, phone=$("f_phone").value,
         addr=$("f_addr").value, caterer=$("f_caterer").value, rating=$("f_rating").value,
         guests=+$("f_guests").value||0, plate=+$("f_plate").value||0, offer=$("f_offer").value,
-        token=+$("f_token").value||0, menu=$("f_menu").value.trim(), service=($("f_service").value||"Catering").trim();
-    var sub = guests*plate, bal = sub - token;
+        token=+$("f_token").value||0, menu=$("f_menu").value.trim(), service=($("f_service").value||"Catering").trim(),
+        extra=($("f_extra").value||"").trim(), extraAmt=+$("f_extra_amt").value||0,
+        confirmed=((($("f_tent").value||"no").trim().toLowerCase().charAt(0))==="y");
+    var cater = guests*plate, sub = cater + extraAmt, bal = sub; // service charge is a separate Aayojan fee; catering amount is payable to the caterer
     $("o_service").textContent = service;
     $("o_no").textContent=no; $("o_name").textContent=name; $("o_phone").textContent=phone; $("o_addr").textContent=addr;
     $("o_date").textContent=date; $("o_guests").textContent=guests; $("o_caterer").textContent=caterer;
     $("o_rating").textContent="★ "+rating+" verified";
-    $("o_qty").textContent=guests; $("o_rate").textContent=inr(plate); $("o_amount").textContent=inr(sub);
-    $("o_offer").textContent=offer||""; $("o_sub").textContent=inr(sub); $("o_token").textContent="– "+inr(token); $("o_bal").textContent=inr(bal);
+    $("o_qty").textContent=guests; $("o_rate").textContent=inr(plate); $("o_amount").textContent=inr(cater);
+    $("o_offer").textContent=offer||""; $("o_sub").textContent=inr(sub); $("o_token").textContent=inr(token); $("o_bal").textContent=inr(bal);
     $("o_menu").textContent = menu || "Menu to be finalised";
+    if($("o_tent")) $("o_tent").style.display = confirmed ? "none" : "block";
+    if($("o_sublbl")) $("o_sublbl").textContent = confirmed ? "Catering total" : "Catering estimate (tentative)";
+    if(extraAmt>0){ $("o_extrarow").style.display=""; $("o_extra").textContent=extra||"Extra"; $("o_extraamt").textContent=inr(extraAmt); }
+    else { $("o_extrarow").style.display="none"; }
     $("o_issued").textContent = new Date().toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
     // shareable link — encodes the whole invoice in the URL
-    var qp = new URLSearchParams({no:no,date:date,name:name,phone:phone,addr:addr,caterer:caterer,rating:rating,guests:guests,plate:plate,offer:offer,token:token,menu:menu,service:service});
+    var qp = new URLSearchParams({no:no,date:date,name:name,phone:phone,addr:addr,caterer:caterer,rating:rating,guests:guests,plate:plate,offer:offer,token:token,menu:menu,service:service,extra:extra,extra_amt:extraAmt,tent:$("f_tent").value});
     window.__link = location.origin + location.pathname + "?" + qp.toString();
     // WhatsApp message to the Aayojak (with the invoice link)
+    var rateNote = confirmed ? "" : " (tentative)";
     var msg = "Hi "+name.split(" ")[0]+"! 🍽️ Your Aayojan booking is confirmed.\n\n"+
-      "📅 "+date+"\n👥 "+guests+" guests\n🍽 "+service+"\n👨‍🍳 "+caterer+" ("+rating+"★)\n💰 ₹"+plate+"/plate (tentative · "+offer+")\n"+
-      "Est. total: "+inr(sub)+"\nToken paid: ₹"+token+"\nEst. balance: "+inr(bal)+"\n\n🧾 View your invoice: "+window.__link+"\n\n— Aayojan.online";
+      "📅 "+date+"\n👥 "+guests+" guests\n🍽 "+service+"\n👨‍🍳 "+caterer+" ("+rating+"★)\n💰 ₹"+plate+"/plate"+rateNote+" · "+offer+"\n"+
+      (extraAmt>0 ? "➕ "+(extra||"Extra")+": "+inr(extraAmt)+"\n" : "")+
+      "Catering total: "+inr(sub)+" (payable to caterer)\nAayojan service charge: pay ₹"+token+" to lock your vendor for 24 hrs\n\n🧾 View your invoice: "+window.__link+"\n\n— Aayojan.online";
     $("waBtn").setAttribute("href","https://wa.me/"+phone.replace(/\D/g,"")+"?text="+encodeURIComponent(msg));
     window.__order = { invoiceNo:no, eventDate:date, aayojakName:name, aayojakNumber:phone, aayojakAddress:addr,
-      caterer:caterer, catererRating:rating, totalGuests:guests, service:service, platePrice:plate, platePriceTentative:true, offer:offer,
-      tokenAmount:token, subtotal:sub, balanceDue:bal, menu:menu, status:"confirmed" };
+      caterer:caterer, catererRating:rating, totalGuests:guests, service:service, platePrice:plate, platePriceTentative:!confirmed, offer:offer,
+      extraLabel:extra, extraAmount:extraAmt, cateringEstimate:cater, payableToCaterer:bal, serviceCharge:token, menu:menu, status:"confirmed" };
   }
   document.querySelectorAll(".controls input").forEach(function(i){ i.addEventListener("input", render); });
   // shareable link: if URL carries order params, populate fields + show clean customer view
-  (function(){ var q=new URLSearchParams(location.search); var keys=["no","date","name","phone","addr","caterer","rating","guests","plate","offer","token","menu","service"];
+  (function(){ var q=new URLSearchParams(location.search); var keys=["no","date","name","phone","addr","caterer","rating","guests","plate","offer","token","menu","service","extra","extra_amt","tent"];
     if(!keys.some(function(k){return q.has(k);})) return;
     keys.forEach(function(k){ if(q.has(k)){ var el=$("f_"+k); if(el) el.value=q.get(k); } });
     document.body.classList.add("viewmode"); })();
