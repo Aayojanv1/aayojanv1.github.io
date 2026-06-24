@@ -280,6 +280,13 @@ html.show-evt #evtHero{display:block!important;}
 html.evt-wedding .evt-slide{display:none!important;} html.evt-wedding .ev-wedding{display:flex!important;}
 html.evt-party .evt-slide{display:none!important;}   html.evt-party .ev-party{display:flex!important;}
 html.evt-pujo .evt-slide{display:none!important;}    html.evt-pujo .ev-pujo{display:flex!important;}
+/* corporate ad landing (?event=corporate) — standalone matched hero, not in rotation */
+.corp-hero{display:none;position:relative;min-height:clamp(440px,72vh,600px);align-items:center;justify-content:center;text-align:center;padding:3.2rem 5%;overflow:hidden;background:#11203a url('/events/img/hub/corporate-hero.jpg') center 42%/cover no-repeat;}
+.corp-hero .wp-overlay{background:linear-gradient(180deg,rgba(8,18,34,0.60) 0%,rgba(8,18,34,0.85) 100%);}
+.corp-hero .wp-badge{background:rgba(33,86,140,0.42);border-color:rgba(120,180,240,0.5);color:#cfe3ff;}
+.corp-hero .wp-h1 em{color:#7CC0FF;}
+html.evt-corporate #offers,html.evt-corporate section.hero,html.evt-corporate #evtHero{display:none!important;}
+html.evt-corporate #corpHero{display:flex!important;}
 .bookbar{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;background:linear-gradient(135deg,#FFF1DE,#FFE7C4);border-top:1px solid #F0D9B5;border-bottom:1px solid #F0D9B5;padding:11px 5%;text-align:center;color:#5b3d1a;font-size:0.92rem;font-weight:600;line-height:1.5;}
 .bookbar strong{color:#236B43;font-weight:800;}
 .bb-dot{width:9px;height:9px;border-radius:50%;background:#2ecc71;flex-shrink:0;animation:bbPulse 1.8s infinite;}
@@ -556,10 +563,10 @@ section.block{padding:4rem 5%;}
    - other events (birthday/corporate/etc)  -> normal multi-event page
    Set PROMO_ON=false to stop the generic rotation (matched ?event= heroes still work). */
 (function(){var PROMO_ON=true;try{var p=new URLSearchParams(location.search);var blob=[p.get('event'),p.get('evt'),p.get('utm_term'),p.get('utm_campaign'),p.get('utm_content'),p.get('keyword'),p.get('campaignid')].join(' ').toLowerCase();
-var ev='';if(/wedding|reception|marriage|shaadi|shadi|\bbiye\b/.test(blob))ev='wedding';else if(/\bparty\b|house ?party|get.?together|kitty/.test(blob))ev='party';else if(/pujo|puja|durga|ratha|\bbhog\b/.test(blob))ev='pujo';
-var otherEvent=/annaprasan|annaprashan|corporate|office|conference|bhai|phota|griha|housewarm|aiburo|birthday/.test(blob);
+var ev='';if(/wedding|reception|marriage|shaadi|shadi|\bbiye\b/.test(blob))ev='wedding';else if(/\bparty\b|house ?party|get.?together|kitty/.test(blob))ev='party';else if(/pujo|puja|durga|ratha|\bbhog\b/.test(blob))ev='pujo';else if(/corporate|\boffice\b|conference|town.?hall|team lunch/.test(blob))ev='corporate';
+var otherEvent=/annaprasan|annaprashan|bhai|phota|griha|housewarm|aiburo|birthday/.test(blob);
 var de=document.documentElement;
-if(ev)de.className+=' show-evt evt-'+ev+' evt-intro';else if(PROMO_ON&&!otherEvent)de.className+=' show-evt evt-rotate';}catch(_){}})();</script>
+if(ev==='corporate')de.className+=' evt-corporate';else if(ev)de.className+=' show-evt evt-'+ev+' evt-intro';else if(PROMO_ON&&!otherEvent)de.className+=' show-evt evt-rotate';}catch(_){}})();</script>
 
 <nav>
   <a href="/" class="nav-logo" aria-label="Aayojan.online home"><img src="/img/aayojan-cloche.png" alt=""><span class="wm">Aayojan.online</span></a>
@@ -648,6 +655,25 @@ if(ev)de.className+=' show-evt evt-'+ev+' evt-intro';else if(PROMO_ON&&!otherEve
   </div>
 
   <div class="evt-dots" id="evtDots" aria-label="Offer navigation"></div>
+</section>
+
+<!-- CORPORATE ad landing (?event=corporate) — matched hero, shown only for corporate ad traffic -->
+<section class="corp-hero" id="corpHero" aria-label="Corporate catering offer">
+  <video class="wp-video" autoplay muted loop playsinline preload="none" poster="/events/img/hub/corporate-hero.jpg" aria-hidden="true">
+    <source src="/events/img/hub/corporate-bg.mp4" type="video/mp4">
+  </video>
+  <div class="wp-overlay"></div>
+  <div class="wp-inner">
+    <span class="wp-badge">🏢 Corporate Catering · Sector V · Salt Lake · Newtown</span>
+    <h1 class="wp-h1"><em>15% OFF</em><br>Corporate Catering</h1>
+    <p class="wp-offer">Office lunches · town-halls · conferences</p>
+    <p class="wp-sub">Bulk office catering from verified Bengali kitchens — on-time delivery, fair quotes, no advance payment. 20–500 plates, all over Kolkata.</p>
+    <div class="wp-cta-wrap">
+      <a class="wp-cta-primary" data-ai-planner href="#aiplan">✨ Plan your office catering with Aayojan AI →</a>
+      <a class="wp-cta-ghost" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quote%20for%20corporate%2Foffice%20catering.">⚡ Quick quote in 30 sec →</a>
+    </div>
+    <div class="wp-trust"><span>⏱️ On-time delivery</span><span>🔒 No advance</span><span>✓ FSSAI verified</span><span>💬 WhatsApp support</span></div>
+  </div>
 </section>
 <script>/* event hero: single matched slide (?event=) with clean intro, OR rotate Party->Pujo->Wedding for generic /events/. Only the active slide's video plays. */
 (function(){var hero=document.getElementById('evtHero');if(!hero)return;var de=document.documentElement,cn=de.className;
