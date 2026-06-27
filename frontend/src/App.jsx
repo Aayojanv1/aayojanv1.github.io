@@ -3315,22 +3315,19 @@ export default function AayojanApp(){
       <footer style={{textAlign:"center",marginTop:44,padding:"20px 20px 0",borderTop:"2px solid #fde8d8",fontSize:12,color:"#9ca3af",letterSpacing:"0.04em"}}>
         <div style={{fontSize:18,letterSpacing:10,color:"#fca5a5",marginBottom:6}}>✦ ✦ ✦ ✦ ✦</div>
         Aayojan © 2025 · Newtown, Kolkata · আয়োজন
-        <div style={{marginTop:8,display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap"}}>
-          <button onClick={()=>navigate("privacy")} style={{background:"none",border:"none",color:"#9ca3af",fontSize:11,cursor:"pointer",textDecoration:"underline"}}>Privacy Policy</button>
-          <button onClick={()=>navigate("terms")} style={{background:"none",border:"none",color:"#9ca3af",fontSize:11,cursor:"pointer",textDecoration:"underline"}}>Terms of Service</button>
-          <button onClick={()=>navigate("refund")} style={{background:"none",border:"none",color:"#9ca3af",fontSize:11,cursor:"pointer",textDecoration:"underline"}}>Refund Policy</button>
-          <button onClick={()=>navigate("about")} style={{background:"none",border:"none",color:"#FF6B35",fontSize:11,cursor:"pointer",textDecoration:"underline",fontWeight:600}}>About Us</button>
+        <div style={{marginTop:8,display:"flex",justifyContent:"center",gap:14,flexWrap:"wrap"}}>
+          <a href="/about.html" style={{color:"#FF6B35",fontSize:11,textDecoration:"underline",fontWeight:600}}>About Us</a>
           <a href="/partners.html" style={{color:"#FF6B35",fontSize:11,textDecoration:"underline",fontWeight:600}}>Partner with Us</a>
+          <a href="/pricing.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>Pricing</a>
           <a href="/faq.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>FAQ</a>
+          <a href="/contact.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>Contact Us</a>
         </div>
         <div style={{marginTop:8,display:"flex",justifyContent:"center",gap:14,flexWrap:"wrap"}}>
           <a href="/privacy.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>Privacy</a>
           <a href="/terms.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>Terms &amp; Conditions</a>
           <a href="/refund.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>Refund &amp; Cancellation</a>
-          <a href="/pricing.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>Pricing</a>
-          <a href="/contact.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>Contact Us</a>
         </div>
-        <div style={{marginTop:8,fontSize:10.5,color:"#b8a89a",lineHeight:1.5}}>Aayojan Technologies (Prop. Suparna Basak) · 327/1, HA Block, Sector III, Salt Lake, Kolkata – 700097 · WhatsApp +91 80884 34425 · aayojan11@gmail.com</div>
+        <div style={{marginTop:8,fontSize:10.5,color:"#b8a89a",lineHeight:1.5}}>Aayojan Technologies (Prop. Suparna Basak) · 327/1, HA Block, Sector III, Salt Lake, Kolkata – 700097 · WhatsApp +91 80884 34425 · aayojan11@gmail.com · GSTIN 19AUPPB2493R1ZR</div>
       </footer>
 
       {/* Floating AI Chat Bot (bottom-left) */}
