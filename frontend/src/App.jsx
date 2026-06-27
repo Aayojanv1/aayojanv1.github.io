@@ -1352,6 +1352,25 @@ export default function AayojanApp(){
            </div>
          </div>
 
+         {/* ── REGISTRATION TRUST BADGES ─────────────────────────── */}
+         <div style={{maxWidth:940,margin:"8px auto 0",padding:"24px 16px 0"}}>
+           <div style={{textAlign:"center",fontSize:11,fontWeight:800,letterSpacing:"0.12em",textTransform:"uppercase",color:"#C95F08",marginBottom:12}}>Registered &amp; Verified Business</div>
+           <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center",gap:9}}>
+             {[
+               {ic:"🪪",t:"Govt-Registered MSME",v:"UDYAM-WB-14-0277694"},
+               {ic:"📜",t:"WB Trade Licence",v:"0917P195926497999"},
+               {ic:"🧾",t:"GST Registered",v:"19AUPPB2493R1ZR"},
+               {ic:"🔒",t:"Secure Payments",v:"via Cashfree"},
+               {ic:"✓",t:"FSSAI-verified kitchens",v:""},
+             ].map((b,i)=>(
+               <span key={i} style={{display:"inline-flex",alignItems:"center",gap:7,background:"#fff",border:"1px solid #EDD8BC",borderRadius:99,padding:"7px 13px",fontSize:12,fontWeight:600,color:"#3a2c1c",boxShadow:"0 4px 12px rgba(76,43,10,0.06)"}}>
+                 <span style={{fontSize:14}}>{b.ic}</span> {b.t} {b.v&&<b style={{color:"#C95F08",fontWeight:800}}>{b.v}</b>}
+               </span>
+             ))}
+           </div>
+           <div style={{textAlign:"center",fontSize:11,color:"#9c8e7b",marginTop:12,lineHeight:1.5}}>Aayojan Technologies (Prop. Suparna Basak) · 327/1, HA Block, Sector III, Salt Lake, Kolkata – 700097 · A registered MSME, Govt. of India.</div>
+         </div>
+
          {/* ── SECTION DIVIDER — Customer area ─────────────────────────── */}
          <div style={{textAlign:"center",padding:"32px 14px 0",position:"relative"}}>
            <div style={{width:"100%",height:1,background:"var(--border-light)",position:"absolute",top:"50%",left:0}}/>

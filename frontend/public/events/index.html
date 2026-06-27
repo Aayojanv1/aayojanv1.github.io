@@ -489,6 +489,13 @@ section.block{padding:4rem 5%;}
 .ts-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
 .ts-item strong{display:block;color:#FFF8EF;font-family:'Playfair Display',serif;font-size:1rem;font-weight:800;margin-bottom:2px;}
 .ts-item span{display:block;color:#c9bca9;font-size:0.84rem;line-height:1.45;}
+/* registration trust badges */
+.reg-badges{max-width:1080px;margin:1.4rem auto 0;display:flex;flex-wrap:wrap;justify-content:center;gap:9px;padding-top:1.2rem;border-top:1px solid rgba(255,248,239,0.1);}
+.reg-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,248,239,0.06);border:1px solid rgba(243,200,105,0.28);border-radius:99px;padding:7px 13px;color:#FFF8EF;font-size:0.78rem;font-weight:600;}
+.reg-badge .ic{font-size:14px;}
+.reg-badge b{color:#F3C869;font-weight:800;letter-spacing:0.02em;}
+.reg-badge small{color:#c9bca9;font-weight:600;}
+.reg-cap{text-align:center;color:#9c8e7b;font-size:0.72rem;margin-top:0.9rem;max-width:760px;margin-left:auto;margin-right:auto;line-height:1.5;}
 /* founder note (photo optional; placeholder auto-upgrades when img added) */
 .founder{background:var(--cream-2);}
 .founder-card{max-width:820px;margin:0 auto;background:white;border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr;overflow:hidden;}
@@ -1045,7 +1052,14 @@ playActive();reset();})();</script>
     <div class="ts-item"><span class="ts-ic">🔒</span><div><strong>No advance payment</strong><span>We never ask for money upfront. You pay the kitchen directly, after the event.</span></div></div>
     <div class="ts-item"><span class="ts-ic">🪪</span><div><strong>Registered business</strong><span>Udyam-registered MSME (Govt. of India). Every partner kitchen is FSSAI-checked.</span></div></div>
   </div>
-  <p style="max-width:1080px;margin:1rem auto 0;text-align:center;color:#9c8e7b;font-size:0.76rem;">Aayojan Technologies · Udyam Reg. No. <strong style="color:#c9bca9;">UDYAM-WB-14-0277694</strong> · Registered MSME, Government of India</p>
+  <div class="reg-badges">
+    <span class="reg-badge"><span class="ic">🪪</span> Govt-Registered MSME <b>UDYAM-WB-14-0277694</b></span>
+    <span class="reg-badge"><span class="ic">📜</span> WB Trade Licence <b>0917P195926497999</b></span>
+    <span class="reg-badge"><span class="ic">🧾</span> GST Registered <b>19AUPPB2493R1ZR</b></span>
+    <span class="reg-badge"><span class="ic">🔒</span> Secure Payments <small>via Cashfree</small></span>
+    <span class="reg-badge"><span class="ic">✓</span> FSSAI-verified kitchens</span>
+  </div>
+  <p class="reg-cap">Aayojan Technologies (Prop. Suparna Basak) · 327/1, HA Block, Sector III, Salt Lake, Kolkata – 700097 · A registered MSME, Government of India.</p>
 </section>
 
 
