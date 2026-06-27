@@ -3323,6 +3323,14 @@ export default function AayojanApp(){
           <a href="/partners.html" style={{color:"#FF6B35",fontSize:11,textDecoration:"underline",fontWeight:600}}>Partner with Us</a>
           <a href="/faq.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>FAQ</a>
         </div>
+        <div style={{marginTop:8,display:"flex",justifyContent:"center",gap:14,flexWrap:"wrap"}}>
+          <a href="/privacy.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>Privacy</a>
+          <a href="/terms.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>Terms &amp; Conditions</a>
+          <a href="/refund.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>Refund &amp; Cancellation</a>
+          <a href="/pricing.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>Pricing</a>
+          <a href="/contact.html" style={{color:"#9ca3af",fontSize:11,textDecoration:"underline"}}>Contact Us</a>
+        </div>
+        <div style={{marginTop:8,fontSize:10.5,color:"#b8a89a",lineHeight:1.5}}>Aayojan Technologies (Prop. Suparna Basak) · 327/1, HA Block, Sector III, Salt Lake, Kolkata – 700097 · WhatsApp +91 80884 34425 · aayojan11@gmail.com</div>
       </footer>
 
       {/* Floating AI Chat Bot (bottom-left) */}
