@@ -1098,13 +1098,12 @@ export default function AayojanApp(){
         </div>
       </div>
 
-      {/* ── Flash Offers Banner ──────────────────────────────────────────── */}
+      {/* ── Party Offer Banner ───────────────────────────────────────────── */}
       <div className="flash-offers-bar" style={{padding:"10px 14px"}}>
         <div style={{maxWidth:1100,margin:"0 auto",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"center",gap:"8px 12px",position:"relative",zIndex:1}}>
-          <span className="fo-badge" style={{display:"inline-flex",alignItems:"center",gap:5,background:"#FFE9B0",color:"#7A1F2B",fontWeight:900,fontSize:12,letterSpacing:"0.06em",padding:"4px 11px",borderRadius:99,textTransform:"uppercase"}}>⚡ Flash Sale</span>
-          <span className="fo-chip-pulse" style={{display:"inline-flex",alignItems:"center",gap:6,background:"rgba(255,255,255,0.18)",border:"1px solid rgba(255,233,176,0.55)",color:"#FFF8EF",padding:"5px 13px",borderRadius:99,fontSize:13,fontWeight:600}}>🎉 <strong style={{color:"#FFE9B0",fontWeight:900,fontSize:15}}>5% OFF</strong> your first 3 bookings</span>
-          <span className="fo-chip-pulse" style={{display:"inline-flex",alignItems:"center",gap:6,background:"rgba(255,255,255,0.18)",border:"1px solid rgba(255,233,176,0.55)",color:"#FFF8EF",padding:"5px 13px",borderRadius:99,fontSize:13,fontWeight:600}}>💍 <strong style={{color:"#FFE9B0",fontWeight:900,fontSize:15}}>UP TO 20% OFF</strong> weddings</span>
-          <span style={{fontSize:11.5,color:"#FFF8EF",fontWeight:700}}>⏳ Ends 29 June</span>
+          <span className="fo-badge" style={{display:"inline-flex",alignItems:"center",gap:5,background:"#FFE9B0",color:"#7A1F2B",fontWeight:900,fontSize:12,letterSpacing:"0.06em",padding:"4px 11px",borderRadius:99,textTransform:"uppercase"}}>🎉 Party Deal</span>
+          <span className="fo-chip-pulse" style={{display:"inline-flex",alignItems:"center",gap:6,background:"rgba(255,255,255,0.18)",border:"1px solid rgba(255,233,176,0.55)",color:"#FFF8EF",padding:"5px 13px",borderRadius:99,fontSize:13,fontWeight:600}}>🎈 <strong style={{color:"#FFE9B0",fontWeight:900,fontSize:15}}>FLAT 10% OFF</strong> on party plates over ₹350</span>
+          <a href="/events/#offers" style={{fontSize:12,color:"#7A1F2B",fontWeight:900,background:"#FFE9B0",padding:"5px 13px",borderRadius:99,textDecoration:"none"}}>See deal →</a>
         </div>
       </div>
 
@@ -1155,12 +1154,12 @@ export default function AayojanApp(){
       {view==="landing"&&(
         <div style={{...anim,overflowX:"hidden"}}>
 
-         {/* ── Live Offers pointer → the single Offers section on /events ── */}
+         {/* ── Party-deal pointer → the Offers section on /events ── */}
          <a href="/events/#offers" className="jamai-teaser-bar" style={{display:"block",padding:"9px 14px",textDecoration:"none"}}>
            <div style={{maxWidth:1100,margin:"0 auto",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"center",gap:"6px 12px"}}>
-             <span style={{fontFamily:"'Playfair Display',serif",fontWeight:900,color:"#FFE9B0",fontSize:14}}>🎟️ Live Offers</span>
-             <span style={{color:"#FFF8EF",fontWeight:700,fontSize:12.5}}>🥁 <strong style={{color:"#FFE9B0"}}>10% off</strong> Pujo catering · 💍 up to <strong style={{color:"#FFE9B0"}}>20% off</strong> weddings · 🎉 party deals</span>
-             <span style={{background:"#FFE9B0",color:"#7A1F2B",fontWeight:900,fontSize:12,padding:"5px 13px",borderRadius:99}}>See offers →</span>
+             <span style={{fontFamily:"'Playfair Display',serif",fontWeight:900,color:"#FFE9B0",fontSize:14}}>🎟️ Party Deal</span>
+             <span style={{color:"#FFF8EF",fontWeight:700,fontSize:12.5}}>🎉 <strong style={{color:"#FFE9B0"}}>Flat 10% off</strong> on party plates over <strong style={{color:"#FFE9B0"}}>₹350</strong></span>
+             <span style={{background:"#FFE9B0",color:"#7A1F2B",fontWeight:900,fontSize:12,padding:"5px 13px",borderRadius:99}}>See deal →</span>
            </div>
          </a>
 
