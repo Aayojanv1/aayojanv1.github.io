@@ -140,6 +140,23 @@ const FEATURED = [
     logoAlt: "DEBI Events & Caterers — Mughlai, Bengali & Chinese catering",
     logoBg: "#FDF1E7",
   },
+  {
+    issue: "09",
+    slug: "krivaans-hensel",
+    chef: "Sanat Ghosh",
+    business: "Krivaans Hensel & Caterers",
+    headlinePrefix: "Sanat Ghosh caters",
+    headlineAccent: "Bengali feasts",
+    headlineRest: "for every occasion, big or small.",
+    quote: "অনুষ্ঠান আপনার, খাবারের স্বাদ ও সঠিক পরিষেবা আমাদের দায়িত্ব — from Rajpur–Sonarpur, Krivaans Hensel & Caterers plates weddings, Annaprashan, birthdays, Puja and corporate events across Kolkata. FSSAI verified and now matched to you through Aayojan.",
+    dishes: ["Weddings · Annaprashan", "Birthdays · Corporate", "Puja & social events"],
+    href: "/partners/krivaans-hensel.html",
+    fssai: { status: "verified", number: "22826176000296" },
+    logoType: "image",
+    logoImg: "/partners/krivaans-hensel/logo.jpg",
+    logoAlt: "Krivaans Hensel & Caterers — Bengali & multi-cuisine catering, Rajpur–Sonarpur",
+    logoBg: "#E7D6AE",
+  },
 ];
 
 const HOLD_MS = 6500;
