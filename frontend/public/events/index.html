@@ -412,6 +412,21 @@ html.evt-corporate .evt-slide{display:none!important;} html.evt-corporate .ev-co
   .orot-slide .pf-sub{font-size:13px;}
 }
 @media(max-width:680px){.puja-feature{flex-direction:column;}.pf-img{flex:none;width:100%;height:190px;min-height:0;}.pf-body{padding:18px 18px 20px;}.pf-offer{font-size:2rem;}}
+/* weekend party 20% toggle: .wknd-only shown Fri-Sun, .wkdy-only shown Mon-Thu */
+.wknd-only{display:none;}
+html.is-weekend .wknd-only{display:inline;}
+html.is-weekend .wkdy-only{display:none;}
+.offer-timer{display:none;}
+html.is-weekend .offer-timer{display:flex;}
+.wp-wknd{display:inline-block;background:#FFE9B0;color:#7A1F2B;font-weight:900;font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;padding:3px 9px;border-radius:99px;margin-bottom:8px;vertical-align:middle;animation:foBadgeBlink 1.05s ease-in-out infinite;}
+/* celebratory confetti pop on the weekend timer */
+.ot-pop{display:inline-block;font-size:1.1rem;animation:otPop 1.1s ease-in-out infinite;}
+.ot-pop:nth-of-type(2){animation-delay:.4s;}
+@keyframes otPop{0%,100%{transform:translateY(0) rotate(0) scale(1);}25%{transform:translateY(-5px) rotate(-10deg) scale(1.12);}75%{transform:translateY(-3px) rotate(10deg) scale(1.08);}}
+@keyframes confettiFall{0%{transform:translateY(-14px) rotate(0);opacity:0;}12%{opacity:1;}100%{transform:translateY(46px) rotate(220deg);opacity:0;}}
+.ot-confetti{position:absolute;top:0;bottom:0;left:0;right:0;overflow:hidden;pointer-events:none;}
+.ot-confetti i{position:absolute;top:-6px;width:6px;height:9px;border-radius:1px;opacity:0;animation:confettiFall 2.4s linear infinite;}
+@media(prefers-reduced-motion:reduce){.ot-pop,.ot-confetti i{animation:none;}.ot-confetti{display:none;}}
 .offer-card{position:relative;display:flex;flex-direction:column;border-radius:18px;padding:18px 18px 58px;min-height:182px;text-decoration:none;overflow:hidden;box-shadow:0 16px 42px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.14);}
 .oc-puja{background:linear-gradient(150deg,#7A1320,#C0392B 46%,#F1A93B);}
 .oc-deco{position:absolute;top:10px;right:12px;font-size:22px;opacity:.6;letter-spacing:2px;animation:ocbob 2.2s ease-in-out infinite;pointer-events:none;}
@@ -583,7 +598,8 @@ section.block{padding:4rem 5%;}
 var ev='';if(/wedding|reception|marriage|shaadi|shadi|\bbiye\b/.test(blob))ev='wedding';else if(/\bparty\b|house ?party|get.?together|kitty/.test(blob))ev='party';else if(/pujo|puja|durga|ratha|\bbhog\b/.test(blob))ev='pujo';else if(/corporate|\boffice\b|conference|town.?hall|team lunch/.test(blob))ev='corporate';
 var otherEvent=/annaprasan|annaprashan|bhai|phota|griha|housewarm|aiburo|birthday/.test(blob);
 var de=document.documentElement;
-if(ev)de.className+=' show-evt evt-'+ev+' evt-intro';else if(PROMO_ON&&!otherEvent)de.className+=' show-evt evt-rotate';}catch(_){}})();</script>
+if(ev)de.className+=' show-evt evt-'+ev+' evt-intro';else if(PROMO_ON&&!otherEvent)de.className+=' show-evt evt-rotate';
+var _wd=new Date().getDay();var _wf=p.get('wknd');var _wknd=(_wf==='1')||(_wf!=='0'&&(_wd===5||_wd===6||_wd===0));if(_wknd)de.className+=' is-weekend';/* Fri/Sat/Sun = weekend party 20%; ?wknd=1/0 forces for preview */}catch(_){}})();</script>
 
 <nav>
   <a href="/" class="nav-logo" aria-label="Aayojan.online home"><img src="/img/aayojan-cloche.png" alt=""><span class="wm">Aayojan.online</span></a>
@@ -611,6 +627,37 @@ if(ev)de.className+=' show-evt evt-'+ev+' evt-intro';else if(PROMO_ON&&!otherEve
 
 <div class="crumbs"><a href="/">Home</a><span>›</span>Events</div>
 
+<!-- WEEKEND PARTY OFFER COUNTDOWN — shows Fri–Sun only, counts to Sunday 11:59 PM, auto-resets weekly -->
+<div class="offer-timer urgent" id="offerTimer">
+  <span class="ot-confetti" aria-hidden="true"><i style="left:8%;background:#FFE9B0;animation-delay:0s"></i><i style="left:22%;background:#86efac;animation-delay:.5s"></i><i style="left:38%;background:#F3C869;animation-delay:1s"></i><i style="left:55%;background:#fff;animation-delay:.3s"></i><i style="left:70%;background:#FFB0B0;animation-delay:1.3s"></i><i style="left:86%;background:#FFE9B0;animation-delay:.8s"></i></span>
+  <span class="ot-pop" aria-hidden="true">🎉</span>
+  <span class="ot-label"><b>Weekend Party Special</b> · 20% OFF party plates — ends in</span>
+  <span class="ot-pop" aria-hidden="true">🎊</span>
+  <span class="ot-clock" id="otClock" aria-label="Time remaining">
+    <span class="ot-seg"><span>hrs</span><i id="ot-h" style="font-style:normal">00</i></span>
+    <span class="ot-seg"><span>min</span><i id="ot-m" style="font-style:normal">00</i></span>
+    <span class="ot-seg"><span>sec</span><i id="ot-s" style="font-style:normal">00</i></span>
+  </span>
+</div>
+<script>
+(function(){
+  var bar=document.getElementById("offerTimer");
+  if(!bar||document.documentElement.className.indexOf("is-weekend")<0) return; // weekdays: bar stays hidden
+  var h=document.getElementById("ot-h"),m=document.getElementById("ot-m"),s=document.getElementById("ot-s");
+  function pad(n){ return (n<10?"0":"")+n; }
+  function endOfSunday(){ var d=new Date(); var day=d.getDay(); var add=(day===0?0:7-day); // days until Sunday
+    var end=new Date(d.getFullYear(),d.getMonth(),d.getDate()+add,23,59,59,999); return end.getTime(); }
+  var DEADLINE=endOfSunday();
+  function tick(){
+    var left=DEADLINE-Date.now();
+    if(left<=0){ bar.style.display="none"; clearInterval(t); return; }
+    var hh=Math.floor(left/3600000), mm=Math.floor(left%3600000/60000), ss=Math.floor(left%60000/1000);
+    h.textContent=pad(hh); m.textContent=pad(mm); s.textContent=pad(ss);
+  }
+  tick(); var t=setInterval(tick,1000);
+})();
+</script>
+
 <!-- EVENT PROMO HERO — rotating Party/Pujo/Wedding (generic) or single matched hero (?event=) -->
 <section class="evt-hero" id="evtHero" aria-label="Catering by occasion">
 
@@ -622,8 +669,9 @@ if(ev)de.className+=' show-evt evt-'+ev+' evt-intro';else if(PROMO_ON&&!otherEve
     <div class="wp-overlay"></div>
     <div class="wp-inner">
       <span class="wp-badge">🎉 Party Catering · All Kolkata</span>
-      <h1 class="wp-h1">Flat <em>10% OFF</em><br>Party Plates</h1>
-      <p class="wp-offer">On party deals · plates over <strong>₹350/plate</strong></p>
+      <span class="wp-wknd wknd-only">⚡ Weekend Special · ends Sunday</span>
+      <h1 class="wp-h1">Flat <em><span class="wkdy-only">10%</span><span class="wknd-only">20%</span> OFF</em><br>Party Plates</h1>
+      <p class="wp-offer"><span class="wknd-only"><strong>This weekend only — double the discount.</strong> </span>On party deals · plates over <strong>₹350/plate</strong> (veg or non-veg)</p>
       <p class="wp-sub">House parties, birthdays, anniversaries &amp; get-togethers — verified Bengali kitchens, fair quotes, no advance payment.</p>
       <div class="wp-cta-wrap">
         <a class="wp-cta-primary" data-ai-planner href="#aiplan">✨ Plan your party with Aayojan AI →</a>
@@ -721,7 +769,7 @@ playActive();reset();})();</script>
         <span class="lt-item">📍 Coverage live · all over Kolkata</span>
         <span class="lt-item">💬 WhatsApp +91 80884 34425 — get matched in minutes</span>
         <span class="lt-item">🎉 Now taking party bookings · all over Kolkata</span>
-        <span class="lt-item">🎉 Party plates over ₹350 — flat 10% off this season</span>
+        <span class="lt-item"><span class="wkdy-only">🎉 Party plates over ₹350 — flat 10% off this season</span><span class="wknd-only">⚡ Weekend Special · 20% off party plates over ₹350 · ends Sunday — slots filling fast!</span></span>
         <span class="lt-item">🍴 Free food tasting before you book your wedding</span>
         <!-- duplicate for seamless loop -->
         <span class="lt-item">🍳 15+ kitchens in our network</span>
@@ -730,7 +778,7 @@ playActive();reset();})();</script>
         <span class="lt-item">📍 Coverage live · all over Kolkata</span>
         <span class="lt-item">💬 WhatsApp +91 80884 34425 — get matched in minutes</span>
         <span class="lt-item">🎉 Now taking party bookings · all over Kolkata</span>
-        <span class="lt-item">🎉 Party plates over ₹350 — flat 10% off this season</span>
+        <span class="lt-item"><span class="wkdy-only">🎉 Party plates over ₹350 — flat 10% off this season</span><span class="wknd-only">⚡ Weekend Special · 20% off party plates over ₹350 · ends Sunday — slots filling fast!</span></span>
         <span class="lt-item">🍴 Free food tasting before you book your wedding</span>
       </div>
     </div>
@@ -741,16 +789,16 @@ playActive();reset();})();</script>
 <section class="roll-promos" id="offers">
   <div style="text-align:center;padding:0 5% 12px;">
     <span style="font-family:'Playfair Display',serif;font-weight:800;color:#F3C869;font-size:1.1rem;">🎟️ Aayojan Offer</span>
-    <div style="font-size:11.5px;color:rgba(255,248,239,0.55);margin-top:2px;">our live party deal</div>
+    <div style="font-size:11.5px;color:rgba(255,248,239,0.55);margin-top:2px;"><span class="wkdy-only">our live party deal</span><span class="wknd-only">⚡ weekend special · ends Sunday midnight</span></div>
   </div>
-  <a class="puja-feature" data-ai-planner href="#aiplan" aria-label="Party catering — flat 10% off plates over ₹350" style="background:linear-gradient(135deg,#7A1320,#C0392B 52%,#E8760A);">
+  <a class="puja-feature" data-ai-planner href="#aiplan" aria-label="Party catering — flat discount on plates over ₹350" style="background:linear-gradient(135deg,#7A1320,#C0392B 52%,#E8760A);">
     <div class="pf-img"><img src="/events/img/hub/tandoori-kebab.jpg" alt="Party catering — tandoori kebabs, fish fry & Bengali spread" loading="lazy"></div>
     <div class="pf-body">
       <span class="pf-deco">🎉🍢</span>
-      <span class="pf-badge">🎉 Party · House Parties · Birthdays · Get-togethers</span>
-      <div class="pf-offer">Flat <em>10% OFF</em> <span>· party plates over ₹350</span></div>
+      <span class="pf-badge"><span class="wknd-only">⚡ WEEKEND SPECIAL · </span>🎉 Party · House Parties · Birthdays · Get-togethers</span>
+      <div class="pf-offer">Flat <em><span class="wkdy-only">10%</span><span class="wknd-only">20%</span> OFF</em> <span>· party plates over ₹350 (veg or non-veg)</span></div>
       <div class="pf-sub">Paneer Tikka · Fish Fry · Chicken Kosha · Mutton Kosha · Pulao · Dal · sweets — verified Bengali kitchens, no advance payment.</div>
-      <div class="pf-meta">🎈 Same-day slots · <b>10% off applies on plates above ₹350</b></div>
+      <div class="pf-meta">🎈 Same-day slots · <b><span class="wkdy-only">10% off applies on plates above ₹350</span><span class="wknd-only">20% off all weekend — double the weekday deal, ends Sunday</span></b></div>
       <span class="pf-cta">🎈 Plan my party →</span>
     </div>
   </a>
@@ -784,7 +832,7 @@ playActive();reset();})();</script>
 <!-- BOOKINGS SOCIAL PROOF -->
 <div class="bookbar">
   <span class="bb-dot" aria-hidden="true"></span>
-  <span class="bb-txt"><strong>Booked this month:</strong> 6+ events in Newtown &amp; Salt Lake · <strong style="color:#B8456A">🎉 party plates over ₹350 now get flat 10% off</strong></span>
+  <span class="bb-txt"><strong>Booked this month:</strong> 6+ events in Newtown &amp; Salt Lake · <strong style="color:#B8456A"><span class="wkdy-only">🎉 party plates over ₹350 now get flat 10% off</span><span class="wknd-only">⚡ this weekend: 20% off party plates over ₹350</span></strong></span>
 </div>
 
 <!-- TESTIMONIALS — trust signal, placed high (real reviews of network kitchens, names gated) -->
