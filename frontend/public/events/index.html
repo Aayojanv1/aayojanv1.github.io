@@ -324,7 +324,13 @@ html.evt-corporate .evt-slide{display:none!important;} html.evt-corporate .ev-co
 .tmoni-human{display:flex;gap:11px;align-items:flex-start;text-align:left;max-width:62ch;margin:0 auto 1.8rem;background:#FFF1DE;border:1px solid #F0D9B5;border-radius:14px;padding:14px 18px;color:#5b4632;font-size:0.95rem;line-height:1.6;}
 .tmoni-human .he{font-size:1.5rem;line-height:1;flex-shrink:0;}
 .tmoni-human strong{color:#236B43;}
-.tmoni-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-bottom:1.8rem;}
+.tmoni-grid{position:relative;overflow:hidden;margin-bottom:1.8rem;-webkit-mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent);}
+.tmoni-track{display:flex;gap:1rem;width:max-content;animation:tmoniscroll 120s linear infinite;align-items:stretch;}
+.tmoni-track:hover{animation-play-state:paused;}
+.tmoni-track .tmoni-card{width:min(340px,82vw);flex:0 0 auto;display:flex;flex-direction:column;}
+.tmoni-track .tmoni-card blockquote{flex:1;}
+@keyframes tmoniscroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+@media (prefers-reduced-motion:reduce){.tmoni-track{animation:none;overflow-x:auto;}}
 .tmoni-card{background:#fff;border:1px solid #EDD8BC;border-radius:16px;padding:1.4rem 1.3rem;text-align:left;box-shadow:0 10px 26px rgba(76,43,10,0.08);}
 .tmoni-photo{display:block;width:100%;height:160px;object-fit:cover;border-radius:12px;margin-bottom:0.9rem;border:1px solid #EDD8BC;}
 .tmoni-photo-cap{font-size:0.72rem;color:#9c8871;margin:-0.6rem 0 0.7rem;font-style:italic;}
@@ -844,11 +850,18 @@ playActive();reset();})();</script>
     <p class="tmoni-sub">Real reviews of kitchens in the Aayojan network. The kitchen's name is shared once we match you.</p>
     <div class="tmoni-human"><span class="he">🤝</span><span><strong>Tech for speed, humans for trust.</strong> Our AI matches you in seconds — then a <strong>real Aayojan person</strong> personally calls the kitchens, confirms your menu &amp; price, and stays with you on WhatsApp until your event is done.</span></div>
     <div class="tmoni-grid">
+      <div class="tmoni-track">
       <figure class="tmoni-card">
         <img class="tmoni-photo" src="/events/img/reviews/chatterjee-birthday.jpg" alt="Mutton kosha and kaju-kismis pulao packed for a birthday, catered via Aayojan" loading="lazy">
         <div class="tmoni-stars" aria-label="4 out of 5 stars">★★★★☆</div>
         <blockquote>"The Mutton Kosha was incredibly soft and delicious, and the pulao was perfectly made with ghee, kaju and kismis. Overall, a fantastic experience! Thanks to Aayojan for finding the perfect vendor for our event."</blockquote>
         <figcaption class="tmoni-cap">— Mr. Chatterjee · daughter's birthday · Newtown</figcaption>
+      </figure>
+      <figure class="tmoni-card">
+        <img class="tmoni-photo" src="/events/img/reviews/somdeb-rajarhat.jpg" alt="Rice, dal, machher jhol and vegetable spread served by Aayojan-verified kitchen for Somdeb's event in Rajarhat" loading="lazy" style="object-position:center 25%;">
+        <div class="tmoni-stars" aria-label="4 out of 5 stars">★★★★☆</div>
+        <blockquote>"Food was great. Effort was better. Thanks 🙏🏻"</blockquote>
+        <figcaption class="tmoni-cap">— Somdeb · Rajarhat</figcaption>
       </figure>
       <figure class="tmoni-card">
         <div class="tmoni-stars" aria-label="5 out of 5 stars">★★★★★</div>
@@ -880,6 +893,50 @@ playActive();reset();})();</script>
         <blockquote>"Really transparent — clear quotes and quick WhatsApp replies, everything sorted in minutes. Would've liked a couple more veg options on one of the menus, but the communication was excellent and I'd happily use Aayojan again for our next get-together."</blockquote>
         <figcaption class="tmoni-cap">— Chanchal, Newtown · booked via Aayojan.Online</figcaption>
       </figure>
+      <!-- duplicated set for seamless marquee loop -->
+      <figure class="tmoni-card" aria-hidden="true">
+        <img class="tmoni-photo" src="/events/img/reviews/chatterjee-birthday.jpg" alt="" loading="lazy">
+        <div class="tmoni-stars">★★★★☆</div>
+        <blockquote>"The Mutton Kosha was incredibly soft and delicious, and the pulao was perfectly made with ghee, kaju and kismis. Overall, a fantastic experience! Thanks to Aayojan for finding the perfect vendor for our event."</blockquote>
+        <figcaption class="tmoni-cap">— Mr. Chatterjee · daughter's birthday · Newtown</figcaption>
+      </figure>
+      <figure class="tmoni-card" aria-hidden="true">
+        <img class="tmoni-photo" src="/events/img/reviews/somdeb-rajarhat.jpg" alt="" loading="lazy" style="object-position:center 25%;">
+        <div class="tmoni-stars">★★★★☆</div>
+        <blockquote>"Food was great. Effort was better. Thanks 🙏🏻"</blockquote>
+        <figcaption class="tmoni-cap">— Somdeb · Rajarhat</figcaption>
+      </figure>
+      <figure class="tmoni-card" aria-hidden="true">
+        <div class="tmoni-stars">★★★★★</div>
+        <blockquote>"The food is so sumptuous and delectable that one can't resist! It is quite unbelievable that the food is home-made. Delicious food · experienced chef · great value."</blockquote>
+        <figcaption class="tmoni-cap">— Debdattaa P. · on an Aayojan-verified kitchen</figcaption>
+      </figure>
+      <figure class="tmoni-card" aria-hidden="true">
+        <div class="tmoni-stars">★★★★★</div>
+        <blockquote>"Chhotto meyer annaprasan-e Aayojan theke caterer pelam — payesh, luchi, chholar dal ar machher matha diye bhaat, ekdom thakurbari-r ranna! Guest-ra kheye darun bollo. Didi nije phone kore menu ar headcount confirm korlo, mone holo পাশে keu achhe. Khub bhalo legechhe. 🙏"</blockquote>
+        <figcaption class="tmoni-cap">— Moumita B. · annaprasan · Behala</figcaption>
+      </figure>
+      <figure class="tmoni-card" aria-hidden="true">
+        <div class="tmoni-stars">★★★★★</div>
+        <blockquote>"Thank you for all the tasty items. Very good service with reasonable price. Food was very good and delivered on time."</blockquote>
+        <figcaption class="tmoni-cap">— Sunanda G. · on an Aayojan-verified kitchen</figcaption>
+      </figure>
+      <figure class="tmoni-card" aria-hidden="true">
+        <div class="tmoni-stars">★★★★★</div>
+        <blockquote>"Excellent food taste and service. Every guest appreciated the taste and quality. The staff were always present and served everyone continuously — extremely satisfied."</blockquote>
+        <figcaption class="tmoni-cap">— Aushi D. · on an Aayojan-verified kitchen</figcaption>
+      </figure>
+      <figure class="tmoni-card" aria-hidden="true">
+        <div class="tmoni-stars">★★★★☆</div>
+        <blockquote>"Booked catering for my daughter's annaprasan through Aayojan. Got matched with 3 verified kitchens in seconds, compared the menus and locked my quote in minutes. What I liked most — a real person from the Aayojan team actually called to confirm my headcount and menu, so it felt like someone genuinely had my back, not just an app. Needed one follow-up, but overall smooth and saved me calling ten caterers."</blockquote>
+        <figcaption class="tmoni-cap">— Amit, Salt Lake · booked via Aayojan.Online</figcaption>
+      </figure>
+      <figure class="tmoni-card" aria-hidden="true">
+        <div class="tmoni-stars">★★★★☆</div>
+        <blockquote>"Really transparent — clear quotes and quick WhatsApp replies, everything sorted in minutes. Would've liked a couple more veg options on one of the menus, but the communication was excellent and I'd happily use Aayojan again for our next get-together."</blockquote>
+        <figcaption class="tmoni-cap">— Chanchal, Newtown · booked via Aayojan.Online</figcaption>
+      </figure>
+      </div>
     </div>
   </div>
 </section>
