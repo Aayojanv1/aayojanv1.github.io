@@ -64,6 +64,9 @@
   .inv-foot .ty{font-family:'Playfair Display',serif;font-style:italic;color:var(--saffron);font-size:1rem;}
   .inv-foot .contact{font-size:12px;color:var(--muted);text-align:right;line-height:1.6;}
   .inv-foot .contact b{color:var(--dark);}
+  .notes{padding:14px 30px 6px;font-size:12.5px;color:#4b3a24;line-height:1.6;white-space:pre-wrap;border-top:1px dashed var(--border);}
+  .notes:empty{display:none;}
+  .notes-h{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:800;margin-bottom:4px;}
   .terms{padding:12px 30px 22px;font-size:10.5px;color:#a89878;line-height:1.5;}
   @media(max-width:560px){.grid,.cols{grid-template-columns:1fr;}.inv-head{flex-direction:column;}.inv-meta{text-align:left;}}
   @media print{body{background:#fff;padding:0;}.controls{display:none!important;}.inv{box-shadow:none;border-radius:0;}}
@@ -82,6 +85,7 @@
       <div class="fld"><label>Aayojak number</label><input id="f_phone" value="+91-9748318444"></div>
       <div class="fld full"><label>Aayojak address</label><input id="f_addr" value="Kolkata – 700094"></div>
       <div class="fld"><label>Caterer</label><input id="f_caterer" value="Magnolia Catering"></div>
+      <div class="fld"><label>Caterer number</label><input id="f_cphone" value="" placeholder="e.g. 90074 57611"></div>
       <div class="fld"><label>Caterer rating</label><input id="f_rating" value="4.7"></div>
       <div class="fld"><label>Total guests</label><input id="f_guests" type="number" value="250"></div>
       <div class="fld"><label>Service / meal type</label><input id="f_service" value="Dinner Buffet"></div>
@@ -94,6 +98,7 @@
       <div class="fld"><label>Extra line label</label><input id="f_extra" value="" placeholder="e.g. Delivery charges / Two serving"></div>
       <div class="fld"><label>Extra line ₹</label><input id="f_extra_amt" type="number" value="0"></div>
       <div class="fld full"><label>Menu (optional)</label><input id="f_menu" value="" placeholder="e.g. Basanti Pulao, Kosha Mangsho, Chingri Malai Curry, Mishti Doi…"></div>
+      <div class="fld full"><label>Notes (payment schedule, tasting, pickup — free text, line breaks preserved)</label><textarea id="f_notes" rows="6" style="padding:9px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;resize:vertical;"></textarea></div>
     </div>
     <div class="actions">
       <button class="btn btn-print" onclick="window.print()">🖨️ Print / Save PDF</button>
@@ -112,7 +117,8 @@
         <div class="brand">Aayojan<span>.online</span><small>Kolkata's verified-kitchen marketplace</small></div>
       </div>
       <div class="inv-meta">
-        <div class="inv-title">Booking Invoice</div>
+        <div class="inv-title" id="o_title">Bill of Supply</div>
+        <div style="font-size:9.5px;color:#8B6E52;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px;">Booking Invoice · No GST charged</div>
         <div>Invoice <b id="o_no">AAY-0001</b></div>
         <div>Issued <b id="o_issued"></b></div>
       </div>
@@ -130,6 +136,7 @@
         <div class="line"><b>Event date:</b> <span id="o_date">16 Feb 2027</span></div>
         <div class="line"><b>Guests:</b> <span id="o_guests">250</span></div>
         <div class="line"><b>Caterer:</b> <span id="o_caterer">Magnolia Catering</span></div>
+        <div class="line" id="o_cphone_row" style="display:none"><b>Caterer no.:</b> <span id="o_cphone"></span></div>
         <div class="rate-badge" id="o_rating">★ 4.7 verified</div>
       </div>
     </div>
@@ -156,8 +163,10 @@
       <div class="trow"><span class="lbl" id="o_offer">20% offer applied</span></div>
       <div class="trow"><span class="lbl" id="o_sublbl">Catering estimate (tentative)</span><span class="val" id="o_sub">₹2,06,250</span></div>
       <div class="trow token"><span class="lbl"><span id="o_sclabel">Aayojan service charge · pay to lock vendor 24 hrs</span> <span class="paidtag" id="o_sctag">PAY NOW</span></span><span class="val" id="o_token">₹199</span></div>
-      <div class="trow bal"><span class="lbl">Payable to caterer</span><span class="val" id="o_bal">₹2,06,250</span></div>
+      <div class="trow bal"><span class="lbl" id="o_ballbl">Payable to caterer</span><span class="val" id="o_bal">₹2,06,250</span></div>
     </div>
+
+    <div class="notes" id="o_notes"></div>
 
     <div class="inv-foot">
       <div class="ty">Thank you for booking with Aayojan! 🍽️</div>
@@ -173,7 +182,7 @@
       <br><br>
       <b style="color:#5b4632">Aayojan Technologies</b> &nbsp;·&nbsp; Proprietor: Suparna Basak<br>
       Trade Licence No.: <b style="color:#5b4632">0917P195926497999</b> &nbsp;·&nbsp; Udyam Registration No. (MSME, Govt. of India): <b style="color:#5b4632">UDYAM-WB-14-0277694</b><br>
-      GSTIN: <b style="color:#5b4632">19AUPPB2493R1ZR</b> &nbsp;·&nbsp; Registered Office: 327/1, HA Block, Sector III, Salt Lake, Kolkata&nbsp;–&nbsp;700097.
+      Registered Office: 327/1, HA Block, Sector III, Salt Lake, Kolkata&nbsp;–&nbsp;700097.
     </div>
   </div>
 </div>
@@ -186,19 +195,25 @@
 
   function render(){
     var no=$("f_no").value, date=$("f_date").value, name=$("f_name").value, phone=$("f_phone").value,
-        addr=$("f_addr").value, caterer=$("f_caterer").value, rating=$("f_rating").value,
+        addr=$("f_addr").value, caterer=$("f_caterer").value, cphone=($("f_cphone").value||"").trim(), rating=$("f_rating").value,
         guests=+$("f_guests").value||0, plate=+$("f_plate").value||0, offer=$("f_offer").value,
         token=+$("f_token").value||0, menu=$("f_menu").value.trim(), service=($("f_service").value||"Catering").trim(),
         extra=($("f_extra").value||"").trim(), extraAmt=+$("f_extra_amt").value||0,
         sclabel=($("f_sclabel").value||"Aayojan service charge").trim(), sctag=($("f_sctag").value||"PAY NOW").trim().toUpperCase(),
+        notes=($("f_notes").value||""),
         confirmed=((($("f_tent").value||"no").trim().toLowerCase().charAt(0))==="y");
-    var cater = guests*plate, sub = cater + extraAmt, bal = sub; // service charge is a separate Aayojan fee; catering amount is payable to the caterer
+    var paid = sctag.indexOf("PAID")>=0;
+    // when the booking amount is already PAID through Aayojan, it is credited against the caterer bill
+    var cater = guests*plate, sub = cater + extraAmt, bal = paid ? (sub - token) : sub;
     $("o_service").textContent = service;
     $("o_no").textContent=no; $("o_name").textContent=name; $("o_phone").textContent=phone; $("o_addr").textContent=addr;
     $("o_date").textContent=date; $("o_guests").textContent=guests; $("o_caterer").textContent=caterer;
     $("o_rating").textContent="★ "+rating+" verified";
+    if($("o_cphone_row")){ $("o_cphone_row").style.display = cphone ? "" : "none"; $("o_cphone").textContent = cphone; }
     $("o_qty").textContent=guests; $("o_rate").textContent=inr(plate); $("o_amount").textContent=inr(cater);
-    $("o_offer").textContent=offer||""; $("o_sub").textContent=inr(sub); $("o_token").textContent=inr(token); $("o_bal").textContent=inr(bal);
+    $("o_offer").textContent=offer||""; $("o_sub").textContent=inr(sub);
+    $("o_token").textContent=(paid?"− ":"")+inr(token); $("o_bal").textContent=inr(bal);
+    if($("o_ballbl")) $("o_ballbl").textContent = paid ? "Balance payable to caterer" : "Payable to caterer";
     $("o_menu").textContent = menu || "Menu to be finalised";
     if($("o_tent")) $("o_tent").style.display = confirmed ? "none" : "block";
     if($("o_sublbl")) $("o_sublbl").textContent = confirmed ? "Catering total" : "Catering estimate (tentative)";
@@ -207,24 +222,33 @@
     if($("o_rating")) $("o_rating").style.display = (rating && rating.trim()) ? "" : "none";
     if(extraAmt>0){ $("o_extrarow").style.display=""; $("o_extra").textContent=extra||"Extra"; $("o_extraamt").textContent=inr(extraAmt); }
     else { $("o_extrarow").style.display="none"; }
+    if($("o_notes")){
+      var n = notes.trim();
+      $("o_notes").innerHTML = n ? '<span class="notes-h">Notes</span>' + n.replace(/[<>&]/g, function(c){return {"<":"&lt;",">":"&gt;","&":"&amp;"}[c];}) : "";
+    }
     $("o_issued").textContent = new Date().toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
     // shareable link — encodes the whole invoice in the URL
-    var qp = new URLSearchParams({no:no,date:date,name:name,phone:phone,addr:addr,caterer:caterer,rating:rating,guests:guests,plate:plate,offer:offer,token:token,menu:menu,service:service,extra:extra,extra_amt:extraAmt,tent:$("f_tent").value,sclabel:sclabel,sctag:sctag});
+    var qp = new URLSearchParams({no:no,date:date,name:name,phone:phone,addr:addr,caterer:caterer,cphone:cphone,rating:rating,guests:guests,plate:plate,offer:offer,token:token,menu:menu,service:service,extra:extra,extra_amt:extraAmt,tent:$("f_tent").value,sclabel:sclabel,sctag:sctag,notes:notes});
     window.__link = location.origin + location.pathname + "?" + qp.toString();
     // WhatsApp message to the Aayojak (with the invoice link)
     var rateNote = confirmed ? "" : " (tentative)";
     var msg = "Hi "+name.split(" ")[0]+"! 🍽️ Your Aayojan booking is confirmed.\n\n"+
       "📅 "+date+"\n👥 "+guests+" guests\n🍽 "+service+"\n👨‍🍳 "+caterer+" ("+rating+"★)\n💰 ₹"+plate+"/plate"+rateNote+" · "+offer+"\n"+
       (extraAmt>0 ? "➕ "+(extra||"Extra")+": "+inr(extraAmt)+"\n" : "")+
-      "Catering total: "+inr(sub)+" (payable to caterer)\nAayojan service charge: pay ₹"+token+" to lock your vendor for 24 hrs\n\n🧾 View your invoice: "+window.__link+"\n\n— Aayojan.online";
+      "Catering total: "+inr(sub)+"\n"+
+      (paid ? "Booking ₹"+token+" paid ✓ (adjusted)\nBalance payable to caterer: "+inr(bal)
+            : "Aayojan service charge: pay ₹"+token+" to lock your vendor for 24 hrs")+
+      "\n\n🧾 View your invoice: "+window.__link+"\n\n— Aayojan.online";
     $("waBtn").setAttribute("href","https://wa.me/"+phone.replace(/\D/g,"")+"?text="+encodeURIComponent(msg));
     window.__order = { invoiceNo:no, eventDate:date, aayojakName:name, aayojakNumber:phone, aayojakAddress:addr,
-      caterer:caterer, catererRating:rating, totalGuests:guests, service:service, platePrice:plate, platePriceTentative:!confirmed, offer:offer,
-      extraLabel:extra, extraAmount:extraAmt, cateringEstimate:cater, payableToCaterer:bal, serviceCharge:token, menu:menu, status:"confirmed" };
+      caterer:caterer, catererNumber:cphone, catererRating:rating, totalGuests:guests, service:service, platePrice:plate, platePriceTentative:!confirmed, offer:offer,
+      extraLabel:extra, extraAmount:extraAmt, cateringEstimate:cater, bookingPaid:paid, bookingAmount:token, payableToCaterer:bal, serviceCharge:token, menu:menu, status:"confirmed" };
   }
   document.querySelectorAll(".controls input").forEach(function(i){ i.addEventListener("input", render); });
   // shareable link: if URL carries order params, populate fields + show clean customer view
-  (function(){ var q=new URLSearchParams(location.search); var keys=["no","date","name","phone","addr","caterer","rating","guests","plate","offer","token","menu","service","extra","extra_amt","tent","sclabel","sctag"];
+  // title override — allows caterer/settlement invoices to relabel
+  (function(){ var q=new URLSearchParams(location.search); if(q.has('title')) $('o_title').textContent = q.get('title'); if(q.has('ballbl')) window.__ballbl_override = q.get('ballbl'); })();
+  (function(){ var q=new URLSearchParams(location.search); var keys=["no","date","name","phone","addr","caterer","cphone","rating","guests","plate","offer","token","menu","service","extra","extra_amt","tent","sclabel","sctag","notes"];
     if(!keys.some(function(k){return q.has(k);})) return;
     keys.forEach(function(k){ if(q.has(k)){ var el=$("f_"+k); if(el) el.value=q.get(k); } });
     document.body.classList.add("viewmode"); })();
@@ -235,21 +259,26 @@
     else prompt("Copy this link:",l); });
 
   // Save to Firestore (bookings) — lazy-load compat SDK
-  $("saveBtn").addEventListener("click", function(){
-    var msg=$("saveMsg"); msg.textContent="Saving…";
+  function saveOrder(silent){
+    var msg=$("saveMsg"); if(!silent) msg.textContent="Saving…";
     function go(){
       try{ if(!firebase.apps||!firebase.apps.length) firebase.initializeApp(FB);
-        var o = window.__order; o.createdAt = new Date().toISOString();
+        var o = window.__order; o.createdAt = new Date().toISOString(); o.type = o.type || "customer_invoice";
         firebase.firestore().collection("bookings").add(o)
-          .then(function(r){ msg.textContent="✓ Saved to records (bookings/"+r.id+")"; })
-          .catch(function(e){ msg.style.color="#c0392b"; msg.textContent="Save failed: "+(e.code||e.message); });
-      }catch(e){ msg.style.color="#c0392b"; msg.textContent="Save error: "+e.message; }
+          .then(function(r){ if(!silent) msg.textContent="✓ Saved to records (bookings/"+r.id+")"; })
+          .catch(function(e){ if(!silent){ msg.style.color="#c0392b"; msg.textContent="Save failed: "+(e.code||e.message); } console.warn(e); });
+      }catch(e){ if(!silent){ msg.style.color="#c0392b"; msg.textContent="Save error: "+e.message; } console.warn(e); }
     }
     if(window.firebase&&firebase.firestore) return go();
     var b="https://www.gstatic.com/firebasejs/10.12.2/", s1=document.createElement("script"); s1.src=b+"firebase-app-compat.js";
     s1.onload=function(){ var s2=document.createElement("script"); s2.src=b+"firebase-firestore-compat.js"; s2.onload=go; document.head.appendChild(s2); };
     document.head.appendChild(s1);
-  });
+  }
+  $("saveBtn").addEventListener("click", function(){ saveOrder(false); });
+  // auto-save when opened with autosave=1 (used by headless PDF generation)
+  if(new URLSearchParams(location.search).get("autosave") === "1"){
+    setTimeout(function(){ saveOrder(true); }, 800);
+  }
 </script>
 </body>
 </html>

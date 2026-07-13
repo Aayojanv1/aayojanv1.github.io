@@ -25,11 +25,26 @@ service cloud.firestore {
       allow read, update, delete: if request.auth != null;
     }
 
+    // Partner commission bills — matches booking but from caterer's ledger side
+    match /partnerCommissions/{doc} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+
     // Allow anonymous chat logging — one doc per session, appended via merge
     // (create + update), so we can see what visitors search even without a lead.
     match /chatLogs/{doc} {
       allow create, update: if true;
       allow read, delete: if request.auth != null;
+    }
+
+    // Public booking trackers — customer opens /track/?b=ID to see live status.
+    // Random unguessable IDs; no sensitive PII should be stored here for now.
+    // read:true so the customer can view without login; create/update for the
+    // internal admin workflow tool (tighten to auth before scaling).
+    match /trackers/{doc} {
+      allow read, create, update: if true;
+      allow delete: if request.auth != null;
     }
 
     // Default: authenticated users only

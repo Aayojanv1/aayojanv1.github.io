@@ -39,3 +39,9 @@ firebase-debug.log
 firestore-debug.log
 frontend/public/banner-partner-recruit.html
 
+# Raw source photos, xlsx, and per-menu posters — keep local only
+Menus/
+
+# Generated customer/partner PDFs — contain PII, do NOT commit
+tools/invoices/
+

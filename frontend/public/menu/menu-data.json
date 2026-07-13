@@ -1,0 +1,204 @@
+{
+  "generated": true,
+  "note": "Party Orders — 20+ heads · base plate prices · shown at 20% off retail",
+  "menus": [
+    {
+      "slug": "chicken-biryani-meal",
+      "n": 1,
+      "title": "Chicken Biryani Meal",
+      "type": "non-veg",
+      "perPlate": 149,
+      "perPlateOriginal": 186,
+      "minHeads": 20,
+      "photo": "/menu/img/chicken_biryani_149.jpg",
+      "items": [
+        "Chicken Biryani",
+        "Salad",
+        "Raita",
+        "Gulab Jamun"
+      ],
+      "maxHeads": 70
+    },
+    {
+      "slug": "veg-arwa-rice-220",
+      "n": 8,
+      "title": "Veg Arwa Rice Thali",
+      "type": "veg",
+      "perPlate": 220,
+      "perPlateOriginal": 275,
+      "minHeads": 20,
+      "delivery": "Box delivery",
+      "photo": "/menu/img/veg_arwa_rice_220.jpg",
+      "items": [
+        "Steamed Arwa Rice",
+        "Dal",
+        "Paneer with Peas",
+        "Alu Bhaja",
+        "Curd",
+        "Gulab Jamun",
+        "Salad"
+      ],
+      "maxHeads": 70
+    },
+    {
+      "slug": "veg-box-delivery-250",
+      "n": 7,
+      "title": "Veg Box Delivery",
+      "type": "veg",
+      "perPlate": 250,
+      "perPlateOriginal": 313,
+      "minHeads": 20,
+      "delivery": "Box delivery",
+      "photo": "/menu/img/veg_box_delivery_250.jpg",
+      "items": [
+        "Basmati Rice",
+        "Dal",
+        "Alu Dom",
+        "Paneer Butter Masala",
+        "Curd",
+        "Gulab Jamun",
+        "Salad",
+        "Veg Cutlet"
+      ],
+      "maxHeads": 70
+    },
+    {
+      "slug": "veg-pulao-paneer",
+      "n": 2,
+      "title": "Veg Feast · Pulao + Paneer",
+      "type": "veg",
+      "perPlate": 299,
+      "perPlateOriginal": 374,
+      "minHeads": 20,
+      "photo": "/menu/img/pulao_paneer_makhani_299.jpg",
+      "items": [
+        "Pulao",
+        "Paneer Makhani",
+        "Veg Chop",
+        "Salad",
+        "Raita",
+        "One Dessert"
+      ],
+      "maxHeads": 70
+    },
+    {
+      "slug": "veg-thali-home-style-350",
+      "n": 9,
+      "title": "Veg Thali · Home Style",
+      "type": "veg",
+      "perPlate": 350,
+      "perPlateOriginal": 438,
+      "minHeads": 20,
+      "photo": "/menu/img/veg_thali_350.jpg",
+      "items": [
+        "Basmati Rice",
+        "Dal Tadka",
+        "Paneer with Peas",
+        "Alu Dom",
+        "Veg Cutlet",
+        "Gulab Jamun (2 pc)",
+        "Salad"
+      ],
+      "maxHeads": 70
+    },
+    {
+      "slug": "fried-rice-chilli-chicken",
+      "n": 3,
+      "title": "Fried Rice + Chilli Chicken",
+      "type": "non-veg",
+      "perPlate": 399,
+      "perPlateOriginal": 499,
+      "minHeads": 20,
+      "photo": "/menu/img/fried_rice_chilli_chicken_399.jpg",
+      "items": [
+        "Fried Rice",
+        "Chilli Chicken (150 gms)",
+        "Non-Veg Starter",
+        "Salad",
+        "Gulab Jamun"
+      ],
+      "maxHeads": 70
+    },
+    {
+      "slug": "mutton-biryani-meal",
+      "n": 4,
+      "title": "Mutton Biryani Meal",
+      "type": "non-veg",
+      "perPlate": 399,
+      "perPlateOriginal": 499,
+      "minHeads": 20,
+      "photo": "/menu/img/mutton_biryani_399.jpg",
+      "items": [
+        "Mutton Biryani",
+        "Salad",
+        "Raita",
+        "Gulab Jamun"
+      ],
+      "maxHeads": 70
+    },
+    {
+      "slug": "veg-deluxe-thali-450",
+      "n": 10,
+      "title": "Veg Deluxe Thali",
+      "type": "veg",
+      "perPlate": 450,
+      "perPlateOriginal": 563,
+      "minHeads": 20,
+      "photo": "/menu/img/veg_deluxe_450.jpg",
+      "items": [
+        "Basmati Rice",
+        "Dal",
+        "Paneer with Peas",
+        "Alu Dom",
+        "Sabzi",
+        "Luchi / Kachori",
+        "Chatni",
+        "Rasgulla",
+        "Aloo Bonda",
+        "Salad"
+      ],
+      "maxHeads": 70
+    },
+    {
+      "slug": "pulao-mutton-kosha",
+      "n": 5,
+      "title": "Pulao + Mutton Kosha",
+      "type": "non-veg",
+      "perPlate": 499,
+      "perPlateOriginal": 624,
+      "minHeads": 20,
+      "photo": "/menu/img/pulao_mutton_kosha_499.jpg",
+      "items": [
+        "Pulao",
+        "Mutton Kosha (4 pcs · 200 gms)",
+        "Salad",
+        "Gulab Jamun",
+        "Pepsi"
+      ],
+      "maxHeads": 70
+    },
+    {
+      "slug": "mutton-kosha-full-meal",
+      "n": 6,
+      "title": "Mutton Kosha Full Meal",
+      "type": "non-veg",
+      "perPlate": 599,
+      "perPlateOriginal": 749,
+      "minHeads": 20,
+      "photo": "/menu/img/steamed_rice_mutton_599.jpg",
+      "items": [
+        "Steamed Basmati Rice",
+        "Dal",
+        "Alu Bhaja",
+        "Mixed Veg",
+        "Mutton Kosha (200 gms)",
+        "Chatni",
+        "Papad",
+        "One Dessert Sweet",
+        "Salad",
+        "Pepsi"
+      ],
+      "maxHeads": 70
+    }
+  ]
+}

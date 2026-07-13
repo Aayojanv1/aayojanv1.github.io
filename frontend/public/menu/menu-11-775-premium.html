@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu 11 - 775 Premium | Aayojan</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;background:#080300;-webkit-text-size-adjust:100%;}
+:root{
+  --red:#1A365D;
+  --dred:#0E1E38;
+  --gold:#D4A017;
+  --pgold:#F0C84A;
+  --ink:#080300;
+  --bg:#0B1528;
+  --cream:#F0F4F8;
+  --muted:rgba(240, 244, 248, 0.55);
+}
+.card{
+  width:100%;
+  max-width:480px;
+  margin:0 auto;
+  background:var(--bg);
+  overflow:hidden;
+  font-family:'Noto Serif Bengali',serif;
+  box-shadow:0 15px 45px rgba(0,0,0,0.6);
+  border:1px solid rgba(212,160,23,0.15);
+}
+.alpona{
+  height:18px;
+  background:var(--red);
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+}
+.alpona-scroll{
+  white-space:nowrap;
+  font-size:9px;
+  color:rgba(255,215,60,.6);
+  letter-spacing:7px;
+  animation:marquee 20s linear infinite;
+}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.hdr{
+  background:var(--bg);
+  padding:26px 18px 18px;
+  text-align:center;
+  position:relative;
+}
+.hdr::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse 80% 80% at 50% 50%,rgba(212,160,23,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hdr-rule{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:14px;
+}
+.hdr-rule .rl{flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold));}
+.hdr-rule .rr{flex:1;height:1px;background:linear-gradient(to left,transparent,var(--gold));}
+.hdr-rule .rm{color:var(--gold);font-size:16px;}
+.pill{
+  display:inline-block;
+  background:var(--red);
+  color:#fff;
+  font-family:'Noto Serif Bengali',serif;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:2px;
+  padding:5px 22px;
+  margin-bottom:14px;
+  clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+}
+.t-main{
+  font-family:'Noto Serif Bengali',serif;
+  font-size:38px;
+  font-weight:900;
+  color:var(--gold);
+  line-height:.95;
+  letter-spacing:-1px;
+  text-shadow:2px 2px 0 var(--red),4px 4px 0 rgba(0,0,0,.35),0 0 40px rgba(212,160,23,.25);
+  display:block;
+  margin-bottom:8px;
+}
+.t-sub{
+  font-family:'Noto Serif Bengali',serif;
+  font-size:18px;
+  font-weight:700;
+  color:var(--cream);
+  text-shadow:2px 2px 6px rgba(0,0,0,.9);
+  display:block;
+  margin-bottom:12px;
+}
+.kitchen-credit{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  margin-bottom:8px;
+}
+.from-k{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:var(--muted);}
+.kitchen-name{
+  font-family:'Noto Serif Bengali',serif;
+  font-size:20px;
+  font-weight:700;
+  color:var(--pgold);
+  text-shadow:0 0 20px rgba(212,160,23,.5);
+  letter-spacing:.5px;
+}
+.feat-by{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:var(--muted);margin-top:1px;}
+.feat-brand{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;color:var(--gold);letter-spacing:5px;text-transform:uppercase;}
+.hdr-div{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  justify-content:center;
+  margin-top:10px;
+}
+.hdr-div .dl{width:70px;height:1px;background:linear-gradient(to right,transparent,var(--gold));}
+.hdr-div .dr{width:70px;height:1px;background:linear-gradient(to left,transparent,var(--gold));}
+.hdr-div .dc{color:var(--gold);font-size:16px;}
+.split{
+  display:grid;
+  grid-template-columns:1.2fr 0.8fr;
+  min-height:480px;
+  position:relative;
+}
+.split-bg{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  background:url('assets/premium_marriage_feast.jpg') center center / cover no-repeat;
+  filter:saturate(1.08) brightness(.85);
+}
+.split-bg-ov-left{
+  position:absolute;
+  top:0;
+  left:0;
+  bottom:0;
+  width:62%;
+  z-index:1;
+  background:linear-gradient(to right,var(--bg) 0%,rgba(13,5,0,.92) 75%,rgba(13,5,0,.38) 100%);
+}
+.split-bg-ov-right{
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  width:38%;
+  z-index:1;
+  background:linear-gradient(to left,rgba(10,4,0,.1) 0%,rgba(10,4,0,.25) 100%);
+}
+.split-bg-ov-top{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:55px;
+  z-index:2;
+  background:linear-gradient(to bottom,var(--bg),transparent);
+}
+.split-bg-ov-bottom{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:65px;
+  z-index:2;
+  background:linear-gradient(to top,var(--bg),transparent);
+}
+.menu-col{
+  position:relative;
+  z-index:4;
+  padding:14px 13px;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.menu-label{
+  font-family:'Noto Serif Bengali',serif;
+  font-size:10px;
+  letter-spacing:3px;
+  color:var(--gold);
+  text-transform:uppercase;
+  text-align:center;
+  margin-top:12px;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-weight:700;
+}
+.menu-label .ll{flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(212,160,23,.6));}
+.menu-label .lr{flex:1;height:1px;background:linear-gradient(to left,transparent,rgba(212,160,23,.6));}
+.dish{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  padding:6px 0;
+  border-bottom:1px solid rgba(212,160,23,.08);
+  position:relative;
+}
+.dish:last-child{border-bottom:none;}
+.dish.star{
+  background:linear-gradient(90deg,rgba(192,57,43,.15),rgba(212,160,23,.05),rgba(192,57,43,.08));
+  margin:0 -13px;
+  padding:7px 13px;
+  border-top:1px solid rgba(212,160,23,.2);
+  border-bottom:1px solid rgba(212,160,23,.2);
+}
+.dnum{
+  width:24px;
+  height:24px;
+  flex-shrink:0;
+  background:var(--red);
+  color:#fff;
+  font-family:'Noto Serif Bengali',serif;
+  font-size:11px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  clip-path:polygon(15% 0%,85% 0%,100% 15%,100% 85%,85% 100%,15% 100%,0% 85%,0% 15%);
+  margin-top:1px;
+}
+.dnum.gn{background:var(--gold);color:var(--ink);font-size:12px;}
+.demoji{font-size:18px;line-height:1;flex-shrink:0;margin-top:2px;}
+.dtext{flex:1;min-width:0;}
+.dbn{
+  font-family:'Noto Serif Bengali',serif;
+  font-size:13.5px;
+  font-weight:700;
+  color:var(--cream);
+  line-height:1.25;
+  text-shadow:0 1px 4px rgba(0,0,0,.95);
+}
+.dish.star .dbn{color:var(--pgold);font-size:14px;text-shadow:0 0 10px rgba(212,160,23,.3);}
+.sbadge{
+  flex-shrink:0;
+  background:var(--gold);
+  color:var(--ink);
+  font-family:'Noto Serif Bengali',serif;
+  font-size:8px;
+  font-weight:700;
+  padding:1px 6px;
+  align-self:flex-start;
+  margin-top:3px;
+  border-radius:2px;
+}
+.img-col{position:relative;z-index:3;}
+.price-wrap{padding:14px 18px 0;}
+.price-box{
+  background:linear-gradient(135deg,var(--dred) 0%,var(--red) 50%,var(--dred) 100%);
+  padding:16px 20px;
+  display:grid;
+  grid-template-columns:1fr 1px 1fr;
+  align-items:center;
+  border:1px solid rgba(212,160,23,.35);
+  position:relative;
+  overflow:hidden;
+}
+/* Fix for single column price box if only one pricing metric exists */
+.price-box.single-item{
+  grid-template-columns:1fr;
+}
+.price-box::before{content:'✦';position:absolute;top:7px;left:12px;color:rgba(255,215,60,.3);font-size:12px;}
+.price-box::after{content:'✦';position:absolute;bottom:7px;right:12px;color:rgba(255,215,60,.3);font-size:12px;}
+.shine{position:absolute;top:-60%;left:-20%;width:30%;height:220%;background:rgba(255,255,255,.07);transform:skewX(-15deg);}
+.pdiv{width:1px;height:44px;background:rgba(255,255,255,.25);}
+.pc{text-align:center;}
+.pa{font-family:'Noto Serif Bengali',serif;font-size:11px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,.75);margin-bottom:3px;}
+.pn{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;color:#fff;line-height:1;text-shadow:2px 2px 0 rgba(0,0,0,.35);}
+.pu{font-size:13px;opacity:.65;margin-left:1px;}
+.moq{
+  background:rgba(10,4,0,.98);
+  border:1px solid rgba(212,160,23,.2);
+  border-top:none;
+  padding:10px 18px;
+  text-align:center;
+  font-family:'Noto Serif Bengali',serif;
+  font-size:11px;
+  color:rgba(253,243,220,.55);
+  line-height:1.4;
+}
+.moq strong{color:var(--gold);}
+.moq em{color:var(--pgold);font-style:normal;}
+.grab-banner{
+  background:linear-gradient(90deg,var(--dred) 0%,var(--red) 50%,var(--dred) 100%);
+  margin:12px 18px 0;
+  padding:13px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:between;
+  gap:10px;
+  border:1px solid rgba(212,160,23,.4);
+  position:relative;
+  overflow:hidden;
+}
+.grab-banner::before{content:'';position:absolute;top:-40%;left:-10%;width:30%;height:180%;background:rgba(255,255,255,.06);transform:skewX(-15deg);}
+.grab-label{font-family:'Noto Serif Bengali',serif;font-size:10px;color:rgba(255,255,255,.7);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
+.grab-text{font-family:'Noto Serif Bengali',serif;font-size:16px;font-weight:700;color:#fff;line-height:1.25;}
+.grab-text span{color:var(--pgold);text-shadow:0 0 10px rgba(240,200,74,.4);}
+.grab-en{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:rgba(255,255,255,.5);margin-top:3px;}
+.grab-right{text-align:center;flex-shrink:0;margin-left:auto;}
+.grab-date-big{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:700;color:var(--pgold);line-height:.9;text-shadow:0 0 20px rgba(240,200,74,.5);}
+.grab-month-big{font-family:'Noto Serif Bengali',serif;font-size:11px;color:rgba(255,255,255,.7);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+.grab-last{font-family:'Noto Serif Bengali',serif;font-size:9px;color:rgba(255,255,255,.4);letter-spacing:1px;margin-top:1px;}
+.cta{padding:16px 18px 0;text-align:center;}
+.cta-bn{font-family:'Noto Serif Bengali',serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:3px;}
+.cta-en{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:var(--muted);margin-bottom:12px;}
+.wa{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  background:linear-gradient(135deg,#1B5E20,#2E7D32);
+  color:#fff;
+  font-family:'Noto Serif Bengali',serif;
+  font-size:14px;
+  font-weight:700;
+  padding:14px 18px;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.12);
+  position:relative;
+  overflow:hidden;
+}
+.wa::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.08),transparent);}
+.wa svg{width:20px;height:20px;flex-shrink:0;position:relative;}
+.wa span{position:relative;}
+.foot{padding:18px 18px 24px;text-align:center;margin-top:12px;}
+.foot-div{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.foot-div .fl{flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(212,160,23,.4));}
+.foot-div .fr{flex:1;height:1px;background:linear-gradient(to left,transparent,rgba(212,160,23,.4));}
+.foot-div .fc{color:var(--gold);font-size:16px;}
+.brand{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--gold);letter-spacing:7px;text-transform:uppercase;text-shadow:0 0 24px rgba(212,160,23,.45);}
+.bsub{font-family:'Noto Serif Bengali',serif;font-size:11px;color:rgba(253,243,220,.3);margin-top:4px;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="alpona"><div class="alpona-scroll">✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁</div></div>
+
+  <div class="hdr">
+    <div class="hdr-rule"><div class="rl"></div><div class="rm">❁</div><div class="rr"></div></div>
+    <div class="pill">✦ &nbsp;আয়োজন বিশেষ ক্যাটরিং&nbsp; ✦</div>
+    <span class="t-main">775 Premium</span>
+    <span class="t-sub">স্পেশাল ক্যাটারিং প্যাকেজ</span>
+    <div class="kitchen-credit">
+      <span class="from-k">package</span>
+      <span class="kitchen-name">Menu 11</span>
+      <span class="feat-by">featured by</span>
+      <span class="feat-brand">aayojan.online</span>
+    </div>
+    <div class="hdr-div"><div class="dl"></div><div class="dc">❁</div><div class="dr"></div></div>
+  </div>
+
+  <div class="split">
+    <div class="split-bg"></div>
+    <div class="split-bg-ov-left"></div>
+    <div class="split-bg-ov-right"></div>
+    <div class="split-bg-ov-top"></div>
+    <div class="split-bg-ov-bottom"></div>
+
+    <div class="menu-col">
+      <div class="menu-label"><div class="ll"></div><span>Starters</span><div class="lr"></div></div>
+      <div class="dish">
+        <div class="dnum">১</div>
+        <div class="demoji">🍗</div>
+        <div class="dtext"><div class="dbn">Dry Chilli Chicken</div></div>
+        
+      </div>
+      <div class="dish">
+        <div class="dnum">২</div>
+        <div class="demoji">🍤</div>
+        <div class="dtext"><div class="dbn">Golden Fried Prawn</div></div>
+        
+      </div>
+      <div class="dish">
+        <div class="dnum">৩</div>
+        <div class="demoji">🍢</div>
+        <div class="dtext"><div class="dbn">Crispy Honey Chilli Babycorn</div></div>
+        
+      </div>
+      <div class="dish">
+        <div class="dnum">৪</div>
+        <div class="demoji">🍢</div>
+        <div class="dtext"><div class="dbn">Paneer Pakora</div></div>
+        
+      </div>
+      <div class="menu-label"><div class="ll"></div><span>Main Course</span><div class="lr"></div></div>
+      <div class="dish">
+        <div class="dnum">৫</div>
+        <div class="demoji">🍛</div>
+        <div class="dtext"><div class="dbn">Radhavallabhi</div></div>
+        
+      </div>
+      <div class="dish">
+        <div class="dnum">৬</div>
+        <div class="demoji">🍛</div>
+        <div class="dtext"><div class="dbn">Chana Masala</div></div>
+        
+      </div>
+      <div class="dish">
+        <div class="dnum">৭</div>
+        <div class="demoji">🐟</div>
+        <div class="dtext"><div class="dbn">Fish Fry</div></div>
+        
+      </div>
+      <div class="dish">
+        <div class="dnum">৮</div>
+        <div class="demoji">🍚</div>
+        <div class="dtext"><div class="dbn">Jeera/Peas Rice</div></div>
+        
+      </div>
+      <div class="dish">
+        <div class="dnum">৯</div>
+        <div class="demoji">🍛</div>
+        <div class="dtext"><div class="dbn">Paneer Pakora</div></div>
+        
+      </div>
+      <div class="dish">
+        <div class="dnum">১০</div>
+        <div class="demoji">🍛</div>
+        <div class="dtext"><div class="dbn">Doi Katla</div></div>
+        
+      </div>
+      <div class="menu-label"><div class="ll"></div><span>Accompaniments</span><div class="lr"></div></div>
+      <div class="dish">
+        <div class="dnum">১১</div>
+        <div class="demoji">🥭</div>
+        <div class="dtext"><div class="dbn">Aamer Chatni</div></div>
+        
+      </div>
+      <div class="menu-label"><div class="ll"></div><span>Dessert</span><div class="lr"></div></div>
+      <div class="dish">
+        <div class="dnum">১২</div>
+        <div class="demoji">🍧</div>
+        <div class="dtext"><div class="dbn">Rosogolla</div></div>
+        
+      </div>
+      <div class="dish">
+        <div class="dnum">১৩</div>
+        <div class="demoji">🍧</div>
+        <div class="dtext"><div class="dbn">Sandesh</div></div>
+        
+      </div>
+      <div class="dish">
+        <div class="dnum">১৪</div>
+        <div class="demoji">🍧</div>
+        <div class="dtext"><div class="dbn">Misti Paan</div></div>
+        
+      </div>
+
+    </div>
+    <div class="img-col"></div>
+  </div>
+
+  <div class="price-wrap">
+    <div class="price-box ">
+      <div class="shine"></div>
+            <div class="pc"><div class="pa">প্লেট প্রতি মূল্য</div><div class="pn">₹775<span class="pu">/plate</span></div></div>
+      <div class="pdiv"></div>
+      <div class="pc"><div class="pa">আনুমানিক মূল্য (250+ Guests)</div><div class="pn">₹1,93,750</div></div>
+    </div>
+    <div class="moq">ন্যূনতম অতিথি সংখ্যা: <strong>250+ Guests</strong> · প্রিমিয়াম ক্যাটারিং সার্ভিস &nbsp;·&nbsp; <em>Optional Mocktail Counter (+₹10,000)</em></div>
+  </div>
+
+  <div class="grab-banner">
+    <div>
+      <div class="grab-label">⏰ সীমিত সময়ের অফার</div>
+      <div class="grab-text">সেরা ডিল বুক করুন<br><span>খুব শীঘ্রই!</span></div>
+      <div class="grab-en">Book your package soon</div>
+    </div>
+    <div class="grab-right">
+      <div class="grab-date-big">2026</div>
+      <div class="grab-month-big">Season</div>
+      <div class="grab-last">Booking Open</div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-bn">আজই বুকিং করুন! 🎉</div>
+    <div class="cta-en">WhatsApp us — we'll handle the rest</div>
+    <a class="wa" href="https://wa.me/918088434425?text=Hi%20Aayojan%21%20I%27m%20interested%20in%20Menu%2011%20%E2%80%94%20775%20Premium.%20Please%20share%20details." target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.998 2C6.476 2 2 6.477 2 12.001c0 1.77.463 3.43 1.27 4.876L2.05 22l5.275-1.383A9.953 9.953 0 0012 21.999C17.522 22 22 17.523 22 12S17.522 2 11.998 2zm.004 18.197a8.197 8.197 0 01-4.18-1.143l-.3-.178-3.13.82.834-3.047-.196-.313A8.197 8.197 0 1120.196 12c0 4.522-3.678 8.197-8.194 8.197z"/></svg>
+      <span>WhatsApp-এ যোগাযোগ করুন</span>
+    </a>
+  </div>
+
+  <div class="foot">
+    <div class="foot-div"><div class="fl"></div><div class="fc">❁</div><div class="fr"></div></div>
+    <div class="brand">Aayojan</div>
+    <div class="bsub">কলকাতার ক্যাটারিং মার্কেটপ্লেস &nbsp;·&nbsp; aayojan.online</div>
+  </div>
+
+  <div class="alpona"><div class="alpona-scroll">✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁ ✿ ❁ ✦ ❁</div></div>
+</div>
+</body>
+</html>

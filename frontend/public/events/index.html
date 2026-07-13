@@ -590,10 +590,76 @@ section.block{padding:4rem 5%;}
 .gcard img{height:100%;width:auto;display:block;}
 .gcard figcaption{position:absolute;left:0;right:0;bottom:0;padding:0.8rem 0.8rem 0.55rem;background:linear-gradient(transparent,rgba(20,12,4,0.85));color:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:0.88rem;}
 @media (prefers-reduced-motion:reduce){.groll-track{animation:none;overflow-x:auto;}}
+
+/* === MENU PICKER — party order tile grid + price bands (mobile-first, 1-col mobile) === */
+.mpick{background:linear-gradient(180deg,#FFF9F1 0%,#FFF3E4 100%);padding:2.6rem 5% 3.2rem;border-top:1px solid var(--border);scroll-margin-top:76px;position:relative;}
+.mpick::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--saffron),#F3C869,var(--saffron));}
+.mpick-inner{max-width:1120px;margin:0 auto;}
+.mpick-head{text-align:center;margin-bottom:1.6rem;}
+.mpick-eyebrow{display:inline-block;font-size:0.7rem;font-weight:900;letter-spacing:0.16em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,#E8760A,#C95F08);padding:6px 14px;border-radius:99px;margin-bottom:0.75rem;box-shadow:0 4px 12px rgba(232,118,10,0.32);}
+.mpick-h{font-family:'Playfair Display',serif;font-size:clamp(1.65rem,4vw,2.4rem);font-weight:900;color:var(--dark);line-height:1.12;margin:0 0 0.5rem;letter-spacing:-0.01em;}
+.mpick-h em{color:var(--saffron);font-style:italic;}
+.mpick-sub{color:#7B634E;font-size:0.95rem;line-height:1.55;max-width:52ch;margin:0 auto;}
+.mpick-sub strong{color:#B8456A;font-weight:800;}
+.mpick-min{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid var(--saffron);border-radius:99px;padding:6px 14px;margin-top:0.9rem;font-size:0.78rem;font-weight:800;color:var(--dark);box-shadow:0 3px 10px rgba(232,118,10,0.15);}
+.mpick-min b{color:var(--saffron);}
+/* filter chips */
+.mpick-filters{display:flex;flex-direction:column;gap:0.55rem;margin:1.4rem 0 1.6rem;}
+.mpick-frow{display:flex;gap:7px;align-items:center;flex-wrap:wrap;justify-content:center;}
+.mpick-flab{font-size:0.7rem;font-weight:900;letter-spacing:0.11em;text-transform:uppercase;color:var(--muted);margin-right:2px;flex-shrink:0;width:100%;text-align:center;margin-bottom:2px;}
+@media(min-width:520px){.mpick-flab{width:auto;text-align:left;margin-bottom:0;margin-right:4px;}}
+.mp-chip{-webkit-appearance:none;appearance:none;font-family:inherit;background:#fff;border:1.5px solid var(--border);border-radius:99px;padding:9px 15px;font-size:0.85rem;font-weight:700;color:var(--dark);cursor:pointer;transition:transform .18s ease, border-color .18s ease, background .18s ease;min-height:40px;line-height:1;white-space:nowrap;}
+.mp-chip:hover{border-color:var(--saffron-light);}
+.mp-chip.active{background:var(--saffron);color:#fff;border-color:var(--saffron);box-shadow:0 4px 12px rgba(232,118,10,0.32);}
+.mp-chip:focus-visible{outline:2px solid var(--saffron-light);outline-offset:2px;}
+/* GRID — rolling horizontal marquee, seamless loop, pauses on hover */
+.mpick-grid{position:relative;overflow:hidden;margin:0 -5% 0;padding:0.4rem 0;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent);}
+.mpick-track{display:flex;gap:1rem;width:max-content;align-items:stretch;animation:mpickscroll 90s linear infinite;padding:0 5%;}
+.mpick-track:hover{animation-play-state:paused;}
+@keyframes mpickscroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+@media (prefers-reduced-motion:reduce){.mpick-track{animation:none;overflow-x:auto;}}
+.mp-skeleton{text-align:center;padding:2rem 1rem;color:var(--muted);font-size:0.9rem;width:100%;}
+/* TILE — big photo, bold price */
+.mp-tile{position:relative;background:#fff;border:1px solid var(--border);border-radius:18px;overflow:hidden;text-decoration:none;color:inherit;box-shadow:0 10px 24px rgba(76,43,10,0.09);display:flex;flex-direction:column;transition:transform .2s ease, box-shadow .2s ease;width:min(300px,82vw);flex:0 0 auto;}
+.mp-tile:hover,.mp-tile:focus-visible{transform:translateY(-3px);box-shadow:0 18px 40px rgba(76,43,10,0.16);outline:none;}
+.mp-tile-img{width:100%;aspect-ratio:1/1;object-fit:cover;background:#EDD8BC;display:block;}
+.mp-tile-body{padding:1rem 1.1rem 1.15rem;display:flex;flex-direction:column;gap:0.5rem;flex:1;}
+.mp-tile-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:var(--dark);line-height:1.22;letter-spacing:-0.005em;}
+.mp-tile-meta{font-size:0.72rem;color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.mp-tile-meta .dot{opacity:0.4;}
+.mp-tile-items{list-style:none;padding:0;margin:0.15rem 0 0.15rem;font-size:0.82rem;color:#4b3a24;line-height:1.55;columns:1;}
+.mp-tile-items li{padding-left:14px;position:relative;}
+.mp-tile-items li::before{content:'•';color:var(--saffron);position:absolute;left:2px;top:-1px;font-weight:900;font-size:1.05rem;line-height:1;}
+.mp-tile-items li.more{color:var(--muted);font-style:italic;}
+.mp-tile-items li.more::before{content:'+';}
+/* price block — big, saffron, prominent */
+.mp-tile-price{display:flex;align-items:baseline;gap:9px;margin-top:auto;padding-top:0.55rem;flex-wrap:wrap;border-top:1px dashed rgba(232,118,10,0.2);}
+.mp-tile-price-orig{font-size:0.85rem;color:#B58A6A;text-decoration:line-through;font-weight:600;}
+.mp-tile-price-now{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:900;color:var(--saffron);line-height:1;}
+.mp-tile-price-now small{font-size:0.66rem;color:var(--muted);font-weight:700;letter-spacing:0.03em;font-family:'DM Sans',sans-serif;margin-left:3px;text-transform:uppercase;}
+.mp-tile-type{display:inline-flex;align-items:center;gap:3px;font-weight:800;padding:3px 9px;border-radius:99px;font-size:0.7rem;letter-spacing:0.02em;}
+.mp-tile-type.veg{color:#236B43;background:#E4F0E8;}
+.mp-tile-type.non-veg{color:#B8456A;background:#FCEBED;}
+.mp-tile-type.pure-veg{color:#236B43;background:#DFF0E4;border:1px solid #236B43;}
+.mp-tile-cta{display:block;margin-top:0.7rem;background:linear-gradient(135deg,#25D366,#1EBA58);color:#fff;font-weight:800;padding:12px 14px;border-radius:99px;text-align:center;font-size:0.9rem;letter-spacing:0.01em;box-shadow:0 6px 16px rgba(37,211,102,0.32);}
+.mp-tile:hover .mp-tile-cta{box-shadow:0 8px 20px rgba(37,211,102,0.42);}
+.mp-badge-20{position:absolute;top:12px;left:12px;background:linear-gradient(135deg,#B8456A,#7A1F2B);color:#fff;font-size:0.66rem;font-weight:900;letter-spacing:0.08em;padding:5px 11px;border-radius:99px;z-index:1;box-shadow:0 4px 12px rgba(184,69,106,0.45);}
+/* empty state */
+.mpick-empty{text-align:center;padding:1.8rem 1rem;background:#fff;border:1.5px dashed var(--border);border-radius:16px;margin-top:1rem;}
+.mpick-empty p{color:var(--muted);font-size:0.95rem;margin-bottom:1rem;line-height:1.5;}
+.mp-cta-wa{display:inline-block;background:#25D366;color:#fff!important;font-weight:800;padding:12px 22px;border-radius:99px;text-decoration:none;font-size:0.92rem;min-height:44px;}
+/* customize footer */
+.mpick-foot{text-align:center;margin-top:1.8rem;padding:1.6rem 1.2rem 1.8rem;background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:0 8px 22px rgba(76,43,10,0.06);}
+.mpick-foot-tag{font-size:0.92rem;color:var(--muted);margin-bottom:0.7rem;font-weight:500;}
+.mpick-customize{-webkit-appearance:none;appearance:none;font-family:inherit;background:linear-gradient(135deg,#E8760A,#C95F08);color:#fff;font-weight:900;padding:15px 28px;border-radius:99px;border:none;font-size:1rem;cursor:pointer;box-shadow:0 10px 26px rgba(232,118,10,0.38);letter-spacing:0.015em;min-height:50px;}
+.mpick-customize:hover{transform:translateY(-1px);box-shadow:0 14px 34px rgba(232,118,10,0.5);}
 </style>
 <script defer src="/events/_analytics.js"></script>
 <script defer src="/events/_whatsapp-desktop.js?v=1"></script>
 <script defer src="/events/_aiplanner.js?v=17"></script>
+<script defer src="/events/_menupicker.js?v=1"></script>
 <link rel="icon" href="/img/aayojan-cloche-48.png" type="image/png">
 </head>
 <body>
@@ -682,7 +748,7 @@ var _wd=new Date().getDay();var _wf=p.get('wknd');var _wknd=(_wf==='1')||(_wf!==
       <p class="wp-offer"><span class="wknd-only"><strong>This weekend only — double the discount.</strong> </span>On party deals · plates over <strong>₹350/plate</strong> (veg or non-veg)</p>
       <p class="wp-sub">House parties, birthdays, anniversaries &amp; get-togethers — verified Bengali kitchens, fair quotes, no advance payment.</p>
       <div class="wp-cta-wrap">
-        <a class="wp-cta-primary" data-ai-planner href="#aiplan">✨ Plan your party with Aayojan AI →</a>
+        <a class="wp-cta-primary" href="#menu-picker">✨ Plan your party with Aayojan AI →</a>
         <a class="wp-cta-ghost" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quick%20quote%20for%20my%20party%20catering.">⚡ Quick quote in 30 sec →</a>
       </div>
       <div class="wp-trust"><span>🎈 Same-day slots</span><span>🔒 No advance</span><span>✓ FSSAI verified</span><span>💬 WhatsApp support</span></div>
@@ -701,7 +767,7 @@ var _wd=new Date().getDay();var _wf=p.get('wknd');var _wknd=(_wf==='1')||(_wf!==
       <p class="wp-offer"><strong>Satwik bhog</strong> · niramish khichuri · labra · payesh</p>
       <p class="wp-sub">Durga Pujo, Pujo bhog &amp; Ratha Yatra — for pandals, housing &amp; community feasts. Verified kitchens, no advance payment.</p>
       <div class="wp-cta-wrap">
-        <a class="wp-cta-primary" data-ai-planner href="#aiplan">🥁 Plan your Pujo with Aayojan AI →</a>
+        <a class="wp-cta-primary" href="#menu-picker">🥁 Plan your Pujo with Aayojan AI →</a>
         <a class="wp-cta-ghost" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quick%20quote%20for%20my%20Pujo%20catering.">⚡ Quick quote in 30 sec →</a>
       </div>
       <div class="wp-trust"><span>🪷 Satwik bhog</span><span>🔒 No advance</span><span>✓ FSSAI verified</span><span>💬 WhatsApp support</span></div>
@@ -720,7 +786,7 @@ var _wd=new Date().getDay();var _wf=p.get('wknd');var _wknd=(_wf==='1')||(_wf!==
       <p class="wp-offer">+ <strong>FREE food tasting</strong> before you book</p>
       <p class="wp-sub">Get matched with verified Bengali kitchens for your wedding &amp; reception — grand multi-cuisine spreads, fair quotes, no advance payment.</p>
       <div class="wp-cta-wrap">
-        <a class="wp-cta-primary" data-ai-planner href="#aiplan">✨ Plan your wedding with Aayojan AI →</a>
+        <a class="wp-cta-primary" href="#menu-picker">✨ Plan your wedding with Aayojan AI →</a>
         <a class="wp-cta-ghost" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quick%20quote%20for%20my%20wedding%20catering.">⚡ Quick quote in 30 sec →</a>
       </div>
       <div class="wp-trust"><span>🍴 Free tasting</span><span>🔒 No advance</span><span>✓ FSSAI verified</span><span>💬 WhatsApp support</span></div>
@@ -739,7 +805,7 @@ var _wd=new Date().getDay();var _wf=p.get('wknd');var _wknd=(_wf==='1')||(_wf!==
       <p class="wp-offer">Office lunches · town-halls · conferences</p>
       <p class="wp-sub">Bulk office catering from verified Bengali kitchens — on-time delivery, fair quotes, no advance payment. 20–500 plates, all over Kolkata.</p>
       <div class="wp-cta-wrap">
-        <a class="wp-cta-primary" data-ai-planner href="#aiplan">✨ Plan your office catering with Aayojan AI →</a>
+        <a class="wp-cta-primary" href="#menu-picker">✨ Plan your office catering with Aayojan AI →</a>
         <a class="wp-cta-ghost" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quote%20for%20corporate%2Foffice%20catering.">⚡ Quick quote in 30 sec →</a>
       </div>
       <div class="wp-trust"><span>⏱️ On-time delivery</span><span>🔒 No advance</span><span>✓ FSSAI verified</span><span>💬 WhatsApp support</span></div>
@@ -826,7 +892,7 @@ playActive();reset();})();</script>
   </h1>
   <p class="hero-sub">15+ kitchens · all over Kolkata · ₹0 to you.</p>
   <div class="hero-cta-wrap">
-    <a class="hero-cta-primary" data-ai-planner href="#aiplan">✨ Plan your event with Aayojan AI →</a>
+    <a class="hero-cta-primary" href="#menu-picker">✨ Plan your event with Aayojan AI →</a>
     <a class="hero-cta-ghost" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quick%20quote%20for%20my%20event.">⚡ Quick quote in 30 sec →</a>
   </div>
   <div class="hero-trust">
@@ -842,6 +908,41 @@ playActive();reset();})();</script>
   <span class="bb-dot" aria-hidden="true"></span>
   <span class="bb-txt"><strong>Booked this month:</strong> 6+ events in Newtown &amp; Salt Lake · <strong style="color:#B8456A"><span class="wkdy-only">🎉 party plates over ₹350 now get flat 10% off</span><span class="wknd-only">⚡ this weekend: 20% off party plates over ₹350</span></strong></span>
 </div>
+
+<!-- MENU PICKER — party order picker with price bands + tile grid (20+ heads) -->
+<section class="mpick" id="menu-picker">
+  <div class="mpick-inner">
+    <div class="mpick-head">
+      <span class="mpick-eyebrow">🍽 Party Orders · Base Menu</span>
+      <h2 class="mpick-h">Pick Your <em>Party Menu</em></h2>
+      <p class="mpick-sub">Real party thalis from Aayojan-verified kitchens — hand-picked menus for 20–70 guests.</p>
+      <span class="mpick-min">🎉 <b>Party size: 20–70 guests</b> · applies to all menus</span>
+    </div>
+
+    <div class="mpick-filters" role="group" aria-label="Filter menus">
+      <div class="mpick-frow">
+        <span class="mpick-flab">Type</span>
+        <button type="button" class="mp-chip active" data-mp-type="all" aria-pressed="true">All</button>
+        <button type="button" class="mp-chip" data-mp-type="veg" aria-pressed="false">🌿 Veg</button>
+        <button type="button" class="mp-chip" data-mp-type="non-veg" aria-pressed="false">🍗 Non-Veg</button>
+      </div>
+    </div>
+
+    <div class="mpick-grid" id="mpick-grid" role="list" aria-live="polite">
+      <div class="mp-skeleton">Loading menus…</div>
+    </div>
+
+    <div class="mpick-empty" id="mpick-empty" hidden>
+      <p><strong>No menu in that band yet.</strong><br>Aayojan can custom-build one for your event.</p>
+      <a class="mp-cta-wa" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27m%20looking%20for%20a%20custom%20party%20menu%20%28min%2020%20heads%29.%20Please%20share%20options." target="_blank" rel="noopener">💬 Get a custom quote</a>
+    </div>
+
+    <div class="mpick-foot">
+      <div class="mpick-foot-tag">Nothing quite right for your event?</div>
+      <button type="button" class="mpick-customize" data-ai-planner>✨ Customize with Aayojan AI →</button>
+    </div>
+  </div>
+</section>
 
 <!-- TESTIMONIALS — trust signal, placed high (real reviews of network kitchens, names gated) -->
 <section class="tmoni" id="testimonials">
@@ -862,6 +963,11 @@ playActive();reset();})();</script>
         <div class="tmoni-stars" aria-label="4 out of 5 stars">★★★★☆</div>
         <blockquote>"Food was great. Effort was better. Thanks 🙏🏻"</blockquote>
         <figcaption class="tmoni-cap">— Somdeb · Rajarhat</figcaption>
+      </figure>
+      <figure class="tmoni-card">
+        <div class="tmoni-stars" aria-label="4 out of 5 stars">★★★★☆</div>
+        <blockquote>"Darun hoyeche… I am really happy 🥳 Sob item — mutton, fish — darun chilo. 👍"</blockquote>
+        <figcaption class="tmoni-cap">— Kaustav Ranjan · Rajarhat</figcaption>
       </figure>
       <figure class="tmoni-card">
         <div class="tmoni-stars" aria-label="5 out of 5 stars">★★★★★</div>
@@ -905,6 +1011,11 @@ playActive();reset();})();</script>
         <div class="tmoni-stars">★★★★☆</div>
         <blockquote>"Food was great. Effort was better. Thanks 🙏🏻"</blockquote>
         <figcaption class="tmoni-cap">— Somdeb · Rajarhat</figcaption>
+      </figure>
+      <figure class="tmoni-card" aria-hidden="true">
+        <div class="tmoni-stars">★★★★☆</div>
+        <blockquote>"Darun hoyeche… I am really happy 🥳 Sob item — mutton, fish — darun chilo. 👍"</blockquote>
+        <figcaption class="tmoni-cap">— Kaustav Ranjan · Rajarhat</figcaption>
       </figure>
       <figure class="tmoni-card" aria-hidden="true">
         <div class="tmoni-stars">★★★★★</div>
