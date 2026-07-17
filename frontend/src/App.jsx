@@ -3091,10 +3091,9 @@ export default function AayojanApp(){
                 <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(1.8rem,3vw,2.6rem)",fontWeight:700,color:"var(--text-primary)",marginBottom:"0.8rem"}}>Meet the team</h2>
                 <p style={{color:"var(--text-secondary)",fontSize:"0.97rem",maxWidth:500,margin:"0 auto",lineHeight:1.7}}>A small team with deep roots in Kolkata and a shared obsession with making catering discovery effortless.</p>
               </div>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"2rem"}}>
+              <div style={{display:"grid",gridTemplateColumns:"1fr",gap:"2rem",maxWidth:420,margin:"0 auto"}}>
                 {[
                   {initials:"S",name:"Suparna",role:"Operations & Customer Experience",bio:"IT Consultant at a top leading MNC with 16 years of experience across international markets. Her deep expertise in customer-facing challenges gives Aayojan its edge in understanding what both customers and partners truly need.",gradient:"linear-gradient(135deg, #2D1A06, #6B3A10)"},
-                  {initials:"G",name:"Gourav",role:"Technology Advisor",bio:"Principal Engineer at a leading MNC with 17 years of experience across international projects. Holder of multiple patents and published journals, Gourav advises Aayojan on AI architecture and technology strategy in an advisory capacity.",gradient:"linear-gradient(135deg, #1A0A2D, #4A1A6B)"},
                 ].map(m=>(
                   <div key={m.initials} style={{background:"var(--bg-card)",border:"1px solid var(--border-default)",borderRadius:20,overflow:"hidden",transition:"transform 0.2s, box-shadow 0.2s"}} onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-5px)";e.currentTarget.style.boxShadow="0 16px 50px rgba(192,57,43,0.12)";}} onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="none";}}>
                     <div style={{height:180,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"4rem",background:m.gradient}}>
