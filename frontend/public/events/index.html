@@ -944,6 +944,83 @@ playActive();reset();})();</script>
   </div>
 </section>
 
+<!-- REAL EVENT REEL — customer-shot video with 3 on-camera testimonials -->
+<section class="realevt" id="real-event" aria-label="Real event reel">
+  <style>
+    .realevt{padding:2.6rem 0 1.6rem;background:linear-gradient(180deg,#FFF9F1 0%,#FDF6ED 100%);}
+    .realevt .container{max-width:min(1100px,calc(100% - 2.5rem));margin:0 auto;}
+    .realevt-head{text-align:center;margin-bottom:1.6rem;}
+    .realevt-eyebrow{display:inline-block;font-size:0.72rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#E8760A;background:#FCE9D0;border:1px solid #F3C994;border-radius:99px;padding:0.28rem 0.9rem;margin-bottom:0.75rem;}
+    .realevt-title{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(1.55rem,3.6vw,2.2rem);color:#1A1208;line-height:1.2;}
+    .realevt-title em{font-style:italic;color:#E8760A;}
+    .realevt-sub{color:#4A2C0A;font-size:0.98rem;max-width:640px;margin:0.5rem auto 0;line-height:1.65;}
+    .realevt-frame{position:relative;width:min(360px,86vw);aspect-ratio:9/16;margin:1.4rem auto 0;border-radius:22px;overflow:hidden;box-shadow:0 22px 60px rgba(76,43,10,0.22);background:#000;cursor:pointer;}
+    .realevt-frame video,.realevt-frame .realevt-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+    .realevt-poster{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:#fff;background:#000 center/cover no-repeat;transition:opacity .25s;}
+    .realevt-poster::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.15) 0%,rgba(0,0,0,0.05) 45%,rgba(0,0,0,0.65) 100%);}
+    .realevt-play{position:relative;width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,0.95);color:#E8760A;font-size:36px;display:grid;place-items:center;padding-left:8px;box-shadow:0 8px 24px rgba(0,0,0,0.45);transition:transform .18s;}
+    .realevt-frame:hover .realevt-play{transform:scale(1.08);}
+    .realevt-pt{position:relative;font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:800;line-height:1.15;text-shadow:0 2px 12px rgba(0,0,0,0.7);}
+    .realevt-ps{position:relative;font-size:0.78rem;font-weight:600;opacity:0.9;letter-spacing:0.06em;text-transform:uppercase;text-shadow:0 2px 10px rgba(0,0,0,0.7);}
+    .realevt-badges{display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.1rem;}
+    .realevt-badge{background:#fff;border:1px solid #EDD8BC;border-radius:99px;padding:0.35rem 0.9rem;font-size:0.78rem;font-weight:700;color:#4A2C0A;}
+    .realevt-badge b{color:#E8760A;}
+    .realevt-cta{display:block;text-align:center;margin-top:1.2rem;color:#E8760A;font-weight:800;font-size:0.95rem;}
+  </style>
+  <div class="container realevt-head">
+    <span class="realevt-eyebrow">Real event · 8 Aug 2026</span>
+    <h2 class="realevt-title">A Griha Pravesh in Newtown — <em>hear the guests</em></h2>
+    <p class="realevt-sub">This is <b>Sandeep Dubey's Griha Pravesh</b> — 60 guests, catered end-to-end via Aayojan. Three guests share their honest reactions on camera.</p>
+  </div>
+  <div class="realevt-frame" id="realEvtFrame" role="button" tabindex="0" aria-label="Play: real event reel from 8 Aug 2026">
+    <div class="realevt-poster" id="realEvtPoster" style="background-image:url('/events/videos/reel-grihapravesh-2026-08-08-poster.jpg');">
+      <div class="realevt-play" aria-hidden="true">▶</div>
+      <div class="realevt-pt">Real family. Real reactions.</div>
+      <div class="realevt-ps">71 seconds · tap to play</div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="realevt-badges">
+      <div class="realevt-badge"><b>60</b> guests</div>
+      <div class="realevt-badge">Newtown · Kolkata</div>
+      <div class="realevt-badge"><b>3</b> on-camera testimonials</div>
+      <div class="realevt-badge">Grihapravesh Lunch</div>
+    </div>
+    <a href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%20saw%20the%20Griha%20Pravesh%20reel%20and%20want%20to%20plan%20my%20event." target="_blank" rel="noopener" class="realevt-cta">📱 Plan my event on WhatsApp →</a>
+  </div>
+  <script>
+    (function(){
+      var frame=document.getElementById("realEvtFrame"),poster=document.getElementById("realEvtPoster");
+      if(!frame||!poster)return;
+      function track(e,p){ if(typeof window.aTrack==="function")window.aTrack(e,p||{}); else if(typeof window.gtag==="function")window.gtag("event",e,p||{}); }
+      var played=false,viewed=false,fired={};
+      if("IntersectionObserver" in window){
+        var io=new IntersectionObserver(function(es){
+          es.forEach(function(en){ if(en.isIntersecting && !viewed){ viewed=true; track("realevt_view",{page:"events-index"}); } });
+        },{threshold:0.5});
+        io.observe(frame);
+      }
+      function play(){
+        if(played)return; played=true;
+        var v=document.createElement("video");
+        v.src="/events/videos/reel-grihapravesh-2026-08-08.mp4";
+        v.controls=true; v.playsInline=true; v.autoplay=true; v.preload="auto";
+        v.style.cssText="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000;";
+        frame.appendChild(v); poster.style.display="none";
+        track("realevt_play",{page:"events-index"});
+        v.addEventListener("timeupdate",function(){
+          if(!v.duration)return;
+          var pct=Math.round((v.currentTime/v.duration)*100);
+          [25,50,75].forEach(function(m){ if(pct>=m && !fired[m]){ fired[m]=1; track("realevt_progress",{page:"events-index",percent:m}); } });
+        });
+        v.addEventListener("ended",function(){ if(!fired[100]){ fired[100]=1; track("realevt_complete",{page:"events-index"}); } });
+      }
+      frame.addEventListener("click",play);
+      frame.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); play(); } });
+    })();
+  </script>
+</section>
+
 <!-- TESTIMONIALS — trust signal, placed high (real reviews of network kitchens, names gated) -->
 <section class="tmoni" id="testimonials">
   <div class="tmoni-inner">
