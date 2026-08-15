@@ -23,6 +23,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, field_validator
 
 from gemini_client import GeminiClient
+import market_prices
 
 load_dotenv()
 
@@ -68,8 +69,29 @@ app = FastAPI(
 
 # CORS — restricted to known origins only
 origins = os.getenv("CORS_ORIGINS", "https://aayojan.online,https://www.aayojan.online,https://aayojanv1.github.io").split(",")
-if os.getenv("ENV", "production") == "development":
-    origins.append("http://localhost:5173")
+# localhost dev/preview ports (harmless — cannot be spoofed for real users)
+origins += ["http://localhost:5173", "http://localhost:4173", "http://127.0.0.1:4173",
+            "http://localhost:8765", "http://127.0.0.1:8765"]
+
+# ─── Cashfree Payments (sandbox/test or production) ───────────────────────────
+CF_APP_ID = os.getenv("CASHFREE_APP_ID", "")
+CF_SECRET = os.getenv("CASHFREE_SECRET", "")
+CF_ENV = os.getenv("CASHFREE_ENV", "sandbox")  # "sandbox" or "production"
+CF_BASE = "https://sandbox.cashfree.com/pg" if CF_ENV == "sandbox" else "https://api.cashfree.com/pg"
+CF_API_VERSION = "2023-08-01"
+
+# ─── Easebuzz Payments (test or production) ───────────────────────────────────
+import hashlib
+import hmac
+import base64
+EB_KEY = os.getenv("EASEBUZZ_KEY", "")
+EB_SALT = os.getenv("EASEBUZZ_SALT", "")
+EB_ENV = os.getenv("EASEBUZZ_ENV", "test")  # "test" or "prod"
+EB_BASE = "https://testpay.easebuzz.in" if EB_ENV == "test" else "https://pay.easebuzz.in"
+
+# ─── Razorpay Payments (test/live — key prefix decides mode) ──────────────────
+RZP_KEY = os.getenv("RAZORPAY_KEY_ID", "")
+RZP_SECRET = os.getenv("RAZORPAY_KEY_SECRET", "")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -304,6 +326,99 @@ class OTPStore:
         return True
 
 otp_store = OTPStore()
+
+
+# ─── Tool-gate stores (verified phone sessions + spent payments) ─────────────
+# TTL for OTP-verified phone sessions used to gate the /api/tools/* endpoints.
+VERIFIED_TTL = 900  # 15 min
+
+class VerifiedPhones:
+    def __init__(self):
+        self._store: dict[str, float] = {}  # phone → expires_at
+
+    def stamp(self, phone: str) -> None:
+        self._store[phone] = time.time() + VERIFIED_TTL
+
+    def is_verified(self, phone: str) -> bool:
+        exp = self._store.get(phone)
+        if not exp:
+            return False
+        if time.time() > exp:
+            self._store.pop(phone, None)
+            return False
+        return True
+
+class SpentPayments:
+    """Prevents a single Razorpay payment_id from being reused on multiple tool calls."""
+    def __init__(self):
+        self._store: set[str] = set()
+
+    def spend(self, payment_id: str) -> bool:
+        if payment_id in self._store:
+            return False
+        self._store.add(payment_id)
+        return True
+
+verified_phones = VerifiedPhones()
+spent_payments = SpentPayments()
+
+
+# ─── Firebase Auth ID-token verification (for Google Sign-In gate) ───────────
+import jwt as _pyjwt
+from cryptography import x509 as _x509
+from cryptography.hazmat.backends import default_backend as _def_backend
+
+FIREBASE_PROJECT_ID = os.getenv("FIREBASE_PROJECT_ID", "aayojan-a8c4f")
+_FIREBASE_CERTS_URL = "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"
+_fb_certs_cache: dict = {"certs": {}, "fetched_at": 0.0}
+_FB_CERTS_TTL = 3600  # 1 hour
+
+async def _fetch_firebase_certs() -> dict:
+    """Fetch and cache Google's public certs for Firebase Auth ID tokens."""
+    now = time.time()
+    if _fb_certs_cache["certs"] and (now - _fb_certs_cache["fetched_at"] < _FB_CERTS_TTL):
+        return _fb_certs_cache["certs"]
+    async with httpx.AsyncClient(timeout=10) as client:
+        r = await client.get(_FIREBASE_CERTS_URL)
+        r.raise_for_status()
+    _fb_certs_cache["certs"] = r.json()
+    _fb_certs_cache["fetched_at"] = now
+    return _fb_certs_cache["certs"]
+
+async def verify_firebase_id_token(id_token: str) -> dict:
+    """Verify a Firebase Auth ID token. Returns decoded claims (with 'sub' = uid)."""
+    if not id_token or "." not in id_token:
+        raise HTTPException(status_code=401, detail="Missing or malformed ID token")
+    try:
+        header = _pyjwt.get_unverified_header(id_token)
+    except Exception:
+        raise HTTPException(status_code=401, detail="Invalid ID token header")
+    kid = header.get("kid")
+    certs = await _fetch_firebase_certs()
+    cert_pem = certs.get(kid)
+    if not cert_pem:
+        # certs rotated — refresh once and retry
+        _fb_certs_cache["fetched_at"] = 0
+        certs = await _fetch_firebase_certs()
+        cert_pem = certs.get(kid)
+    if not cert_pem:
+        raise HTTPException(status_code=401, detail="Unknown token signing key")
+    try:
+        pub_key = _x509.load_pem_x509_certificate(cert_pem.encode(), _def_backend()).public_key()
+        decoded = _pyjwt.decode(
+            id_token,
+            pub_key,
+            algorithms=["RS256"],
+            audience=FIREBASE_PROJECT_ID,
+            issuer=f"https://securetoken.google.com/{FIREBASE_PROJECT_ID}",
+        )
+    except _pyjwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="ID token expired — sign in again")
+    except Exception as e:
+        raise HTTPException(status_code=401, detail=f"ID token invalid: {type(e).__name__}")
+    if not decoded.get("sub"):
+        raise HTTPException(status_code=401, detail="Token missing uid (sub)")
+    return decoded
 
 
 # ─── AiSensy WhatsApp Sender ──────────────────────────────────────────────────
@@ -619,6 +734,205 @@ def team_alert_email(data: PartnerNotifyRequest) -> tuple[str, str]:
     return subject, html
 
 
+# ─── Cashfree payment endpoints ───────────────────────────────────────────────
+class CFOrderRequest(BaseModel):
+    amount: float
+    name: str = ""
+    email: str = ""
+    phone: str
+    purpose: str = "booking"  # "booking" (₹199) or "menu_unlock" (₹49)
+
+
+@app.post("/api/cf/create-order")
+async def cf_create_order(req: CFOrderRequest):
+    """Create a Cashfree order and return a payment_session_id for checkout."""
+    if not CF_APP_ID or not CF_SECRET:
+        raise HTTPException(status_code=503, detail="Payment gateway not configured")
+    order_id = "aay_" + "".join(random.choices(string.ascii_lowercase + string.digits, k=12))
+    phone = "".join(ch for ch in (req.phone or "") if ch.isdigit())[-10:] or "9999999999"
+    payload = {
+        "order_id": order_id,
+        "order_amount": round(float(req.amount), 2),
+        "order_currency": "INR",
+        "customer_details": {
+            "customer_id": "cust_" + phone,
+            "customer_phone": phone,
+            "customer_name": req.name or "Aayojan Customer",
+            "customer_email": req.email or "noreply@aayojan.online",
+        },
+        "order_meta": {"return_url": "https://aayojan.online/events/?cf_order_id={order_id}"},
+        "order_note": req.purpose,
+    }
+    headers = {
+        "x-client-id": CF_APP_ID,
+        "x-client-secret": CF_SECRET,
+        "x-api-version": CF_API_VERSION,
+        "Content-Type": "application/json",
+    }
+    try:
+        async with httpx.AsyncClient(timeout=20) as client:
+            r = await client.post(CF_BASE + "/orders", json=payload, headers=headers)
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Cashfree unreachable: {e}")
+    if r.status_code not in (200, 201):
+        raise HTTPException(status_code=502, detail=f"Cashfree: {r.text[:300]}")
+    data = r.json()
+    return {
+        "order_id": data.get("order_id", order_id),
+        "payment_session_id": data.get("payment_session_id", ""),
+        "env": CF_ENV,
+    }
+
+
+@app.get("/api/cf/status/{order_id}")
+async def cf_status(order_id: str):
+    """Verify the status of a Cashfree order (PAID / ACTIVE / EXPIRED)."""
+    if not CF_APP_ID or not CF_SECRET:
+        raise HTTPException(status_code=503, detail="Payment gateway not configured")
+    headers = {
+        "x-client-id": CF_APP_ID,
+        "x-client-secret": CF_SECRET,
+        "x-api-version": CF_API_VERSION,
+    }
+    try:
+        async with httpx.AsyncClient(timeout=20) as client:
+            r = await client.get(CF_BASE + f"/orders/{order_id}", headers=headers)
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Cashfree unreachable: {e}")
+    if r.status_code != 200:
+        raise HTTPException(status_code=502, detail=f"Cashfree: {r.text[:300]}")
+    data = r.json()
+    return {
+        "order_id": order_id,
+        "order_status": data.get("order_status", "UNKNOWN"),
+        "order_amount": data.get("order_amount"),
+    }
+
+
+# ─── Razorpay payment endpoints ───────────────────────────────────────────────
+class RZPOrderRequest(BaseModel):
+    amount: float
+    name: str = ""
+    email: str = ""
+    phone: str
+    purpose: str = "booking"
+
+
+class RZPVerifyRequest(BaseModel):
+    razorpay_order_id: str
+    razorpay_payment_id: str
+    razorpay_signature: str
+
+
+@app.post("/api/rzp/create-order")
+async def rzp_create_order(req: RZPOrderRequest):
+    """Create a Razorpay order; returns order_id + key for the checkout."""
+    if not RZP_KEY or not RZP_SECRET:
+        raise HTTPException(status_code=503, detail="Razorpay not configured")
+    auth = base64.b64encode(f"{RZP_KEY}:{RZP_SECRET}".encode()).decode()
+    receipt = "aay_" + "".join(random.choices(string.ascii_lowercase + string.digits, k=12))
+    payload = {
+        "amount": int(round(float(req.amount) * 100)),  # paise
+        "currency": "INR",
+        "receipt": receipt,
+        "notes": {"purpose": req.purpose, "name": req.name, "phone": req.phone},
+    }
+    try:
+        async with httpx.AsyncClient(timeout=20) as client:
+            r = await client.post("https://api.razorpay.com/v1/orders", json=payload,
+                                  headers={"Authorization": "Basic " + auth, "Content-Type": "application/json"})
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Razorpay unreachable: {e}")
+    if r.status_code not in (200, 201):
+        raise HTTPException(status_code=502, detail=f"Razorpay: {r.text[:300]}")
+    data = r.json()
+    return {"order_id": data.get("id"), "amount": data.get("amount"), "currency": "INR", "key": RZP_KEY}
+
+
+@app.post("/api/rzp/verify")
+async def rzp_verify(req: RZPVerifyRequest):
+    """Verify a Razorpay payment signature (HMAC-SHA256). Every attempt is logged
+    to stdout so we have a server-side audit trail independent of Firestore."""
+    if not RZP_SECRET:
+        raise HTTPException(status_code=503, detail="Razorpay not configured")
+    msg = (req.razorpay_order_id + "|" + req.razorpay_payment_id).encode()
+    expected = hmac.new(RZP_SECRET.encode(), msg, hashlib.sha256).hexdigest()
+    ok = hmac.compare_digest(expected, req.razorpay_signature)
+    # Structured audit line — grep for [RZP-AUDIT] in Render logs to reconcile.
+    print(
+        f"[RZP-AUDIT] verified={bool(ok)} order={req.razorpay_order_id} "
+        f"payment={req.razorpay_payment_id} at={time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}",
+        flush=True,
+    )
+    return {"verified": bool(ok), "payment_id": req.razorpay_payment_id}
+
+
+# ─── Easebuzz payment endpoints ───────────────────────────────────────────────
+class EBOrderRequest(BaseModel):
+    amount: float
+    name: str = ""
+    email: str = ""
+    phone: str
+    purpose: str = "booking"
+
+
+@app.post("/api/eb/create-order")
+async def eb_create_order(req: EBOrderRequest):
+    """Initiate an Easebuzz payment and return an access_key for checkout."""
+    if not EB_KEY or not EB_SALT:
+        raise HTTPException(status_code=503, detail="Easebuzz not configured")
+    txnid = "aay" + "".join(random.choices(string.ascii_lowercase + string.digits, k=14))
+    amount = f"{float(req.amount):.2f}"
+    productinfo = req.purpose or "booking"
+    firstname = ((req.name or "Aayojan Customer").split(" ")[0]) or "Customer"
+    email = req.email or "noreply@aayojan.online"
+    phone = "".join(ch for ch in (req.phone or "") if ch.isdigit())[-10:] or "9999999999"
+    # hash = sha512(key|txnid|amount|productinfo|firstname|email|udf1..udf10|salt)
+    hash_seq = f"{EB_KEY}|{txnid}|{amount}|{productinfo}|{firstname}|{email}|||||||||||{EB_SALT}"
+    hashh = hashlib.sha512(hash_seq.encode()).hexdigest()
+    form = {
+        "key": EB_KEY, "txnid": txnid, "amount": amount, "productinfo": productinfo,
+        "firstname": firstname, "email": email, "phone": phone,
+        "surl": "https://aayojan.online/events/?eb_status=success",
+        "furl": "https://aayojan.online/events/?eb_status=failure",
+        "hash": hashh,
+    }
+    try:
+        async with httpx.AsyncClient(timeout=20) as client:
+            r = await client.post(EB_BASE + "/payment/initiateLink", data=form)
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Easebuzz unreachable: {e}")
+    if r.status_code != 200:
+        raise HTTPException(status_code=502, detail=f"Easebuzz: {r.text[:300]}")
+    data = r.json()
+    if str(data.get("status")) != "1":
+        raise HTTPException(status_code=502, detail=f"Easebuzz: {data}")
+    return {"access_key": data.get("data"), "txnid": txnid, "env": EB_ENV, "key": EB_KEY}
+
+
+@app.get("/api/eb/status/{txnid}")
+async def eb_status(txnid: str):
+    """Verify an Easebuzz transaction status."""
+    if not EB_KEY or not EB_SALT:
+        raise HTTPException(status_code=503, detail="Easebuzz not configured")
+    hashh = hashlib.sha512(f"{EB_KEY}|{txnid}|{EB_SALT}".encode()).hexdigest()
+    try:
+        async with httpx.AsyncClient(timeout=20) as client:
+            r = await client.post(EB_BASE + "/transaction/v2.1/retrieve",
+                                  data={"key": EB_KEY, "txnid": txnid, "hash": hashh})
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Easebuzz unreachable: {e}")
+    data = r.json()
+    st = "UNKNOWN"
+    try:
+        msg = data.get("msg")
+        if isinstance(msg, dict):
+            st = msg.get("status", "UNKNOWN")
+    except Exception:
+        pass
+    return {"txnid": txnid, "status": st, "ok": str(data.get("status"))}
+
+
 @app.post("/api/otp/send")
 async def otp_send(req: OTPSendRequest):
     """Generate OTP and send via AiSensy WhatsApp."""
@@ -637,8 +951,11 @@ async def otp_send(req: OTPSendRequest):
 
 @app.post("/api/otp/verify")
 async def otp_verify(req: OTPVerifyRequest):
-    """Verify OTP. Returns {valid: bool}."""
+    """Verify OTP. Returns {valid: bool}. On success, stamps phone as verified
+    for 15 min so /api/tools/* endpoints can be called without re-OTP."""
     valid = otp_store.verify(req.phone, req.otp)
+    if valid:
+        verified_phones.stamp(req.phone)
     return {"valid": valid}
 
 
@@ -796,4 +1113,357 @@ async def notify_partner(req: PartnerNotifyRequest):
         "partner_email_sent": partner_email_ok,
         "team_alert_sent": team_email_ok,
         "whatsapp_sent": wa_ok,
+    }
+
+
+# ─── PriceLens + Bhojon Buddy (paid tools, ₹9 gated) ─────────────────────────
+# Gating flow:
+#   1. Frontend collects phone → /api/otp/send → user gets OTP over WhatsApp.
+#   2. User enters OTP → /api/otp/verify → backend stamps phone as verified (15 min).
+#   3. Frontend checks Firestore toolUsage/{phone} for prior use.
+#   4. If first-use: call /api/tools/<name> with { phone, ... }. Backend requires
+#      phone to be OTP-verified. Frontend logs the query to Firestore.
+#   5. If not first-use: frontend hits Razorpay checkout for ₹9. On success,
+#      calls /api/tools/<name> with { phone, ..., paymentId }. Backend verifies
+#      phone is OTP-verified AND paymentId hasn't been spent (spent_payments set).
+
+class PriceLensRequest(BaseModel):
+    idToken: str                      # Firebase Auth ID token from Google Sign-In
+    menu: list[str]
+    guests: int = 30
+    paymentId: Optional[str] = None
+
+    @field_validator("menu")
+    @classmethod
+    def _menu(cls, v):
+        v = [str(x).strip() for x in v if str(x).strip()]
+        if not v:
+            raise ValueError("menu is empty")
+        if len(v) > 40:
+            raise ValueError("too many items (max 40)")
+        return v
+
+    @field_validator("guests")
+    @classmethod
+    def _guests(cls, v):
+        if v < 15 or v > 2000:
+            raise ValueError("guests must be 15-2000")
+        return v
+
+
+class BhojonBuddyRequest(BaseModel):
+    idToken: str                      # Firebase Auth ID token from Google Sign-In
+    budgetPerPlate: int
+    guests: int = 30
+    occasion: str = ""
+    diet: str = "any"
+    paymentId: Optional[str] = None
+
+    @field_validator("budgetPerPlate")
+    @classmethod
+    def _budget(cls, v):
+        if v < 100 or v > 5000:
+            raise ValueError("budget must be ₹100-5000 per plate")
+        return v
+
+    @field_validator("guests")
+    @classmethod
+    def _guests(cls, v):
+        if v < 15 or v > 2000:
+            raise ValueError("guests must be 15-2000")
+        return v
+
+    @field_validator("occasion")
+    @classmethod
+    def _occ(cls, v):
+        return (v or "").strip()[:80]
+
+    @field_validator("diet")
+    @classmethod
+    def _diet(cls, v):
+        v = (v or "any").strip().lower()
+        if v not in ("any", "veg", "non-veg", "nonveg", "mix", "jain", "satwik"):
+            v = "any"
+        return v
+
+
+DEV_EMAILS = {
+    e.strip().lower() for e in os.getenv("DEV_EMAILS", "gouravchat@gmail.com").split(",")
+    if e.strip()
+}
+
+
+async def _gate_tool_or_raise(id_token: str, payment_id: Optional[str]) -> dict:
+    """Verify Google Sign-In ID token, then decide whether the caller may run a tool.
+
+    Rules:
+      - If the token's verified email is in DEV_EMAILS → bypass (unlimited use).
+      - If payment_id starts with 'bundle_' → multi-use token from a paid bundle
+        (frontend tracks credits in Firestore; backend just accepts).
+      - Otherwise if payment_id is present → single-use Razorpay id (marked spent).
+
+    First-use-free vs paid gating is enforced on the frontend via Firestore
+    counters keyed by uid; backend guards the door with a real Google identity.
+    """
+    claims = await verify_firebase_id_token(id_token)
+    email = (claims.get("email") or "").strip().lower()
+    if email in DEV_EMAILS:
+        return claims  # dev bypass — no credit/payment checks
+    if payment_id and not payment_id.startswith("bundle_") and not payment_id.startswith("dev_"):
+        if not spent_payments.spend(payment_id):
+            raise HTTPException(status_code=409, detail="Payment already used.")
+    return claims
+
+
+@app.get("/api/market-prices")
+async def market_prices_endpoint():
+    """Public snapshot of the current market rates CSV (for admin viewing / debug)."""
+    return market_prices.snapshot_meta()
+
+
+# Menu ingredient-cost cache. Same menu produces same ingredient cost regardless
+# of guest count (portions are per-plate). Cache lets us skip a Gemini call and
+# also enforces consistency across guest-count re-runs.
+import hashlib as _hashlib
+_menu_cost_cache: dict = {}
+_MENU_CACHE_TTL = 3 * 3600  # 3 hours
+
+def _menu_key(menu: list[str]) -> str:
+    norm = "|".join(sorted([m.strip().lower() for m in menu if m.strip()]))
+    return _hashlib.sha256(norm.encode()).hexdigest()[:16]
+
+def _cache_get(key: str):
+    entry = _menu_cost_cache.get(key)
+    if not entry:
+        return None
+    if time.time() - entry["ts"] > _MENU_CACHE_TTL:
+        _menu_cost_cache.pop(key, None)
+        return None
+    return entry["data"]
+
+def _cache_put(key: str, data: dict) -> None:
+    _menu_cost_cache[key] = {"ts": time.time(), "data": data}
+
+
+# ─── Signature-dish ingredient floors (₹ per plate) ──────────────────────────
+# Server-side guard against Gemini undersizing well-known Bengali dishes.
+# Keys are lowercased substrings — matcher uses LONGEST match to disambiguate
+# (so "mutton biryani" wins over "biryani" alone).
+DISH_INGREDIENT_FLOORS: dict[str, int] = {
+    # Biryani (Kolkata style with aloo, larger portion)
+    "mutton biryani": 200, "mutton biriyani": 200,
+    "chicken biryani": 120, "chicken biriyani": 120,
+    "veg biryani": 45,
+    # Non-veg curries / kosha
+    "mutton kosha": 100, "mutton rezala": 110, "mutton curry": 100,
+    "chicken kosha": 40, "chicken kasha": 40,
+    "chicken chaap": 55,
+    "chicken reshmi kabab": 40, "chicken reshmi kebab": 40, "reshmi kabab": 40, "reshmi kebab": 40,
+    "chicken kabab": 35, "chicken kebab": 35,
+    "chicken curry": 40,
+    # Fish
+    "bhetki fry": 90, "bhetki fillet": 90, "bhetki paturi": 100,
+    "ilish bhapa": 250, "ilish paturi": 250, "ilish curry": 220,
+    "chingri malaikari": 100, "chingri curry": 90,
+    "prawn": 80,
+    "doi katla": 55, "katla kalia": 50, "katla curry": 45,
+    "rohu curry": 40, "rohu kalia": 45,
+    "fish fry": 40, "fish finger": 35, "fish chop": 25, "fish kabab": 40,
+    "fish kalia": 45,
+    # Veg mains
+    "paneer butter masala": 50, "paneer tikka masala": 50,
+    "paneer tikka": 40, "paneer butter fry": 35, "paneer batter fry": 35,
+    "paneer sabzi": 35,
+    "dhokar dalna": 25, "dal makhani": 25,
+    "alu dom": 15, "aloo dum": 15, "alu dum": 15, "aloor dum": 15,
+    "alu phulkopi": 18, "aloo phulkopi": 18, "phulkopi": 15,
+    "alu bhaja": 10, "aloo bhaja": 10,
+    "chana dal": 15, "chholar dal": 15, "cholar dal": 15,
+    "moong dal": 15, "arahar dal": 18, "toor dal": 18, "dal tadka": 15,
+    "palak paneer": 40, "kaju curry": 45,
+    "mixed vegetable": 22, "veg cutlet": 12,
+    "baiguni": 8,
+    # Rice / bread
+    "basanti pulao": 40, "gobindobhog pulao": 35, "navratna pulao": 45,
+    "kaju kismis pulao": 35, "basmati pulao": 25, "peas pulao": 30,
+    "plain rice": 18, "jafrani rice": 30,
+    "luchi": 15, "radhaballabi": 20, "roti": 8, "naan": 12,
+    # Sweets
+    "rajbhog": 20, "kaju barfi": 18, "nolen gurer payesh": 25, "payesh": 20,
+    "mishti doi": 15, "misti doi": 15,
+    "rasogolla": 10, "rasgulla": 10, "rassogolla": 10,
+    "sandesh": 15, "sondesh": 15,
+    "gulab jamun": 8, "vanilla ice cream": 12, "ice cream": 12,
+    "kheer": 20,
+    # Accompaniments
+    "salad": 8, "green salad": 8, "kachumber": 8, "russian salad": 15,
+    "fruit salad": 20, "sprout salad": 12, "corn salad": 10,
+    "chutney": 5, "chatni": 5, "papad": 3, "papad bhaja": 3,
+    # Drinks / counters
+    "welcome drink": 15, "aam panna": 15, "rose sherbet": 15, "jaljeera": 10,
+    "mocktail counter": 25, "mocktail bar": 25,
+    "tea/coffee counter": 8, "tea coffee counter": 8, "masala chai": 5, "filter coffee": 6,
+    "salad bar": 20,
+    "pepsi": 15, "coke": 15, "cold drink": 15,
+    "water bottle": 5,
+}
+
+
+def _floor_breakdown(breakdown: list) -> None:
+    """Mutate breakdown in place: raise any signature-dish cost below its floor."""
+    if not breakdown:
+        return
+    for item in breakdown:
+        name = str(item.get("item", "")).lower()
+        # Longest-substring match wins ("mutton biryani" > "biryani")
+        best_key, best_len = None, 0
+        for key in DISH_INGREDIENT_FLOORS:
+            if key in name and len(key) > best_len:
+                best_key, best_len = key, len(key)
+        if best_key:
+            floor = DISH_INGREDIENT_FLOORS[best_key]
+            current = float(item.get("ingredientCost") or 0)
+            if current < floor:
+                item["ingredientCost"] = floor
+                item["_flooredFrom"] = round(current)
+                item["_matchedRule"] = best_key
+
+
+def _pricing_mode_for(guests: int) -> tuple[str, int, str, int]:
+    """Two-tier pricing calibrated to real Kolkata catering norms:
+       ≤50 guests → bulk order  → 35% overhead + ₹180 floor
+       >50 guests → full catering → 90% overhead + ₹450 floor
+    Delta ≈ 40% (matches user spec of 30-40% premium for full catering).
+    Floors ensure fixed-cost minimums (staff, setup) don't get underpriced
+    on simple menus where a pure % overhead alone would drop below reality.
+    Returns (mode, overhead_pct, human_note, floor_per_plate)."""
+    if guests <= 50:
+        return ("bulk_order", 35,
+                "Bulk-order pricing (≤50 guests) — 35% overhead + ₹180 floor. Food delivered in trays/foil. Covers kitchen prep, LPG, delivery, packaging & margin.",
+                180)
+    return ("full_catering", 90,
+            "Premium full-catering pricing (>50 guests) — 90% overhead + ₹450 floor. Includes on-site kitchen setup, service staff (1 per 25 guests), cutlery, tables, transport & caterer margin. Fixed setup costs dominate cheaper menus, hence the floor.",
+            450)
+
+
+AAYOJAN_DISCOUNT_PCT = 20   # % struck-through discount shown to user
+MARKET_MARKUP_PCT = 20      # % inflation applied to fair price to create the "market" anchor
+
+
+def _aayojan_pricing(fair_price: int, guests: int) -> dict:
+    """Compute the shown 'market' price (fair + markup) and the Aayojan discount off it.
+    Net effect: aayojan price ≈ 96% of true fair, presented as 20% off an anchored market rate."""
+    market_display = round(fair_price * (1 + MARKET_MARKUP_PCT / 100.0))
+    aayojan_price = round(market_display * (1 - AAYOJAN_DISCOUNT_PCT / 100.0))
+    save = market_display - aayojan_price
+    return {
+        "marketDisplayPrice": market_display,
+        "aayojanPrice": aayojan_price,
+        "aayojanDiscountPct": AAYOJAN_DISCOUNT_PCT,
+        "aayojanSavingsPerPlate": save,
+        "aayojanSavingsTotal": save * max(int(guests), 1),
+    }
+
+
+def _apply_scale_math(result: dict, guests: int) -> dict:
+    """Recompute pricePerPlate from the model's own breakdown so the arithmetic
+    is deterministic and reflects the bulk-vs-full-catering split. Also derives
+    the anchored market price + Aayojan-network price."""
+    try:
+        breakdown = result.get("breakdown") or []
+        _floor_breakdown(breakdown)   # raise underpriced signature dishes to their floors
+        ingr_sum = sum(float(b.get("ingredientCost") or 0) for b in breakdown)
+        if ingr_sum <= 0:
+            ingr_sum = float(result.get("ingredientCostPerPlate") or 0)
+        if ingr_sum <= 0:
+            return result
+        mode, overhead_pct, note, floor = _pricing_mode_for(guests)
+        price = round(ingr_sum * (1 + overhead_pct / 100.0))
+        if price < floor:
+            price = floor  # honour fixed-cost floor (staff/setup dominate cheap menus)
+        result["ingredientCostPerPlate"] = round(ingr_sum)
+        result["overheadPct"] = overhead_pct
+        result["pricingMode"] = mode
+        result["floorApplied"] = (price == floor)
+        result["pricePerPlate"] = price
+        result["fairRangeLow"] = round(price * 0.90)
+        result["fairRangeHigh"] = round(price * 1.10)
+        result["guestScaleNote"] = note
+        result.update(_aayojan_pricing(price, guests))
+    except Exception:
+        pass
+    return result
+
+
+def _add_aayojan_discount_to_menu(result: dict, guests: int) -> dict:
+    """Apply the SAME tiered-overhead + floor pricing as PriceLens, so both
+    tools quote consistently for the same guest count."""
+    try:
+        ingr = float(result.get("estimatedIngredientCost") or 0)
+        if ingr <= 0:
+            base = float(result.get("estimatedPlateCost") or 0)
+            if base <= 0:
+                return result
+            result.update(_aayojan_pricing(round(base), guests))
+            return result
+
+        mode, overhead_pct, note, floor = _pricing_mode_for(guests)
+        price = round(ingr * (1 + overhead_pct / 100.0))
+        if price < floor:
+            price = floor
+        result["estimatedIngredientCost"] = round(ingr)
+        result["estimatedPlateCost"] = price
+        result["overheadPct"] = overhead_pct
+        result["pricingMode"] = mode
+        result["floorApplied"] = (price == floor)
+        result["guestScaleNote"] = note
+        result.update(_aayojan_pricing(price, guests))
+    except Exception:
+        pass
+    return result
+
+
+@app.post("/api/tools/price-lens")
+async def price_lens_endpoint(req: PriceLensRequest, request: Request):
+    claims = await _gate_tool_or_raise(req.idToken, req.paymentId)
+    key = _menu_key(req.menu)
+    cached = _cache_get(key)
+    if cached:
+        # Same menu was priced recently — reuse ingredients, just re-scale for new guest count
+        result = dict(cached)
+        result["cached"] = True
+    else:
+        prices_block = market_prices.format_for_prompt()
+        try:
+            result = await request.app.state.gemini.price_lens(
+                menu=req.menu, guests=req.guests, market_prices_block=prices_block
+            )
+        except Exception as e:
+            raise HTTPException(status_code=502, detail=f"AI error: {e}")
+        _cache_put(key, result)
+    result = _apply_scale_math(result, req.guests)
+    return {
+        "ok": True, "tool": "price_lens", "result": result,
+        "user": {"uid": claims.get("sub"), "email": claims.get("email"), "name": claims.get("name")},
+    }
+
+
+@app.post("/api/tools/bhojon-buddy")
+async def bhojon_buddy_endpoint(req: BhojonBuddyRequest, request: Request):
+    claims = await _gate_tool_or_raise(req.idToken, req.paymentId)
+    prices_block = market_prices.format_for_prompt()
+    try:
+        result = await request.app.state.gemini.bhojon_buddy(
+            budget_per_plate=req.budgetPerPlate,
+            guests=req.guests,
+            occasion=req.occasion,
+            diet=req.diet,
+            market_prices_block=prices_block,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"AI error: {e}")
+    result = _add_aayojan_discount_to_menu(result, req.guests)
+    return {
+        "ok": True, "tool": "bhojon_buddy", "result": result,
+        "user": {"uid": claims.get("sub"), "email": claims.get("email"), "name": claims.get("name")},
     }

@@ -685,9 +685,78 @@ var _wd=new Date().getDay();var _wf=p.get('wknd');var _wknd=(_wf==='1')||(_wf!==
     <a href="/caterers/">Areas</a>
     <a href="/faq.html">FAQ</a>
     <a href="/partners.html" class="nav-cater">🍳 Caterers — Join Free</a>
-    <a href="https://wa.me/918088434425?text=Hi%20Aayojan!" class="nav-cta">Get Quote</a>
+    <a href="#ai-tools" class="nav-cta">Check Fair Price</a>
   </div>
+  <button class="nav-profile" id="navProfile" aria-label="Your account" style="display:none">
+    <img id="navProfileImg" alt="" referrerpolicy="no-referrer">
+    <span id="navProfileInit"></span>
+    <span class="np-badge" id="navProfileBadge" hidden>0</span>
+  </button>
 </nav>
+
+<!-- Profile dropdown — populated by _profile.js -->
+<div class="profile-dd" id="profileDd" hidden aria-label="Account menu">
+  <div class="pdd-head">
+    <img id="pddPhoto" alt="" referrerpolicy="no-referrer">
+    <div>
+      <div class="pdd-name" id="pddName">—</div>
+      <div class="pdd-email" id="pddEmail">—</div>
+    </div>
+  </div>
+  <div class="pdd-stats">
+    <div class="pdd-stat"><span class="pdd-num" id="pddCredits">0</span><span class="pdd-lbl">credits</span></div>
+    <div class="pdd-stat"><span class="pdd-num" id="pddTxCount">0</span><span class="pdd-lbl">transactions</span></div>
+    <div class="pdd-stat"><span class="pdd-num" id="pddSpent">₹0</span><span class="pdd-lbl">total spent</span></div>
+  </div>
+  <div class="pdd-section">
+    <div class="pdd-sec-h">Recent transactions</div>
+    <div class="pdd-tx-list" id="pddTxList"><div class="pdd-empty">No transactions yet.</div></div>
+  </div>
+  <div class="pdd-actions">
+    <button class="pdd-btn danger" id="pddDelete">🗑️ Delete my data</button>
+    <button class="pdd-btn" id="pddSignout">Sign out</button>
+  </div>
+  <div class="pdd-fine">Deleting removes your profile, tool usage, queries and transaction history from Aayojan.</div>
+</div>
+
+<style>
+  .nav-profile{position:relative;background:#F3A84E;border:2px solid var(--saffron);border-radius:50%;width:38px;height:38px;padding:0;cursor:pointer;flex-shrink:0;margin-left:0.9rem;overflow:visible;}
+  .nav-profile img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;}
+  .nav-profile #navProfileInit{color:#1A1208;font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center;height:100%;}
+  .nav-profile:hover{transform:scale(1.05);border-color:#F3C869;}
+  /* Live credit badge on the avatar */
+  .np-badge{position:absolute;top:-6px;right:-8px;min-width:22px;height:22px;padding:0 6px;background:linear-gradient(135deg,#236B43 0%,#3fa26a 100%);color:#fff;font-size:11px;font-weight:900;line-height:22px;border-radius:99px;border:2px solid #1C130A;box-shadow:0 3px 8px rgba(35,107,67,0.4);text-align:center;pointer-events:none;letter-spacing:0;font-family:'DM Sans',sans-serif;}
+  .np-badge.free{background:linear-gradient(135deg,#E8760A 0%,#F3A84E 100%);box-shadow:0 3px 8px rgba(232,118,10,0.4);}
+  .np-badge.dev{background:linear-gradient(135deg,#7A2AE8 0%,#B47AF3 100%);box-shadow:0 3px 8px rgba(122,42,232,0.4);font-size:14px;}
+  .np-badge[hidden]{display:none;}
+  @media(max-width:720px){.nav-profile{margin-left:auto;margin-right:8px;}}
+  .profile-dd{position:fixed;top:66px;right:16px;width:min(360px,calc(100vw - 24px));background:#FFFBF4;border:1px solid #EDD8BC;border-radius:14px;box-shadow:0 20px 60px rgba(28,19,10,0.28);z-index:1000;padding:16px 18px;font-family:'DM Sans',sans-serif;color:#1A1208;}
+  .profile-dd[hidden]{display:none;}
+  .pdd-head{display:flex;gap:12px;align-items:center;padding-bottom:12px;border-bottom:1px solid #EDD8BC;}
+  #pddPhoto{width:52px;height:52px;border-radius:50%;object-fit:cover;background:#F3A84E;flex-shrink:0;}
+  .pdd-name{font-family:'Playfair Display',serif;font-weight:800;font-size:1.02rem;line-height:1.15;}
+  .pdd-email{font-size:0.78rem;color:#8B6E52;margin-top:2px;word-break:break-all;}
+  .pdd-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0;}
+  .pdd-stat{background:#FDF6ED;border:1px solid #EDD8BC;border-radius:9px;padding:9px 6px;text-align:center;}
+  .pdd-num{display:block;font-family:'Playfair Display',serif;font-weight:900;font-size:1.15rem;color:#E8760A;line-height:1;}
+  .pdd-lbl{display:block;font-size:0.66rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:#8B6E52;margin-top:3px;}
+  .pdd-section{margin-top:8px;}
+  .pdd-sec-h{font-size:0.68rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#8B6E52;margin-bottom:6px;}
+  .pdd-tx-list{max-height:180px;overflow-y:auto;background:#FDF6ED;border:1px solid #EDD8BC;border-radius:9px;padding:6px 4px;}
+  .pdd-tx{display:flex;justify-content:space-between;align-items:center;padding:7px 8px;border-bottom:1px solid #F0E3CD;font-size:0.84rem;gap:8px;}
+  .pdd-tx:last-child{border-bottom:none;}
+  .pdd-tx-l{color:#4A2C0A;line-height:1.25;overflow:hidden;}
+  .pdd-tx-l small{display:block;color:#8B6E52;font-size:0.68rem;margin-top:1px;}
+  .pdd-tx-r{color:#1A1208;font-weight:800;font-size:0.9rem;white-space:nowrap;}
+  .pdd-empty{color:#8B6E52;font-size:0.82rem;padding:14px 8px;text-align:center;}
+  .pdd-actions{display:flex;gap:8px;margin-top:14px;}
+  .pdd-btn{flex:1;border:1px solid #EDD8BC;background:#fff;color:#1A1208;padding:0.6rem 0.8rem;border-radius:9px;font-weight:700;cursor:pointer;font-size:0.85rem;font-family:inherit;}
+  .pdd-btn:hover{background:#FDF6ED;}
+  .pdd-btn.danger{color:#B03A2E;border-color:#F5C6C1;background:#FDECEA;}
+  .pdd-btn.danger:hover{background:#F9DCD8;}
+  .pdd-fine{font-size:0.7rem;color:#8B6E52;line-height:1.4;margin-top:8px;text-align:center;}
+</style>
+<script src="/events/_profile.js?v=10" defer></script>
 <script>
 (function(){
   var b=document.getElementById('navBurger'),l=document.getElementById('navLinks');
@@ -749,7 +818,7 @@ var _wd=new Date().getDay();var _wf=p.get('wknd');var _wknd=(_wf==='1')||(_wf!==
       <p class="wp-sub">House parties, birthdays, anniversaries &amp; get-togethers — verified Bengali kitchens, fair quotes, no advance payment.</p>
       <div class="wp-cta-wrap">
         <a class="wp-cta-primary" href="#menu-picker">✨ Plan your party with Aayojan AI →</a>
-        <a class="wp-cta-ghost" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quick%20quote%20for%20my%20party%20catering.">⚡ Quick quote in 30 sec →</a>
+        <a class="wp-cta-ghost" href="#ai-tools">💰 Check fair price · Free →</a>
       </div>
       <div class="wp-trust"><span>🎈 Same-day slots</span><span>🔒 No advance</span><span>✓ FSSAI verified</span><span>💬 WhatsApp support</span></div>
     </div>
@@ -768,7 +837,7 @@ var _wd=new Date().getDay();var _wf=p.get('wknd');var _wknd=(_wf==='1')||(_wf!==
       <p class="wp-sub">Durga Pujo, Pujo bhog &amp; Ratha Yatra — for pandals, housing &amp; community feasts. Verified kitchens, no advance payment.</p>
       <div class="wp-cta-wrap">
         <a class="wp-cta-primary" href="#menu-picker">🥁 Plan your Pujo with Aayojan AI →</a>
-        <a class="wp-cta-ghost" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quick%20quote%20for%20my%20Pujo%20catering.">⚡ Quick quote in 30 sec →</a>
+        <a class="wp-cta-ghost" href="#ai-tools">💰 Check fair price · Free →</a>
       </div>
       <div class="wp-trust"><span>🪷 Satwik bhog</span><span>🔒 No advance</span><span>✓ FSSAI verified</span><span>💬 WhatsApp support</span></div>
     </div>
@@ -787,7 +856,7 @@ var _wd=new Date().getDay();var _wf=p.get('wknd');var _wknd=(_wf==='1')||(_wf!==
       <p class="wp-sub">Get matched with verified Bengali kitchens for your wedding &amp; reception — grand multi-cuisine spreads, fair quotes, no advance payment.</p>
       <div class="wp-cta-wrap">
         <a class="wp-cta-primary" href="#menu-picker">✨ Plan your wedding with Aayojan AI →</a>
-        <a class="wp-cta-ghost" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quick%20quote%20for%20my%20wedding%20catering.">⚡ Quick quote in 30 sec →</a>
+        <a class="wp-cta-ghost" href="#ai-tools">💰 Check fair price · Free →</a>
       </div>
       <div class="wp-trust"><span>🍴 Free tasting</span><span>🔒 No advance</span><span>✓ FSSAI verified</span><span>💬 WhatsApp support</span></div>
     </div>
@@ -806,7 +875,7 @@ var _wd=new Date().getDay();var _wf=p.get('wknd');var _wknd=(_wf==='1')||(_wf!==
       <p class="wp-sub">Bulk office catering from verified Bengali kitchens — on-time delivery, fair quotes, no advance payment. 20–500 plates, all over Kolkata.</p>
       <div class="wp-cta-wrap">
         <a class="wp-cta-primary" href="#menu-picker">✨ Plan your office catering with Aayojan AI →</a>
-        <a class="wp-cta-ghost" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quote%20for%20corporate%2Foffice%20catering.">⚡ Quick quote in 30 sec →</a>
+        <a class="wp-cta-ghost" href="#ai-tools">💰 Check fair price · Free →</a>
       </div>
       <div class="wp-trust"><span>⏱️ On-time delivery</span><span>🔒 No advance</span><span>✓ FSSAI verified</span><span>💬 WhatsApp support</span></div>
     </div>
@@ -829,6 +898,42 @@ function go(n){slides[idx].classList.remove('active');dots[idx].classList.remove
 var timer;function reset(){clearInterval(timer);timer=setInterval(function(){go(idx+1);},3800);}
 playActive();reset();})();</script>
 
+
+<!-- PriceLens + Bhojon Buddy hero strip — visible on every hero slide -->
+<section class="ai-strip" aria-label="PriceLens and Bhojon Buddy — quick tools">
+  <style>
+    .ai-strip{background:linear-gradient(90deg,#1C130A 0%,#3a2410 60%,#1C130A 100%);padding:1.1rem 5%;position:relative;overflow:hidden;}
+    .ai-strip::before{content:"";position:absolute;top:-40%;left:20%;width:280px;height:280px;background:radial-gradient(circle,rgba(243,168,78,0.18) 0%,transparent 65%);pointer-events:none;}
+    .ai-strip::after{content:"";position:absolute;top:-40%;right:15%;width:220px;height:220px;background:radial-gradient(circle,rgba(35,107,67,0.22) 0%,transparent 65%);pointer-events:none;}
+    .ai-strip-wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:16px;position:relative;flex-wrap:wrap;}
+    .ai-strip-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:0.68rem;font-weight:900;letter-spacing:0.14em;color:#1A1208;background:#F3A84E;padding:4px 10px;border-radius:99px;text-transform:uppercase;flex-shrink:0;}
+    .ai-strip-title{font-family:'Playfair Display',serif;font-weight:800;color:#fff;font-size:1.05rem;flex:1;min-width:200px;line-height:1.35;}
+    .ai-strip-title em{color:#F3A84E;font-style:italic;}
+    .ai-strip-title small{display:block;color:#F3C869;font-size:0.72rem;font-weight:700;letter-spacing:0.04em;margin-top:2px;font-family:'DM Sans',sans-serif;}
+    .ai-strip-ctas{display:flex;gap:10px;flex-wrap:wrap;}
+    .ai-strip-cta{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#1A1208;padding:0.62rem 1rem;border-radius:99px;font-weight:800;font-size:0.88rem;text-decoration:none;border:2px solid transparent;transition:transform .15s,border-color .15s;white-space:nowrap;}
+    .ai-strip-cta:hover{transform:translateY(-1px);border-color:#F3A84E;}
+    .ai-strip-cta .ic{font-size:1.05rem;}
+    .ai-strip-cta.bb{background:#236B43;color:#fff;}
+    .ai-strip-cta.bb:hover{background:#1F5D3A;}
+    @media(max-width:640px){
+      .ai-strip{padding:1rem 5%;}
+      .ai-strip-wrap{flex-direction:column;align-items:flex-start;gap:12px;}
+      .ai-strip-title{font-size:0.98rem;}
+      .ai-strip-ctas{width:100%;}
+      .ai-strip-cta{flex:1;justify-content:center;}
+    }
+  </style>
+  <div class="ai-strip-wrap">
+    <span class="ai-strip-eyebrow">✨ New · Try free</span>
+    <div class="ai-strip-title">Meet <em>PriceLens</em> &amp; <em>Bhojon Buddy</em>
+      <small>Free first query · then 5 for ₹15 · shared across both</small></div>
+    <div class="ai-strip-ctas">
+      <a class="ai-strip-cta" href="#ai-tools"><span class="ic">💰</span>PriceLens — is your quote fair?</a>
+      <a class="ai-strip-cta bb" href="#ai-tools"><span class="ic">🍽️</span>Bhojon Buddy — menu for your budget</a>
+    </div>
+  </div>
+</section>
 
 <!-- Live status ticker (honest — no fake transactions) -->
 <div class="live-ticker">
@@ -893,7 +998,7 @@ playActive();reset();})();</script>
   <p class="hero-sub">15+ kitchens · all over Kolkata · ₹0 to you.</p>
   <div class="hero-cta-wrap">
     <a class="hero-cta-primary" href="#menu-picker">✨ Plan your event with Aayojan AI →</a>
-    <a class="hero-cta-ghost" href="https://wa.me/918088434425?text=Hi%20Aayojan!%20I%27d%20like%20a%20quick%20quote%20for%20my%20event.">⚡ Quick quote in 30 sec →</a>
+    <a class="hero-cta-ghost" href="#ai-tools">💰 Check fair price · Free →</a>
   </div>
   <div class="hero-trust">
     <span class="trust-pill">💬 WhatsApp routing</span>
@@ -942,6 +1047,291 @@ playActive();reset();})();</script>
       <button type="button" class="mpick-customize" data-ai-planner>✨ Customize with Aayojan AI →</button>
     </div>
   </div>
+</section>
+
+<!-- PRICELENS + BHOJON BUDDY — price check + menu curator -->
+<section class="paidtools" id="ai-tools" aria-label="Aayojan AI tools">
+  <style>
+    .paidtools{padding:3.5rem 0 3rem;background:linear-gradient(180deg,#1C130A 0%,#3a2410 30%,#5B3E1E 100%);position:relative;overflow:hidden;}
+    .paidtools::before{content:"";position:absolute;top:-30%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(232,118,10,0.25) 0%,transparent 60%);pointer-events:none;}
+    .paidtools::after{content:"";position:absolute;bottom:-30%;right:-10%;width:520px;height:520px;background:radial-gradient(circle,rgba(35,107,67,0.25) 0%,transparent 60%);pointer-events:none;}
+    .paidtools .container{max-width:min(1100px,calc(100% - 2.5rem));margin:0 auto;position:relative;}
+    .ptools-head{text-align:center;margin-bottom:2rem;}
+    .ptools-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:0.72rem;font-weight:900;letter-spacing:0.16em;text-transform:uppercase;color:#1A1208;background:linear-gradient(90deg,#F3A84E 0%,#F3C869 100%);border-radius:99px;padding:0.35rem 1rem;margin-bottom:1rem;box-shadow:0 6px 20px rgba(243,168,78,0.35);animation:eybPulse 2.4s ease-in-out infinite;}
+    @keyframes eybPulse{0%,100%{box-shadow:0 6px 20px rgba(243,168,78,0.35);}50%{box-shadow:0 6px 26px rgba(243,168,78,0.6);}}
+    .ptools-head h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(1.9rem,4.5vw,2.85rem);color:#fff;line-height:1.15;letter-spacing:-0.01em;}
+    .ptools-head h2 em{color:#F3A84E;font-style:italic;}
+    .ptools-head p{color:#FFDDA9;font-size:1.02rem;max-width:640px;margin:0.75rem auto 0;line-height:1.6;}
+    .ptools-head p b{color:#F3C869;}
+    .ptools-social{display:flex;justify-content:center;flex-wrap:wrap;gap:1.4rem;margin-top:1rem;color:#F3C869;font-size:0.82rem;font-weight:600;}
+    .ptools-social span{display:inline-flex;align-items:center;gap:6px;}
+    .ptools-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:1.6rem;}
+    @media(max-width:800px){.ptools-grid{grid-template-columns:1fr;}}
+    .ptool{background:linear-gradient(180deg,#FFFBF4 0%,#FFF6E6 100%);border:2px solid #F3A84E;border-radius:22px;padding:1.5rem 1.3rem 1.5rem;box-shadow:0 20px 50px rgba(28,19,10,0.35),0 0 0 4px rgba(243,168,78,0.14);display:flex;flex-direction:column;position:relative;overflow:hidden;transition:transform .25s;}
+    .ptool:hover{transform:translateY(-4px);}
+    .ptool::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#E8760A,#F3C869,#E8760A);}
+    .ptool[data-tool="bhojon_buddy"]{border-color:#236B43;box-shadow:0 20px 50px rgba(28,19,10,0.35),0 0 0 4px rgba(35,107,67,0.14);}
+    .ptool[data-tool="bhojon_buddy"]::before{background:linear-gradient(90deg,#236B43,#3fa26a,#236B43);}
+    .ptool-icon{font-size:2.6rem;line-height:1;margin-bottom:0.5rem;filter:drop-shadow(0 3px 8px rgba(232,118,10,0.3));}
+    .ptool h3{font-family:'Playfair Display',serif;font-weight:900;font-size:1.55rem;color:#1A1208;margin-bottom:0.25rem;letter-spacing:-0.01em;}
+    .ptool-tag{font-size:0.98rem;color:#4A2C0A;font-weight:600;margin-bottom:0.85rem;line-height:1.4;}
+    .ptool-badge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(90deg,#236B43 0%,#3fa26a 100%);color:#fff;border:none;border-radius:99px;padding:0.32rem 0.85rem;font-size:0.72rem;font-weight:900;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.9rem;box-shadow:0 4px 12px rgba(35,107,67,0.3);align-self:flex-start;animation:badgeGlow 2.6s ease-in-out infinite;}
+    @keyframes badgeGlow{0%,100%{box-shadow:0 4px 12px rgba(35,107,67,0.3);}50%{box-shadow:0 4px 18px rgba(35,107,67,0.55);}}
+    .ptool-step{display:flex;flex-direction:column;gap:0.55rem;}
+    .ptool-step label{font-size:0.72rem;font-weight:800;color:#8B6E52;letter-spacing:0.06em;text-transform:uppercase;margin-top:0.2rem;}
+    .ptool-step input,.ptool-step textarea,.ptool-step select{width:100%;padding:0.7rem 0.85rem;border:1px solid #EDD8BC;border-radius:9px;font-size:0.95rem;font-family:inherit;background:#FFFBF4;color:#1A1208;}
+    .ptool-step input:focus,.ptool-step textarea:focus,.ptool-step select:focus{outline:none;border-color:#E8760A;background:#fff;}
+    .ptool-step textarea{resize:vertical;min-height:100px;}
+    .ptool-cta{margin-top:0.9rem;background:#E8760A;color:#fff;border:none;border-radius:10px;padding:0.85rem 1rem;font-weight:800;font-size:0.98rem;cursor:pointer;font-family:inherit;transition:transform .12s;}
+    .ptool-cta:hover:not(:disabled){transform:translateY(-1px);background:#C95F08;}
+    .ptool-cta:disabled{opacity:0.6;cursor:wait;}
+    .ptool-cta.ghost{background:transparent;color:#8B6E52;font-size:0.85rem;padding:0.4rem;border:1px dashed #EDD8BC;}
+    .ptool-cta.ghost:hover:not(:disabled){background:#FDF6ED;color:#1A1208;}
+    .ptool-cta.google{background:#fff;color:#3c4043;border:1px solid #dadce0;box-shadow:0 1px 2px rgba(0,0,0,0.08);}
+    .ptool-cta.google:hover:not(:disabled){background:#f8f9fa;transform:translateY(-1px);}
+    .ptool-cta.bundle{background:#236B43;color:#fff;font-size:1rem;font-weight:900;padding:0.9rem 1rem;}
+    .ptool-cta.bundle:hover:not(:disabled){background:#1F5D3A;transform:translateY(-1px);}
+    /* Pay-panel hero — single ₹15/5-pack offer */
+    .pay-title{font-family:'Playfair Display',serif;font-weight:800;font-size:1.05rem;color:#1A1208;margin-bottom:0.7rem;text-align:center;}
+    .pay-hero{background:linear-gradient(135deg,#1C130A 0%,#3a2410 100%);color:#fff;border-radius:12px;padding:1rem;margin-bottom:0.8rem;position:relative;overflow:hidden;}
+    .pay-hero::before{content:"";position:absolute;top:-40%;right:-20%;width:180px;height:180px;background:radial-gradient(circle,rgba(243,168,78,0.24) 0%,transparent 70%);pointer-events:none;}
+    .pay-hero-price{display:flex;align-items:baseline;gap:0.6rem;justify-content:center;position:relative;margin-bottom:0.6rem;}
+    .pay-hero-anchor{font-family:'Playfair Display',serif;font-weight:900;font-size:2.2rem;color:#F3A84E;line-height:1;}
+    .pay-hero-count{font-size:0.95rem;color:#F3C869;font-weight:700;letter-spacing:0.02em;}
+    .pay-hero-perks{list-style:none;padding:0;margin:0.4rem 0 0;font-size:0.82rem;color:#FFDDA9;line-height:1.55;position:relative;}
+    .pay-hero-perks b{color:#fff;}
+    .pay-hero-perks li{padding:2px 0;}
+    .pay-fine{font-size:0.72rem;color:#8B6E52;text-align:center;margin-top:0.5rem;line-height:1.5;padding:0 0.5rem;}
+    .pay-fine b{color:#5B4632;}
+    .ptool-signed{display:flex;align-items:center;gap:8px;background:#EAF7EE;border:1px solid #B4E1BF;color:#236B43;padding:0.4rem 0.7rem;border-radius:99px;font-size:0.82rem;font-weight:700;margin-bottom:0.6rem;flex-wrap:wrap;}
+    .ptool-signed img{width:22px;height:22px;border-radius:50%;object-fit:cover;}
+    .ptool-signed b{color:#155a30;}
+    .sib-credits{margin-left:auto;background:#155a30;color:#fff;padding:2px 9px;border-radius:99px;font-size:0.75rem;letter-spacing:0.02em;}
+    .sib-credits b{color:#F3C869;font-weight:900;}
+    .sib-free{background:#E8760A;}
+    .sib-free b{color:#fff;}
+    .sib-empty{background:#8B6E52;font-weight:600;letter-spacing:0.01em;}
+    .sib-dev{background:linear-gradient(90deg,#7A2AE8,#B47AF3);color:#fff;letter-spacing:0.04em;}
+    .sib-dev b{color:#FFDDA9;}
+    .ptool-err{display:none;background:#FDECEA;color:#B03A2E;border:1px solid #F5C6C1;padding:0.55rem 0.75rem;border-radius:8px;font-size:0.86rem;margin-top:0.6rem;}
+    .ptool-verdict{display:flex;justify-content:space-between;align-items:baseline;padding:0.9rem 0;border-bottom:1px solid #EDD8BC;margin-bottom:0.7rem;}
+    .pv-price{font-family:'Playfair Display',serif;font-weight:900;font-size:1.9rem;color:#E8760A;}
+    .pv-range{font-size:0.82rem;font-weight:700;color:#8B6E52;text-align:right;}
+    .ptool-verdict-note{font-size:0.9rem;color:#4A2C0A;line-height:1.55;margin-bottom:0.6rem;}
+    .ptool-verdict-note b{color:#1A1208;}
+    .pv-totals{background:#FCF5E6;border:1px dashed #E4C48E;border-radius:8px;padding:0.55rem 0.75rem;font-size:0.88rem;color:#5B4632;margin:0.4rem 0 0.7rem;text-align:center;}
+    .pv-totals b{color:#1A1208;font-weight:800;}
+    .ptool-table{width:100%;border-collapse:collapse;margin:0.4rem 0;font-size:0.85rem;}
+    .ptool-table th{text-align:left;font-size:0.7rem;color:#8B6E52;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;padding:0.35rem 0.5rem;border-bottom:1px solid #EDD8BC;}
+    .ptool-table th.r,.ptool-table td.r{text-align:right;}
+    .ptool-table td{padding:0.45rem 0.5rem;border-bottom:1px solid #F5EBD8;color:#4A2C0A;}
+    .ptool-menu{list-style:none;padding:0;margin:0.5rem 0;display:flex;flex-direction:column;gap:0.5rem;}
+    .ptool-menu li{display:flex;gap:12px;align-items:flex-start;padding:0.55rem 0.7rem;background:#FFF8EF;border:1px solid #EDD8BC;border-radius:10px;font-size:0.88rem;}
+    .pc-thumb{width:56px;height:56px;flex-shrink:0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,0.35);background-size:cover;background-position:center;box-shadow:0 3px 10px rgba(28,19,10,0.15);}
+    img.pc-thumb{object-fit:cover;}
+    .pc-thumb.nonveg{background:linear-gradient(135deg,#F3A84E 0%,#8B3D0A 100%);}
+    .pc-thumb.veg{background:linear-gradient(135deg,#3fa26a 0%,#155a30 100%);}
+    .pc-thumb.rice{background:linear-gradient(135deg,#F3C869 0%,#B8871A 100%);}
+    .pc-thumb.sweet{background:linear-gradient(135deg,#F3A84E 0%,#B47AF3 100%);}
+    .pc-thumb.drink{background:linear-gradient(135deg,#7ABBE8 0%,#2E4E7A 100%);}
+    .pc-thumb.salad{background:linear-gradient(135deg,#a3d977 0%,#4a7b2b 100%);}
+    .pc-content{flex:1;min-width:0;}
+    .pc-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:2px;}
+    .pc-course{display:inline-block;font-size:0.68rem;font-weight:800;color:#E8760A;letter-spacing:0.06em;text-transform:uppercase;}
+    .pc-portion{color:#8B6E52;font-size:0.75rem;font-weight:600;flex-shrink:0;}
+    .pc-item{display:block;font-weight:700;color:#1A1208;font-size:0.95rem;line-height:1.3;}
+    .pc-rat{color:#4A2C0A;font-size:0.8rem;line-height:1.5;margin-top:0.25rem;font-style:italic;opacity:0.85;}
+    .ptool-note{font-size:0.82rem;color:#8B6E52;padding:0.5rem 0.7rem;background:#FCF5E6;border-left:3px solid #F3C869;border-radius:6px;margin-top:0.6rem;}
+    .ptool-disclaimer{font-size:0.75rem;color:#7B5D3E;padding:0.65rem 0.8rem;background:#FEF8ED;border:1px dashed #E4C48E;border-radius:8px;margin-top:0.9rem;line-height:1.55;}
+    .ptool-disclaimer b{color:#5B4632;}
+    .ptool-wa{display:block;text-align:center;background:#25D366;color:#fff;padding:0.75rem 1rem;border-radius:10px;font-weight:800;text-decoration:none;font-size:0.95rem;margin-top:0.9rem;}
+    .ptool-wa:hover{background:#1DA851;}
+    /* Aayojan-discount panel */
+    .ptool-aay{background:linear-gradient(135deg,#1C130A 0%,#3a2410 100%);color:#fff;border-radius:14px;padding:1rem 1.1rem;margin:0.8rem 0;box-shadow:0 8px 24px rgba(28,19,10,0.28);position:relative;overflow:hidden;}
+    .ptool-aay::before{content:"";position:absolute;top:-50%;right:-30%;width:200px;height:200px;background:radial-gradient(circle,rgba(243,168,78,0.28) 0%,transparent 70%);pointer-events:none;}
+    .pa-eyebrow{font-size:0.72rem;font-weight:800;letter-spacing:0.1em;color:#F3A84E;text-transform:uppercase;margin-bottom:0.5rem;position:relative;}
+    .pa-row{display:flex;align-items:baseline;gap:0.8rem;position:relative;}
+    .pa-strike{color:#8B6E52;text-decoration:line-through;font-size:1rem;font-weight:600;}
+    .pa-price{font-family:'Playfair Display',serif;font-weight:900;font-size:2.2rem;color:#F3A84E;line-height:1;}
+    .pa-price small{font-size:0.9rem;color:#F3C869;font-weight:700;margin-left:2px;}
+    .pa-save{font-size:0.88rem;color:#FFDDA9;margin-top:0.4rem;position:relative;}
+    .pa-save b{color:#fff;}
+    .pa-cta{display:block;background:#25D366;color:#fff;text-align:center;padding:0.7rem 1rem;border-radius:9px;font-weight:800;text-decoration:none;font-size:0.95rem;margin-top:0.7rem;position:relative;}
+    .pa-cta:hover{background:#1DA851;}
+    .pa-fine{font-size:0.72rem;color:#8B6E52;text-align:center;margin-top:0.4rem;position:relative;}
+    .ptool-loader{padding:1rem 0.3rem;}
+    .ptool-loader .pl-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:800;color:#1A1208;margin-bottom:0.8rem;text-align:center;}
+    .ptool-loader .pl-sub{text-align:center;font-size:0.78rem;color:#8B6E52;margin-bottom:0.9rem;letter-spacing:0.04em;text-transform:uppercase;font-weight:700;}
+    .ptool-loader ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.55rem;}
+    .ptool-loader li{display:flex;align-items:center;gap:0.65rem;font-size:0.9rem;color:#8B6E52;opacity:0.4;transition:opacity .35s ease,color .35s ease;padding:0.35rem 0.55rem;border-radius:8px;}
+    .ptool-loader li.on{opacity:1;color:#4A2C0A;background:#FCF5E6;}
+    .ptool-loader li.done{opacity:0.85;color:#236B43;background:transparent;}
+    .ptool-loader .pl-mark{display:inline-flex;width:22px;height:22px;border-radius:50%;background:#F5EBD8;color:#8B6E52;font-size:14px;font-weight:800;align-items:center;justify-content:center;flex-shrink:0;transition:background .3s,color .3s;}
+    .ptool-loader li.on .pl-mark{background:#E8760A;color:#fff;animation:plSpin 0.9s linear infinite;}
+    .ptool-loader li.done .pl-mark{background:#236B43;color:#fff;animation:none;}
+    @keyframes plSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+  </style>
+  <div class="container ptools-head">
+    <span class="ptools-eyebrow">✨ Try free · Kolkata's first fair-price tools</span>
+    <h2>Stop <em>guessing</em>. Get honest <em>numbers</em>.</h2>
+    <p>Two tools every Kolkata host needs — powered by live mandi rates from <b>41 essential ingredients</b>, updated weekly. First query <b>FREE</b> · then 5 for ₹15 (₹3 each), shared across both.</p>
+    <div class="ptools-social">
+      <span>🎁 First query free</span>
+      <span>⚡ Answers in 30 seconds</span>
+      <span>🔒 No credit card upfront</span>
+      <span>💬 Direct to WhatsApp</span>
+    </div>
+  </div>
+  <div class="container ptools-grid">
+
+    <!-- ── PriceLens ─────────────────────────────────────────────── -->
+    <article class="ptool" data-tool="price_lens">
+      <div class="ptool-icon">💰</div>
+      <h3>PriceLens</h3>
+      <p class="ptool-tag">Get a quick quote for your menu — paste the items, we return a fair per-plate price in seconds.</p>
+      <span class="ptool-badge">🎁 First query FREE · then 50 credits for ₹15</span>
+
+      <div class="ptool-step" data-step="input">
+        <label>Menu items (one per line)</label>
+        <textarea data-in="menu" placeholder="Chicken Kosha&#10;Basmati Pulao&#10;Fish Fry&#10;Rasogolla"></textarea>
+        <label>Guests</label>
+        <input data-in="guests" type="number" min="15" max="2000" value="30" placeholder="Minimum 15">
+        <button class="ptool-cta" data-act="start">Check fair price →</button>
+      </div>
+
+      <div class="ptool-signed" data-out="signed-in" style="display:none"></div>
+
+      <div class="ptool-step" data-step="google" style="display:none">
+        <label>Sign in to run PriceLens</label>
+        <p style="font-size:0.82rem;color:#8B6E52;margin-bottom:0.3rem;">One tap — no OTP. First query on your Google account is free.</p>
+        <button class="ptool-cta google" data-act="google">
+          <svg width="18" height="18" viewBox="0 0 18 18" style="vertical-align:middle;margin-right:8px"><g fill="none" fill-rule="evenodd"><path d="M17.64 9.2a10 10 0 00-.16-1.84H9v3.48h4.84a4.14 4.14 0 01-1.8 2.72v2.26h2.92a8.78 8.78 0 002.68-6.62z" fill="#4285F4"/><path d="M9 18a8.6 8.6 0 005.96-2.18l-2.92-2.26a5.4 5.4 0 01-8.06-2.84H.98v2.32A9 9 0 009 18z" fill="#34A853"/><path d="M3.96 10.72A5.4 5.4 0 013.68 9c0-.6.1-1.18.28-1.72V4.96H.98A9 9 0 000 9c0 1.45.35 2.82.98 4.04l2.98-2.32z" fill="#FBBC04"/><path d="M9 3.58a4.9 4.9 0 013.44 1.34l2.58-2.58A8.66 8.66 0 009 0 9 9 0 00.98 4.96l2.98 2.32A5.4 5.4 0 019 3.58z" fill="#EA4335"/></g></svg>
+          Continue with Google
+        </button>
+      </div>
+
+      <div class="ptool-step" data-step="pay" style="display:none">
+        <div class="pay-title">You've used your free query</div>
+        <div class="pay-hero">
+          <div class="pay-hero-price"><span class="pay-hero-anchor">₹15</span><span class="pay-hero-count">50 credits</span></div>
+          <ul class="pay-hero-perks">
+            <li>✓ Each query uses <b>10 credits</b> — 5 queries in a pack</li>
+            <li>✓ Split any way across <b>PriceLens + Bhojon Buddy</b></li>
+            <li>✓ Credits don't expire</li>
+            <li>🔒 Non-refundable — credits granted instantly on payment</li>
+          </ul>
+        </div>
+        <button class="ptool-cta bundle" data-act="pay-bundle">Get 50 credits for ₹15 →</button>
+        <div class="pay-fine">By paying you agree the ₹15 is a <b>non-refundable digital purchase</b>. Credits appear immediately on payment success.</div>
+        <div data-out="pay-reason" style="font-size:0.78rem;color:#8B6E52;line-height:1.5;margin-top:0.4rem;text-align:center;"></div>
+      </div>
+
+      <div class="ptool-step" data-step="loading" style="display:none">
+        <div class="ptool-loader" data-loader="price_lens">
+          <div class="pl-title">PriceLens is checking your menu</div>
+          <div class="pl-sub">Live activity</div>
+          <ul>
+            <li data-i="0"><span class="pl-mark">○</span><span class="pl-txt">Getting live market rates</span></li>
+            <li data-i="1"><span class="pl-mark">○</span><span class="pl-txt">Getting caterer rates in Kolkata</span></li>
+            <li data-i="2"><span class="pl-mark">○</span><span class="pl-txt">Comparing budget vs. premium catering</span></li>
+            <li data-i="3"><span class="pl-mark">○</span><span class="pl-txt">Cross-referencing ingredient costs</span></li>
+            <li data-i="4"><span class="pl-mark">○</span><span class="pl-txt">Calculating fair price range</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ptool-step" data-step="result" style="display:none">
+        <div data-out="result"></div>
+        <button class="ptool-cta ghost" data-act="restart">Run another query</button>
+      </div>
+
+      <div class="ptool-err"></div>
+    </article>
+
+    <!-- ── Bhojon Buddy ──────────────────────────────────────────── -->
+    <article class="ptool" data-tool="bhojon_buddy">
+      <div class="ptool-icon">🍽️</div>
+      <h3>Bhojon Buddy</h3>
+      <p class="ptool-tag">Set your budget &amp; guest count — a full Bengali menu curated for you, right down to the mishti.</p>
+      <span class="ptool-badge">🎁 First query FREE · then 50 credits for ₹15</span>
+
+      <div class="ptool-step" data-step="input">
+        <label>Budget per plate (₹)</label>
+        <input data-in="budget" type="number" min="100" max="5000" value="400">
+        <label>Guests</label>
+        <input data-in="guests" type="number" min="15" max="2000" value="30" placeholder="Minimum 15">
+        <label>Occasion</label>
+        <select data-in="occasion">
+          <option value="Griha Pravesh">Griha Pravesh</option>
+          <option value="Wedding">Wedding</option>
+          <option value="Annaprasan">Annaprasan</option>
+          <option value="Birthday">Birthday</option>
+          <option value="Bhai Phota">Bhai Phota</option>
+          <option value="Corporate Lunch">Corporate Lunch</option>
+          <option value="Party">General Party</option>
+        </select>
+        <label>Diet</label>
+        <select data-in="diet">
+          <option value="mix">Mixed (veg + non-veg)</option>
+          <option value="veg">Pure vegetarian</option>
+          <option value="non-veg">Non-veg heavy</option>
+          <option value="jain">Jain</option>
+          <option value="satwik">Satwik</option>
+        </select>
+        <button class="ptool-cta" data-act="start">Curate my menu →</button>
+      </div>
+
+      <div class="ptool-signed" data-out="signed-in" style="display:none"></div>
+
+      <div class="ptool-step" data-step="google" style="display:none">
+        <label>Sign in to run Bhojon Buddy</label>
+        <p style="font-size:0.82rem;color:#8B6E52;margin-bottom:0.3rem;">One tap — no OTP. First menu on your Google account is free.</p>
+        <button class="ptool-cta google" data-act="google">
+          <svg width="18" height="18" viewBox="0 0 18 18" style="vertical-align:middle;margin-right:8px"><g fill="none" fill-rule="evenodd"><path d="M17.64 9.2a10 10 0 00-.16-1.84H9v3.48h4.84a4.14 4.14 0 01-1.8 2.72v2.26h2.92a8.78 8.78 0 002.68-6.62z" fill="#4285F4"/><path d="M9 18a8.6 8.6 0 005.96-2.18l-2.92-2.26a5.4 5.4 0 01-8.06-2.84H.98v2.32A9 9 0 009 18z" fill="#34A853"/><path d="M3.96 10.72A5.4 5.4 0 013.68 9c0-.6.1-1.18.28-1.72V4.96H.98A9 9 0 000 9c0 1.45.35 2.82.98 4.04l2.98-2.32z" fill="#FBBC04"/><path d="M9 3.58a4.9 4.9 0 013.44 1.34l2.58-2.58A8.66 8.66 0 009 0 9 9 0 00.98 4.96l2.98 2.32A5.4 5.4 0 019 3.58z" fill="#EA4335"/></g></svg>
+          Continue with Google
+        </button>
+      </div>
+
+      <div class="ptool-step" data-step="pay" style="display:none">
+        <div class="pay-title">You've used your free query</div>
+        <div class="pay-hero">
+          <div class="pay-hero-price"><span class="pay-hero-anchor">₹15</span><span class="pay-hero-count">50 credits</span></div>
+          <ul class="pay-hero-perks">
+            <li>✓ Each query uses <b>10 credits</b> — 5 queries in a pack</li>
+            <li>✓ Split any way across <b>PriceLens + Bhojon Buddy</b></li>
+            <li>✓ Credits don't expire</li>
+            <li>🔒 Non-refundable — credits granted instantly on payment</li>
+          </ul>
+        </div>
+        <button class="ptool-cta bundle" data-act="pay-bundle">Get 50 credits for ₹15 →</button>
+        <div class="pay-fine">By paying you agree the ₹15 is a <b>non-refundable digital purchase</b>. Credits appear immediately on payment success.</div>
+        <div data-out="pay-reason" style="font-size:0.78rem;color:#8B6E52;line-height:1.5;margin-top:0.4rem;text-align:center;"></div>
+      </div>
+
+      <div class="ptool-step" data-step="loading" style="display:none">
+        <div class="ptool-loader" data-loader="bhojon_buddy">
+          <div class="pl-title">Bhojon Buddy is curating your menu</div>
+          <div class="pl-sub">Live activity</div>
+          <ul>
+            <li data-i="0"><span class="pl-mark">○</span><span class="pl-txt">Getting live market rates</span></li>
+            <li data-i="1"><span class="pl-mark">○</span><span class="pl-txt">Analysing your budget &amp; guest count</span></li>
+            <li data-i="2"><span class="pl-mark">○</span><span class="pl-txt">Comparing budget vs. premium menus</span></li>
+            <li data-i="3"><span class="pl-mark">○</span><span class="pl-txt">Curating dishes by occasion &amp; diet</span></li>
+            <li data-i="4"><span class="pl-mark">○</span><span class="pl-txt">Finalising your recommended menu</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ptool-step" data-step="result" style="display:none">
+        <div data-out="result"></div>
+        <button class="ptool-cta ghost" data-act="restart">Curate another menu</button>
+      </div>
+
+      <div class="ptool-err"></div>
+    </article>
+
+  </div>
+  <script src="/events/_paidtools.js?v=10" defer></script>
 </section>
 
 <!-- REAL EVENT REEL — customer-shot video with 3 on-camera testimonials -->

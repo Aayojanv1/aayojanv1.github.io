@@ -1,0 +1,42 @@
+name,category,price,unit,notes
+Chicken (dressed),poultry,260,kg,broiler bazaar rate
+Country Chicken (desi murgi),poultry,480,kg,premium
+Mutton (bone-in),meat,780,kg,retail
+Rohu Fish (medium),fish,320,kg,1-2 kg pieces
+Katla Fish,fish,340,kg,
+Bhetki Fillet,fish,750,kg,boneless
+Ilish (Hilsa medium),fish,1600,kg,seasonal peak
+Prawn (medium),fish,620,kg,farmed
+Egg,dairy,7,piece,per egg
+Paneer,dairy,340,kg,fresh
+Curd (dahi),dairy,90,kg,plain
+Ghee,dairy,720,kg,cow ghee
+Mustard Oil,oils,155,litre,kacchi ghani
+Refined Oil,oils,140,litre,sunflower/soya
+Basmati Rice,staples,105,kg,daily quality
+Gobindobhog Rice,staples,110,kg,fragrant
+Atta (wheat flour),staples,42,kg,
+Maida,staples,44,kg,
+Chana Dal,staples,95,kg,
+Moong Dal,staples,120,kg,
+Arahar (Toor) Dal,staples,150,kg,
+Potato,veg,32,kg,
+Onion,veg,38,kg,
+Tomato,veg,45,kg,
+Cauliflower,veg,50,kg,
+Cabbage,veg,32,kg,
+Green Chilli,veg,80,kg,
+Ginger,veg,180,kg,
+Garlic,veg,220,kg,
+Coriander leaves,veg,120,kg,
+Kaju (Cashew),dry_fruit,900,kg,
+Kismis (Raisin),dry_fruit,320,kg,
+Garam Masala mix,spice,900,kg,in-house grind approx
+Turmeric powder,spice,240,kg,
+Red Chilli powder,spice,320,kg,
+Cumin (Jeera),spice,540,kg,whole
+Cardamom (Elaichi),spice,3200,kg,green
+Sugar,staples,44,kg,
+Salt,staples,22,kg,iodised
+Rasogolla (piece),sweet,10,piece,standard size wholesale
+LPG (commercial cylinder),fuel,1900,cylinder,19 kg cyl

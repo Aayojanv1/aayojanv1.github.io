@@ -47,6 +47,62 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
 
+    // ─────────────────────────────────────────────────────────────
+    // Aayojan AI tools (PriceLens + Bhojon Buddy) — four collections:
+    //   users/{uid}                 — Google Sign-In profile
+    //   toolUsage/{uid}             — free/paid gate counter
+    //   transactions/{doc}          — Razorpay ₹9 payments
+    //   priceLensQueries/{doc}       — Price Corrector history
+    //   bhojonBuddyQueries/{doc}    — Menu Generator history
+    // ─────────────────────────────────────────────────────────────
+
+    // User profiles — user may read/write/delete their own doc only.
+    match /users/{uid} {
+      allow read, create, update, delete: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Per-user usage counter (source of truth for first-use vs paid gate).
+    match /toolUsage/{uid} {
+      allow read, create, update, delete: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Transactions — user may create + read + delete their own; admin can do anything.
+    match /transactions/{doc} {
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
+      allow read, delete: if request.auth != null && (
+        request.auth.token.admin == true ||
+        resource.data.uid == request.auth.uid
+      );
+      allow update: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // PriceLens query history — user creates + reads + deletes their own; admin can do anything.
+    match /priceLensQueries/{doc} {
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
+      allow read, delete: if request.auth != null && (
+        request.auth.token.admin == true ||
+        resource.data.uid == request.auth.uid
+      );
+      allow update: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Bhojon Buddy query history — same pattern.
+    match /bhojonBuddyQueries/{doc} {
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
+      allow read, delete: if request.auth != null && (
+        request.auth.token.admin == true ||
+        resource.data.uid == request.auth.uid
+      );
+      allow update: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Legacy tool queries — kept for backwards read compatibility; new writes
+    // now go to priceLensQueries / bhojonBuddyQueries.
+    match /toolQueries/{doc} {
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
+      allow read, update, delete: if request.auth != null && request.auth.token.admin == true;
+    }
+
     // Default: authenticated users only
     match /{document=**} {
       allow read, write: if request.auth != null;

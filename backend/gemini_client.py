@@ -25,6 +25,9 @@ class GeminiClient:
         messages: list[dict],
         system_prompt: Optional[str] = None,
         use_tools: bool = True,
+        max_tokens: int = 1000,
+        temperature: float = 0.7,
+        json_mode: bool = False,
     ) -> str:
         """Send a conversational message and get a reply."""
         if not self.client:
@@ -38,11 +41,15 @@ class GeminiClient:
 
         cfg = dict(
             system_instruction=system_prompt or "You are AayojanAI, a helpful catering assistant.",
-            temperature=0.7,
-            max_output_tokens=1000,
+            temperature=temperature,
+            max_output_tokens=max_tokens,
         )
         if use_tools:
             cfg["tools"] = [types.Tool(google_search=types.GoogleSearch())]
+        if json_mode:
+            # Force pure JSON output + disable thinking (thinking tokens eat max_output_tokens on 2.5-flash)
+            cfg["response_mime_type"] = "application/json"
+            cfg["thinking_config"] = types.ThinkingConfig(thinking_budget=0)
         config = types.GenerateContentConfig(**cfg)
 
         response = await asyncio.to_thread(
@@ -176,6 +183,215 @@ Rules: Rank top 3 only. No markdown."""
             return data
         except Exception:
             return {"reply": (reply or "Tell me a bit about your event 🙂")[:300], "brief": {}, "complete": False}
+
+    async def price_lens(
+        self,
+        menu: list[str],
+        guests: int,
+        market_prices_block: str,
+    ) -> dict:
+        """PriceLens — estimate a fair per-plate price for the given menu using live market rates."""
+        menu_text = "\n".join(f"- {m}" for m in menu if str(m).strip())
+        prompt = f"""You are PriceLens, a Kolkata catering price analyst.
+Given the menu below and today's Kolkata market rates, estimate a FAIR per-plate cost.
+Be RIGOROUS — do not anchor to a "typical Kolkata plate" average. Compute strictly from ingredients.
+
+TODAY'S KOLKATA MARKET RATES:
+{market_prices_block}
+
+MENU REQUESTED ({guests} guests):
+{menu_text}
+
+CRITICAL RULES (violating any of these makes the answer wrong):
+- Portion size per person is FIXED — it does NOT change with guest count. Chicken kosha is 150g
+  whether serving 10 people or 300. So `ingredientCost` for a given menu is IDENTICAL regardless
+  of guest count. Do not vary it.
+- Do NOT anchor to a "typical Kolkata plate ≈ ₹380". Compute from ingredients only.
+
+Method (follow strictly, item by item):
+1. The breakdown must contain ONLY edible dishes that appear on the plate.
+   HARD BAN — NEVER add these to the breakdown (they're overhead, not ingredients):
+     ❌ Cooking Fuel / LPG / Gas
+     ❌ Water bottle / Drinking water / Packaged water
+     ❌ Packaging / Foil / Boxes / Trays / Disposables / Cutlery
+     ❌ Labour / Prep time / Delivery / Transport
+     ❌ Any "Misc" / "Other" / "Overhead" line
+   These are already baked into the overhead the server applies. Adding them here
+   is DOUBLE-COUNTING and produces wrong prices.
+
+2. For each menu item, list actual raw ingredients + per-plate portion.
+   REALISTIC Kolkata per-plate portions (do not go below these):
+     - chicken bone-in (curry / kosha): 150g
+     - mutton bone-in (curry / kosha): 150g
+     - fish (any): 100-120g          - prawn: 80-100g
+     - paneer main: 100g (NOT 60g)   - dal: 80-100ml
+     - plain rice / pulao: 180-220g  - sabzi / veg curry: 100-120g
+     - salad: 80-100g                - chutney/papad: 50g / 2 pcs
+     - sweets (rasogolla / gulab jamun / rajbhog / mishti doi): 1-2 PIECES per person,
+       ~30-40g each. Portion field MUST be like "2 pc" or "1 pc (30g)" — NEVER "1g" or "2g".
+     - drinks (welcome drink / mocktail): 150-200ml per guest
+
+   BIRYANI is different — treat these portions as MANDATORY:
+     - KOLKATA MUTTON BIRYANI plate (500-600g total): 200g mutton bone-in + 250g basmati
+       + 80-100g aloo (potato) + optional 1 egg + ghee 25g + saffron/spices/kaju.
+       Ingredient should be ~₹200-240/plate. Anything below ₹180 is UNDER-PORTIONED.
+     - KOLKATA CHICKEN BIRYANI (450-550g total): 150g chicken + 250g basmati + 80g aloo
+       + optional egg + ghee + spices. Ingredient ~₹110-140/plate.
+     - Aloo is COMPULSORY in Kolkata biryani — never skip it.
+
+3. Sum ingredient cost per plate strictly from the rates above. Do NOT invent items.
+
+4. Server applies overhead + guest-count scaling deterministically. Report raw ingredient
+   cost honestly. For reference: server adds 35% for ≤50 guests, 90% for >50 guests, and
+   applies a floor (₹180 bulk, ₹450 full). This overhead ALREADY COVERS fuel, water,
+   packaging, labour, staff, delivery, cutlery, transport, and caterer margin.
+
+5. Fair-range = ±10% (server may recompute).
+
+6. Sanity floors — if your ingredient sum is below these, you're under-portioning:
+     - pure veg party menu (4-5 items):  ingredient ≥ ₹90/plate
+     - non-veg party menu (with chicken + fish): ingredient ≥ ₹170/plate
+     - premium wedding (mutton/chingri/ilish): ingredient ≥ ₹400/plate
+   If your first pass falls below these, RECHECK your portion sizes — you likely
+   under-portioned paneer, protein, or forgot ghee/oil/spices in ingredient math.
+   Do NOT add fake "misc" or "fuel" items to inflate the total — that's banned above.
+
+Return ONLY valid JSON, no markdown:
+{{
+  "pricePerPlate": 380,
+  "fairRangeLow": 342,
+  "fairRangeHigh": 418,
+  "ingredientCostPerPlate": 240,
+  "overheadPct": 25,
+  "guestScaleNote": "one-line note on scale — e.g. '30% overhead applied for small event'",
+  "breakdown": [
+    {{"item": "Chicken Kosha", "portionGrams": 150, "ingredientCost": 55, "note": "chicken ₹260/kg + masalas"}}
+  ],
+  "verdict": "one warm one-line verdict — 'fair', 'slightly high', 'below market'",
+  "notes": "one line explaining any assumption (e.g., 'assumed 150g rice/plate')"
+}}
+Rules: integers only for money. Verdict must be encouraging, not accusatory."""
+
+        reply = await self.chat(
+            messages=[{"role": "user", "content": prompt}],
+            system_prompt="You are PriceLens, a Kolkata catering price analyst. Return only valid JSON.",
+            use_tools=False,
+            max_tokens=4000,
+            temperature=0.15,
+            json_mode=True,
+        )
+        return json.loads(self._extract_json(reply))
+
+    async def bhojon_buddy(
+        self,
+        budget_per_plate: int,
+        guests: int,
+        occasion: str,
+        diet: str,
+        market_prices_block: str,
+    ) -> dict:
+        """Bhojon Buddy — curate a realistic menu for a given budget/plate + guest count + occasion."""
+        diet_norm = (diet or "any").lower().strip()
+        occ_lower = (occasion or "").lower()
+
+        # Course template by occasion (Bengali Kolkata norms)
+        if "wedding" in occ_lower:
+            template = ("Bengali WEDDING full course:\n"
+                        "  LIVE COUNTERS — MANDATORY at every Bengali wedding, ALWAYS include ALL THREE:\n"
+                        "    1. 'Live Counter · Mocktails' — Item text should list 2-3 mocktail varieties in one line "
+                        "(e.g. 'Mocktail Bar — Aam Panna · Rose Sherbet · Jaljeera'). Portion: 'per guest'.\n"
+                        "    2. 'Live Counter · Tea/Coffee' — Item text: 'Tea/Coffee Counter — Masala Chai · Filter Coffee "
+                        "(+ Green Tea for premium)'. Portion: 'per guest'.\n"
+                        "    3. 'Live Counter · Salad Bar' — Item text MUST list 5-6 salad varieties in one line "
+                        "(e.g. 'Salad Bar (6 varieties) — Green Salad · Kachumber · Russian Salad · Fruit Salad · "
+                        "Sprouts Salad · Corn Salad'). Portion: 'buffet · 5-6 types'.\n"
+                        "  SEATED COURSE (in order):\n"
+                        "    - Welcome Drink (1) · e.g. Aam Panna / Rose Sherbet on arrival\n"
+                        "    - Starters — {starter_split}\n"
+                        "    - Rice / Bread (1-2) · Basanti Pulao or Gobindobhog Pulao (mandatory), plus Luchi/Roti if premium\n"
+                        "    - Main Course (3-4) · one signature protein (Mutton Kosha / Chingri Malaikari / Ilish Bhapa) + "
+                        "fish curry + paneer/dal + one veg\n"
+                        "    - Accompaniments · Chatni · Papad (kept separate from the Salad Bar)\n"
+                        "    - Dessert (1-2) · Rasogolla + Payesh or Mishti Doi (premium: add Sandesh / Rajbhog / Ice cream)")
+            if diet_norm == "veg" or diet_norm == "jain" or diet_norm == "satwik":
+                starter_split = "3-4 veg starters (Paneer Tikka, Veg Cutlet, Paneer Butter Fry, Corn Sticks etc.)"
+            else:
+                starter_split = "2 non-veg starters + 2 veg starters (STRICT). Non-veg examples: Fish Fry / Fish Finger / Chicken Kabab / Chicken Chaap / Reshmi Kabab. Veg examples: Paneer Tikka / Paneer Butter Fry / Veg Cutlet / Cocktail Kabab"
+            template = template.format(starter_split=starter_split)
+        elif "annaprasan" in occ_lower:
+            template = ("ANNAPRASAN course structure (traditional Bengali baby's first-rice):\n"
+                        "  - Rice · Payesh (rice + milk + jaggery/sugar) — MANDATORY as the ritual dish\n"
+                        "  - Luchi + Chholar Dal · classic pairing\n"
+                        "  - 1-2 Vegetables (Alu Phulkopi / Dhokar Dalna / Chatni)\n"
+                        "  - Fish (Bhetki / Rohu curry if non-veg preferred)\n"
+                        "  - Mishti Doi + Sandesh + Rasogolla")
+        elif "griha pravesh" in occ_lower or "grihapravesh" in occ_lower:
+            template = ("GRIHA PRAVESH lunch/dinner:\n"
+                        "  - 1-2 Starters (light — Veg Cutlet + optional Fish Fry)\n"
+                        "  - Pulao or Radhaballabi + Chana Dal\n"
+                        "  - 2-3 Mains (Paneer Butter Masala + Alu Dom / Fish curry / Chicken Kosha)\n"
+                        "  - Chatni · Papad · Salad · Rasogolla")
+        elif "corporate" in occ_lower:
+            template = ("CORPORATE LUNCH box/buffet:\n"
+                        "  - 1 protein main (Chicken Kosha / Paneer) + Pulao/Rice + Dal + 1 sabzi + salad + 1 sweet")
+        else:
+            template = ("General party — 1-2 Starters + Rice/Bread + 2-3 Mains (per diet) + 1 Accompaniment + 1 Dessert")
+
+        prompt = f"""You are Bhojon Buddy, a warm Bengali menu curator for Kolkata events.
+Design a REALISTIC menu a verified Aayojan kitchen can actually cook and serve profitably.
+
+TODAY'S KOLKATA MARKET RATES:
+{market_prices_block}
+
+BRIEF:
+- Occasion: {occasion or 'general party'}
+- Guests: {guests}
+- Budget per plate: ₹{budget_per_plate}
+- Diet: {diet_norm}
+
+OCCASION TEMPLATE (follow this course structure strictly):
+{template}
+
+Pricing tier hints (Bengali wedding norms):
+- ₹300–500 budget/plate → budget wedding · standard chicken/fish · Rasogolla
+- ₹500–800 → mid-range · mutton or fish + paneer premium · Rasogolla + Payesh
+- ₹800–1200 → premium · Mutton Kosha + Chingri Malaikari · Payesh + Sandesh
+- ₹1200+ → luxury · Ilish Bhapa + Chingri Malaikari + Mutton · full dessert spread
+
+Rules:
+- Target ingredient cost per plate based on delivery mode (server applies the overhead):
+    * ≤50 guests (bulk delivery, 18% overhead) → ingredient budget ≈ 85% of plate budget
+    * >50 guests (full catering, 60% overhead)  → ingredient budget ≈ 62% of plate budget
+- Do NOT exceed the ingredient budget. Prefer FEWER well-made items over stretched cheap ones.
+- Portions must be realistic (mutton 150g, fish 120g, rice 200g, paneer 60g, sweets 1-2 pc).
+- Bengali crowd-favourites first; Indian classics second.
+- For WEDDING non-veg (or 'mix'), the starters MUST be exactly 2 non-veg + 2 veg unless the customer explicitly requested pure-veg.
+- Use the market rates provided; do not invent items not in the rate list.
+
+Return ONLY valid JSON, no markdown:
+{{
+  "menu": [
+    {{"course": "Starter · Non-Veg", "item": "Fish Fry", "portion": "80 g", "rationale": "wedding classic"}}
+  ],
+  "estimatedIngredientCost": 460,
+  "estimatedPlateCost": 720,
+  "budgetFit": "well within budget | tight | over — reduce by ₹X",
+  "occasionNote": "one warm line tying the menu to the occasion",
+  "warnings": ["any caveats — e.g. 'Ilish adds seasonality risk'"]
+}}
+Course labels to use: "Live Counter · Mocktails", "Live Counter · Tea/Coffee", "Live Counter · Salad Bar", "Welcome Drink", "Starter · Non-Veg", "Starter · Veg", "Rice / Bread", "Main · Non-Veg", "Main · Veg", "Accompaniment", "Dessert".
+For weddings: the three Live Counters must appear at the TOP of the menu array, before Welcome Drink.
+No markdown. Integers only for money."""
+
+        reply = await self.chat(
+            messages=[{"role": "user", "content": prompt}],
+            system_prompt="You are Bhojon Buddy, a Bengali menu curator. Return only valid JSON.",
+            use_tools=False,
+            max_tokens=4000,
+            temperature=0.4,
+            json_mode=True,
+        )
+        return json.loads(self._extract_json(reply))
 
     @staticmethod
     def _extract_json(text: str) -> str:
