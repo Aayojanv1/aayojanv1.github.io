@@ -1329,21 +1329,67 @@ def _floor_breakdown(breakdown: list) -> None:
                 item["_matchedRule"] = best_key
 
 
-def _pricing_mode_for(guests: int) -> tuple[str, int, str, int]:
-    """Two-tier pricing calibrated to real Kolkata catering norms:
-       ≤50 guests → bulk order  → 35% overhead + ₹180 floor
-       >50 guests → full catering → 90% overhead + ₹450 floor
-    Delta ≈ 40% (matches user spec of 30-40% premium for full catering).
-    Floors ensure fixed-cost minimums (staff, setup) don't get underpriced
-    on simple menus where a pure % overhead alone would drop below reality.
-    Returns (mode, overhead_pct, human_note, floor_per_plate)."""
-    if guests <= 50:
-        return ("bulk_order", 35,
-                "Bulk-order pricing (≤50 guests) — 35% overhead + ₹180 floor. Food delivered in trays/foil. Covers kitchen prep, LPG, delivery, packaging & margin.",
-                180)
-    return ("full_catering", 90,
-            "Premium full-catering pricing (>50 guests) — 90% overhead + ₹450 floor. Includes on-site kitchen setup, service staff (1 per 25 guests), cutlery, tables, transport & caterer margin. Fixed setup costs dominate cheaper menus, hence the floor.",
-            450)
+# Content-tier detection — inspects a breakdown or raw menu list to decide
+# whether the menu is pure veg, non-veg, or premium (mutton/prawn/ilish).
+# Used to pick the right floor so non-veg menus aren't priced like veg ones.
+_PREMIUM_KEYWORDS = ("mutton", "prawn", "chingri", "ilish", "hilsa", "malaikari")
+_NONVEG_KEYWORDS = ("chicken", "murgi", "fish", "bhetki", "rohu", "katla",
+                    "kalia", "paturi", "reshmi", "kabab", "kebab", "chaap",
+                    "fry", "egg", "mach")
+
+
+def _content_tier(items) -> str:
+    """Returns 'premium' | 'nonveg' | 'veg'. items = list of dicts (breakdown) or strings (menu)."""
+    if not items:
+        return "veg"
+    def name_of(x):
+        if isinstance(x, str): return x.lower()
+        if isinstance(x, dict): return str(x.get("item", "")).lower()
+        return ""
+    joined = " | ".join(name_of(x) for x in items)
+    if any(k in joined for k in _PREMIUM_KEYWORDS):
+        return "premium"
+    if any(k in joined for k in _NONVEG_KEYWORDS):
+        return "nonveg"
+    return "veg"
+
+
+# Per-tier floors: composition-aware. Non-veg menus have real protein cost the
+# base veg-tuned floor doesn't cover; premium (mutton/prawn/ilish) higher still.
+_FLOORS = {
+    "bulk_order":     {"veg": 180, "nonveg": 260, "premium": 380},
+    "full_catering":  {"veg": 450, "nonveg": 550, "premium": 700},
+}
+
+# Fixed EVENT-LEVEL overhead (lump sum, divided by guest count for per-plate).
+# Reflects real catering economics: LPG cylinders, staff hours, van, packaging,
+# setup, cutlery rental, margin — costs that don't scale with menu richness.
+_FIXED_OVERHEAD = {
+    "bulk_order":     3500,    # packaging · drop-off delivery · kitchen margin
+    "full_catering":  15000,   # 2 staff × 8h + van + setup + cutlery + cleanup + margin
+}
+
+
+def _pricing_mode_for(guests: int, content_tier: str = "veg") -> tuple[str, int, str, int]:
+    """Two-tier pricing × three-way content-aware floor. Uses FIXED per-event
+    overhead divided by guest count, not a % markup — matches real catering math
+    (economies of scale kick in naturally as guest count grows).
+       ≤50 guests → bulk order  → ₹3,500 fixed
+       >50 guests → full catering → ₹15,000 fixed
+       floor picks: veg / nonveg / premium (mutton/prawn/ilish)
+    Returns (mode, overhead_per_plate, human_note, floor_per_plate)."""
+    mode = "bulk_order" if guests <= 50 else "full_catering"
+    fixed = _FIXED_OVERHEAD[mode]
+    overhead_per_plate = round(fixed / max(int(guests), 1))
+    floor = _FLOORS[mode].get(content_tier, _FLOORS[mode]["veg"])
+    if mode == "bulk_order":
+        note = (f"Bulk-order pricing (≤50 guests) — ₹{fixed:,} fixed overhead ÷ {guests} guests "
+                f"= ₹{overhead_per_plate}/plate. Covers prep, LPG, packaging, drop-off delivery, margin.")
+    else:
+        note = (f"Full catering (>50 guests) — ₹{fixed:,} fixed overhead ÷ {guests} guests "
+                f"= ₹{overhead_per_plate}/plate. Covers staff (~1 per 25 guests), setup, "
+                f"serving, cutlery, transport, cleanup, margin.")
+    return (mode, overhead_per_plate, note, floor)
 
 
 AAYOJAN_DISCOUNT_PCT = 20   # % struck-through discount shown to user
@@ -1365,10 +1411,44 @@ def _aayojan_pricing(fair_price: int, guests: int) -> dict:
     }
 
 
+def _tier_block(mode: str, ingr_sum: float, guests: int, content_tier: str) -> dict:
+    """Compute one tier's numbers (price, floor, aayojan pricing, label) for the
+    two-tier response used when small events can choose bulk vs full catering."""
+    fixed = _FIXED_OVERHEAD[mode]
+    overhead_per_plate = round(fixed / max(int(guests), 1))
+    floor = _FLOORS[mode].get(content_tier, _FLOORS[mode]["veg"])
+    price = max(round(ingr_sum) + overhead_per_plate, floor)
+    if mode == "bulk_order":
+        label, sub = "Bulk order", "Kitchen delivers hot food in trays. You serve."
+        includes = "Prep, LPG, packaging, drop-off delivery, kitchen margin."
+        icon = "📦"
+    else:
+        label, sub = "Full catering", "Staff on-site, buffet setup, serving, cutlery, cleanup."
+        includes = "Staff (~1 per 25 guests), setup, serving, cutlery, transport, cleanup, margin."
+        icon = "🍽️"
+    block = {
+        "mode": mode,
+        "label": label,
+        "sub": sub,
+        "includes": includes,
+        "icon": icon,
+        "pricePerPlate": price,
+        "overheadPerPlate": overhead_per_plate,
+        "fixedOverhead": fixed,
+        "floor": floor,
+        "floorApplied": price == floor,
+    }
+    block.update(_aayojan_pricing(price, guests))
+    return block
+
+
 def _apply_scale_math(result: dict, guests: int) -> dict:
     """Recompute pricePerPlate from the model's own breakdown so the arithmetic
     is deterministic and reflects the bulk-vs-full-catering split. Also derives
-    the anchored market price + Aayojan-network price."""
+    the anchored market price + Aayojan-network price.
+
+    For guests ≤ 50 we ALSO emit both tiers (bulk + full catering) so the UI
+    can offer a choice; for guests > 50 only full catering is meaningful."""
     try:
         breakdown = result.get("breakdown") or []
         _floor_breakdown(breakdown)   # raise underpriced signature dishes to their floors
@@ -1377,44 +1457,58 @@ def _apply_scale_math(result: dict, guests: int) -> dict:
             ingr_sum = float(result.get("ingredientCostPerPlate") or 0)
         if ingr_sum <= 0:
             return result
-        mode, overhead_pct, note, floor = _pricing_mode_for(guests)
-        price = round(ingr_sum * (1 + overhead_pct / 100.0))
-        if price < floor:
-            price = floor  # honour fixed-cost floor (staff/setup dominate cheap menus)
+        tier = _content_tier(breakdown)
+        mode, overhead_per_plate, note, floor = _pricing_mode_for(guests, tier)
+        price = max(round(ingr_sum) + overhead_per_plate, floor)
         result["ingredientCostPerPlate"] = round(ingr_sum)
-        result["overheadPct"] = overhead_pct
+        result["overheadPerPlate"] = overhead_per_plate
+        result["fixedOverhead"] = _FIXED_OVERHEAD[mode]
         result["pricingMode"] = mode
+        result["contentTier"] = tier
         result["floorApplied"] = (price == floor)
         result["pricePerPlate"] = price
         result["fairRangeLow"] = round(price * 0.90)
         result["fairRangeHigh"] = round(price * 1.10)
         result["guestScaleNote"] = note
+        result["guests"] = int(guests)
         result.update(_aayojan_pricing(price, guests))
+
+        # Small events (≤50) get BOTH tiers so the buyer can choose service level.
+        # Large events (>50) don't — bulk-drop-off isn't practical at that scale.
+        if guests <= 50:
+            bulk = _tier_block("bulk_order", ingr_sum, guests, tier)
+            full = _tier_block("full_catering", ingr_sum, guests, tier)
+            result["tiers"] = {"bulk_order": bulk, "full_catering": full}
+            result["priceRangeLow"] = bulk["pricePerPlate"]
+            result["priceRangeHigh"] = full["pricePerPlate"]
     except Exception:
         pass
     return result
 
 
 def _add_aayojan_discount_to_menu(result: dict, guests: int) -> dict:
-    """Apply the SAME tiered-overhead + floor pricing as PriceLens, so both
-    tools quote consistently for the same guest count."""
+    """Apply the SAME tiered-overhead + composition-aware floor pricing as
+    PriceLens, so both tools quote consistently for the same guest count."""
     try:
         ingr = float(result.get("estimatedIngredientCost") or 0)
+        menu_items = result.get("menu") or []
+        tier = _content_tier(menu_items)
         if ingr <= 0:
             base = float(result.get("estimatedPlateCost") or 0)
             if base <= 0:
                 return result
             result.update(_aayojan_pricing(round(base), guests))
+            result["contentTier"] = tier
             return result
 
-        mode, overhead_pct, note, floor = _pricing_mode_for(guests)
-        price = round(ingr * (1 + overhead_pct / 100.0))
-        if price < floor:
-            price = floor
+        mode, overhead_per_plate, note, floor = _pricing_mode_for(guests, tier)
+        price = max(round(ingr) + overhead_per_plate, floor)
         result["estimatedIngredientCost"] = round(ingr)
         result["estimatedPlateCost"] = price
-        result["overheadPct"] = overhead_pct
+        result["overheadPerPlate"] = overhead_per_plate
+        result["fixedOverhead"] = _FIXED_OVERHEAD[mode]
         result["pricingMode"] = mode
+        result["contentTier"] = tier
         result["floorApplied"] = (price == floor)
         result["guestScaleNote"] = note
         result.update(_aayojan_pricing(price, guests))

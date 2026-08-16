@@ -241,10 +241,13 @@ Method (follow strictly, item by item):
 
 3. Sum ingredient cost per plate strictly from the rates above. Do NOT invent items.
 
-4. Server applies overhead + guest-count scaling deterministically. Report raw ingredient
-   cost honestly. For reference: server adds 35% for ≤50 guests, 90% for >50 guests, and
-   applies a floor (₹180 bulk, ₹450 full). This overhead ALREADY COVERS fuel, water,
-   packaging, labour, staff, delivery, cutlery, transport, and caterer margin.
+4. Server applies overhead deterministically as a FIXED per-event lump sum divided by
+   guest count. Report raw ingredient cost honestly. For reference: server adds
+   ₹3,500 fixed for ≤50 guests (bulk order) or ₹15,000 fixed for >50 guests (full
+   catering), then ÷ guests → per-plate overhead. Composition-aware floors still
+   apply as a safety net (₹180/260/380 bulk, ₹450/550/700 full for veg/nonveg/premium).
+   The overhead ALREADY COVERS fuel, water, packaging, labour, staff, delivery, cutlery,
+   transport, and caterer margin.
 
 5. Fair-range = ±10% (server may recompute).
 
@@ -262,8 +265,7 @@ Return ONLY valid JSON, no markdown:
   "fairRangeLow": 342,
   "fairRangeHigh": 418,
   "ingredientCostPerPlate": 240,
-  "overheadPct": 25,
-  "guestScaleNote": "one-line note on scale — e.g. '30% overhead applied for small event'",
+  "guestScaleNote": "one-line note on scale — server will overwrite this with the fixed-overhead ÷ guests breakdown",
   "breakdown": [
     {{"item": "Chicken Kosha", "portionGrams": 150, "ingredientCost": 55, "note": "chicken ₹260/kg + masalas"}}
   ],

@@ -290,7 +290,9 @@
     card.addEventListener("click", function (e) {
       var a = e.target.closest && e.target.closest(".ptool-aay a[href*='wa.me']");
       if (!a) return;
-      track("ptool_result_whatsapp", { tool: tool, wasFree: !!state.paymentId ? false : true });
+      var panel = a.closest(".ptool-aay");
+      var tier = (panel && panel.getAttribute("data-tier")) || "single";
+      track("ptool_result_whatsapp", { tool: tool, tier: tier, wasFree: !state.paymentId });
     });
 
     function step(name) {
@@ -559,6 +561,10 @@
     }
 
     function aayojanPanel(res) {
+      // PriceLens ≤50 guests: two side-by-side tier cards (bulk vs full catering)
+      if (tool === "price_lens" && res.tiers && res.tiers.bulk_order && res.tiers.full_catering) {
+        return tiersPanel(res);
+      }
       if (!res.aayojanPrice) return "";
       // marketDisplayPrice = fair × 1.20 anchor; aayojanPrice = market × 0.80
       var anchor = res.marketDisplayPrice || 0;
@@ -570,7 +576,7 @@
         : "I want to book this Bhojon Buddy menu at the Aayojan-network price of " + inr(res.aayojanPrice) + "/plate.";
       var url = "https://wa.me/" + WA + "?text=" + encodeURIComponent("Hi Aayojan! " + msg);
       return '' +
-        '<div class="ptool-aay">' +
+        '<div class="ptool-aay" data-tier="single">' +
           '<div class="pa-eyebrow">🏷️ ' + (res.aayojanDiscountPct || 20) + '% off with Aayojan Kitchens</div>' +
           '<div class="pa-row">' +
             (anchor ? '<span class="pa-strike">' + inr(anchor) + '</span>' : '') +
@@ -579,6 +585,63 @@
           '<a class="pa-cta" href="' + url + '" target="_blank" rel="noopener">📱 Lock this price on WhatsApp →</a>' +
           '<div class="pa-fine">Verified-kitchen network price. Final confirmation on WhatsApp.</div>' +
         '</div>';
+    }
+
+    function tiersPanel(res) {
+      var guests = res.guests || input.guests || 0;
+      var b = res.tiers.bulk_order, f = res.tiers.full_catering;
+      function card(t, extraClass) {
+        var save = t.aayojanSavingsPerPlate || 0;
+        var totalSave = t.aayojanSavingsTotal || 0;
+        var totalLine = totalSave > 0 ? ' · Total save <b>' + inr(totalSave) + '</b>' : '';
+        var msg = "I want to book " + t.label.toLowerCase() + " at the Aayojan-network price of "
+                  + inr(t.aayojanPrice) + "/plate for " + guests + " guests.";
+        var url = "https://wa.me/" + WA + "?text=" + encodeURIComponent("Hi Aayojan! " + msg);
+        return '' +
+          '<div class="ptool-aay tier-card ' + extraClass + '" data-tier="' + t.mode + '">' +
+            '<div class="tc-head"><span class="tc-icon">' + t.icon + '</span>' +
+              '<span class="tc-label">' + esc(t.label) + '</span></div>' +
+            '<div class="tc-sub">' + esc(t.sub) + '</div>' +
+            '<div class="pa-eyebrow">🏷️ ' + (t.aayojanDiscountPct || 20) + '% off with Aayojan Kitchens</div>' +
+            '<div class="pa-row">' +
+              '<span class="pa-strike">' + inr(t.marketDisplayPrice || 0) + '</span>' +
+              '<span class="pa-price">' + inr(t.aayojanPrice) + '<small>/plate</small></span></div>' +
+            '<div class="pa-save">You save <b>' + inr(save) + '/plate</b>' + totalLine + '</div>' +
+            '<a class="pa-cta" href="' + url + '" target="_blank" rel="noopener">📱 Book ' + esc(t.label.toLowerCase()) + ' →</a>' +
+            '<div class="pa-fine">' + esc(t.includes) + '</div>' +
+          '</div>';
+      }
+      return '<div class="ptool-tiers">' +
+               '<div class="pt-eyebrow">Two options for ≤50 guests — pick the service level that fits your event</div>' +
+               '<div class="pt-grid">' + card(b, 'bulk') + card(f, 'full') + '</div>' +
+             '</div>';
+    }
+
+    function breakdownTable(res) {
+      var rows = (res.breakdown || []).map(function (b) {
+        return '<tr><td>' + esc(b.item) + '</td><td class="r">' + inr(b.ingredientCost || 0) + '</td></tr>';
+      }).join("");
+      if (!rows) return "";
+      var ingr = res.ingredientCostPerPlate || 0;
+      var guests = res.guests || input.guests || 0;
+      var fixed = res.fixedOverhead || 0;
+      var overheadRs = res.overheadPerPlate != null ? res.overheadPerPlate : Math.max((res.pricePerPlate || 0) - ingr, 0);
+      var isBulk = res.pricingMode === "bulk_order";
+      var ohLabel = isBulk
+        ? '+ Bulk overhead per plate'
+        : '+ Full-catering overhead per plate';
+      var ohSub = (fixed && guests)
+        ? '₹' + fixed.toLocaleString('en-IN') + ' fixed ÷ ' + guests + ' guests · '
+          + (isBulk ? 'LPG, packaging, delivery, margin' : 'staff, setup, serving, cutlery, cleanup, margin')
+        : (isBulk ? 'LPG · packaging · delivery · kitchen margin'
+                  : 'Staff · setup · serving · cutlery · transport · cleanup');
+      return '<table class="ptool-table ptool-breakdown"><thead><tr><th>Item</th><th class="r">Cost/plate</th></tr></thead>' +
+             '<tbody>' + rows +
+             '<tr class="pbr-subtotal"><td>Plate price (ingredients)</td><td class="r">' + inr(ingr) + '</td></tr>' +
+             '<tr class="pbr-overhead"><td>' + ohLabel + '<div class="pbr-sub">' + ohSub + '</div></td>' +
+               '<td class="r">' + inr(overheadRs) + '</td></tr>' +
+             '<tr class="pbr-total"><td><b>Per-plate cost</b></td><td class="r"><b>' + inr(res.pricePerPlate || 0) + '</b></td></tr>' +
+             '</tbody></table>';
     }
 
     var DISCLAIMER = '<div class="ptool-disclaimer">⚠️ <b>Indicative only.</b> Actual price may vary by <b>event date</b>, <b>delivery location</b>, and <b>seasonal availability</b> of ingredients (esp. Ilish, fresh Chingri, vegetables). Confirm final quote on WhatsApp before booking.</div>';
@@ -621,16 +684,20 @@
     function renderResult(res) {
       var host = card.querySelector('[data-out="result"]');
       if (tool === "price_lens") {
-        var rows = (res.breakdown || []).map(function (b) {
-          return '<tr><td>' + esc(b.item) + '</td><td class="r">' + inr(b.ingredientCost || 0) + '</td></tr>';
-        }).join("");
+        // Headline: range for ≤50 guests (both tiers), single price for >50
+        var hasRange = res.priceRangeLow && res.priceRangeHigh && res.priceRangeLow !== res.priceRangeHigh;
+        var priceHead = hasRange
+          ? inr(res.priceRangeLow) + '–' + inr(res.priceRangeHigh) + '/plate'
+          : inr(res.pricePerPlate) + '/plate';
+        var rangeSub = hasRange
+          ? '<span class="pv-range">Bulk order → Full catering</span>'
+          : '<span class="pv-range">Fair range: ' + inr(res.fairRangeLow) + '–' + inr(res.fairRangeHigh) + '</span>';
         host.innerHTML =
-          '<div class="ptool-verdict"><span class="pv-price">' + inr(res.pricePerPlate) + '/plate</span>' +
-          '<span class="pv-range">Fair range: ' + inr(res.fairRangeLow) + '–' + inr(res.fairRangeHigh) + '</span></div>' +
-          guestTotalLine(res.pricePerPlate) +
+          '<div class="ptool-verdict"><span class="pv-price">' + priceHead + '</span>' + rangeSub + '</div>' +
+          guestTotalLine(hasRange ? res.priceRangeHigh : res.pricePerPlate) +
           '<div class="ptool-verdict-note"><b>Verdict:</b> ' + esc(res.verdict || "") + '</div>' +
           aayojanPanel(res) +
-          (rows ? '<table class="ptool-table"><thead><tr><th>Item</th><th class="r">Cost/plate</th></tr></thead><tbody>' + rows + '</tbody></table>' : '') +
+          breakdownTable(res) +
           (res.notes ? '<div class="ptool-note">' + esc(res.notes) + '</div>' : '') +
           DISCLAIMER;
       } else {
