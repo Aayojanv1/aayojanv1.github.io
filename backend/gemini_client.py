@@ -298,23 +298,105 @@ Rules: integers only for money. Verdict must be encouraging, not accusatory."""
 
         # Course template by occasion (Bengali Kolkata norms)
         if "wedding" in occ_lower:
-            template = ("Bengali WEDDING full course:\n"
-                        "  LIVE COUNTERS — MANDATORY at every Bengali wedding, ALWAYS include ALL THREE:\n"
-                        "    1. 'Live Counter · Mocktails' — Item text should list 2-3 mocktail varieties in one line "
-                        "(e.g. 'Mocktail Bar — Aam Panna · Rose Sherbet · Jaljeera'). Portion: 'per guest'.\n"
-                        "    2. 'Live Counter · Tea/Coffee' — Item text: 'Tea/Coffee Counter — Masala Chai · Filter Coffee "
-                        "(+ Green Tea for premium)'. Portion: 'per guest'.\n"
-                        "    3. 'Live Counter · Salad Bar' — Item text MUST list 5-6 salad varieties in one line "
-                        "(e.g. 'Salad Bar (6 varieties) — Green Salad · Kachumber · Russian Salad · Fruit Salad · "
-                        "Sprouts Salad · Corn Salad'). Portion: 'buffet · 5-6 types'.\n"
-                        "  SEATED COURSE (in order):\n"
-                        "    - Welcome Drink (1) · e.g. Aam Panna / Rose Sherbet on arrival\n"
-                        "    - Starters — {starter_split}\n"
-                        "    - Rice / Bread (1-2) · Basanti Pulao or Gobindobhog Pulao (mandatory), plus Luchi/Roti if premium\n"
-                        "    - Main Course (3-4) · one signature protein (Mutton Kosha / Chingri Malaikari / Ilish Bhapa) + "
-                        "fish curry + paneer/dal + one veg\n"
-                        "    - Accompaniments · Chatni · Papad (kept separate from the Salad Bar)\n"
-                        "    - Dessert (1-2) · Rasogolla + Payesh or Mishti Doi (premium: add Sandesh / Rajbhog / Ice cream)")
+            # Budget-tiered section counts. Kolkata Bengali/Marwari weddings are
+            # long-form dining events; a real menu spans 12-22 sections including
+            # multiple live counters. The AI must scale sections + variety-per-
+            # counter to the plate budget, not just drop items.
+            if budget_per_plate < 500:
+                tier_label = "BUDGET wedding (₹300–500/plate) — 10-12 sections"
+                counter_rules = (
+                    "    · Mocktails: 8-10 varieties (Aam Panna · Rose Sherbet · Jaljeera · "
+                    "Watermelon Cooler · Litchi Cooler · Kokum · Cucumber Mint · Nolen Gur Sherbet)\n"
+                    "    · Salad Bar: 5-6 varieties\n"
+                    "    · Sweet Counter: 3-4 sweets (Rasogolla · Sandesh · Mihidana)\n"
+                    "    · SKIP: Chaat / Chinese / Tandoor / Ice Cream / Paan / Soup counters\n")
+                seated_rules = (
+                    "    - Welcome Drink (1)\n"
+                    "    - Starters: {starter_split}\n"
+                    "    - Rice/Bread: Basanti Pulao (mandatory)\n"
+                    "    - Dal: 1 (Chana Dal or Musur Dal)\n"
+                    "    - Main Course: 2-3 (one non-veg protein + fish curry + paneer/veg)\n"
+                    "    - Accompaniments: Chatni + Papad\n"
+                    "    - Dessert (plated): Payesh or Mishti Doi\n")
+            elif budget_per_plate < 800:
+                tier_label = "MID-RANGE wedding (₹500–800/plate) — 14-16 sections"
+                counter_rules = (
+                    "    · Mocktails: 10-12 varieties (add Gondhoraj Lemonade · Jamun Cooler · "
+                    "Blue Lagoon · Thandai · Cucumber Mint to the base list)\n"
+                    "    · Salad Bar: 6-8 varieties\n"
+                    "    · Chaat Counter: 3-4 items (Puchka · Aloo Kabli · Ghugni · Papdi Chaat)\n"
+                    "    · Chinese Counter: 3-4 items (Chowmein · Chilli Chicken · Veg Manchurian · Fried Rice)\n"
+                    "    · Sweet Counter: 5-7 sweets (Rasogolla · Sandesh · Rajbhog · Mihidana · Sitabhog · Kheer Kadam)\n"
+                    "    · Tea/Coffee: Masala Chai + Filter Coffee\n"
+                    "    · SKIP: Tandoor / Ice Cream / Paan\n")
+                seated_rules = (
+                    "    - Welcome Drink (1)\n"
+                    "    - Starters (passed): {starter_split}\n"
+                    "    - Rice/Bread: Basanti Pulao + Luchi\n"
+                    "    - Dal: 1 (Chana Dal or Sona Moong)\n"
+                    "    - Main Course: 3-4 (mutton or fish + fish curry + paneer + one veg)\n"
+                    "    - Accompaniments: Chatni · Papad · Kachumber\n"
+                    "    - Dessert (plated): Payesh + Mishti Doi\n")
+            elif budget_per_plate < 1200:
+                tier_label = "PREMIUM wedding (₹800–1200/plate) — 17-20 sections"
+                counter_rules = (
+                    "    · Mocktails: 12-15 varieties (add Pina Colada · Mango Lassi · Watermelon "
+                    "Basil · Grape Fizz · Rose Falooda to the base list)\n"
+                    "    · Salad Bar: 8-10 varieties (add Waldorf · Caesar · Corn & Bean · Pasta Salad)\n"
+                    "    · Chaat Counter: 4-5 items (Puchka · Aloo Kabli · Ghugni · Papdi Chaat · Jhal Muri)\n"
+                    "    · Chinese Counter: 4-5 items (add Prawn Manchurian or Chilli Fish)\n"
+                    "    · Tandoor/Kebab Counter: 4-6 varieties (Reshmi Kabab · Chicken Tikka · "
+                    "Paneer Tikka · Fish Tikka · Mutton Seekh · Malai Chaap)\n"
+                    "    · Soup: 1-2 (Sweet Corn + Cream of Tomato or Thai)\n"
+                    "    · Sweet Counter: 8-10 sweets (add Kaju Barfi · Chomchom · Malpua · Nolen Gur Sandesh)\n"
+                    "    · Ice Cream / Kulfi Counter: 5-7 flavours (Nolen Gur · Kesar · Chocolate · "
+                    "Kulfi Falooda · Vanilla · Strawberry · Mango)\n"
+                    "    · Paan Counter: 3-4 varieties (Meetha Paan · Chocolate Paan · Silver Paan · Gulkand Paan)\n"
+                    "    · Tea/Coffee: Masala Chai + Filter Coffee + Green Tea\n")
+                seated_rules = (
+                    "    - Welcome Drink (1)\n"
+                    "    - Starters (passed): {starter_split}\n"
+                    "    - Rice/Bread: Basanti Pulao + Luchi + Roti (choice)\n"
+                    "    - Dal: Chana Dal (signature) or Sona Moong\n"
+                    "    - Main Course: 4-5 (Mutton Kosha + Chingri Malaikari + Fish curry + Paneer + one veg)\n"
+                    "    - Accompaniments: Chatni · Papad · Salad\n"
+                    "    - Dessert (plated): Payesh + Mishti Doi (from the sweet counter)\n")
+            else:  # ≥ 1200 luxury
+                tier_label = "LUXURY wedding (₹1200+/plate) — 20-22 sections, everything"
+                counter_rules = (
+                    "    · Mocktails: 12-15 varieties (full premium list)\n"
+                    "    · Salad Bar: 8-10 varieties incl. imported greens\n"
+                    "    · Chaat Counter: 5 items (full spread)\n"
+                    "    · Chinese Counter: 5 items (add Chilli Fish · Hakka Noodles)\n"
+                    "    · Tandoor/Kebab Counter: 6 varieties\n"
+                    "    · Pasta / Continental Counter: 2-3 items (Alfredo · Arrabbiata · Grilled Veg)\n"
+                    "    · Soup: 2 varieties\n"
+                    "    · Sweet Counter: 8-10 sweets (Bengali premium + one Marwari sweet)\n"
+                    "    · Ice Cream / Kulfi Counter: 6-7 flavours\n"
+                    "    · Paan Counter: 4 varieties\n"
+                    "    · Tea/Coffee: Masala Chai + Filter Coffee + Green Tea + Herbal\n")
+                seated_rules = (
+                    "    - Welcome Drink (1) · premium (Rose sherbet or Nolen gur sherbet)\n"
+                    "    - Starters (passed): {starter_split}\n"
+                    "    - Rice/Bread: Basanti Pulao + Luchi + Roti + Kashmiri Pulao (choice)\n"
+                    "    - Dal: Chana Dal (signature)\n"
+                    "    - Main Course: 5-6 (Mutton Kosha + Chingri Malaikari + Ilish Bhapa + "
+                    "Fish curry + Paneer signature + one veg)\n"
+                    "    - Accompaniments: Chatni · Papad · Salad · Kachori\n"
+                    "    - Dessert (plated): Payesh + Mishti Doi (from the sweet counter)\n")
+
+            template = (f"Bengali WEDDING full course — {tier_label}.\n"
+                        f"Kolkata weddings are LONG-FORM dining events. The menu MUST be comprehensive.\n"
+                        f"Bunch items into the courses below. Do NOT drop courses to save cost — reduce\n"
+                        f"variety within each counter instead. Order matters (courses appear in this order):\n\n"
+                        f"  LIVE COUNTERS (before seated dinner, guests visit as they arrive):\n"
+                        f"{counter_rules}"
+                        f"    Format: each Live Counter is ONE row in the menu array with the varieties\n"
+                        f"    listed in the item text, e.g. \"Mocktail Bar (12) — Aam Panna · Rose Sherbet · \n"
+                        f"    Jaljeera · Gondhoraj Lemonade · Watermelon Cooler · Litchi Cooler · Blue Lagoon · \n"
+                        f"    Thandai · Kokum · Jamun Cooler · Cucumber Mint · Nolen Gur Sherbet\". Portion: 'per guest'.\n\n"
+                        f"  SEATED / SERVED PHASE (guests sit down, courses served in order):\n"
+                        f"{seated_rules}")
             if diet_norm == "veg" or diet_norm == "jain" or diet_norm == "satwik":
                 starter_split = "3-4 veg starters (Paneer Tikka, Veg Cutlet, Paneer Butter Fry, Corn Sticks etc.)"
             else:
@@ -355,20 +437,26 @@ OCCASION TEMPLATE (follow this course structure strictly):
 {template}
 
 Pricing tier hints (Bengali wedding norms):
-- ₹300–500 budget/plate → budget wedding · standard chicken/fish · Rasogolla
-- ₹500–800 → mid-range · mutton or fish + paneer premium · Rasogolla + Payesh
-- ₹800–1200 → premium · Mutton Kosha + Chingri Malaikari · Payesh + Sandesh
-- ₹1200+ → luxury · Ilish Bhapa + Chingri Malaikari + Mutton · full dessert spread
+- ₹300–500 budget/plate → budget wedding · standard chicken/fish · Rasogolla · 10-12 sections
+- ₹500–800 → mid-range · mutton or fish + paneer premium · adds chaat + chinese counters · 14-16 sections
+- ₹800–1200 → premium · Mutton Kosha + Chingri Malaikari · adds tandoor + ice cream + paan · 17-20 sections
+- ₹1200+ → luxury · Ilish Bhapa + Chingri Malaikari + Mutton · adds pasta/continental · 20-22 sections
 
 Rules:
-- Target ingredient cost per plate based on delivery mode (server applies the overhead):
-    * ≤50 guests (bulk delivery, 18% overhead) → ingredient budget ≈ 85% of plate budget
-    * >50 guests (full catering, 60% overhead)  → ingredient budget ≈ 62% of plate budget
+- Target ingredient cost per plate: plate budget MINUS per-plate overhead (server applies overhead
+  as ₹3,500 fixed for ≤50 guests OR ₹15,000 fixed for >50 guests, then ÷ by guest count).
+    * Example: 200 guests @ ₹700 budget → overhead ≈ 15000/200 = ₹75 → ingredient target ≈ ₹625.
+    * Example: 30 guests @ ₹500 budget → overhead ≈ 3500/30 = ₹117 → ingredient target ≈ ₹383.
+  Compute for THIS guest count + budget and hit that ingredient number.
 - Do NOT exceed the ingredient budget. Prefer FEWER well-made items over stretched cheap ones.
 - Portions must be realistic (mutton 150g, fish 120g, rice 200g, paneer 60g, sweets 1-2 pc).
 - Bengali crowd-favourites first; Indian classics second.
 - For WEDDING non-veg (or 'mix'), the starters MUST be exactly 2 non-veg + 2 veg unless the customer explicitly requested pure-veg.
 - Use the market rates provided; do not invent items not in the rate list.
+- WEDDING SECTION FLOOR: at all budgets the wedding menu MUST include the mocktail bar, salad bar,
+  tea/coffee counter, starters, rice/bread, dal, main course, accompaniments and dessert. Additional
+  counters (chaat, chinese, tandoor, ice cream, paan, soup, pasta) get added as budget rises per the
+  tier rules above. If a required course is missing, the menu is INCOMPLETE.
 
 Return ONLY valid JSON, no markdown:
 {{
@@ -381,8 +469,8 @@ Return ONLY valid JSON, no markdown:
   "occasionNote": "one warm line tying the menu to the occasion",
   "warnings": ["any caveats — e.g. 'Ilish adds seasonality risk'"]
 }}
-Course labels to use: "Live Counter · Mocktails", "Live Counter · Tea/Coffee", "Live Counter · Salad Bar", "Welcome Drink", "Starter · Non-Veg", "Starter · Veg", "Rice / Bread", "Main · Non-Veg", "Main · Veg", "Accompaniment", "Dessert".
-For weddings: the three Live Counters must appear at the TOP of the menu array, before Welcome Drink.
+Course labels to use: "Live Counter · Mocktails", "Live Counter · Salad Bar", "Live Counter · Chaat", "Live Counter · Chinese", "Live Counter · Tandoor", "Live Counter · Pasta", "Live Counter · Ice Cream", "Live Counter · Tea/Coffee", "Welcome Drink", "Soup", "Starter · Non-Veg", "Starter · Veg", "Rice / Bread", "Dal", "Main · Non-Veg", "Main · Veg", "Accompaniment", "Sweet Counter", "Dessert", "Paan Counter".
+For weddings: emit rows in this order — (1) All Live Counters at the top (Mocktails first, then Salad Bar, Chaat, Chinese, Tandoor, Pasta, Ice Cream, Tea/Coffee — whichever are in the tier); (2) Welcome Drink; (3) Soup (if applicable); (4) Starters (Non-Veg then Veg); (5) Rice/Bread; (6) Dal; (7) Mains (Non-Veg then Veg); (8) Accompaniments; (9) Sweet Counter; (10) Dessert (plated); (11) Paan Counter (if applicable).
 No markdown. Integers only for money."""
 
         reply = await self.chat(
