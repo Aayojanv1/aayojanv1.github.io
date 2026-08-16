@@ -262,6 +262,36 @@
     var tool = card.getAttribute("data-tool");   // "price_lens" | "bhojon_buddy"
     var state = { user: null, idToken: null, paymentId: null };
     var input = {};
+    var _fired = {};   // per-card single-fire analytics guards
+
+    // Card impression: fires once when the card is ≥50% visible
+    if (typeof IntersectionObserver === "function") {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting && !_fired.view) {
+            _fired.view = true;
+            track("ptool_view", { tool: tool });
+            io.disconnect();
+          }
+        });
+      }, { threshold: 0.5 });
+      io.observe(card);
+    }
+
+    // First input focus: strongest early-intent signal
+    card.addEventListener("focusin", function (e) {
+      if (_fired.focus) return;
+      if (!e.target.matches("input, textarea, select")) return;
+      _fired.focus = true;
+      track("ptool_input_focus", { tool: tool, field: e.target.getAttribute("data-in") || "" });
+    });
+
+    // WhatsApp click from the Aayojan-price result panel (conversion moment)
+    card.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest(".ptool-aay a[href*='wa.me']");
+      if (!a) return;
+      track("ptool_result_whatsapp", { tool: tool, wasFree: !!state.paymentId ? false : true });
+    });
 
     function step(name) {
       card.querySelectorAll(".ptool-step").forEach(function (el) {
@@ -298,7 +328,10 @@
     card.querySelector('[data-act="start"]').addEventListener("click", function () {
       err("");
       try { input = collectInput(); }
-      catch (e) { err(e.message); return; }
+      catch (e) {
+        track("ptool_validation_fail", { tool: tool, reason: String(e.message || e).slice(0, 80) });
+        err(e.message); return;
+      }
       track("ptool_start", { tool: tool });
       // If already signed in, skip straight ahead
       loadFirebase().then(function (fb) {
@@ -368,6 +401,7 @@
       // Optional footnote in the reason slot (rendered small under the button)
       var reason = card.querySelector('[data-out="pay-reason"]');
       if (reason) reason.textContent = "Powered by Razorpay · One-time payment · No auto-renewal";
+      track("ptool_paywall_shown", { tool: tool });
       step("pay");
     }
 

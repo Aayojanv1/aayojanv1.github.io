@@ -889,27 +889,30 @@ var _wd=new Date().getDay();var _wf=p.get('wknd');var _wknd=(_wf==='1')||(_wf!==
 /* Deep-link ?tool=pricelens|bhojon_buddy — scrolls to #ai-tools and highlights the card.
    Also intercepts strip clicks so we don't leave a query string in the URL forever. */
 (function(){
-  function focusTool(key){
+  function track(e,p){try{if(typeof window.aTrack==='function')window.aTrack(e,p||{});else if(typeof window.gtag==='function')window.gtag('event',e,p||{});}catch(_){}}
+  function focusTool(key,source){
     var el=document.querySelector('.ptool[data-tool="'+key+'"]');
     if(!el)return;
     try{el.scrollIntoView({behavior:'smooth',block:'center'});}catch(_){el.scrollIntoView();}
     el.classList.add('tool-focus');
     setTimeout(function(){el.classList.remove('tool-focus');},3600);
     var input=el.querySelector('[data-in]');if(input){try{setTimeout(function(){input.focus({preventScroll:true});},650);}catch(_){}}
+    track('ptool_deeplink_landed',{tool:key,source:source||'unknown'});
   }
   function keyFromParam(v){v=(v||'').toLowerCase();if(v==='pricelens'||v==='price_lens'||v==='price-lens')return 'price_lens';if(v==='bhojon_buddy'||v==='bhojonbuddy'||v==='bhojon-buddy'||v==='bb')return 'bhojon_buddy';return '';}
   document.addEventListener('click',function(e){
     var a=e.target.closest('a[data-tool-link]');if(!a)return;
     e.preventDefault();
     var key=a.getAttribute('data-tool-link');
-    focusTool(key);
+    var src=a.closest('.ai-launch')?'launch_banner':a.closest('nav')?'nav':a.closest('.hero')?'hero':'other';
+    focusTool(key,src);
   });
   function run(){
     try{
       var params=new URLSearchParams(location.search);
       var key=keyFromParam(params.get('tool'));
       if(!key)return;
-      setTimeout(function(){focusTool(key);},200);
+      setTimeout(function(){focusTool(key,'query_param');},200);
     }catch(_){}
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
