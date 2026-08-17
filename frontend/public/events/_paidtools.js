@@ -553,7 +553,11 @@
           input: input, output: r.result,
           wasFree: !!isFree, paymentId: state.paymentId || null,
         });
-        track("ptool_success", { tool: tool, wasFree: !!isFree });
+        track("ptool_success", {
+          tool: tool,
+          wasFree: !!isFree,
+          pricingTier: r.result && r.result.pricingTier ? r.result.pricingTier : ""
+        });
       }).catch(function (e) {
         step("input"); err("Something went wrong: " + (e.message || e));
         track("ptool_error", { tool: tool, msg: String(e.message || e).slice(0, 80) });
@@ -710,9 +714,17 @@
                    (m.rationale ? '<div class="pc-rat">' + esc(m.rationale) + '</div>' : '') +
                  '</div></li>';
         }).join("");
+        var tierChip = res.pricingTier
+          ? '<div class="pt-chip pt-chip-' + esc(res.pricingTier) + '">'
+              + '<span class="ptc-icon">' + (res.pricingTier === "luxury" ? "👑" : res.pricingTier === "premium" ? "✨" : res.pricingTier === "mid" ? "⚡" : "🎯") + '</span>'
+              + '<span class="ptc-txt"><b>' + esc((res.pricingTier || "").toUpperCase()) + ' tier</b>'
+              + (res.pricingTierLabel ? '<small> · ' + esc(res.pricingTierLabel) + '</small>' : '')
+              + '</span></div>'
+          : '';
         host.innerHTML =
           '<div class="ptool-verdict"><span class="pv-price">' + inr(res.estimatedPlateCost) + '/plate</span>' +
           '<span class="pv-range">' + esc(res.budgetFit || "") + '</span></div>' +
+          tierChip +
           guestTotalLine(res.estimatedPlateCost) +
           (res.occasionNote ? '<div class="ptool-verdict-note">' + esc(res.occasionNote) + '</div>' : '') +
           aayojanPanel(res) +

@@ -11,6 +11,60 @@ from google import genai
 from google.genai import types
 
 
+def _bhojon_tier_for_budget(budget: int) -> tuple[str, str]:
+    """Map a per-plate budget to a tier slug + human label. Used to scale menu
+    scope across ALL occasions (weddings, birthdays, corporate, etc.) so the
+    same occasion at different price points produces genuinely different menus."""
+    if budget < 500:
+        return ("budget", "Budget tier — smaller spread, essentials only")
+    if budget < 800:
+        return ("mid", "Mid tier — adds variety, one live counter")
+    if budget < 1200:
+        return ("premium", "Premium tier — multiple live counters, richer proteins")
+    return ("luxury", "Luxury tier — full spread, premium proteins, all counters")
+
+
+# Explicit ITEM LADDERS by budget tier. Give the AI concrete anchors so it
+# doesn't default to the same crowd-pleaser regardless of price.
+_NONVEG_STARTER_LADDER = {
+    "budget":  "1-2 items: Chicken Kabab OR Fish Fry",
+    "mid":     "2-3 items: Fish Fry + Chicken Kabab (+ Fish Finger optional)",
+    "premium": "3-4 items: Reshmi Kabab + Fish Fry + Chicken Tikka + Fish Finger",
+    "luxury":  "4-5 items: Mutton Seekh + Chingri Kabab + Reshmi Kabab + Fish Fry + Chicken Tikka",
+}
+_VEG_STARTER_LADDER = {
+    "budget":  "1-2 items: Veg Cutlet OR Paneer Tikka",
+    "mid":     "2 items: Paneer Tikka + Veg Cutlet",
+    "premium": "3 items: Paneer Tikka + Cocktail Kabab + Veg Cutlet",
+    "luxury":  "3-4 items: Malai Chaap + Paneer Tikka + Corn Sticks + Veg Cutlet",
+}
+_NONVEG_MAIN_LADDER = {
+    "budget":  "1-2 mains: Chicken Kosha (+ Rohu curry optional). NO mutton at this tier.",
+    "mid":     "2-3 mains: Chicken Kosha + Fish curry (Bhetki/Rohu) (+ 1 veg main)",
+    "premium": "3-4 mains: Mutton Kosha + Fish curry + Chicken Kosha + Paneer main",
+    "luxury":  "4-5 mains: Mutton Kosha + Chingri Malaikari + Ilish Bhapa + Fish curry + Paneer signature",
+}
+_VEG_MAIN_LADDER = {
+    "budget":  "1-2 mains: Paneer Butter Masala OR Alu Dom + 1 sabzi",
+    "mid":     "2-3 mains: Paneer Butter Masala + Dhokar Dalna + 1 sabzi",
+    "premium": "3-4 mains: Paneer Signature + Dhokar Dalna + Malai Kofta + 1 sabzi",
+    "luxury":  "4-5 mains: Paneer Signature + Chhanar Dalna + Dhokar Dalna + Malai Kofta + Alu Phulkopi",
+}
+_SWEET_LADDER = {
+    "budget":  "1-2 sweets: Rasogolla OR Payesh",
+    "mid":     "2-3 sweets: Rasogolla + Payesh + Mishti Doi",
+    "premium": "4-5 sweets: Rasogolla + Sandesh + Payesh + Mishti Doi + Kaju Barfi",
+    "luxury":  "6-8 sweets: Rasogolla + Sandesh + Rajbhog + Mihidana + Sitabhog + Nolen Gur Sandesh + Payesh + Mishti Doi",
+}
+
+
+def _pick_ladder(diet_norm: str, ladder_nv: dict, ladder_v: dict, tier: str) -> str:
+    """Pick the right item-ladder line for the diet + tier."""
+    if diet_norm in ("veg", "jain", "satwik"):
+        return ladder_v.get(tier, ladder_v["mid"])
+    return ladder_nv.get(tier, ladder_nv["mid"])
+
+
 class GeminiClient:
     def __init__(self, api_key: str, model: str = "gemini-2.5-flash"):
         self.model = model
@@ -295,6 +349,7 @@ Rules: integers only for money. Verdict must be encouraging, not accusatory."""
         """Bhojon Buddy — curate a realistic menu for a given budget/plate + guest count + occasion."""
         diet_norm = (diet or "any").lower().strip()
         occ_lower = (occasion or "").lower()
+        tier_slug, tier_label = _bhojon_tier_for_budget(budget_per_plate)
 
         # Course template by occasion (Bengali Kolkata norms)
         if "wedding" in occ_lower:
@@ -403,23 +458,182 @@ Rules: integers only for money. Verdict must be encouraging, not accusatory."""
                 starter_split = "2 non-veg starters + 2 veg starters (STRICT). Non-veg examples: Fish Fry / Fish Finger / Chicken Kabab / Chicken Chaap / Reshmi Kabab. Veg examples: Paneer Tikka / Paneer Butter Fry / Veg Cutlet / Cocktail Kabab"
             template = template.format(starter_split=starter_split)
         elif "annaprasan" in occ_lower:
-            template = ("ANNAPRASAN course structure (traditional Bengali baby's first-rice):\n"
-                        "  - Rice · Payesh (rice + milk + jaggery/sugar) — MANDATORY as the ritual dish\n"
-                        "  - Luchi + Chholar Dal · classic pairing\n"
-                        "  - 1-2 Vegetables (Alu Phulkopi / Dhokar Dalna / Chatni)\n"
-                        "  - Fish (Bhetki / Rohu curry if non-veg preferred)\n"
-                        "  - Mishti Doi + Sandesh + Rasogolla")
+            # Traditional Bengali baby's first-rice — Payesh is ritual-mandatory at every tier.
+            if tier_slug == "budget":
+                template = ("ANNAPRASAN — BUDGET tier (₹300-499/plate) · 5-6 items:\n"
+                            "  - Rice + Payesh (MANDATORY ritual dish)\n"
+                            "  - Luchi + Chholar Dal\n"
+                            "  - 1 vegetable (Alu Phulkopi or Dhokar Dalna)\n"
+                            "  - 1 sweet (Rasogolla or Sandesh)")
+            elif tier_slug == "mid":
+                template = ("ANNAPRASAN — MID tier (₹500-799/plate) · 8-9 items:\n"
+                            "  - Rice + Payesh (MANDATORY)\n"
+                            "  - Luchi + Chholar Dal\n"
+                            "  - Basanti Pulao\n"
+                            "  - 1-2 vegetables (Alu Phulkopi + Dhokar Dalna)\n"
+                            "  - Fish (Rohu or Bhetki curry) if non-veg preferred\n"
+                            "  - Chatni · Papad\n"
+                            "  - Mishti Doi + Sandesh")
+            elif tier_slug == "premium":
+                template = ("ANNAPRASAN — PREMIUM tier (₹800-1199/plate) · 11-13 items:\n"
+                            "  - Welcome Drink (Aam Panna or Rose Sherbet)\n"
+                            "  - Rice + Payesh (MANDATORY)\n"
+                            "  - Luchi + Chholar Dal\n"
+                            "  - Basanti Pulao\n"
+                            "  - 2 vegetables (Alu Phulkopi + Dhokar Dalna)\n"
+                            "  - 1 non-veg main (Bhetki curry / Chicken Kosha)\n"
+                            "  - 1 paneer main\n"
+                            "  - Chatni · Papad · Salad\n"
+                            "  - Sweet plate: Rasogolla + Sandesh + Mihidana\n"
+                            "  - Mishti Doi")
+            else:  # luxury
+                template = ("ANNAPRASAN — LUXURY tier (₹1200+/plate) · 14-16 items:\n"
+                            "  - Welcome Drink + Live Counter · Mocktails (6-8 varieties)\n"
+                            "  - Rice + Payesh (MANDATORY)\n"
+                            "  - Luchi + Chholar Dal + Basanti Pulao\n"
+                            "  - 2-3 vegetables\n"
+                            "  - Fish (Bhetki or Ilish) + 1 more non-veg (Chingri Malaikari / Mutton Kosha)\n"
+                            "  - 1 paneer signature main\n"
+                            "  - Chatni · Papad · Salad · Kachori\n"
+                            "  - Sweet Counter: 5-6 varieties (Rasogolla + Sandesh + Rajbhog + Mihidana + Sitabhog + Nolen Gur Sandesh)\n"
+                            "  - Mishti Doi (plated dessert)")
         elif "griha pravesh" in occ_lower or "grihapravesh" in occ_lower:
-            template = ("GRIHA PRAVESH lunch/dinner:\n"
-                        "  - 1-2 Starters (light — Veg Cutlet + optional Fish Fry)\n"
-                        "  - Pulao or Radhaballabi + Chana Dal\n"
-                        "  - 2-3 Mains (Paneer Butter Masala + Alu Dom / Fish curry / Chicken Kosha)\n"
-                        "  - Chatni · Papad · Salad · Rasogolla")
+            nv_start = _pick_ladder(diet_norm, _NONVEG_STARTER_LADDER, _VEG_STARTER_LADDER, tier_slug)
+            nv_main = _pick_ladder(diet_norm, _NONVEG_MAIN_LADDER, _VEG_MAIN_LADDER, tier_slug)
+            sweets = _SWEET_LADDER[tier_slug]
+            if tier_slug == "budget":
+                template = (f"GRIHA PRAVESH — BUDGET tier (₹300-499/plate) · 6-7 items:\n"
+                            f"  - Welcome Drink (1 · Aam Panna or Rose Sherbet)\n"
+                            f"  - Starters: {nv_start}\n"
+                            f"  - Radhaballabi + Chana Dal OR Basanti Pulao\n"
+                            f"  - Mains: {nv_main}\n"
+                            f"  - Chatni · Papad · Salad\n"
+                            f"  - Sweet: {sweets}")
+            elif tier_slug == "mid":
+                template = (f"GRIHA PRAVESH — MID tier (₹500-799/plate) · 9-11 items:\n"
+                            f"  - Welcome Drink (1)\n"
+                            f"  - Starters: {nv_start}\n"
+                            f"  - Basanti Pulao + Luchi\n"
+                            f"  - Dal (Chana Dal or Sona Moong)\n"
+                            f"  - Mains: {nv_main}\n"
+                            f"  - Chatni · Papad · Salad\n"
+                            f"  - Sweets: {sweets}")
+            elif tier_slug == "premium":
+                template = (f"GRIHA PRAVESH — PREMIUM tier (₹800-1199/plate) · 12-14 items:\n"
+                            f"  - Welcome Drink + Live Counter · Mocktails (8-10 varieties)\n"
+                            f"  - Live Counter · Salad Bar (6 varieties)\n"
+                            f"  - Starters (passed): {nv_start}\n"
+                            f"  - Basanti Pulao + Luchi + Roti\n"
+                            f"  - Dal (Chana Dal signature)\n"
+                            f"  - Mains: {nv_main}\n"
+                            f"  - Chatni · Papad\n"
+                            f"  - Sweet Counter: {sweets}\n"
+                            f"  - Plated Dessert: Payesh + Mishti Doi")
+            else:  # luxury
+                template = (f"GRIHA PRAVESH — LUXURY tier (₹1200+/plate) · 15-17 items:\n"
+                            f"  - Welcome Drink + Live Counter · Mocktails (10-12 varieties)\n"
+                            f"  - Live Counter · Salad Bar (8 varieties)\n"
+                            f"  - Live Counter · Chinese (Chowmein · Chilli Chicken · Manchurian)\n"
+                            f"  - Starters (passed): {nv_start}\n"
+                            f"  - Basanti Pulao + Luchi + Roti + Kashmiri Pulao\n"
+                            f"  - Dal (Chana Dal signature)\n"
+                            f"  - Mains: {nv_main}\n"
+                            f"  - Chatni · Papad · Salad · Kachori\n"
+                            f"  - Sweet Counter: {sweets}\n"
+                            f"  - Plated Dessert: Payesh + Mishti Doi + Nolen Gur Ice Cream")
         elif "corporate" in occ_lower:
-            template = ("CORPORATE LUNCH box/buffet:\n"
-                        "  - 1 protein main (Chicken Kosha / Paneer) + Pulao/Rice + Dal + 1 sabzi + salad + 1 sweet")
+            # Corporate lunch tiers reflect box vs buffet vs live-counter setup
+            if tier_slug == "budget":
+                template = ("CORPORATE LUNCH — BUDGET tier (₹200-499/plate) · 5-6 items · lunch box:\n"
+                            "  - 1 protein main (Chicken Kosha OR Paneer Butter Masala)\n"
+                            "  - Basanti Pulao or Basmati Rice\n"
+                            "  - Dal (Chana or Musur)\n"
+                            "  - 1 sabzi\n"
+                            "  - Salad + Papad\n"
+                            "  - 1 sweet (Rasogolla)")
+            elif tier_slug == "mid":
+                template = ("CORPORATE LUNCH — MID tier (₹500-799/plate) · 8-10 items · buffet:\n"
+                            "  - Welcome Drink (1)\n"
+                            "  - 1 veg starter (Paneer Tikka)\n"
+                            "  - 2 mains (1 non-veg + 1 paneer)\n"
+                            "  - Basanti Pulao + Roti\n"
+                            "  - Dal + 1 sabzi\n"
+                            "  - Salad · Chatni · Papad\n"
+                            "  - 2 sweets (Rasogolla + Mishti Doi)")
+            elif tier_slug == "premium":
+                template = ("CORPORATE LUNCH — PREMIUM tier (₹800-1199/plate) · 11-13 items · buffet + counter:\n"
+                            "  - Welcome Drink + Live Counter · Mocktails (5-6 varieties)\n"
+                            "  - Live Counter · Salad Bar (5-6 varieties)\n"
+                            "  - Starters: 1 non-veg + 1 veg\n"
+                            "  - 3 mains (Chicken Kosha + Fish curry + Paneer)\n"
+                            "  - Basanti Pulao + Luchi + Roti\n"
+                            "  - Dal + 2 sabzi\n"
+                            "  - Chatni · Papad\n"
+                            "  - Sweet Counter (3-4 sweets)")
+            else:  # luxury
+                template = ("CORPORATE LUNCH — LUXURY tier (₹1200+/plate) · 14-17 items · full buffet + live counters:\n"
+                            "  - Welcome Drink + Live Counter · Mocktails (8-10 varieties)\n"
+                            "  - Live Counter · Salad Bar (8 varieties)\n"
+                            "  - Live Counter · Chaat (Puchka · Ghugni · Aloo Kabli)\n"
+                            "  - Live Counter · Chinese (Chowmein · Chilli Chicken)\n"
+                            "  - Starters: 2 non-veg + 2 veg (passed)\n"
+                            "  - 4 mains (Mutton Kosha + Fish curry + Chicken Kosha + Paneer signature)\n"
+                            "  - Basanti Pulao + Luchi + Roti\n"
+                            "  - Dal + 2 sabzi\n"
+                            "  - Chatni · Papad · Salad\n"
+                            "  - Sweet Counter (5-6 sweets)\n"
+                            "  - Ice Cream Counter (3-4 flavours)")
         else:
-            template = ("General party — 1-2 Starters + Rice/Bread + 2-3 Mains (per diet) + 1 Accompaniment + 1 Dessert")
+            # General party / Birthday / Bhai Phota / anything else
+            nv_start = _pick_ladder(diet_norm, _NONVEG_STARTER_LADDER, _VEG_STARTER_LADDER, tier_slug)
+            nv_main = _pick_ladder(diet_norm, _NONVEG_MAIN_LADDER, _VEG_MAIN_LADDER, tier_slug)
+            sweets = _SWEET_LADDER[tier_slug]
+            is_birthday = "birthday" in occ_lower
+            cake_line = "\n  - Birthday Cake (mandatory, 1 kg per 25 guests)" if is_birthday else ""
+            if tier_slug == "budget":
+                template = (f"{'BIRTHDAY' if is_birthday else 'GENERAL PARTY'} — BUDGET tier (₹200-499/plate) · 5-7 items:\n"
+                            f"  - Welcome Drink (1) OR skip\n"
+                            f"  - Starters: {nv_start}\n"
+                            f"  - Basanti Pulao or Basmati Rice\n"
+                            f"  - Mains: {nv_main}\n"
+                            f"  - Chatni · Papad\n"
+                            f"  - Sweet: {sweets}"
+                            f"{cake_line}")
+            elif tier_slug == "mid":
+                template = (f"{'BIRTHDAY' if is_birthday else 'GENERAL PARTY'} — MID tier (₹500-799/plate) · 8-10 items:\n"
+                            f"  - Welcome Drink (1)\n"
+                            f"  - Starters: {nv_start}\n"
+                            f"  - Basanti Pulao + Luchi or Roti\n"
+                            f"  - Dal\n"
+                            f"  - Mains: {nv_main}\n"
+                            f"  - Chatni · Papad · Salad\n"
+                            f"  - Sweets: {sweets}"
+                            f"{cake_line}")
+            elif tier_slug == "premium":
+                template = (f"{'BIRTHDAY' if is_birthday else 'GENERAL PARTY'} — PREMIUM tier (₹800-1199/plate) · 12-14 items:\n"
+                            f"  - Welcome Drink + Live Counter · Mocktails (8-10 varieties)\n"
+                            f"  - Live Counter · Chaat (Puchka · Ghugni · Aloo Kabli) OR Chinese Counter\n"
+                            f"  - Starters (passed): {nv_start}\n"
+                            f"  - Basanti Pulao + Luchi + Roti\n"
+                            f"  - Dal\n"
+                            f"  - Mains: {nv_main}\n"
+                            f"  - Chatni · Papad · Salad\n"
+                            f"  - Sweet Counter: {sweets}"
+                            f"{cake_line}")
+            else:  # luxury
+                template = (f"{'BIRTHDAY' if is_birthday else 'GENERAL PARTY'} — LUXURY tier (₹1200+/plate) · 15-18 items:\n"
+                            f"  - Welcome Drink + Live Counter · Mocktails (10-12 varieties)\n"
+                            f"  - Live Counter · Salad Bar (8 varieties)\n"
+                            f"  - Live Counter · Chaat (5 items)\n"
+                            f"  - Live Counter · Chinese (4-5 items)\n"
+                            f"  - Starters (passed): {nv_start}\n"
+                            f"  - Basanti Pulao + Luchi + Roti + Kashmiri Pulao\n"
+                            f"  - Dal (Chana Dal signature)\n"
+                            f"  - Mains: {nv_main}\n"
+                            f"  - Chatni · Papad · Salad · Kachori\n"
+                            f"  - Sweet Counter: {sweets}\n"
+                            f"  - Ice Cream Counter (5-6 flavours)"
+                            f"{cake_line}")
 
         prompt = f"""You are Bhojon Buddy, a warm Bengali menu curator for Kolkata events.
 Design a REALISTIC menu a verified Aayojan kitchen can actually cook and serve profitably.
@@ -432,9 +646,15 @@ BRIEF:
 - Guests: {guests}
 - Budget per plate: ₹{budget_per_plate}
 - Diet: {diet_norm}
+- Pricing tier: {tier_slug.upper()} ({tier_label})
 
-OCCASION TEMPLATE (follow this course structure strictly):
+OCCASION TEMPLATE (follow this course structure strictly for THIS tier):
 {template}
+
+TIER DIFFERENTIATION IS CRITICAL — a menu at ₹500 must look OBVIOUSLY different
+from one at ₹1000 for the SAME occasion. The section count, item count, protein
+choices, and counter presence should all shift. Do not default to the same
+crowd-pleaser regardless of budget.
 
 Pricing tier hints (Bengali wedding norms):
 - ₹300–500 budget/plate → budget wedding · standard chicken/fish · Rasogolla · 10-12 sections
@@ -478,10 +698,15 @@ No markdown. Integers only for money."""
             system_prompt="You are Bhojon Buddy, a Bengali menu curator. Return only valid JSON.",
             use_tools=False,
             max_tokens=4000,
-            temperature=0.4,
+            temperature=0.6,
             json_mode=True,
         )
-        return json.loads(self._extract_json(reply))
+        result = json.loads(self._extract_json(reply))
+        # Annotate with the tier we picked so the UI can render a chip and
+        # so telemetry can measure which tier converts best.
+        result["pricingTier"] = tier_slug
+        result["pricingTierLabel"] = tier_label
+        return result
 
     @staticmethod
     def _extract_json(text: str) -> str:
